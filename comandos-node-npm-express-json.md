@@ -664,3 +664,4 @@ cursor.read(10, (err, rows) => {
 console.log(rows);
 cursor.close()
 });
+# texto plano parametrizado
