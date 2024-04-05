@@ -665,3 +665,34 @@ console.log(rows);
 cursor.close()
 });
 # texto plano parametrizado
+pool.query(text[String], values[Array])
+
+JSON
+{
+ text: '<consultas con parámetros $1,$2, ...',
+ values: ['valor1', 'valor2', ...],
+};
+
+# ROW MODE
+registros retornados de objeto a arreglo
+# Prepared Statements
+declaraciones preparadas, que hace referencia al manejo de una memoria caché
+
+const queryObj = {
+const queryObj = {
+name: 'fetch-user', // prepared statement
+text: `SELECT
+att_id,
+app_clients.cli_name||' '||app_clients.cli_lastname as Cliente,
+att_date,
+att_detail,
+app_employee.emp_name||' '||app_employee.emp_lastname as Ejecutivo
+FROM app_attentions
+INNER JOIN app_clients
+ON app_attentions.cli_id = app_clients.cli_id
+INNER JOIN app_employee
+ON app_attentions.emp_id = app_employee.emp_id
+`,
+}
+}
+
