@@ -1,4 +1,5 @@
-# //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 6 => linea 329
+# //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 6 => linea 331
+# //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 7 => linea 622
 
 # terminal Prompt Node de windows
 # REPL (read, eval, print, loop) = (leer, evaluar, mostrar)
@@ -617,5 +618,49 @@ app.listen(PORT, () => {
 
 //----GITIGNORE--
 //para ignorar carpeta node_modules para no subir a github en archivo gitignore digitar node_modules/*
+# //----------------------------------------------------------------------------------------------------
+# //---------------MODULO 7---------------------------------------------------------------------------
+# //----------------------------------------------------------------------------------------------------
+# NPM i PG => instala dependencia o modulo o aplicacion PG
+# PG.POOL
+# PG.STRING => texto plano
+# PG.CLIENT
+# RESULT.ROWS => formato filas
+# RESULT.FIELDS => valor tabla
+# PROCESS.ARGV => captura argumentos
+# max => maximo de clientes
+# MIN => minimo de clientes para que pool inicie consultas
+# idleTimeoutMillis => tiempo de inactividad
+# connectionTimeoutMillis => tiempo de espera para conectar nuevo cliente
+# SSL => boleano si la conexión a la base de datos soporta un protocolo de transporte encriptado
 
+# conexion base de datos
 
+const { Client } = require("pg");
+const conection = async () => {
+ const client = new Client({
+ host: "localhost",
+ port: 5432,
+ database: "tu_base_de_datos",
+ user: "tu_usuario",
+ password: "tu_password",
+ });
+ await client.connect();
+ const result = await client.query("SELECT * FROM users");
+ console.log(result.rows);
+ await client.end();
+};
+conection();
+
+# PG-CURSOR
+npm i pg-cursor
+const Cursor = require("pg-cursor")
+new Cursor(sql, values)
+
+const consulta = new Cursor("select * from usuarios")
+const cursor = client.query(consulta);
+
+cursor.read(10, (err, rows) => {
+console.log(rows);
+cursor.close()
+});
