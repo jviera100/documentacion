@@ -1112,7 +1112,7 @@ console.log(v1.getMarca()); // "Ford"
 ● v1.setMarca("Kia");
 console.log(v1.getMarca()); // "Kia"
 # interpolacion
-es como concatenar conllamados de propiedades y con signo +
+es como concatenar con llamados o invocaciones de propiedades, en vez de signo + usas signo $
 ejemplo:
 var persona = { nombre: "José" };
 var direccion = { calle: "Avenida Santiago 123", comuna: "Santiago" };
@@ -1333,12 +1333,12 @@ en catch, sí o sí ejecutará lo que está en este bloque.
 ejecución.
 ● Se puede utilizar onerror en el elemento img de html para capturar el error cuando no
 existe la imagen cargada. 
-# Prototipo
-Clase objeto modelo a seguir, parámetro
-Objetos instancia de una clase u objeto 
-Atributo propiedad características de objeto
-Modelo funcion de objeto
+# Prototipo = objeto modelo a reutilizar
+Clase objeto = modelo a seguir o parámetro para instanciar
+Objetos = instancia de una clase de objeto, anteponiendo palabra reservada new, el objeto contiene propiedades y funciones
+    Atributo o propiedad = características de objeto
+    metodo o funcion = comportamiento de objeto
 # metodo funcion proactiva
 # evento funcion reactiva
 
-API-ajax api-json Babel random callback branch
+API-ajax api-json Babel

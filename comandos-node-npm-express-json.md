@@ -48,7 +48,7 @@ console.log(process);
 terminal
 node node_process.js
 
-# process.argv
+# process.argv = captura argumentos de terminal
 //node_process_argv.js
 console.log(process.argv);
 terminal
@@ -619,22 +619,30 @@ app.listen(PORT, () => {
 //----GITIGNORE--
 //para ignorar carpeta node_modules para no subir a github en archivo gitignore digitar node_modules/*
 # //----------------------------------------------------------------------------------------------------
-# //---------------MODULO 7---------------------------------------------------------------------------
+# //--------MODULO 7-PostgreSQL en Node.js--------------------------------------------------------------
 # //----------------------------------------------------------------------------------------------------
-# NPM i PG => instala dependencia o modulo o aplicacion PG
-# PG.POOL
-# PG.STRING => texto plano
-# PG.CLIENT
-# RESULT.ROWS => formato filas
-# RESULT.FIELDS => valor tabla
-# PROCESS.ARGV => captura argumentos
-# max => maximo de clientes
-# MIN => minimo de clientes para que pool inicie consultas
-# idleTimeoutMillis => tiempo de inactividad
-# connectionTimeoutMillis => tiempo de espera para conectar nuevo cliente
-# SSL => boleano si la conexión a la base de datos soporta un protocolo de transporte encriptado
+-------------------------------------------------------
+# conceptos de comandos: (entendiendo el codigo)
+npm i pg = instala dependencia o modulo o aplicacion PG postgres sql
+PG.String => texto plano
+PG.Pool = conexiones multiples con postgres
+PG.Client = conexion para consulta = script
+const { rows } = await pool.query("SELECT NOW()"); ===> consulta DATABASE
+console.log(result.rows); = captura respuesta consulta DATABASE = valor fila tabla
+console.log(result.rowCount); = captura respuesta consulta DATABASE = numero orden consulta fila tabla
+console.log(result.fields); = captura respuesta consulta DATABASE = valor columna tabla
+await client.end(); = cierre de conexion
+console.log(process.env.DB_PASS); = captura contraseña archivo .env
+console.log(process.argv) = captura argumentos de terminal
+console.log(process.argv.slice(2)) = captura argumentos de terminal y omite los 2 primeros indices del array que son ruta de node y ruta de archivo index.js
+max = maximo de clientes
+min = minimo de clientes para que pool inicie consultas
+idleTimeoutMillis => tiempo de inactividad
+connectionTimeoutMillis => tiempo de espera para conectar nuevo cliente
+SSL => boleano si la conexión a la base de datos soporta un protocolo de transporte encriptado
+allowExitOnIdle: true,
 
-# conexion base de datos
+# conexion base de datos ES5
 
 const { Client } = require("pg");
 const conection = async () => {
@@ -652,7 +660,100 @@ const conection = async () => {
 };
 conection();
 
+# conexion base de datos ES6
+
+import pkg from "pg";
+const { Pool } = pkg;
+import "dotenv/config";
+
+
+const pool = new Pool({
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  allowExitOnIdle: true,
+  ssl: { rejectUnauthorized: false },
+});
+
+const getDate = async () => {
+  const { rows } = await pool.query("SELECT NOW()");
+  console.log(rows);
+  return rows;
+};
+getDate();
+
+
+export default pool;
+
+
+# conexion base de datos ES6 otra forma
+
+import pg from "pg"; //cambio import pg
+
+import "dotenv/config";
+//-----------------------------------------------------------------
+//desestructuramos invocando los parametros dentro de process.env
+//-------------------------------------------------------------------
+
+const { DB_PASWORD, DB_USER, DB_HOST, DB_DATABASE } = process.env;
+
+const config = {
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_DATABASE,
+};
+
+const db = new pg.Pool(config); //instancia de pg.Pool
+
+const getDate = async () => {
+  const result = await db.query("SELECT NOW()");
+  console.log(result.rows);
+};
+getDate();
+
+# ejemplo archivo .env
+DB_USER:postgres
+DB_PASSWORD:123456
+DB_HOST:localhost
+DB_DATABASE_POOL:latoxica
+DB_DAYABASE_CLIENT: jeans
+
+# ejemplo archivo DATABASE
+-- Creacion de la BBDD
+create database users;
+
+
+--Creación de la tabla usuarios
+create table users (
+id serial primary key,
+name varchar(50) not null,
+email varchar(50) not null
+);
+
+--inserción de un usuario
+insert into users(name, email) values('Juan', 'juan@gmail.com');
+insert into users(name, email) values('Maria', 'maria@gmail.com');
+
+# PROCESS.ARGV
+console.log(process.argv.slice(2)) = captura argumentos de terminal y omite los 2 primeros indices del array que son ruta de node y ruta de archivo index.js
+
+----CRUD----
+----AGREGA datos desde terminal----
+node queries/consultas add 'Juan Perez' 12300300-7 flauta basico
+----MUESTRA registro actual desde terminal----
+node queries/consultas get 
+----BUSCA dato por FILTRO rut desde terminal----
+node queries/consultas getrut 12300300-7
+----ACTUALIZA datos desde terminal----
+node queries/consultas update 'Juan Perez' 12300300-7 flauta intermedio
+----ELIMINA datos desde terminal
+node queries/consultas delete 'Juan Perez' 12300300-7 flauta intermedio
+
 # PG-CURSOR
+Es un módulo de PostgreSQL que proporciona un cursor para realizar consultas selectivas en una base de datos. Los cursores permiten recorrer los resultados de una consulta de manera eficiente, especialmente cuando se trabaja con grandes conjuntos de datos. Esto es útil cuando se necesitan resultados parciales de una consulta o cuando se quiere procesar los datos de manera incremental.
+
 npm i pg-cursor
 const Cursor = require("pg-cursor")
 new Cursor(sql, values)
@@ -664,7 +765,15 @@ cursor.read(10, (err, rows) => {
 console.log(rows);
 cursor.close()
 });
+
+# sql injection 
+vulnera la base de datos usando CRUD, la solucion es usar texto plano parametrizado.
+
 # texto plano parametrizado
+
+● Texto plano parametrizado: Es una técnica que implica la creación de consultas SQL con parámetros dinámicos, donde los valores de los parámetros se proporcionan por separado. Esto ayuda a prevenir la inyección SQL y mejora la legibilidad del código.
+
+● Interpolación: La interpolación de cadenas de texto en JavaScript es una característica que permite incrustar valores de variables dentro de una cadena utilizando el símbolo ${}. Esto se puede utilizar para crear consultas SQL con parámetros de manera más dinámica y legible.
 pool.query(text[String], values[Array])
 
 JSON
@@ -674,9 +783,23 @@ JSON
 };
 
 # ROW MODE
-registros retornados de objeto a arreglo
-# Prepared Statements
+ Se refiere al modo en que se devuelven los resultados de una consulta en PostgreSQL. En el modo ROW, los resultados de la consulta se devuelven como un conjunto de filas, donde cada fila representa un registro de la tabla. Esto contrasta con otros modos de devolución, como el modo JSON, donde los resultados se devuelven en formato JSON.
+
+# Prepared Statements = consultas preparadas o parametrizadas se compilan una sola vez = guardadas = cache
 declaraciones preparadas, que hace referencia al manejo de una memoria caché
+
+👨🏽‍💻La principal ventaja de los Prepared Statements es que ayudan a prevenir ataques de inyección SQL, ya que los datos proporcionados por el usuario se tratan como datos, no como parte de la instrucción SQL. Además, pueden mejorar el rendimiento en sistemas que ejecutan la misma consulta múltiples veces, ya que la consulta solo se compila una vez y luego se pueden ejecutar con diferentes valores de parámetros👨🏽‍💻
+
+● Prepared Statements: Son consultas SQL precompiladas que permiten separar el código SQL de los datos o prompt  proporcionados por el usuario. Esto se logra utilizando marcadores de posición o indices en la consulta que luego se reemplazan por los valores de los parámetros.
+
+● queryObj (Objeto de Consulta): se utiliza para estructurar una consulta SQL junto con sus parámetros, donde text representa la consulta SQL y values representa los valores de los parámetros. en un objeto JSON. 
+--ejemplo---
+const queryObj = {
+  text: 'SELECT * FROM estudiantes WHERE rut = $1',
+  values: [rut]
+};
+● object.values puede darme los valores de los parametros del array
+● object.keys puede darme los nombrte de los parametros del array
 
 const queryObj = {
 const queryObj = {
@@ -696,3 +819,70 @@ ON app_attentions.emp_id = app_employee.emp_id
 }
 }
 
+--------------------------------------------------------------
+# queryObj (concepto)
+Uso de JSON como argumento de consulta: Se utiliza un objeto JSON (queryObj) para definir el texto de la consulta y los valores de los parámetros. Esto permite separar claramente el texto de la consulta y los valores, lo que mejora la legibilidad del código y evita problemas de seguridad como la inyección SQL.
+
+----ejemplo con texto plano parametrizado:
+
+const queryObj = {
+  text: 'SELECT * FROM estudiantes WHERE rut = $1',
+  values: [rut]
+};
+
+----Explicacion de ejemplo => objeto:
+
+--text: Es una cadena que representa la consulta SQL que se va a ejecutar. En este caso, la consulta busca todos los estudiantes cuyo rut coincide con el valor proporcionado como parámetro.
+
+--values: Es un arreglo que contiene los valores de los parámetros de la consulta. En este ejemplo, $1 indica que se espera un parámetro en la consulta SQL, y ese valor se toma del primer elemento del arreglo values, que en este caso es la variable rut.
+
+# PROCESS.ARGV = redeclarar variables del array de la funcion con nuevo indice dentro del IF
+import pool from "../config/db.js";
+
+const argumento = process.argv.slice(2);
+const option = argumento [0]; //------si agrego un nuevo valor se ubicara en el indice 0.-
+const gender = argumento [1];
+const dob = argumento [2];
+const phone = argumento [3];
+const email = argumento [4];
+const country = argumento [5];
+const name = argumento [6];
+
+const addStudent = async (gender, dob, phone, email, country, name) => {
+  try {
+    const consulta = {  
+      text: 'INSERT INTO users (gender, dob, phone, email, country, name) VALUES ($1, $2, $3, $4, $5, $6) returning *',
+      values: [gender, dob, phone, email, country, name],
+    };
+    const res = await pool.query(consulta);
+    console.log("Estudiante agregado: ", res.rows[0]);
+  } catch (error) {
+    console.log(error.code, error.message);    
+  }
+}
+<!-- con IF o SWICHT definimos un string que al ponerlo en terminal invoca una funcion u otra -->
+if(option === "add"){       <!--ubicado indice [0] -->
+  addStudent();
+}
+if(option === "getEmail"){  <!--ubicado indice [4] -->
+  getStudentEmail(email);
+}
+<!-- ---------terminal----------------------------- -->
+node queries/consultas add
+---para pasar email con indice [4] tendria que anotar los valores de indice [0,1,2,3,4]
+node queries/consultas add cosa cosa cosa juan@gmail,com
+<!-- redeclaramos variables con nuevo indice dentro del IF  -->
+--//para este ejemplo el array contiene el nombre de cada funcion ejemplo agregar, actualizar, mostrar, eliminar datos
+el array tiene un indice, es el orden en que se muestran los datos en el terminal
+si quieres modificar datos, ejemplo del indice [4], debes completar datos del indice [0,1,2,3,4]
+entonces si redeclaras el indice en su variables dentro del if que invoca esa funcion 
+de indice [4] a [1] entonces solo anotas el indice [0] y el [1] asi agregas lo que necesitas,
+omitiendo los datos o las funciones que no quieres llamar//---------------------------------
+
+if(option === "add"){       <!--ubicado indice [0] -->
+  addStudent();
+}
+if(option === "getEmail"){  <!--actual indice [4] -->
+  email = argumento [1];    <!--nuevo indice [1] -->
+  getStudentEmail(email);
+}
