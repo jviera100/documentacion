@@ -714,11 +714,11 @@ const getDate = async () => {
 getDate();
 
 # ejemplo archivo .env
+DB_HOST:localhost
+DB_DATABASE_POOL:soyNombre
+DB_PORT: 5432
 DB_USER:postgres
 DB_PASSWORD:123456
-DB_HOST:localhost
-DB_DATABASE_POOL:latoxica
-DB_DAYABASE_CLIENT: jeans
 
 # ejemplo archivo DATABASE
 -- Creacion de la BBDD
