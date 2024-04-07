@@ -456,9 +456,14 @@ const axios = require('axios');
 const table = require('cli-table3');
 const jimp = require('jimp');
 const nodemailer = require('nodemailer');
+import "dotenv/config";
 require('dotenv').config();
 const yargs = require('yargs');
 const argv = yargs.command();
+import { Client } from 'pg';
+const { Client } = require('pg');
+import readline from 'readline';
+const readline = require('readline');
 moment.locale('es'); // idioma fecha
 moment().format('DD-MM-YYYY HH:mm:ss')
 
