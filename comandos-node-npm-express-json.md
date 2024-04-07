@@ -1,5 +1,5 @@
 # //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 6 => linea 331
-# //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 7 => linea 622
+# //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 7 => linea 628
 
 # terminal Prompt Node de windows
 # REPL (read, eval, print, loop) = (leer, evaluar, mostrar)
@@ -623,10 +623,15 @@ app.listen(PORT, () => {
 
 //----GITIGNORE--
 //para ignorar carpeta node_modules para no subir a github en archivo gitignore digitar node_modules/*
+
 # //----------------------------------------------------------------------------------------------------
 # //--------MODULO 7-PostgreSQL en Node.js--------------------------------------------------------------
 # //----------------------------------------------------------------------------------------------------
--------------------------------------------------------
+
+# estructura de carpetas => modelo vista controlador (MVC)
+//importaciones = 
+index <= rutas <= query <= config conexion <= .env
+
 # conceptos de comandos: (entendiendo el codigo)
 npm i pg = instala dependencia o modulo o aplicacion PG postgres sql
 PG.String => texto plano
