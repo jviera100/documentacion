@@ -1,4 +1,4 @@
-# //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 6 => linea 331
+# //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 6 => linea 331 => instalaciones dependencias linea 386
 # //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻--modulo 7 => linea 628
 
 # terminal Prompt Node de windows
@@ -383,7 +383,7 @@ console.log(chalk.underline.bgCyanBright.magenta.bold.italic(JSON.stringify({ me
 // Moment: Para formatear las fechas.
 // Lodash: Para dividir el arreglo de usuarios por sexo.
 // Chalk: Para imprimir en la consola con colores.version 5.3 con import
-// npm i express express-handlebars bootstrap jquery path chalk@4.1.2 uuid moment lodash axios cli-table3 jimp nodemailer dotenv yargs
+// npm i express express-handlebars bootstrap jquery path chalk@4.1.2 uuid moment lodash axios cli-table3 jimp nodemailer dotenv yargs pg pg-cursor sequelize pg-hstore
 //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻
 // npm i --- instala todas las dependencias registradas en json ---👨🏽‍💻
 // npm i cli-table3 ------
@@ -896,3 +896,33 @@ if(option === "getEmail"){  <!--actual indice [4] -->
   email = argumento [1];    <!--nuevo indice [1] -->
   getStudentEmail(email);
 }
+# snippets global
+
+● alt shift flecha abajo = copia codigo
+● ctrl alt flecha abajo = selecciona el principio o final de cada linea de codigo hacia abajo para agregar    comillas y coma al final.
+
+ejemplo:
+
+{
+  "Gitignore": {
+    "prefix": "gitignore",
+    "body": [
+      "# Ignorar archivos y carpetas",      
+      "node_modules/",
+      ".env"      
+    ],
+    "description": "Snippet para .gitignore"
+  }
+}
+# MVC
+/*con el MVC (Model-View-Controller o modelo-vista-controlador)
+    (frontend)
+    todo se enlaza en escala, el index.js importa archivo staticFolder de carpeta middlewares,
+    que fija carpetas estaticas views y assets, entonces si hay un html dentro de views o assets 
+    lo muestra en el navegador, asi enlazamos desde index.js el index.html y este
+    se enlaza con script.js y style.css de carpeta assets.
+    (backend database)
+    index.js levanta el servidor e importa el routes.js que tiene las rutas con cada consulta o queries.
+    los controllers o queries tienen las funciones o consultas CRUD y este importan el dbPool.js,
+    el dbPool.js es la conexion a la base de datos y este importa las variables de entorno de archivo .env 
+    */

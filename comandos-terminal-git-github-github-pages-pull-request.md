@@ -122,6 +122,7 @@ git clone https://github.com/TuUsuario/nombre-del-repositorio.git
 - code
 - download zip
 # GITHUB PULL REQUEST - dentro del repositorio
+se forkea, se clona y pull request desde la web
 en resumen guardo cambios en mi repo local independiente de aprobacion dueño repo y despues envio pull request desde pagina web y le queda al dueño de la repo aprobar o rechazar cambio en su repo
 - pull request
 - new pull request
