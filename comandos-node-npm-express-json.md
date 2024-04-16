@@ -383,7 +383,7 @@ console.log(chalk.underline.bgCyanBright.magenta.bold.italic(JSON.stringify({ me
 // Moment: Para formatear las fechas.
 // Lodash: Para dividir el arreglo de usuarios por sexo.
 // Chalk: Para imprimir en la consola con colores.version 5.3 con import
-// npm i express express-handlebars bootstrap jquery path chalk@4.1.2 uuid moment lodash axios cli-table3 jimp nodemailer dotenv yargs pg pg-cursor sequelize pg-hstore
+// npm i express express-handlebars bootstrap jquery path chalk uuid moment lodash axios cli-table3 jimp nodemailer dotenv yargs pg pg-cursor sequelize pg-hstore cors body-parser
 //👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻
 // npm i --- instala todas las dependencias registradas en json ---👨🏽‍💻
 // npm i cli-table3 ------
