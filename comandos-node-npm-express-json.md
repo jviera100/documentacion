@@ -915,14 +915,35 @@ ejemplo:
   }
 }
 # MVC
-/*con el MVC (Model-View-Controller o modelo-vista-controlador)
-    (frontend)
-    todo se enlaza en escala, el index.js importa archivo staticFolder de carpeta middlewares,
-    que fija carpetas estaticas views y assets, entonces si hay un html dentro de views o assets 
-    lo muestra en el navegador, asi enlazamos desde index.js el index.html y este
-    se enlaza con script.js y style.css de carpeta assets.
-    (backend database)
-    index.js levanta el servidor e importa el routes.js que tiene las rutas con cada consulta o queries.
-    los controllers o queries tienen las funciones o consultas CRUD y este importan el dbPool.js,
-    el dbPool.js es la conexion a la base de datos y este importa las variables de entorno de archivo .env 
+/*● MVC (Model-View-Controller: modelo-vista-controlador)
+    ● (frontend = cliente)     
+    el index.js importa archivo middlewares, que fija carpetas estaticas views y assets,
+     que muestran el html en el navegador,  y este enlaza script.js y style.css de carpeta assets.
+    ● (backend = servidor)
+    index.js (levanta el servidor) y este importa archivo routes.js (las rutas) 
+    y este importa los controllers.js (api rest full) y este importa la config el db.js (conexion database)
+     y este importa archivo .env (variables de entorno). 
+     Opcionalmente los controllers pueden importar la data de una API o desde archivo json.
     */
+
+
+
+---------------------------------------------
+?? que es esto
+    
+const { emisor, receptor, monto } = datos
+    const { id: emisorId } = (
+      await pool.query(`SELECT * FROM usuarios WHERE nombre = '${emisor}'`)
+    ).rows[0];
+    //buscamos el id del receptor
+    const { id: receptorId } = (
+      await pool.query(`SELECT * FROM usuarios WHERE nombre = '${receptor}'`)
+    ).rows[0];
+-----------------------------------------------------
+body = post = backend
+query = get = lleva signo ? = porque filtra
+params = url
+------------------------------------------------
+entonces rowMode muestra un objeto como array?
+petstore.swagger.io para documentar api🤔
+HATEOAS🧐🤔🤯🧑‍🏫 permite paginar la data, mostrar tantos datos por pagina

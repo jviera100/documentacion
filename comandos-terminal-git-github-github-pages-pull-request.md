@@ -43,7 +43,7 @@ q + enter: cuando ves END y no te deja escribir, ahora te dejara escribir
 - git branch -M main : cambio nombre de rama de master a main
 - git push -u origin main : subes archivos y pone contraseña
 - Ejemplo:
-remote git add origin https://github.com/jviera100/desafio-ricomida.git
+git remote add origin https://github.com/jviera100/desafio-ricomida.git
 git branch -M main
 git push -u main origin
 # TERMINAL GIT sube a GITHUB cambios de trabajo
@@ -55,15 +55,17 @@ git push -u main origin
 - git remote add origin https://github.com/jviera100/desafio-ricomida.git
 # TERMINAL GIT si la rama main no esta asociada de forma remota, la asocias
 - git push --set-upstream origin main
-# TERMINAL GIT forzar subir y reemplazar cambios locales por los remotos
+# TERMINAL GIT PUSH -F (no usar) forzar subir y reemplazar cambios locales por los remotos
 - git push --force origin main
-# TERMINAL GIT branch, rama o version del mismo proyecto o carpeta(no duplica la carpeta, es la misma con otra version)
-- git log : muestra todas las versiones
+- git push -f origin main : 
+No se recomienda utilizar este comando, ya que puede causar la pérdida de datos y la corrupción del historial de versiones, hay formas arreglar eso sin forzarlo pero hay que utilizar algo que se llama rebase
+# TERMINAL GIT branch o rama del mismo proyecto o carpeta(no duplica la carpeta, es la misma con otra version)
+- git log : muestra todas las versiones👨🏽‍💻
 - git branch : muestra en la rama que estas y las demas ramas
 - git branch -M main : cambio nombre de rama de master a main
 - git branch nombre-nueva-rama : crea nueva rama
 - git checkout nombre-otra-rama : te cambia a otra rama
-- git checkout -b otra_branch : crea nueva rama y te ubica en esa rama nueva
+- git checkout -b otra_branch : crea nueva rama y te ubica en esa rama nueva👨🏽‍💻
 - git stash : aparta modificaciones de rama actual para no perder cambios
 - git stash list : lista de cambios apartados en paralelo a historial de commits (historial modificaciones github)
 - git stash apply : unir directorio actual con cambios apartados
@@ -75,22 +77,19 @@ git push -u main origin
 - archivo (letra A): es cuando le das git add .
 - archivo (letra M) : cuando se modifica, debes poner git add . y luego git commit -m "nombre"
 - archivo (sin letra) : es cuando no hiciste git init o si lo iniciaste esta guardado, las letras significa que falta guardar
-# TERMINAL crea github pages
-git branch gh-pages
-# TERMINAL bajar trabajo
+# TERMINAL GIT PULL bajar trabajo
 - git pull -u origin main : bajas archivos
-# TERMINA git merge fusionar cambios
-- git merge : le pones el nombre de la otra rama ejemplo development y la fusiona a la otra rama ejemplo main dejandole los mismos cambios
-# TERMINAL GIT fetch recupera github y actualiza terminal
+- # TERMINAL GIT fetch recupera github y actualiza terminal
 - git fetch se utiliza para recuperar los cambios del repositorio remoto y actualizar el repositorio local sin fusionar los cambios.
-# TERMINAL GIT no usar
-- git push -f origin main : No se recomienda utilizar este comando, ya que puede causar la pérdida de datos y la corrupción del historial de versiones, hay formas arreglar eso sin forzarlo pero hay que utilizar algo que se llama rebase
+# TERMINA git merge fusionar cambios (GIT PULL = GIT FETCH + GIT MERGE)👨🏽‍💻
+- git merge : le pones el nombre de la otra rama ejemplo development y la fusiona a la otra rama ejemplo main dejandole los mismos cambios
+# ----------------------------------------------------------------
 # TERMINAL GIT muestra informacion repositorio
 - git remote show [nombre]
 # github cambiar de repositorio al señalado
 git remote set-url origin https://github.com/jviera100/desafio_evaluado_24_citas_medicas.git
 # TERMINAL GIT cambia nombre repositorio
-- git remote rename nombreActual NuevoNombre
+- git remote rename nombreActual NuevoNombre👨🏽‍💻
 # TERMINAL GIT elimina repositorio
 - git remote rm NombreRepositorio
 # crear repositorios en GITHUB
@@ -109,7 +108,7 @@ git remote set-url origin https://github.com/jviera100/desafio_evaluado_24_citas
 - main
 - save
 - deployments: ver pagina web subida
-# clonar o copiar repositorio en GITHUB - dentro del repositorio remoto de ambos
+# clonar o copiar repositorio en GITHUB de otro
 - abrir ruta del  compañero en el navegador
 - fork: copia repositorio desde git hub de compañero
 - creo el repositorio en mi git hub
@@ -129,6 +128,40 @@ en resumen guardo cambios en mi repo local independiente de aprobacion dueño re
 - create pull request
 - agrega titulo y descripcion
 - create pull request
+# TERMINAL crea github pages
+git branch gh-pages
+# //----------------------------------------------------------------
+# COMPARAR VERSION ANTIGUA EN RAMA NUEVA CON VERSION NUEVA EN RAMA ANTIGUA
+# Crea una nueva rama llamada 'old' y entra en ella
+git checkout -b old
+# entra a la rama 'main' 
+git checkout main
+# Muestra los commits en la rama 'main' para encontrar el hash del commit antiguo
+git log
+# Cambia de nuevo a la rama 'old'
+git checkout old
+# Trae el commit antiguo a la rama 'old'
+git cherry-pick <hash_del_commit_antiguo>
+# Continúa el proceso de cherry-pick si hay conflictos
+git cherry-pick --continue
+# compara versiones de ramas
+git diff main..old
+# //----------------------------------------------------------------
+# SUBIR NUEVA RAMA CON VERSION ANTIGUA A GITHUB, DESCARGA EN PC Y COMPARA VISUALMENTE
+git checkout -b old
+git add .
+git commit -m "Mensaje del commit"
+git push -u origin old
+# //----------------------------------------------------------------
+# CAMBIAR DIRECTORIO Y NOMBRE REPO EN GITHUB Y EN TERMINAL
+mv nombre_antiguo nombre_nuevo => cambia nombre carpeta proyecto con comando o desde la carpeta renombrando
+vas github y renombras la repo
+git remote set-url jviera100 https://github.com/jviera100/jviera100.git => con este comando se actualiza repo en terminal
+
+
+
+
+
 
 
 
