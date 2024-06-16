@@ -1,9 +1,14 @@
-👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻👨🏽‍💻repo de documentacion para explicar codigos utilizados en desarrollo full stack
---MODULO 6-Node desde linea 331
---MODULO 7-PostgreSQL en Node. desde linea 628
-pueden filtrar conceptos dentro de cada archivo usando ctrl f
-y pueden cambiar extendion .md por .js
 
-# estructura de carpetas => modelo vista controlador (MVC)
-//importaciones = 
-index <= rutas <= query <= config conexion <= .env
+
+                            MVC ( Model-View-Controller )🎉
+    ● (frontend = client):
+      the index.js (starts server) and this imports middlewares file (configures json requests, handlebars,
+      error handling, fileupload, JWT and static folders showing html or hbs views in the browser),
+      and the main.hbs view links the views and the partials (navbar and footer) and the main.hbs links the animations 
+      with files (script.js) and styles with files (style.css). There is also a script with the logic in each view.
+
+    ● (backend = server):
+      index.js (raises the server) and this imports the routes.js file (the routes) and this imports the
+      controllers.js (api rest full) and this imports the queries.js (sql queries), and this imports the
+      config the db.js (database connection) and this imports the .env file (environment variables).
+      Controllers can optionally import data from an API or from a json file.
