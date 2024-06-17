@@ -34,20 +34,20 @@ Digite «help» para obtener ayuda.
 ● serial  => ciclo autocompleta
 
 *tipo de columna*
-● VARCHAR tipo de columna
-● SMALLINT tipo de columna
-● INTEGER tipo de columna
-● BIGINT tipo de columna
-● DECIMAL tipo de columna
-● TIMESTAMP tipo de columna
-● DATE tipo de columna
-● TIME tipo de columna
-● BOOLEAN tipo de columna
-● TEXT tipo de columna
-● SERIAL tipo de columna
-● UUID tipo de columna
-● JSON tipo de columna
-● JSONB tipo de columna
+● VARCHAR
+● SMALLINT
+● INTEGER
+● BIGINT
+● DECIMAL
+● TIMESTAMP
+● DATE
+● TIME
+● BOOLEAN
+● TEXT
+● SERIAL
+● UUID
+● JSON
+● JSONB
 
 **Clausulas o comandos**
 # CREATE DATABASE = crea carpeta principal o padre
@@ -132,11 +132,9 @@ ALTER SEQUENCE cocina_chilena_id_seq > RESTART WITH 1;
 # ● Equi Join: Es un tipo de Inner Join que se utiliza para unir dos tablas que tienen una columna en común.
 # ● Natural Join: Es un tipo de Inner Join que se utiliza para unir dos tablas que tienen columnas con el mismo nombre y tipo de datos.
 
-<!-- TABLAS RELACIONADAS clave foranea -->
-# FORMA A
- FOREIGN KEY (autor_id) REFERENCES autores (id) <!-- columna tabla hija references columna tabla padre, con palabra foreign key -->
-# FORMA B
-id_pelicula INTEGER REFERENCES peliculas(id), <!-- columna tabla hija references columna tabla padre, sin palabra foreign key -->
+**TABLAS RELACIONADAS clave foranea**
+# FORMA A => FOREIGN KEY (autor_id) REFERENCES autores (id) <!-- columna tabla hija references columna tabla padre, con palabra foreign key -->
+# FORMA B => id_pelicula INTEGER REFERENCES peliculas(id), <!-- columna tabla hija references columna tabla padre, sin palabra foreign key -->
 
 *comandos de transacciones SQL*
 # begin: inicio
