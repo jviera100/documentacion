@@ -3,12 +3,27 @@
 - cmd: abre terminal
 - dir: muestra carpetas al interior
 - cd nombre carpeta: entra a la carpeta
-# TERMINAL codigos consola en PowerShell o bash - 
+# TERMINAL codigos consola en PowerShell o bash - linux
 - ls: muestra carpetas al interior
 - pwd: muestra la ruta en la que estoy
+- |: se llama pipe o pleca para comandos simultaneos o concatenados
+- >: sobreescribe archivos
+- >>: agrega texto al final del archivo
+- echo: de linux equivalente a console.log de javascript y print de python muestra el contenido del comando o codigo
+- grep: filtra archivo
+- nano: edita archivo
+- find: encuentra dentro de archivo es un buscar
+- iname: diferencia entre minusculas y minusculas
+- mtime: -mtime -1 modificado en menos de un dia mtime +1 mayor a un dia
+- mmin: en minutos
+- cat nombre archivo: abre el archivo
+- head: muestra las primeras 10 filas del archivo por debecto, puedes editar las filas a mostrar asi head -n 10 
+- cd nombre carpeta: entra a la carpeta
 - cd .. : sale a la carpeta pabre anterior
 - cd ~ : sale a la carpeta padre principal, codigo ASCII para hacer el simbolo (alt+fn+126)clear
+- ls -l: muestra carpetas al interior con detalles como permisos, fechas, tamaños
 - ls -a : muestra carpetas ocultas del sistema, las que empiezan con un punto son las ocultas
+- ls -la: muestra carpetas detalladas al interior incluida las ocultas, conbinacion de ls -l y ls -a
 - clear: limpia todo
 - flecha hacia arriba: muestra codigos ingresados anteriormente en los ultimos dias
 - ls -LS : muestra carpetas ordenadas del tamaño mas grande al pequeño
@@ -17,12 +32,28 @@
 - tree: arbol o estructura  de carpetas
 - ni: crea carpeta
 - mkdir: crea carpeta y si haces un espacio puedes crear varias carpetas
+- rmdir: elimina carpeta o directorio
 - touch: crea carpeta
 - code . : abre carpeta en nuevo visual
 - cp: copia archivo
 - mv: mover archivos
 - rm: eliminar archivo
+- chmod: + agrega - elimina = asigna permisos (read, write y execute) de propietarios (user, group y other)
+- sudo: modo perfil administrador, usuario root o superusuario
+- useradd: agrega user
+- usermod: modifica user
+- userdel: elimina user
+- chown: cambia de propiedad archivos o carpetas de usuario o grupo
+- man: descripcion de manual de comandos, ej: man chown
+- apropos: filtro de man
+- whatis: sinopsis de comandos
 q + enter: cuando ves END y no te deja escribir, ahora te dejara escribir
+# hash linux
+- sha256sum: genera hash sha256sum file1.txt
+- md5sum: genera hash
+- Get-FileHash: genera hash 
+- sha256sum file1.txt >> file1hash : comparar hashes
+- cmp file1hash file2hash : destaca diferencias en archivos
 # TERMINAL GIT configuracion inicial 
 - git --version: muestra version git
 - git config --global user.name "Tu Nombre" : agregas tu nombre
