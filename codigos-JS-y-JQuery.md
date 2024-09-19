@@ -38,12 +38,20 @@
 - console.log(false); muestra en consola valor false de color azul cuando no lleva comillas
 - console.log(soyvariable); muestra en consola valor de variable o muestra linea de error de color rojo, en este caso la consola mostrara como resultado un numero 7 de color azul
 - console.log("soy texto" + soyvariable); muestra en consola texto y numero, todo de color negro, poner funcion de console debajo de nueva variable, para que muestre variable nueva
-# consol.debug # consol.info # consol.error
+# console.debug # consol.info # consol.dir # console.trace
 funcionan igual que consol.log pero cambia el diseño de visualizacion, se muestran de otro color los mensajes en consola
 ejemplo:
 console.debug(Object);
 console.info(Object);
+console.dir("detalle objeto");
+console.trace("ruta detallada");
+
+# console.error
 console.error(Object);
+console.error(error.message); Muestra solo el mensaje del error
+console.error("Error:", error);Muestra el objeto mensaje y detalles error, la traza de la pila (stack trace) si está disponible.
+console.error(error.stack); Muestra la traza de la pila del error. Esto proporciona una visión detallada del lugar en el código donde ocurrió el error y puede ayudar a depurar más a fondo.
+
 # variables
 - soyvariable = 3 + 4  mala practica poner en js una variable, sin palabra reservada let o const
 - let soyvariable = 3 + 4  buena practica poner en js una variable, con palabra reservada let o const
