@@ -41,3 +41,5 @@ sudo tcpdump -nn -r capture.pcap -X
     -r: Lee los datos capturados del archivo nombrado.
     -X: Muestra los datos del paquete como resultados en formato ASCII y hexadecimal. Los analistas de seguridad pueden analizar los resultados hexadecimales y ASCII para detectar patrones o anomalías durante un análisis forense o de software malicioso.
     Nota: El sistema hexadecimal, también conocido como hex o de base 16, utiliza 16 símbolos para representar valores, incluyendo los dígitos del 0 al 9 y las letras A, B, C, D, E y F. El American Standard Code for Information Interchange (ASCII) es un estándar de codificación de caracteres que utiliza un conjunto de caracteres para representar texto en forma digital.
+
+# -w => tcpdump para capturar o guardar el tráfico de red en un archivo de captura de paquetes para su posterior análisis.
