@@ -1,4 +1,4 @@
-Guía Básica Para Instalar Babel:
+Guía Básica Para Instalar Babel: (ES5 => ES6)
 Dentro de la terminal ejecutar los siguientes comandos:
 npm init -y
 npm i @babel/preset-env @babel/cli @babel/core @babel/polyfill
