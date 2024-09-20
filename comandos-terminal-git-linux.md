@@ -16,7 +16,8 @@
 - iname: diferencia entre minusculas y minusculas
 - mtime: -mtime -1 modificado en menos de un dia mtime +1 mayor a un dia
 - mmin: en minutos
-- cat nombre archivo: abre el archivo
+- cat nombre archivo: abre el archivo, ej: cat /var/log/suricata/eve.json
+- less nombre archivo: lee una pagina a la vez de archivo extenso, ej: jq . /var/log/suricata/eve.json | less
 - head: muestra las primeras 10 filas del archivo por debecto, puedes editar las filas a mostrar asi head -n 10 
 - cd nombre carpeta: entra a la carpeta
 - cd .. : sale a la carpeta pabre anterior
