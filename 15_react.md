@@ -1,4 +1,4 @@
-# resulto con esto:
+# resulto exitoso con esto:
 npm install react-scripts@latest bootstrap reactstrap react react-dom --save
 
 cd holamundo
