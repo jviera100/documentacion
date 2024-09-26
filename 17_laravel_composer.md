@@ -9,12 +9,13 @@ no
 mariadb
 no
 cd proyecto_tareas
-php artisan serve
+php artisan serve => levanta el servidor si es cancelado
 # desde la web
 localhost:8000
 # desde visual abrir carpeta
 # desde cdm
 php artisan migrate
 yes
+npm install -g vite => es necesario para iniciar proyecto de laravel
 
 
