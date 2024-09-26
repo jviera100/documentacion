@@ -16,6 +16,9 @@ localhost:8000
 # desde cdm
 php artisan migrate
 yes
-npm install -g vite => es necesario para iniciar proyecto de laravel
+php artisan make:model Tarea-m => crea archivo en carpeta model
+php artisan migrate:rollback => revierte cambios
+php artisan make:controller TareasController => crea controller
+
 
 
