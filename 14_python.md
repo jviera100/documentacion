@@ -1,8 +1,8 @@
 print = console.log = echo
-def = function
+def = function = let variable()=>{}
 elif = else if
-
-lista[inicio:fin:paso]
+len = length
+lista[inicio:fin:paso] = array filtra desde hasta y paso salta, si no se filtra se muestra todo, un inicio -1 inicia desde ultima propiedad de arreglo
 
 # imprime todos los números del 3 al 7?
 for i in range(3, 8):
