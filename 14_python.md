@@ -2,7 +2,25 @@ print = console.log = echo
 def = function = let variable()=>{}
 elif = else if
 len = length
-lista[inicio:fin:paso] = array filtra desde hasta y paso salta, si no se filtra se muestra todo, un inicio -1 inicia desde ultima propiedad de arreglo
+lista = array
+strip = eliminar caracteres de los extremos de una cadena de texto
+slicing = filtra lista por índices, desde hasta y salta, o muestra todo, 
+    ejemplo: lista[inicio:fin:paso] = , un inicio -1 inicia desde ultima propiedad de arreglo
+
+push pop shift unshift = filas
+append = columnas de listas o arrays 
+    ej:
+def agregar_si(lista, nombre):
+    if len(nombre) >=5:
+        lista.append(nombre)
+    return lista
+in = verifica si esta dentro de lista
+
+def rotar_a_la_izquierda(lista):
+    if lista:  # Verifica si la lista no está vacía
+        primer_elemento = lista.pop(0)  # Elimina y obtiene el primer elemento
+        lista.append(primer_elemento)  # Lo agrega al final
+    return lista
 
 # imprime todos los números del 3 al 7?
 for i in range(3, 8):
