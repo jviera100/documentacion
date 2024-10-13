@@ -239,7 +239,8 @@ alert("El número ingresado no corresponde a un día de la semana");
 break;
 }
 # for (ciclos o bucle o recorrido o iteracion)
-se repite ciclo de codigo, ejemplo: if, switch, etc
+Ideal cuando sabes cuántas veces se va a repetir el ciclo. La variable de control se actualiza automáticamente. su estructura es valor de variable, condicion y acumulador, en orden horizontal, hacia el lado.
+ ejemplo: if, switch, etc
 - ejemplo:          
 var num = 0;        
 for (;num < 2;) {   
@@ -313,7 +314,7 @@ for(let diente of dental) {
     console.log(diente.name)
 }             
 # while (ciclos)
-se repite ciclo de codigo hasta que la condicion deje de cumplirse
+Ideal cuando no sabes cuántas veces se va a repetir el ciclo. La variable de control la manejas tú, y debes asegurarte de actualizarla para que el ciclo no sea infinito. se repite ciclo de codigo hasta que la condicion deje de cumplirse, al igual que for se da un valor, una condicion y un acumulador, el orden es vertical
 - ejemplo:          <!-- ciclo dara alerta sumando 1 cuando cumpla condicion, primera alerta es 0+1, segunda alerta es 1+1 -->
 var num = 0;        <!-- variable num es igual a 0 -->
 while (num < 2) {   <!-- el numero debe ser menor a 2 -->
