@@ -9,6 +9,10 @@ startswith = verifica si cadena de texto comienza con un prefijo específico, tr
 if correo[-10:] == '@gmail.com':  = verifica si string termina en texto especificado
 Tuplas: Se crean usando paréntesis (), por ejemplo: tupla = (1, 2, 3).
 Listas: Se crean usando corchetes [], por ejemplo: lista = [1, 2, 3].
+*args es una convención en Python para pasar valores como tuplas entre ()
+kwargs es abreviatura de "keyword arguments" pasa valores como diccionario
+Lambdas funcion anonima de un solo uso, se asigna a variables
+rom functools import reduce, factoriza y simplifica conjunto, tupla o lista
 strip = eliminar caracteres de los extremos de una cadena de texto
 slicing = filtra lista por índices, desde hasta y salta, o muestra todo, 
     ejemplo: lista[inicio:fin:paso] = , un inicio -1 inicia desde ultima propiedad de arreglo
