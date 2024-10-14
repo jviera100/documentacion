@@ -7,6 +7,8 @@ lista = array
 split = separador por simbolo, ej: ","
 startswith = verifica si cadena de texto comienza con un prefijo específico, true o false
 if correo[-10:] == '@gmail.com':  = verifica si string termina en texto especificado
+Tuplas: Se crean usando paréntesis (), por ejemplo: tupla = (1, 2, 3).
+Listas: Se crean usando corchetes [], por ejemplo: lista = [1, 2, 3].
 strip = eliminar caracteres de los extremos de una cadena de texto
 slicing = filtra lista por índices, desde hasta y salta, o muestra todo, 
     ejemplo: lista[inicio:fin:paso] = , un inicio -1 inicia desde ultima propiedad de arreglo
