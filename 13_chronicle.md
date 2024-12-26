@@ -1,33 +1,39 @@
-Búsquedas en Chronicle
-En Chronicle, puedes buscar eventos en el campo Search (Buscar) y, además, utilizar el menú Procedural Filtering (proceso de filtrado) para aplicar filtros y refinar aún más los resultados de búsqueda. Por ejemplo, puedes usarlo para incluir o excluir resultados de búsqueda que contengan información específica relacionada a un tipo de evento o una fuente de registro. Hay dos tipos de búsqueda que puedes realizar para encontrar eventos en Chronicle: una búsqueda de modelos de datos unificados (UDM) o una búsqueda de registro sin procesar.
+### Búsquedas en Chronicle
 
-Página de inicio de Chronicle.
-Búsqueda de modelos de datos unificados (UDM)
-Es el tipo de búsqueda predeterminado que se utiliza en Chronicle. Para hacer una búsqueda UDM, debes escribir lo que quieres buscar, hacer clic en "Search" (Buscar) y seleccionar "UDM Search" (Búsqueda UDM). Con este tipo de búsqueda, Chronicle busca datos de seguridad que se hayan ingerido, analizado y normalizado. Una búsqueda UDM recupera los resultados de búsqueda más rápido que una búsqueda de registro sin procesar, porque busca en datos indexados y estructurados que están normalizados en UDM.
+En Chronicle, puedes buscar eventos en el campo **Search (Buscar)** y utilizar el menú **Procedural Filtering (Proceso de Filtrado)** para aplicar filtros y refinar los resultados de búsqueda. Hay dos tipos principales de búsqueda que puedes realizar:
 
+1. **Búsqueda de Modelos de Datos Unificados (UDM)**
+2. **Búsqueda de Registro Sin Procesar**
 
-Página de inicio de Chronicle.
-Una búsqueda UDM recupera eventos formateados en UDM, que contienen campos UDM. Hay muchos tipos diferentes de campos UDM que se pueden usar para consultar información específica de un evento. En esta lectura no los analizaremos todos, pero si deseas obtener más información, puedes consultar la 
-lista de campos UDM de Chronicle
-. Todos los eventos UDM contienen un conjunto de campos comunes que incluyen:
+### 1. Búsqueda de Modelos de Datos Unificados (UDM)
 
-Entidades: Se las conoce también como sustantivos. Todos los eventos UDM deben contener al menos una entidad. Este campo brinda contexto adicional sobre un dispositivo, usuario o proceso que está involucrado en un evento. Por ejemplo, un evento UDM que contiene información de entidad incluye los detalles del origen de un evento, como el nombre de host, el nombre de usuario y la dirección IP del evento.
+Es el tipo de búsqueda predeterminado en Chronicle. Se utiliza para buscar datos de seguridad ingeridos, analizados y normalizados, proporcionando resultados más rápidos que una búsqueda de registro sin procesar.
 
-Metadatos del evento: Brinda una descripción básica de un evento, incluidos el tipo de evento, las marcas de tiempo y demás. 
+**Ejemplo de Búsqueda UDM**:
+```plaintext
+metadata.event_type = "USER_LOGIN"
+```
 
-Metadatos de red: Proporciona información sobre eventos relacionados con la red y detalles del protocolo. 
+- **metadata.event_type = "USER_LOGIN"**: Busca eventos relacionados con la autenticación de usuarios, utilizando el campo de metadatos de eventos.
 
-Resultados de seguridad: Indica el resultado relacionado con la seguridad de los eventos. Un ejemplo de un resultado de seguridad puede ser un software antivirus que detecta y pone en cuarentena un archivo malicioso e informa: "virus detectado y en cuarentena". 
+**Campos Comunes en Eventos UDM**:
+- **Entidades**: Proporcionan contexto adicional sobre un dispositivo, usuario o proceso involucrado en un evento (nombre de host, nombre de usuario, dirección IP, etc.).
+- **Metadatos del Evento**: Descripción básica del evento (tipo de evento, marcas de tiempo, etc.).
+- **Metadatos de Red**: Información sobre eventos relacionados con la red y detalles del protocolo.
+- **Resultados de Seguridad**: Resultado relacionado con la seguridad de los eventos (por ejemplo, "virus detectado y en cuarentena").
 
-A continuación, podrás ver un ejemplo de una búsqueda UDM simple que utiliza el campo de metadatos de eventos para localizar eventos relacionados con los inicios de sesión de los usuarios:
+Para más información, puedes consultar la [lista de campos UDM de Chronicle](https://cloud.google.com/chronicle/docs/reference/udm-field-reference).
 
-metadata.event_type = “USER_LOGIN” 
+### 2. Búsqueda de Registros Sin Procesar
 
-metadata.event_type = “USER_LOGIN”: El campo UDM metadata.event_type contiene información sobre el tipo del evento. Esto incluye información como marca de tiempo, conexión de red, autenticación de usuario y demás. Aquí, el tipo de evento especifica USER_LOGIN, que busca eventos relacionados con la autenticación. 
+Si no encuentras la información necesaria en los datos normalizados, puedes realizar una búsqueda de registros sin procesar, buscando en los registros sin analizar.
 
-Si usas solo campos de metadatos, puedes comenzar rápidamente a buscar eventos. Mientras sigues practicando la búsqueda en Chronicle con UDM Search, irás encontrando más campos. Prueba usar estos campos para realizar búsquedas específicas con el fin de localizar diferentes eventos.
+**Ejemplo de Búsqueda de Registro Sin Procesar**:
+```plaintext
+USER_LOGIN
+```
 
-Búsqueda de registros sin procesar 
-Si no puedes encontrar la información que necesitas en los datos normalizados, puedes usar una búsqueda de registros sin procesar, que te permitirá buscar en los registros sin analizar. Para realizar una búsqueda de registros sin procesar, deberás escribir lo que quieres buscar, hacer clic en "Search" (Buscar) y seleccionar "Raw Log Search" (Búsqueda de registro sin procesar). Buscar en registros sin procesar, lleva más tiempo que una búsqueda estructurada. En el campo Search (Buscar), puedes hacer una búsqueda de registro sin procesar si especificas información, como nombres de usuario, nombres de archivo, hashes y demás. Chronicle recuperará los eventos asociados con la búsqueda.
+- **Buscar en Registros Sin Procesar**: Lleva más tiempo que una búsqueda estructurada. Puedes buscar nombres de usuario, nombres de archivo, hashes, etc.
 
-Consejo profesional: La búsqueda de registro sin procesar admite el uso de expresiones regulares, lo que puede ayudarte a acotar una búsqueda para que coincida con patrones específicos.
+**Consejo Profesional**: La búsqueda de registro sin procesar admite el uso de expresiones regulares, lo que te ayuda a acotar la búsqueda para que coincida con patrones específicos.
+

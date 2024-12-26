@@ -1,75 +1,175 @@
-print = console.log = echo
-def = function = let variable()=>{}
-elif = else if
-len = length
-f-strings = interpolacion, invocacion o sustitucion de valores de variables o iterados
-lista = array
-split = separador por simbolo, ej: ","
-startswith = verifica si cadena de texto comienza con un prefijo específico, true o false
-if correo[-10:] == '@gmail.com':  = verifica si string termina en texto especificado
-Tuplas: Se crean usando paréntesis (), por ejemplo: tupla = (1, 2, 3).
-Listas: Se crean usando corchetes [], por ejemplo: lista = [1, 2, 3].
-*args es una convención en Python para pasar valores como tuplas entre ()
-kwargs es abreviatura de "keyword arguments" pasa valores como diccionario
-Lambdas funcion anonima de un solo uso, se asigna a variables
-rom functools import reduce, factoriza y simplifica conjunto, tupla o lista
-strip = eliminar caracteres de los extremos de una cadena de texto
-slicing = filtra lista por índices, desde hasta y salta, o muestra todo, 
-    ejemplo: lista[inicio:fin:paso] = , un inicio -1 inicia desde ultima propiedad de arreglo
-
-push pop shift unshift = filas
-append = columnas de listas o arrays 
-    ej:
-def agregar_si(lista, nombre):
-    if len(nombre) >=5:
-        lista.append(nombre)
-    return lista
-in = verifica si esta dentro de lista
-
-def rotar_a_la_izquierda(lista):
-    if lista:  # Verifica si la lista no está vacía
-        primer_elemento = lista.pop(0)  # Elimina y obtiene el primer elemento
-        lista.append(primer_elemento)  # Lo agrega al final
-    return lista
-# tabla del 12
-def dibujar_tabla_12():
-    n = 12  # Establecemos el tamaño de la tabla
-    numero = 1  # Contador para los números consecutivos
-    for i in range(n):  # Itera sobre las filas
-        for j in range(n):  # Itera sobre las columnas
-            print(f"{numero:3d}", end=" ")  # Imprime el número con formato
-            numero += 1  # Incrementa el número
-        print()  # Nueva línea después de cada fila
 
 
-# tabla del 12
-def tabla_multiplicar():
-    for i in range(1, 13):  # Itera de 1 a 12 para las filas
-        for j in range(1, 13):  # Itera de 1 a 12 para las columnas
-            print(f"{i * j:3d}", end=" ")  # Imprime el resultado de la multiplicación con formato
-        print()  # Nueva línea después de cada fila
-# tabla vista vertical, asignar valor de variable, ejemplo 5, sera tabla del 5
-def mostrar_tabla(numero):
-    # Itera del 1 al 10 para mostrar la tabla de multiplicar
-    for i in range(1, 11):
-        print(f"{numero} x {i} = {numero * i}")
+### Equivalencias en Diferentes Lenguajes
+- **print = console.log = echo**
+    ```python
+    print("Hola, mundo")  # Python
+    ```
+    ```javascript
+    console.log("Hola, mundo");  # JavaScript
+    ```
+    ```sh
+    echo "Hola, mundo"  # Shell/Bash
+    ```
 
+- **def = function = let variable()=>{}**
+    ```python
+    def my_function():
+        pass  # Python
+    ```
+    ```javascript
+    function myFunction() {
+        // JavaScript
+    }
+    let myFunction = () => {
+        // JavaScript (arrow function)
+    };
+    ```
 
+- **elif = else if**
+    ```python
+    if condition:
+        pass
+    elif other_condition:
+        pass  # Python
+    ```
+    ```javascript
+    if (condition) {
+        // JavaScript
+    } else if (otherCondition) {
+        // JavaScript
+    }
+    ```
 
-# imprime todos los números del 3 al 7?
-for i in range(3, 8):
-    print(i)
+- **len = length**
+    ```python
+    len(my_list)  # Python
+    ```
+    ```javascript
+    myArray.length  # JavaScript
+    ```
 
-# In Out
+- **f-strings = interpolación (invocación o sustitución de valores de variables)**
+    ```python
+    name = "World"
+    f"Hello, {name}!"  # Python
+    ```
+    ```javascript
+    let name = "World";
+    `Hello, ${name}!`  # JavaScript
+    ```
 
-print("hola mundo");
-hola mundo
+### Listas y Tuplas
+- **Tuplas**: Se crean usando paréntesis `()`.
+    ```python
+    tupla = (1, 2, 3)
+    ```
 
-In[5]: 'el \"perro\" de luis'
-Out[5]: 'el "perro" de luis'
+- **Listas**: Se crean usando corchetes `[]`.
+    ```python
+    lista = [1, 2, 3]
+    ```
 
-# comentarios de una linea
-'''
-comentarios varias lineas
-'''
+### Argumentos Variables
+- **`*args`**: Permite pasar un número variable de argumentos a una función.
+    ```python
+    def my_function(*args):
+        for arg in args:
+            print(arg)
+    ```
+
+- **`**kwargs`**: Permite pasar argumentos nombrados a una función.
+    ```python
+    def my_function(**kwargs):
+        for key, value in kwargs.items():
+            print(f"{key}: {value}")
+    ```
+
+### Funciones y Métodos
+- **Lambdas**: Función anónima de un solo uso.
+    ```python
+    add = lambda x, y: x + y
+    ```
+
+### Manipulación de Cadenas y Listas
+- **`strip`**: Eliminar caracteres de los extremos de una cadena de texto.
+    ```python
+    my_string.strip()
+    ```
+
+- **Slicing**: Filtra lista por índices.
+    ```python
+    my_list[start:end:step]
+    ```
+
+- **`append`**: Añade un elemento al final de una lista.
+    ```python
+    my_list.append(element)
+    ```
+
+### Ejemplos de Funciones
+- **Agregar elemento si cumple condición**:
+    ```python
+    def agregar_si(lista, nombre):
+        if len(nombre) >= 5:
+            lista.append(nombre)
+        return lista
+    ```
+
+- **Rotar a la izquierda**:
+    ```python
+    def rotar_a_la_izquierda(lista):
+        if lista:
+            primer_elemento = lista.pop(0)
+            lista.append(primer_elemento)
+        return lista
+    ```
+
+- **Dibujar tabla del 12**:
+    ```python
+    def dibujar_tabla_12():
+        n = 12
+        numero = 1
+        for i in range(n):
+            for j in range(n):
+                print(f"{numero:3d}", end=" ")
+                numero += 1
+            print()
+    ```
+
+- **Tabla de multiplicar**:
+    ```python
+    def tabla_multiplicar():
+        for i in range(1, 13):
+            for j in range(1, 13):
+                print(f"{i * j:3d}", end=" ")
+            print()
+    ```
+
+- **Mostrar tabla de un número específico**:
+    ```python
+    def mostrar_tabla(numero):
+        for i in range(1, 11):
+            print(f"{numero} x {i} = {numero * i}")
+    ```
+
+- **Imprimir números del 3 al 7**:
+    ```python
+    for i in range(3, 8):
+        print(i)
+    ```
+
+### Comentarios
+- **Comentarios de una línea**:
+    ```python
+    # Este es un comentario de una línea
+    ```
+
+- **Comentarios de varias líneas**:
+    ```python
+    '''
+    Este es un comentario
+    de varias líneas
+    '''
+    ```
 

@@ -1,15 +1,20 @@
-Guía Básica Para Instalar Babel: (ES5 => ES6)
-Dentro de la terminal ejecutar los siguientes comandos:
+### 1. Guía Básica Para Instalar Babel (ES5 => ES6)
+
+**Dentro de la terminal, ejecutar los siguientes comandos:**
+```sh
 npm init -y
 npm i @babel/preset-env @babel/cli @babel/core @babel/polyfill
 npm i core-js
+```
 
-Crear Carpeta el Repositorio ej: ejemplo
+**Crear Carpeta para el Repositorio (ej: ejemplo):**
+```sh
 mkdir FullStack-Babel
 cd FullStack-Babel
+```
 
-Crear nuestro archivo babel-config.json con la siguiente estructura
-
+**Crear nuestro archivo `babel-config.json` con la siguiente estructura:**
+```json
 {
   "presets": [
     [
@@ -27,30 +32,38 @@ Crear nuestro archivo babel-config.json con la siguiente estructura
     ]
   ]
 }
+```
 
-Luego de la configuración inicial, creamos la siguiente estructura
-mkdir src (crear un carpeta con nombre src)
-cd src (movemos a la carpeta src)
+**Luego de la configuración inicial, crear la siguiente estructura:**
+```sh
+mkdir src
+cd src
+```
 
-Crear los Archivos JS que desea trabajar corresponda en SRC y luego Compilar:
-<!-- npx babel src/ -d dist/ -->
-Opción de compilación:
+**Crear los Archivos JS que desea trabajar en SRC y luego Compilar:**
+```sh
+npx babel src/ -d dist/
+```
+
+**Opción de compilación:**
+```sh
 npx babel src/ -d dist --config-file ./babel-config.json
+```
 
-(TIP extra compilar código en ES5)
-TIPS dentro de nuestro archivo package.json editar donde dice:
+**TIP extra para compilar código en ES5:**
 
-"scripts":{
-"test":"echo \"Error: no test specified\" && exit 1"
+**Editar el archivo `package.json` para agregar scripts:**
+```json
+"scripts": {
+  "start": "npm run build && node dist/main.js",
+  "build": "npx babel src/ -d dist/ --config-file ./babel-config.json",
+  "test": "echo \"Error: no test specified\" && exit 1"
 }
+```
 
-y agregar lo siguiente
+**Luego ejecutar Iniciar:**
+```sh
+npm start
+```
+Esto compilará y ejecutará nuestro programa.
 
-"scripts":{
-"start":"npm run build && node dist/main.js",
-"build":"npx babel src/ -d dist/ --config-file ./babel-config.json",
-"test":"echo \"Error: no test specified\" && exit 1"
-}
-
-luego ejecutar Iniciar:
-npm start esto compilara y ejecturá nuestro program
