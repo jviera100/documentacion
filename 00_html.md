@@ -1,5 +1,3 @@
-¡Entendido! Vamos a adaptar el formato de la guía de etiquetas HTML y comandos útiles siguiendo la estructura detallada que usamos anteriormente para el resumen de Data Science:
-
 ### 1. Estructura Básica de un Documento HTML
 
 ```html
@@ -100,4 +98,3 @@
 - Utiliza los títulos (`<h1>`, `<h2>`, etc.) de manera jerárquica para mejorar la estructura del contenido.
 - Al enlazar a páginas externas, considera usar `target="_blank"` para abrir en una nueva pestaña.
 
-Espero que esta guía adaptada te sea de ayuda. Si tienes más preguntas o necesitas más aclaraciones, ¡déjame saber!
