@@ -1,9 +1,11 @@
+
 ### Título: Guía de Node.js y Express
 
 ### 1. Generalidades y Configuración
 
-- **Módulo 6** (Línea 497: Instalaciones y Dependencias, Línea 546)
-- **Módulo 7** (Línea 890)
+- **Módulo 6** [Módulo 6: Roles y Herramientas en Reuniones de Informáticos](#módulo-6-roles-y-herramientas-en-reuniones-de-informáticos) (Línea 498), [Terminal con Node, Express y Más Dependencias](#terminal-con-node-express-y-más-dependencias) (Línea 547)
+- **Módulo 7** [Módulo 7: PostgreSQL en Node.js](#módulo-7-postgresql-en-node-js) (Línea 890)
+
 
 ### 2. Terminal Prompt Node de Windows
 
@@ -885,7 +887,7 @@ app.listen(PORT, () => {
 - Para ignorar la carpeta `node_modules` y no subir a GitHub, en el archivo `.gitignore` digitar `node_modules/*`
 
 
-### Módulo 7: PostgreSQL en Node.js
+### Módulo 7: PostgreSQL en Node js
 
 ### Estructura de Carpetas (Modelo Vista Controlador - MVC)
 
