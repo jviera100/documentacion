@@ -1,4 +1,4 @@
-¡Vamos a estructurar y ampliar la guía de propiedades CSS de la misma manera clara y detallada!
+### Guía de propiedades CSS:
 
 ### 1. Estructura y Selección
 
@@ -140,5 +140,3 @@
 ```css
 /* Signos para comentarios y no aplican función */
 ```
-
-Espero que esta versión detallada y estructurada de la guía de propiedades CSS te sea de ayuda. Si tienes más preguntas o necesitas más aclaraciones, ¡déjame saber! Estoy aquí para ayudarte.
