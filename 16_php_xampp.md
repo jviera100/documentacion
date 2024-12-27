@@ -1,4 +1,6 @@
-### Instalación y Configuración de XAMPP
+
+
+### 1. Instalación y Configuración de XAMPP
 
 1. **Instalar XAMPP**:
     - Descarga e instala XAMPP desde el [sitio oficial](https://www.apachefriends.org/index.html).
@@ -17,7 +19,7 @@
     - La dirección del escritorio se verá algo así: `file:///C:/xampp/htdocs/mi_php/primeros_pasos/`.
     - Elige la carpeta `mi_php` y el archivo `hola mundo`.
 
-### Variables en PHP
+### 2. Variables en PHP
 
 - Las variables en PHP comienzan con el signo `$`.
 - Las mayúsculas hacen diferencia en las variables aunque tengan el mismo nombre.
@@ -26,7 +28,7 @@
     $Nombre = "valor";
     ```
 
-### Atajos de Teclado
+### 3. Atajos de Teclado
 
 - **F12**: Inspecciona la página.
 - **Ctrl + U**: Muestra el código fuente de la página.
