@@ -1,10 +1,10 @@
 
-### Título: Guía de Node.js y Express
+### Guía de Node.js y Express
 
 ### 1. Generalidades y Configuración
 
-- **Módulo 6** [Módulo 6: Roles y Herramientas en Reuniones de Informáticos](#módulo-6-roles-y-herramientas-en-reuniones-de-informáticos) (Línea 498), [Terminal con Node, Express y Más Dependencias](#terminal-con-node-express-y-más-dependencias) (Línea 547)
-- **Módulo 7** [Módulo 7: PostgreSQL en Node.js](#módulo-7-postgresql-en-node-js) (Línea 890)
+- **Módulo 6** [18. Módulo 6: node js y express](#18-módulo-6-node-js-y-express) (Línea 493), [23. Terminal con Node, Express y Más Dependencias](#23-terminal-con-node-express-y-más-dependencias) (Línea 542)
+- **Módulo 7** [40. Módulo 7: PostgreSQL en Node js](#40-módulo-7-postgresql-en-node-js) (Línea 882)
 
 
 ### 2. Terminal Prompt Node de Windows
@@ -200,7 +200,7 @@
     }
     ```
 
-### Correlativo 7: Funciones de Temporización en Node.js
+### 7. Funciones de Temporización en Node.js
 
 - **setTimeout**:
   - Retarda la ejecución de una función:
@@ -259,7 +259,7 @@
     estoy aprendiendo node.js
     ```
 
-### Correlativo 8: Versiones Asíncronas del Módulo FS
+### 8. Versiones Asíncronas del Módulo FS
 
 - **FS (system file) module**:
   - Métodos de este módulo por defecto son asíncronos, se ejecutan después de los síncronos. O agregar sync.
@@ -320,7 +320,7 @@
   });
   ```
 
-### Correlativo 9: Versiones Síncronas del Módulo FS
+### 9. Versiones Síncronas del Módulo FS
 
 - **Leer Archivo**:
   ```js
@@ -353,10 +353,7 @@
   fs.unlinkSync('main.html');
   ```
 
-
-### Correlativo 10: Terminal VisualStudioCode y Express
-
-#### Configuración de JSON en Terminal con npm
+### 10. Configuración de JSON en Terminal con npm
 
 - **npm init**:
   - Inicia npm con valores modificables:
@@ -378,7 +375,7 @@
 - **npm init --yes**:
   - Inicia npm con valores por defecto.
 
-#### Express
+### 11. Express
 
 - **Instalar Express**:
   - `npm install express`
@@ -395,7 +392,7 @@
 - **Desinstalar Express**:
   - `npm uninstall express`
 
-#### Archivos y Herramientas de Node
+### 12. Archivos y Herramientas de Node
 
 - **node_modules**:
   - Es una carpeta que se crea en un proyecto de Node.js cuando se instalan paquetes o librerías a través de npm. Contiene todos los archivos de los módulos que tu proyecto necesita para funcionar correctamente.
@@ -418,7 +415,7 @@
 - **JSON (JavaScript Object Notation)**:
   - Es un lenguaje que las computadoras usan para enviar y recibir información de manera organizada. Es muy útil para almacenar información en archivos, como el archivo package.json en proyectos de Node.js.
 
-#### Emisor de Eventos (EventEmitter)
+### 13. Emisor de Eventos (EventEmitter)
 
 - **Ejemplo de uso**:
   ```js
@@ -433,7 +430,7 @@
   emisorProductos.emit('compra', 500, 5);
   ```
 
-#### Promesas
+### 14. Promesas
 
 - **Ejemplo de Promesa**:
   ```js
@@ -460,13 +457,13 @@
   miPromesa.then(manejarPromesaCumplida).catch(manejarPromesaRechazada);
   ```
 
-#### Nodemon
+### 15. Nodemon
 
 - **Instalación de Nodemon**:
   - Herramienta que reinicia Node cuando detecta cambios.
   - `npm install -g nodemon`
 
-#### Comandos Útiles
+### 16. Comandos Útiles
 
 - **Terminal de Git**:
   - `q + enter`: cuando ves END y no te deja escribir, ahora te dejará escribir.
@@ -475,7 +472,7 @@
   - Cancela el servidor:
     - `ctrl + c`
 
-#### JSON Methods
+### 17. JSON Methods
 
 - **JSON.stringify**:
   - Convierte un objeto o un arreglo de JavaScript a una cadena de texto en formato JSON.
@@ -493,15 +490,12 @@
     console.log(objetoUsuarios.usuarios[0].nombre); // Salida: Ana
     ```
 
+### 18. Módulo 6: node js y express
 
-
-
-### Módulo 6: Roles y Herramientas en Reuniones de Informáticos
-
-#### Proyecto:
+### 19. Proyecto:
 🚀[desafio_evaluado_26_prueba_modulo_6_club_deportivo2](https://desafio-evaluado-26-prueba-modulo-6-club.onrender.com)
 
-#### Roles de reuniones entre informáticos:
+### 20. Roles de reuniones entre informáticos:
 
 - **Daily Scrum**: Es una reunión diaria de no más de 15 minutos donde el equipo de desarrollo sincroniza el trabajo y establece el plan para las próximas 24 horas. Su propósito es evaluar el progreso hacia el objetivo del sprint y adaptar el Sprint Backlog si es necesario.
 
@@ -520,7 +514,7 @@ console.log(chalk.underline.bgCyanBright.bold.italic(JSON.stringify(persona, nul
 console.log(chalk.underline.bgCyanBright.magenta.bold.italic(JSON.stringify({ message: 'Usuarios registrados desde la API:', users }, null, 2)));
 ```
 
-### Estructura de Carpetas con Handlebars
+### 21. Estructura de Carpetas con Handlebars
 
 - Guardar archivo y ejecutar servidor para que actualice.
 - `ctrl + d` selecciona más de un elemento y `ctrl + shift + l` selecciona todos los elementos o códigos.
@@ -529,7 +523,7 @@ console.log(chalk.underline.bgCyanBright.magenta.bold.italic(JSON.stringify({ me
 - Partials => CSS y Bootstraps.
 - Botones: recorrer el array colores desde HTML o HBS cuando llamas al partial botones.
 
-### Rutas y Consultas en Express
+### 22. Rutas y Consultas en Express
 
 - **req.params**: Parte de la ruta.
   ```js
@@ -545,7 +539,7 @@ console.log(chalk.underline.bgCyanBright.magenta.bold.italic(JSON.stringify({ me
   });
   ```
 
-### Terminal con Node, Express y Más Dependencias
+### 23. Terminal con Node, Express y Más Dependencias
 
 - **Iniciar JSON**:
   - `npm init -y` => crea JSON con toda configuración inicial.
@@ -580,9 +574,7 @@ console.log(chalk.underline.bgCyanBright.magenta.bold.italic(JSON.stringify({ me
   npm update chalk
   ```
 
-
-
-### UUID vs Date.now()
+### 24. UUID vs Date.now()
 
 ```js
 UUID garantiza la unicidad absoluta
@@ -601,7 +593,7 @@ Literalmente hablando, el epoch es el Unix time 0, que corresponde a la medianoc
 Este sistema de medición es ampliamente utilizado en programación y sistemas informáticos para representar fechas y horas de manera uniforme. Por ejemplo, cuando ves un timestamp en un archivo o en una base de datos, es probable que esté basado en la época Unix.
 ```
 
-### JSON y Scripts
+### 25. JSON y Scripts
 
 - **Scripts para Nodemon**: Invocan al nodemon instalado para cada archivo `.js`.
   ```json
@@ -623,7 +615,7 @@ Este sistema de medición es ampliamente utilizado en programación y sistemas i
   }
   ```
 
-### Requerimiento 0: Crear un servidor con Node en el puerto 3000
+### 26. Requerimiento 0: Crear un servidor con Node en el puerto 3000
 
 ```js
 const http = require('http');
@@ -637,7 +629,7 @@ http.createServer((req, res) => {
 });
 ```
 
-### Requerimiento 1: Crear un servidor con Express en el puerto 3000
+### 27. Requerimiento 1: Crear un servidor con Express en el puerto 3000
 
 Modo nuevo (import):
 
@@ -651,7 +643,7 @@ Modo antiguo (require):
 const express = require('express'); // Importa el módulo Express = modo antiguo
 ```
 
-### Configuración del Servidor
+### 28. Configuración del Servidor
 
 - **Importar módulos**:
 
@@ -706,7 +698,7 @@ const express = require('express'); // Importa el módulo Express = modo antiguo
   const exphbs = require('express-handlebars'); // Importa el motor de plantillas express-handlebars
   ```
 
-### Requerimiento 2: Definir la carpeta “assets” como carpeta pública del servidor
+### 29. Requerimiento 2: Definir la carpeta “assets” como carpeta pública del servidor
 
 ```js
 app.engine(".hbs", exphbs.engine({ extname: ".hbs" })); // Define el motor de plantillas con la extensión .hbs
@@ -720,7 +712,7 @@ app.use("/bootstrap_js", express.static('./node_modules/bootstrap/dist/js')); //
 app.use("/jquery", express.static('./node_modules/jquery/dist')); // Sirve jQuery desde node_modules
 ```
 
-### Requerimiento 3: Crear en el servidor un arreglo de nombres y devolverlo en formato JSON a través de la ruta /abracadabra/usuarios
+### 30. Requerimiento 3: Crear en el servidor un arreglo de nombres y devolverlo en formato JSON a través de la ruta /abracadabra/usuarios
 
 ```js
 const usuarios = ['Juan', 'Jocelyn', 'Astrid', 'Maria', 'Ignacia', 'Javier', 'Brian']; // arreglo
@@ -747,7 +739,7 @@ app.get('/abracadabra/usuarios', (req, res) => {
 });
 ```
 
-### Requerimiento 4: Crear un middleware con la ruta /abracadabra/juego/:usuario para validar que el usuario recibido como parámetro “usuario” existe en el arreglo de nombres
+### 31. Requerimiento 4: Crear un middleware con la ruta /abracadabra/juego/:usuario para validar que el usuario recibido como parámetro “usuario” existe en el arreglo de nombres
 
 ```js
 app.use('/abracadabra/juego/:usuario', (req, res, next) => {
@@ -762,7 +754,7 @@ app.get('/abracadabra/juego/:usuario', (req, res) => { // Ruta devuelve imagen i
 }); // Ejemplo: http://localhost:3000/abracadabra/juego/astrid
 ```
 
-### Requerimiento 5: Crear una ruta /abracadabra/conejo/:n que valide si el parámetro “n” coincide con el número generado de forma aleatoria
+### 32. Requerimiento 5: Crear una ruta /abracadabra/conejo/:n que valide si el parámetro “n” coincide con el número generado de forma aleatoria
 
 ```js
 app.get('/abracadabra/conejo/:n', (req, res) => {
@@ -776,7 +768,7 @@ app.get('/abracadabra/conejo/:n', (req, res) => {
 });
 ```
 
-### Validar Nombre
+### 33. Validar Nombre
 
 ```js
 app.get('/usuario/:nombre', (req, res) => {
@@ -788,7 +780,7 @@ app.get('/usuario/:nombre', (req, res) => {
 });
 ```
 
-### Redireccionar a otra ruta
+### 34. Redireccionar a otra ruta
 
 ```js
 app.get('/musica', (req, res) => {
@@ -796,7 +788,7 @@ app.get('/musica', (req, res) => {
 });
 ```
 
-### Validar Color
+### 35. Validar Color
 
 ```js
 app.use('/colores/:color', (req, res, next) => {
@@ -808,7 +800,7 @@ app.get('/colores/:color', (req, res, next) => {
 });
 ```
 
-### Requerimiento 7: Crear una ruta para obtener los datos de la API: https://jsonplaceholder.typicode.com/users
+### 36. Requerimiento 7: Crear una ruta para obtener los datos de la API: https://jsonplaceholder.typicode.com/users
 
 ```js
 /*
@@ -829,7 +821,7 @@ app.get('/usuarios', async (req, res) => {
 */
 ```
 
-### Iniciar el servidor
+### 37. Iniciar el servidor
 
 ```js
 app.listen(port, () => {
@@ -878,24 +870,18 @@ app.listen(PORT, () => {
     ```
   - **Terminal**: `npm run server` (con nombre diferente a start se digita run)
 
-### Thunder Client
+### 38. Thunder Client
 
 - Usar extensión de Visual Studio Code Thunder Client o Postman para usar la URL en visual
 
-### Gitignore
+### 39. Gitignore
 
 - Para ignorar la carpeta `node_modules` y no subir a GitHub, en el archivo `.gitignore` digitar `node_modules/*`
 
 
-### Módulo 7: PostgreSQL en Node js
+### 40. Módulo 7: PostgreSQL en Node js
 
-### Estructura de Carpetas (Modelo Vista Controlador - MVC)
-
-```plaintext
-index <= rutas <= query <= config conexion <= .env
-```
-
-### Conceptos de Comandos
+### 41. Conceptos de Comandos
 
 - `npm i pg`: Instala la dependencia o módulo o aplicación PG (PostgreSQL).
 - `PG.String`: Texto plano.
@@ -916,7 +902,7 @@ index <= rutas <= query <= config conexion <= .env
 - `SSL`: Booleano, indica si la conexión a la base de datos soporta un protocolo de transporte encriptado.
 - `allowExitOnIdle: true`: Permitir salida en inactividad.
 
-### Conexión a Base de Datos en ES5
+### 42. Conexión a Base de Datos en ES5
 
 ```js
 const { Client } = require("pg");
@@ -936,7 +922,7 @@ const conection = async () => {
 conection();
 ```
 
-### Conexión a Base de Datos en ES6
+### 43. Conexión a Base de Datos en ES6
 
 ```js
 import pkg from "pg";
@@ -962,7 +948,7 @@ getDate();
 export default pool;
 ```
 
-### Conexión a Base de Datos en ES6 (Otra Forma)
+### 44. Conexión a Base de Datos en ES6 (Otra Forma)
 
 ```js
 import pg from "pg"; // cambio import pg
@@ -987,7 +973,7 @@ const getDate = async () => {
 getDate();
 ```
 
-### Ejemplo Archivo .env
+### 45. Ejemplo Archivo .env
 
 ```plaintext
 DB_HOST=localhost
@@ -997,7 +983,7 @@ DB_USER=postgres
 DB_PASSWORD=123456
 ```
 
-### Ejemplo Archivo DATABASE
+### 46. Ejemplo Archivo DATABASE
 
 ```sql
 -- Creacion de la BBDD
@@ -1016,13 +1002,13 @@ insert into users(name, email) values('Maria', 'maria@gmail.com');
 ```
 
 
-### PROCESS.ARGV
+### 47. PROCESS.ARGV
 
 ```js
 console.log(process.argv.slice(2)) = captura argumentos de terminal y omite los 2 primeros índices del array que son ruta de Node y ruta de archivo index.js
 ```
 
-### CRUD
+### 48. CRUD
 
 - **AGREGA datos desde terminal**:
   ```bash
@@ -1049,7 +1035,7 @@ console.log(process.argv.slice(2)) = captura argumentos de terminal y omite los 
   node queries/consultas delete 'Juan Perez' 12300300-7 flauta intermedio
   ```
 
-### PG-CURSOR
+### 49. PG-CURSOR
 
 Es un módulo de PostgreSQL que proporciona un cursor para realizar consultas selectivas en una base de datos. Los cursores permiten recorrer los resultados de una consulta de manera eficiente, especialmente cuando se trabaja con grandes conjuntos de datos. Esto es útil cuando se necesitan resultados parciales de una consulta o cuando se quiere procesar los datos de manera incremental.
 
@@ -1070,11 +1056,11 @@ cursor.read(10, (err, rows) => {
 });
 ```
 
-### SQL Injection
+### 50. SQL Injection
 
 Vulnera la base de datos usando CRUD. La solución es usar texto plano parametrizado.
 
-### Texto Plano Parametrizado
+### 51. Texto Plano Parametrizado
 
 - **Texto plano parametrizado**: Es una técnica que implica la creación de consultas SQL con parámetros dinámicos, donde los valores de los parámetros se proporcionan por separado. Esto ayuda a prevenir la inyección SQL y mejora la legibilidad del código.
 
@@ -1089,11 +1075,11 @@ const queryObj = {
 };
 ```
 
-### ROW MODE
+### 52. ROW MODE
 
 Se refiere al modo en que se devuelven los resultados de una consulta en PostgreSQL. En el modo ROW, los resultados de la consulta se devuelven como un conjunto de filas, donde cada fila representa un registro de la tabla. Esto contrasta con otros modos de devolución, como el modo JSON, donde los resultados se devuelven en formato JSON.
 
-### Prepared Statements
+### 53. Prepared Statements
 
 Las consultas preparadas o parametrizadas se compilan una sola vez y se guardan en caché.
 
@@ -1129,7 +1115,7 @@ const queryObj = {
 };
 ```
 
-### Uso de JSON como Argumento de Consulta
+### 54. Uso de JSON como Argumento de Consulta
 
 Se utiliza un objeto JSON (`queryObj`) para definir el texto de la consulta y los valores de los parámetros. Esto permite separar claramente el texto de la consulta y los valores, lo que mejora la legibilidad del código y evita problemas de seguridad como la inyección SQL.
 
@@ -1147,7 +1133,7 @@ const queryObj = {
   - `text`: Es una cadena que representa la consulta SQL que se va a ejecutar. En este caso, la consulta busca todos los estudiantes cuyo rut coincide con el valor proporcionado como parámetro.
   - `values`: Es un arreglo que contiene los valores de los parámetros de la consulta. En este ejemplo, `$1` indica que se espera un parámetro en la consulta SQL, y ese valor se toma del primer elemento del arreglo `values`, que en este caso es la variable `rut`.
 
-### PROCESS.ARGV = Redeclarar Variables del Array de la Función con Nuevo Índice Dentro del IF
+### 55. PROCESS.ARGV = Redeclarar Variables del Array de la Función con Nuevo Índice Dentro del IF
 
 ```js
 import pool from "../config/db.js";
@@ -1206,7 +1192,7 @@ if(option === "getEmail"){  // actual índice [4]
 }
 ```
 
-### Snippets Global
+### 56. Snippets Global
 
 - **alt + shift + flecha abajo**: Copia código.
 - **ctrl + alt + flecha abajo**: Selecciona el principio o final de cada línea de código hacia abajo para agregar comillas y coma al final.
@@ -1228,164 +1214,271 @@ Ejemplo:
 ```
 
 ---
+Vamos a mejorar y clarificar las secciones que has mencionado en el manual. También quitaremos o ajustaremos aquellas que puedan ser innecesarias.
 
-### **¿Qué es esto?**
+### 57. Obtener IDs de Emisor y Receptor
+
+**Descripción**: Se realiza una consulta a la base de datos para obtener los IDs de los usuarios "emisor" y "receptor".
 
 ```js
 const { emisor, receptor, monto } = datos;
+
+// Obtenemos el ID del emisor
 const { id: emisorId } = (
-  await pool.query(`SELECT * FROM usuarios WHERE nombre = '${emisor}'`)
+  await pool.query(`SELECT * FROM usuarios WHERE nombre = $1`, [emisor])
 ).rows[0];
-// Buscamos el id del receptor
+
+// Obtenemos el ID del receptor
 const { id: receptorId } = (
-  await pool.query(`SELECT * FROM usuarios WHERE nombre = '${receptor}'`)
+  await pool.query(`SELECT * FROM usuarios WHERE nombre = $1`, [receptor])
 ).rows[0];
+```
+
+**Nota**: Es recomendable usar parámetros en las consultas SQL para evitar inyecciones SQL.
+
+---
+
+### 58. Uso de `rowMode` en PostgreSQL
+
+**Descripción**: `rowMode` es una opción en `pg` que permite devolver los resultados de las consultas SQL como arrays en lugar de objetos.
+
+```js
+const res = await pool.query({
+  text: `SELECT * FROM usuarios WHERE nombre = $1`,
+  values: [emisor],
+  rowMode: 'array'
+});
+console.log(res.rows[0]); // Resultado en formato array
 ```
 
 ---
 
-### **¿Entonces rowMode muestra un objeto como array?**
+### 59. Documentación de API con Swagger (petstore.swagger.io)
+
+**Descripción**: Swagger es una herramienta que permite documentar APIs. Puedes usar [petstore.swagger.io](https://petstore.swagger.io/) para generar documentación interactiva de tu API.
 
 ---
 
-### **petstore.swagger.io para documentar API**
+### 60. HATEOAS (Hypermedia as the Engine of Application State)
+
+**Descripción**: HATEOAS es una restricción de la arquitectura REST que permite a los clientes interactuar con la aplicación de manera dinámica mediante hipermedios proporcionados en las respuestas.
+
+**Ejemplo**:
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "nombre": "Producto A",
+      "links": {
+        "self": "/productos/1",
+        "comprar": "/productos/1/comprar"
+      }
+    }
+  ]
+}
+```
+
+**Nota**: Permite paginar la data, mostrando tantos datos por página y proporcionando enlaces a la siguiente página de resultados.
 
 ---
 
-### **HATEOAS**
+### 61. Generación de Nuevo Token
 
-Permite paginar la data, mostrar tantos datos por página.
-
----
-
-### Generas Nuevo Token Actualizando Página
+**Descripción**: Un nuevo token puede ser generado actualizando la página, asegurando que el usuario obtenga un token actualizado para sus operaciones.
 
 ---
 
-### Estructura Token:
+### 62. Estructura de un Token JWT
 
-- **color rojo**: Header no se modifica.
-- **data**: Color morado.
-- **secret key**: Color celeste.
+**Descripción**: Un token JWT tiene tres partes: Header, Payload y Signature.
 
-### Función Método `sign` o `verify` (trae data y variables de entornos)
+- **Header (color rojo)**: Contiene información sobre el tipo de token y el algoritmo de cifrado.
+- **Payload (color morado)**: Contiene los datos del usuario y las reclamaciones.
+- **Signature (color celeste)**: Es una firma que verifica que el mensaje no haya sido alterado.
 
 ---
 
-### Body = POST = Backend
+### 63. Función Método `sign` o `verify`
 
-### Query = GET = Lleva signo `?` porque filtra
+**Descripción**: Métodos de `jsonwebtoken` para crear y verificar tokens JWT.
 
-### Params = URL
+- **sign**: Crea un nuevo token.
+  ```js
+  const jwt = require('jsonwebtoken');
+  const token = jwt.sign({ userId: 123 }, 'secret_key', { expiresIn: '1h' });
+  ```
 
+- **verify**: Verifica la validez de un token.
+  ```js
+  const decoded = jwt.verify(token, 'secret_key');
+  ```
+
+---
+
+### 64. Métodos HTTP y Sus Usos
+
+**Body = POST = Backend**: Envía datos al servidor para crear un recurso.
+  ```http
+  POST /usuarios
+  {
+    "nombre": "Juan",
+    "edad": 30
+  }
+  ```
+
+**Query = GET = Lleva signo `?` porque filtra**: Solicita datos del servidor.
+  ```http
+  GET /usuarios?nombre=Juan
+  ```
+
+**Params = URL**: Define parámetros en la URL.
+  ```http
+  GET /usuarios/:id
+  ```
 
 
 
 --------------------------------------------------------------------------------------------------------------------
-# SPANISH
-
-# Api Rest Full:
-(Uso de req.params, req.body y req.query en las operaciones CRUD con solicitudes HTTP.)
 
 
-# ● req.params: 
-              Se utiliza en las operaciones Read (GET), Update (PUT) y Delete (DELETE), para capturar los parámetros 
-              de la ruta en la URL, generalmente un ID para buscar en la base de datos, API o en un archivo JSON.
 
-      --ejemplo: //--Read (GET): Para obtener una tarea específica por su ID.//
+## SPANISH
 
-                app.get('/tasks/:taskId', function(req, res) {
-                    let taskId = req.params.taskId;
-                    // Buscar la tarea en la base de datos y devolverla//
-                });
-# ● req.body: 
-            Se utiliza en las operaciones Create (POST) y Update (PUT), para capturar para acceder a los datos enviados
-             en el cuerpo de la solicitud HTTP, generalmente para agregar o actualizar datos en la base de datos, 
-            API o en un archivo JSON.
+### API RESTful: Uso de req.params, req.body y req.query en las operaciones CRUD con solicitudes HTTP
 
-      --ejemplo: //--Create (POST): Para crear una nueva tarea.//
+### 1. req.params
 
-                app.post('/tasks', function(req, res) {
-                    let newTask = req.body;
-                    // Agregar la nueva tarea a la base de datos//
-                    });
-# ● req.query: 
-            Se utiliza en la operación Read (GET) para leer los parámetros de consulta en la URL, generalmente para 
-            filtrar resultados en una base de datos, API o en un archivo JSON.
+- **Descripción**: Se utiliza en las operaciones Read (GET), Update (PUT) y Delete (DELETE) para capturar los parámetros de la ruta en la URL, generalmente un ID para buscar en la base de datos, API o en un archivo JSON.
 
-      --ejemplo: //--Read (GET): Para obtener tareas que coincidan con un estado específico (ejemplo, completadas).//
+- **Ejemplo**: **Read (GET): Para obtener una tarea específica por su ID.**
+    ```javascript
+    app.get('/tasks/:taskId', function(req, res) {
+        let taskId = req.params.taskId;
+        // Buscar la tarea en la base de datos y devolverla
+    });
+    ```
 
-                app.get('/tasks', function(req, res) {
-                    let status = req.query.status;
-                    // Buscar las tareas que coincidan con el estado en la base de datos 
-                    y devolverlas//
-                });
-          
---------------------------------------------------------------------------------------------------------------------                
-# ENGLISH
+### 2. req.body
 
-# Api Rest Full:
-(Using req.params, req.body, and req.query in CRUD operations with HTTP requests.)
+- **Descripción**: Se utiliza en las operaciones Create (POST) y Update (PUT) para capturar los datos enviados en el cuerpo de la solicitud HTTP, generalmente para agregar o actualizar datos en la base de datos, API o en un archivo JSON.
 
+- **Ejemplo**: **Create (POST): Para crear una nueva tarea.**
+    ```javascript
+    app.post('/tasks', function(req, res) {
+        let newTask = req.body;
+        // Agregar la nueva tarea a la base de datos
+    });
+    ```
 
-# ● req.params: 
-              It is used in Read (GET), Update (PUT) and Delete (DELETE) operations. to capture the route parameters 
-              in the URL, usually an ID to search the database, API or a JSON file.              
+### 3. req.query
 
-      --example: //--Read (GET): To get a specific task by its ID.//
+- **Descripción**: Se utiliza en la operación Read (GET) para leer los parámetros de consulta en la URL, generalmente para filtrar resultados en una base de datos, API o en un archivo JSON.
 
-                app.get('/tasks/:taskId', function(req, res) {
-                    let taskId = req.params.taskId;
-                    // Find the task in the database and return it //
-                });
-# ● req.body:
-            It is used in the Create (POST) and Update (PUT) operations, to capture to access the data sent in the 
-            body of the HTTP request, usually to add or update data in the database, API or in a JSON file.            
+- **Ejemplo**: **Read (GET): Para obtener tareas que coincidan con un estado específico (ejemplo, completadas).**
+    ```javascript
+    app.get('/tasks', function(req, res) {
+        let status = req.query.status;
+        // Buscar las tareas que coincidan con el estado en la base de datos y devolverlas
+    });
+    ```
 
-      --example: //--Create (POST): To create a new task.//
-
-                app.post('/tasks', function(req, res) {
-                    let newTask = req.body;
-                    // Add the new task to the database //
-                    });
-# ● req.query: 
-            Used in the Read (GET) operation to read the query parameters in the URL, usually to filter results in
-             a database, API or in a JSON file.            
-
-      --example: //--Read (GET): To get tasks that match a specific state (e.g. completed).//
-
-                app.get('/tasks', function(req, res) {
-                    let status = req.query.status;
-                    // Find tasks that match the status in the database and return them //
-                });
-
---------------------------------------------------------------------------------------------------------------------
-# MVC SPANISH
-/*                            MVC ( modelo-vista-controlador )
-    ● (frontend = cliente):     
-      el index.js (levanta servidor) y este importa archivo middlewares (configura solicitudes json, handlebars, 
-      manejo de errores, fileupload, JWT y carpetas estaticas que muestran las vistas de html o hbs en el navegador), 
-      y la vista main.hbs enlaza las vistas y los partials (navbar y footer) y el main.hbs enlaza las animaciones con  
-      archivos (script.js) y los estilos con archivos (style.css). Ademas hay un script con la logica en cada vista.
-
-    ● (backend = servidor):
-      index.js (levanta el servidor) y este importa archivo routes.js (las rutas) y este importa los 
-      controllers.js (api rest full) y este importa las consultas.js (consultas sql), y este importa la 
-      config el db.js (conexion database) y este importa archivo .env (variables de entorno). 
-      Opcionalmente los controllers pueden importar la data de una API o desde archivo json.
-*/
-# MVC ENGLISH
-/*                             MVC ( Model-View-Controller )
-    ● (frontend = client):
-      the index.js (starts server) and this imports middlewares file (configures json requests, handlebars,
-      error handling, fileupload, JWT and static folders showing html or hbs views in the browser),
-      and the main.hbs view links the views and the partials (navbar and footer) and the main.hbs links the animations 
-      with files (script.js) and styles with files (style.css). There is also a script with the logic in each view.
-
-    ● (backend = server):
-      index.js (raises the server) and this imports the routes.js file (the routes) and this imports the
-      controllers.js (api rest full) and this imports the queries.js (sql queries), and this imports the
-      config the db.js (database connection) and this imports the .env file (environment variables).
-      Controllers can optionally import data from an API or from a json file.
-*/
 ----------------------------------------------------------------------------------------------------------------
+
+## ENGLISH
+
+### API RESTful: Using req.params, req.body, and req.query in CRUD operations with HTTP requests
+
+### 1. req.params
+
+- **Description**: It is used in Read (GET), Update (PUT), and Delete (DELETE) operations to capture the route parameters in the URL, usually an ID to search the database, API, or a JSON file.
+
+- **Example**: **Read (GET): To get a specific task by its ID.**
+    ```javascript
+    app.get('/tasks/:taskId', function(req, res) {
+        let taskId = req.params.taskId;
+        // Find the task in the database and return it
+    });
+    ```
+
+### 2. req.body
+
+- **Description**: It is used in the Create (POST) and Update (PUT) operations to capture the data sent in the body of the HTTP request, usually to add or update data in the database, API, or a JSON file.
+
+- **Example**: **Create (POST): To create a new task.**
+    ```javascript
+    app.post('/tasks', function(req, res) {
+        let newTask = req.body;
+        // Add the new task to the database
+    });
+    ```
+
+### 3. req.query
+
+- **Description**: Used in the Read (GET) operation to read the query parameters in the URL, usually to filter results in a database, API, or a JSON file.
+
+- **Example**: **Read (GET): To get tasks that match a specific state (e.g., completed).**
+    ```javascript
+    app.get('/tasks', function(req, res) {
+        let status = req.query.status;
+        // Find tasks that match the status in the database and return them
+    });
+    ```
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+## MVC SPANISH
+
+### MVC (Modelo-Vista-Controlador)
+
+#### 1. Frontend (Cliente)
+
+- **index.js**: Levanta el servidor y este importa el archivo de middlewares (configura solicitudes JSON, handlebars, manejo de errores, fileupload, JWT y carpetas estáticas que muestran las vistas de HTML o HBS en el navegador).
+
+- **main.hbs**: Enlaza las vistas y los partials (navbar y footer). Además, `main.hbs` enlaza las animaciones con archivos `script.js` y los estilos con archivos `style.css`. Cada vista también contiene un script con la lógica específica.
+
+#### 2. Backend (Servidor)
+
+- **index.js**: Levanta el servidor e importa el archivo `routes.js` (las rutas).
+
+- **routes.js**: Contiene las rutas e importa los `controllers.js` (API RESTful).
+
+- **controllers.js**: Controla la lógica de la aplicación e importa las `consultas.js` (consultas SQL).
+
+- **consultas.js**: Contiene las consultas SQL e importa `db.js` (conexión a la base de datos).
+
+- **db.js**: Configura la conexión a la base de datos e importa el archivo `.env` (variables de entorno).
+
+- **Opcional**: Los controladores pueden importar datos de una API o desde un archivo JSON.
+
+---
+
+## MVC ENGLISH
+
+### MVC (Model-View-Controller)
+
+#### 1. Frontend (Client)
+
+- **index.js**: Starts the server and imports the middlewares file (configures JSON requests, handlebars, error handling, fileupload, JWT, and static folders showing HTML or HBS views in the browser).
+
+- **main.hbs**: Links the views and partials (navbar and footer). Additionally, `main.hbs` links animations with `script.js` files and styles with `style.css` files. Each view also contains a script with specific logic.
+
+#### 2. Backend (Server)
+
+- **index.js**: Starts the server and imports the `routes.js` file (the routes).
+
+- **routes.js**: Contains the routes and imports the `controllers.js` (API RESTful).
+
+- **controllers.js**: Handles the application logic and imports `queries.js` (SQL queries).
+
+- **queries.js**: Contains SQL queries and imports `db.js` (database connection).
+
+- **db.js**: Configures the database connection and imports the `.env` file (environment variables).
+
+- **Optional**: Controllers can optionally import data from an API or a JSON file.
+
+---
+
