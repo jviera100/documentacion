@@ -46,34 +46,50 @@
 
 * **Modelos:**
     * **TCP/IP:** Estándar de Internet (práctico).
-        * * **Protocolos Clave:**
-                  * **TCP:** Entrega confiable.
-                  * **IP:** Enrutamiento.
     * **OSI:** Modelo conceptual (cómo *debería* funcionar).
 
 * **Tabla Comparativa de Capas TCP/IP vs. OSI:**
 
 | Capa TCP/IP       | Capa OSI        | Función Principal                                                                                                                          | Relación                                                                                                                                                         |
 | ------------------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Aplicación         | Aplicación       | Proporciona servicios de red a las aplicaciones (ej: HTTP para la web, SMTP para el correo, DNS).                                               | Directa                                                                                                                                                          |
-|                    | Presentación     | Formato de datos, cifrado, compresión. Asegura que los datos sean legibles por la aplicación receptora.                                  | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
-|                    | Sesión           | Gestiona las conexiones (sesiones) entre aplicaciones. Establece, mantiene y finaliza las comunicaciones.                               | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
-| Transporte         | Transporte       | Proporciona una comunicación confiable (TCP) o rápida (UDP) entre aplicaciones. Segmentación, control de flujo, multiplexación.             | Directa                                                                                                                                                          |
-| Internet           | Red             | Enrutamiento de datos entre redes. Define el direccionamiento IP y la lógica para encontrar la mejor ruta.                               | Directa                                                                                                                                                          |
-| Acceso a la Red   | Enlace de Datos  | Transfiere datos entre dos nodos directamente conectados (Ethernet). Define el formato de los datos (tramas), direcciones MAC, control de errores. | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
-|                    | Física          | Transmisión de datos brutos (bits) a través del medio físico (cable, radio y señales). Define voltajes, tasas de datos, etc.                           | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
+| Aplicación         | Aplicación       | Proporciona servicios de __red__ (ej: HTTP para la web, SMTP para el correo).                                               | Directa                                                                                                                                                          |
+|                    | Presentación     | __Formato__ de datos, cifrado, compresión. Asegura que los datos sean legibles por la aplicación receptora.                                  | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
+|                    | Sesión           | Gestiona las __conexiones__ (sesiones) entre aplicaciones. Establece, mantiene y finaliza las comunicaciones.                               | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
+| Transporte         | Transporte       | Proporciona una __comunicación__ confiable (TCP) o rápida (UDP) entre aplicaciones. Segmentación, control de flujo, multiplexación.             | Directa                                                                                                                                                          |
+| Internet           | Red             | __Enrutamiento__ de datos entre redes. Define el direccionamiento IP y la lógica para encontrar la mejor ruta.                               | Directa                                                                                                                                                          |
+| Acceso a la Red   | Enlace de Datos  | __Transfiere__ datos entre dos nodos directamente conectados. Define el __formato__ de los datos (tramas), direcciones MAC, control de errores. | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
+|                    | Física          | __Transmisión__ de datos brutos (bits) a través del medio físico (cable, radio). Define voltajes, __tasas__ de datos, etc.                           | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
 
+* **Protocolos Clave:**
+    * TCP: Entrega confiable.
+    * IP: Enrutamiento.
+
+*   **Cómo esto responde a las preguntas:**
+    *   **Entrega fiable:** TCP (Transporte)
+    *   **Enrutamiento:** IP (Red/Internet)
+    *   **Acceso a la Red (TCP/IP) = Física + Enlace de Datos (OSI)**
+    *   **Direccionamiento IP:** Red (OSI) / Internet (TCP/IP)
+
+*   **¿Por qué OSI?**
+    *   **Estandarización, solución de problemas, flexibilidad.**
 
 ### Glosario de Acrónimos y Siglas:
 
-*   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto (para la web).
-*   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
 *   **DNS (Domain Name System):** Sistema de nombres de dominio (traduce nombres de dominio a direcciones IP).
-*   **OSI (Open Systems Interconnection):** Interconexión de sistemas abiertos (modelo de referencia para redes).
-*   **TCP (Transmission Control Protocol):** Protocolo de control de transmisión (protocolo confiable).
-*   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).
-*   **UDP (User Datagram Protocol):** Protocolo de datagramas de usuario (protocolo rápido, no confiable).
+*   **DSL (Digital Subscriber Line):** Línea de abonado digital.
+*   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto (para la web).
 *   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
 *   **IEEE (Institute of Electrical and Electronics Engineers):** Instituto de Ingenieros Eléctricos y Electrónicos.
 *   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
+*   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).
+*   **ISP (Internet Service Provider):** Proveedor de servicios de Internet.
+*   **LAN (Local Area Network):** Red de área local.
+*   **MAN (Metropolitan Area Network):** Red de área metropolitana.
+*   **OSI (Open Systems Interconnection):** Interconexión de sistemas abiertos (modelo de referencia para redes).
 *   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
+*   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
+*   **SSID (Service Set Identifier):** Identificador del conjunto de servicios.
+*   **TCP (Transmission Control Protocol):** Protocolo de control de transmisión (protocolo confiable).
+*   **UDP (User Datagram Protocol):** Protocolo de datagramas de usuario (protocolo rápido, no confiable).
+*   **WAN (Wide Area Network):** Red de área extensa.
+*   **WLAN (Wireless Local Area Network):** Red de área local inalámbrica.
