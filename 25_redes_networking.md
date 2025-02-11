@@ -46,7 +46,12 @@
 
 * **Modelos:**
     * **TCP/IP:** Estándar de Internet (práctico).
+    * **TCP (Transmission Control Protocol):** Protocolo de control de transmisión (protocolo confiable).
+        * * **Protocolos Clave:**
+                  * **TCP:** Entrega confiable.
+                  * **IP:** Enrutamiento.
     * **OSI:** Modelo conceptual (cómo *debería* funcionar).
+    * **OSI (Open Systems Interconnection):** Interconexión de sistemas abiertos (modelo de referencia para redes).* 
 
 * **Tabla Comparativa de Capas TCP/IP vs. OSI:**
 
@@ -60,36 +65,19 @@
 | Acceso a la Red   | Enlace de Datos  | __Transfiere__ datos entre dos nodos directamente conectados. Define el __formato__ de los datos (tramas), direcciones MAC, control de errores. | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
 |                    | Física          | __Transmisión__ de datos brutos (bits) a través del medio físico (cable, radio). Define voltajes, __tasas__ de datos, etc.                           | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
 
-* **Protocolos Clave:**
-    * TCP: Entrega confiable.
-    * IP: Enrutamiento.
-
-*   **Cómo esto responde a las preguntas:**
-    *   **Entrega fiable:** TCP (Transporte)
-    *   **Enrutamiento:** IP (Red/Internet)
-    *   **Acceso a la Red (TCP/IP) = Física + Enlace de Datos (OSI)**
-    *   **Direccionamiento IP:** Red (OSI) / Internet (TCP/IP)
-
-*   **¿Por qué OSI?**
-    *   **Estandarización, solución de problemas, flexibilidad.**
 
 ### Glosario de Acrónimos y Siglas:
 
 *   **DNS (Domain Name System):** Sistema de nombres de dominio (traduce nombres de dominio a direcciones IP).
-*   **DSL (Digital Subscriber Line):** Línea de abonado digital.
 *   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto (para la web).
+*   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
+*   
 *   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
 *   **IEEE (Institute of Electrical and Electronics Engineers):** Instituto de Ingenieros Eléctricos y Electrónicos.
 *   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
-*   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).
-*   **ISP (Internet Service Provider):** Proveedor de servicios de Internet.
-*   **LAN (Local Area Network):** Red de área local.
-*   **MAN (Metropolitan Area Network):** Red de área metropolitana.
-*   **OSI (Open Systems Interconnection):** Interconexión de sistemas abiertos (modelo de referencia para redes).
 *   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
-*   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
-*   **SSID (Service Set Identifier):** Identificador del conjunto de servicios.
-*   **TCP (Transmission Control Protocol):** Protocolo de control de transmisión (protocolo confiable).
+*   
+*   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).*    
+*   
 *   **UDP (User Datagram Protocol):** Protocolo de datagramas de usuario (protocolo rápido, no confiable).
-*   **WAN (Wide Area Network):** Red de área extensa.
-*   **WLAN (Wireless Local Area Network):** Red de área local inalámbrica.
+*  
