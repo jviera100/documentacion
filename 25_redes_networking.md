@@ -48,24 +48,17 @@
     * **TCP/IP:** Estándar de Internet (práctico).
     * **OSI:** Modelo conceptual (cómo *debería* funcionar).
 
-* **Capas Clave (OSI y TCP/IP):**
-    * **Física (OSI):** (Capa 1) Bits por cable/radio.
-    * **Enlace de Datos (OSI):** (Capa 2) Transferencia entre nodos directos (Ethernet).
-    * **Red/Internet:** (Capa 3 OSI / Internet TCP/IP) Enrutamiento entre redes (IP).
-    * **Transporte:** (Capa 4) Comunicación confiable (TCP) o rápida (UDP) entre aplicaciones.
-    * **Aplicación:** (Capas 5-7 OSI / Aplicación TCP/IP) Servicios de red (HTTP, SMTP, DNS).
-
 * **Tabla Comparativa de Capas TCP/IP vs. OSI:**
-    | Capa TCP/IP          | Capas OSI                       | Función Principal                                                              |
-    | --------------------- | -------------------------------- | ------------------------------------------------------------------------------ |
-    | **Aplicación**        | Aplicación, Presentación, Sesión | Servicios de red para aplicaciones (HTTP, SMTP, DNS).                           |
-    |                       | *Presentación:* Formato de datos, cifrado.                                 |
-    |                       | *Sesión:* Control de diálogos (conexiones).                            |
-    | **Transporte**        | Transporte                       | Comunicación confiable (TCP) o rápida (UDP) entre aplicaciones.                |
-    | **Internet**          | Red                             | Enrutamiento de datos entre redes (IP). Direccionamiento lógico.              |
-    | **Acceso a la Red** | Enlace de Datos, Física         | Transmisión de datos sobre el medio físico. Direccionamiento físico (MAC).       |
-    |                       | *Enlace de Datos:* Control de acceso al medio, corrección de errores básica.  |
-    |                       | *Física:* Transmisión de bits, voltajes, etc.                              |
+
+| Capa TCP/IP       | Capa OSI        | Función Principal                                                                                                                          | Relación                                                                                                                                                         |
+| ------------------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Aplicación         | Aplicación       | Proporciona servicios de red a las aplicaciones (ej: HTTP para la web, SMTP para el correo).                                               | Directa                                                                                                                                                          |
+|                    | Presentación     | Formato de datos, cifrado, compresión. Asegura que los datos sean legibles por la aplicación receptora.                                  | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
+|                    | Sesión           | Gestiona las conexiones (sesiones) entre aplicaciones. Establece, mantiene y finaliza las comunicaciones.                               | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
+| Transporte         | Transporte       | Proporciona una comunicación confiable (TCP) o rápida (UDP) entre aplicaciones. Segmentación, control de flujo, multiplexación.             | Directa                                                                                                                                                          |
+| Internet           | Red             | Enrutamiento de datos entre redes. Define el direccionamiento IP y la lógica para encontrar la mejor ruta.                               | Directa                                                                                                                                                          |
+| Acceso a la Red   | Enlace de Datos  | Transfiere datos entre dos nodos directamente conectados. Define el formato de los datos (tramas), direcciones MAC, control de errores. | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
+|                    | Física          | Transmisión de datos brutos (bits) a través del medio físico (cable, radio). Define voltajes, tasas de datos, etc.                           | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
 
 * **Protocolos Clave:**
     * **TCP:** Entrega confiable.
@@ -88,6 +81,13 @@
 
 ### Glosario de Acrónimos y Siglas:
 
+*   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto (para la web).
+*   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
+*   **DNS (Domain Name System):** Sistema de nombres de dominio (traduce nombres de dominio a direcciones IP).
+*   **OSI (Open Systems Interconnection):** Interconexión de sistemas abiertos (modelo de referencia para redes).
+*   **TCP (Transmission Control Protocol):** Protocolo de control de transmisión (protocolo confiable).
+*   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).
+*   **UDP (User Datagram Protocol):** Protocolo de datagramas de usuario (protocolo rápido, no confiable).
 *   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
 *   **IEEE (Institute of Electrical and Electronics Engineers):** Instituto de Ingenieros Eléctricos y Electrónicos.
 *   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
