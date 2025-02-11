@@ -46,38 +46,23 @@
 
 * **Modelos:**
     * **TCP/IP:** Estándar de Internet (práctico).
+        * * **Protocolos Clave:**
+                  * **TCP:** Entrega confiable.
+                  * **IP:** Enrutamiento.
     * **OSI:** Modelo conceptual (cómo *debería* funcionar).
 
 * **Tabla Comparativa de Capas TCP/IP vs. OSI:**
 
 | Capa TCP/IP       | Capa OSI        | Función Principal                                                                                                                          | Relación                                                                                                                                                         |
 | ------------------ | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Aplicación         | Aplicación       | Proporciona servicios de red a las aplicaciones (ej: HTTP para la web, SMTP para el correo).                                               | Directa                                                                                                                                                          |
+| Aplicación         | Aplicación       | Proporciona servicios de red a las aplicaciones (ej: HTTP para la web, SMTP para el correo, DNS).                                               | Directa                                                                                                                                                          |
 |                    | Presentación     | Formato de datos, cifrado, compresión. Asegura que los datos sean legibles por la aplicación receptora.                                  | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
 |                    | Sesión           | Gestiona las conexiones (sesiones) entre aplicaciones. Establece, mantiene y finaliza las comunicaciones.                               | La capa de Aplicación de TCP/IP engloba estas funciones.                                                                                                                  |
 | Transporte         | Transporte       | Proporciona una comunicación confiable (TCP) o rápida (UDP) entre aplicaciones. Segmentación, control de flujo, multiplexación.             | Directa                                                                                                                                                          |
 | Internet           | Red             | Enrutamiento de datos entre redes. Define el direccionamiento IP y la lógica para encontrar la mejor ruta.                               | Directa                                                                                                                                                          |
-| Acceso a la Red   | Enlace de Datos  | Transfiere datos entre dos nodos directamente conectados. Define el formato de los datos (tramas), direcciones MAC, control de errores. | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
-|                    | Física          | Transmisión de datos brutos (bits) a través del medio físico (cable, radio). Define voltajes, tasas de datos, etc.                           | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
+| Acceso a la Red   | Enlace de Datos  | Transfiere datos entre dos nodos directamente conectados (Ethernet). Define el formato de los datos (tramas), direcciones MAC, control de errores. | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
+|                    | Física          | Transmisión de datos brutos (bits) a través del medio físico (cable, radio y señales). Define voltajes, tasas de datos, etc.                           | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
 
-* **Protocolos Clave:**
-    * **TCP:** Entrega confiable.
-    * **IP:** Enrutamiento.
-* **En resumen:**
-    * **Física:** Cables y señales.
-    * **Enlace de Datos:** Ethernet.
-    * **Red/Internet:** IP.
-    * **Transporte:** TCP/UDP.
-    * **Aplicación:** HTTP, SMTP, DNS.
-
-*   **Cómo esto responde a las preguntas:**
-    *   **Entrega fiable:** TCP (Transporte)
-    *   **Enrutamiento:** IP (Red/Internet)
-    *   **Acceso a la Red (TCP/IP) = Física + Enlace de Datos (OSI)**
-    *   **Direccionamiento IP:** Red (OSI) / Internet (TCP/IP)
-
-*   **¿Por qué OSI?**
-    *   **Estandarización, solución de problemas, flexibilidad.**
 
 ### Glosario de Acrónimos y Siglas:
 
