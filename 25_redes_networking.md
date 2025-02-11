@@ -54,6 +54,19 @@
     * **Red/Internet:** (Capa 3 OSI / Internet TCP/IP) Enrutamiento entre redes (IP).
     * **Transporte:** (Capa 4) Comunicación confiable (TCP) o rápida (UDP) entre aplicaciones.
     * **Aplicación:** (Capas 5-7 OSI / Aplicación TCP/IP) Servicios de red (HTTP, SMTP, DNS).
+
+* **Tabla Comparativa de Capas TCP/IP vs. OSI:**
+    | Capa TCP/IP          | Capas OSI                       | Función Principal                                                              |
+    | --------------------- | -------------------------------- | ------------------------------------------------------------------------------ |
+    | **Aplicación**        | Aplicación, Presentación, Sesión | Servicios de red para aplicaciones (HTTP, SMTP, DNS).                           |
+    |                       | *Presentación:* Formato de datos, cifrado.                                 |
+    |                       | *Sesión:* Control de diálogos (conexiones).                            |
+    | **Transporte**        | Transporte                       | Comunicación confiable (TCP) o rápida (UDP) entre aplicaciones.                |
+    | **Internet**          | Red                             | Enrutamiento de datos entre redes (IP). Direccionamiento lógico.              |
+    | **Acceso a la Red** | Enlace de Datos, Física         | Transmisión de datos sobre el medio físico. Direccionamiento físico (MAC).       |
+    |                       | *Enlace de Datos:* Control de acceso al medio, corrección de errores básica.  |
+    |                       | *Física:* Transmisión de bits, voltajes, etc.                              |
+
 * **Protocolos Clave:**
     * **TCP:** Entrega confiable.
     * **IP:** Enrutamiento.
@@ -72,3 +85,10 @@
 
 *   **¿Por qué OSI?**
     *   **Estandarización, solución de problemas, flexibilidad.**
+
+### Glosario de Acrónimos y Siglas:
+
+*   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
+*   **IEEE (Institute of Electrical and Electronics Engineers):** Instituto de Ingenieros Eléctricos y Electrónicos.
+*   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
+*   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
