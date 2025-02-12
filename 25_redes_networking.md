@@ -65,6 +65,13 @@
 | Acceso a la Red   | Enlace de Datos  | __Transfiere__ datos entre dos nodos directamente conectados. Define el __formato__ de los datos (tramas), direcciones MAC, control de errores. | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
 |                    | Física          | __Transmisión__ de datos brutos (bits) a través del medio físico (cable, radio). Define voltajes, __tasas__ de datos, etc.                           | La capa de Acceso a la Red de TCP/IP *combina* las funciones de Enlace de Datos y Física.                                                                         |
 
+### Comparación de Tipos de Cables de Red
+
+| Cable             | Tipo de Datos    | Distancia                                 | Funcionalidad                                               | Ejemplo de Uso                                   |
+|--------------------|-------------------|-------------------------------------------|-------------------------------------------------------------|---------------------------------------------------|
+| **Par Trenzado (Cat5/5e/6/6a)** | Eléctricos        | Relativamente corta (hasta 100 metros en Ethernet) | Conexión de dispositivos a redes Ethernet (LAN).           | Conectar una PC a un router en casa o en la oficina. |
+| **Coaxial**         | Eléctricos        | Media (depende de la frecuencia)          | Transmisión de señales de TV, conexión de antenas.        | Conexión de un televisor a un servicio de cable.    |
+| **Fibra Óptica**   | Luz             | Larga (varios kilómetros o más)           | Transmisión de datos a alta velocidad, inmune a interferencia. | Redes troncales, conexión de ciudades, centros de datos. |
 
 ### Glosario de Acrónimos y Siglas:
 
