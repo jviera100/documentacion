@@ -76,16 +76,19 @@
 
 ### Glosario de Acrónimos y Siglas:
 
-*   **DNS (Domain Name System):** Sistema de nombres de dominio (traduce nombres de dominio a direcciones IP).
-*   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto (para la web).
-*   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
-*   
-*   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
-*   **IEEE (Institute of Electrical and Electronics Engineers):** Instituto de Ingenieros Eléctricos y Electrónicos.
-*   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
-*   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
-*   
-*   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).*    
-*   
-*   **UDP (User Datagram Protocol):** Protocolo de datagramas de usuario (protocolo rápido, no confiable).
-*  
+*   #### Servicios y Protocolos de Red:
+    *   **DNS (Domain Name System):** Sistema de nombres de dominio (traduce nombres de dominio a direcciones IP).
+    *   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto (para la web).
+    *   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
+    *   **UDP (User Datagram Protocol):** Protocolo de datagramas de usuario (protocolo rápido, no confiable).
+    *   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).
+
+*   #### Organizaciones y Estándares de Internet:
+    *   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
+    *   **IEEE (Institute of Electrical and Electronics Engineers):** Instituto de Ingenieros Eléctricos y Electrónicos.
+    *   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
+    *   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
+
+*   #### Interferencias de Medios de Red:
+    *   **EMI (Electromagnetic Interference):** Interferencia Electromagnética.
+    *   **RFI (Radio Frequency Interference):** Interferencia de Radiofrecuencia.
