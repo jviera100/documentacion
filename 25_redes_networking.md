@@ -126,6 +126,18 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
 
 **Misma Red?** Compara las Direcciones de RED. Si coinciden, ¡están en la misma red!
 
+**Redes Domésticas/Oficinas Pequeñas:**
+
+1.  **Internet Entra:** El ISP te da Internet. El "ancho de banda" de tu plan define la velocidad.
+2.  **Red Local (LAN/WLAN):** Tu router crea una red local (LAN = cable, WLAN = Wi-Fi) para que tus dispositivos se conecten y compartan Internet.
+3.  **Direcciones:** Cada dispositivo *activo* en la red necesita una dirección IP (y tiene una MAC). Pero periféricos (mouse, teclado, webcam) no necesitan IP.
+4.  **IPs y Máscaras (Lo Crucial):**
+    *   La Máscara define qué parte de la IP es la RED y cuál el HOST.
+    *   Para encontrar la Red, "redondea" la parte HOST a cero.
+    *   Si dos IPs tienen la misma dirección de RED, están en la misma LAN.
+5.  **Más Cables?**: Si necesitas conectar más dispositivos con cable, usa un switch Ethernet (amplía los puertos de tu router).
+6.  **Redes Virtuales (VLANs - Opcional):** Un switch avanzado puede crear VLANs. Esto divide la red en "subredes virtuales". Dispositivos en diferentes VLANs no se ven, aunque estén conectados al mismo switch. Útil para separar redes de invitados o dispositivos inseguros.
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
