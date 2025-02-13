@@ -102,7 +102,29 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
 - Binario: `11010001101001011100100000000001`
 - Octetos: `11010001.10100101.11001000.00000001`
 - Decimal con puntos: `209.165.200.1`
-```
+
+
+## IPs en Resumen: Máscara y Redondeo a Cero
+
+**Concepto Clave:**  IP = RED + HOST. La MÁSCARA define la división.
+
+**Los Dos Trucos:**
+
+1.  **Máscara -> IP: Coordenadas RED/HOST:**
+    *   `255` en la máscara: El número correspondiente en la IP es RED.
+    *   `0` en la máscara: El número correspondiente en la IP es HOST.
+2.  **Calcular la Dirección de RED:**
+    *   Toma la parte de RED de la IP.
+    *   Redondea a cero la parte del HOST.  Ej: si el HOST era .50, ahora es .0
+
+**Ejemplo Rápido:**
+
+*   IP: `192.168.1.50`
+*   Máscara: `255.255.255.0`
+*   RED: `192.168.1`
+*   Dirección de RED: `192.168.1.0`
+
+**Misma Red?** Compara las Direcciones de RED. Si coinciden, ¡están en la misma red!
 
 ### Glosario de Acrónimos y Siglas:
 
@@ -122,3 +144,6 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
 *   #### Interferencias de Medios de Red:
     *   **EMI (Electromagnetic Interference):** Interferencia Electromagnética.
     *   **RFI (Radio Frequency Interference):** Interferencia de Radiofrecuencia.
+
+
+
