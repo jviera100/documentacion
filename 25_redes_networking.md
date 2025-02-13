@@ -158,6 +158,33 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
     *   Hosts se "suscriben" a grupos de multidifusión.
     *   Ejemplo: Usado por protocolos de enrutamiento (OSPF).(ej., 224.0.0.5 para OSPF).
 
+## 9.2 Tipos de Direcciones IPv4: Públicas vs. Privadas (y el Truco!)
+
+*   **Direcciones IPv4: Dos Grandes Tipos**
+    *   **Públicas:** Para Internet. Únicas y enrutables globalmente.
+    *   **Privadas:** Para redes internas (casa, oficina). No enrutables en Internet.
+
+*   **El Truco para Identificar Privadas:**
+
+    Las direcciones IPv4 privadas *siempre* empiezan con uno de estos rangos:
+    *   **10.x.x.x** (donde 'x' es cualquier número de 0 a 255)
+    *   **172.16.x.x** a **172.31.x.x**
+    *   **192.168.x.x**
+
+    Si una dirección IPv4 *no* empieza con uno de esos rangos, ¡entonces es una dirección pública!
+
+*   **NAT (Traducción de Direcciones):** Convierte IPs privadas a una IP pública cuando los dispositivos internos acceden a Internet.
+
+*   **Direcciones Especiales:**
+    *   **Loopback (127.0.0.1):** Para probar la propia conexión.
+    *   **APIPA (169.254.x.x):** Windows las usa si no obtiene IP automáticamente.
+
+*   **Direccionamiento con Clase (Histórico):** Antes usaban clases (A, B, C) para asignar IPs, pero era ineficiente. Ya no se usa.
+
+*   **Quién Asigna las IPs?**
+
+    IANA da bloques de IPs a los **RIRs (Regional Internet Registries)**, y los RIRs las asignan a los ISPs y otras organizaciones.  Los RIRs son AfriNIC, APNIC, ARIN, LACNIC y RIPE NCC.
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
