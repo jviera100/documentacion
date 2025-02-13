@@ -138,6 +138,26 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
 5.  **Más Cables?**: Si necesitas conectar más dispositivos con cable, usa un switch Ethernet (amplía los puertos de tu router).
 6.  **Redes Virtuales (VLANs - Opcional):** Un switch avanzado puede crear VLANs. Esto divide la red en "subredes virtuales". Dispositivos en diferentes VLANs no se ven, aunque estén conectados al mismo switch. Útil para separar redes de invitados o dispositivos inseguros.
 
+## IPv4: Unidifusión, Difusión y Multidifusión (Resumen)
+
+*   **Unidifusión (1 a 1):**
+    *   Un host envía a *otro host específico*.
+    *   Dirección IP de destino: Dirección de unidifusión (1.1.1.1 - 223.255.255.255, excluyendo reservados).
+    *   Dirección IP de origen: *Siempre* unidifusión.
+
+*   **Difusión (1 a Todos):**
+    *   Un host envía a *todos los hosts* en la red.
+    *   Dirección IP de destino: Termina con todos 1s en la parte de HOST (ej: 172.16.4.255).
+    *   Tipos: Dirigida (a una red específica) y Limitada (255.255.255.255).
+    *   Los routers *no* reenvían difusiones limitadas.
+    *   Puede degradar el rendimiento de la red.
+
+*   **Multidifusión (1 a Muchos Seleccionados):**
+    *   Un host envía a un *grupo específico* de hosts suscritos.
+    *   Dirección IP de destino: Rango de multidifusión (224.0.0.0 - 239.255.255.255).
+    *   Hosts se "suscriben" a grupos de multidifusión.
+    *   Ejemplo: Usado por protocolos de enrutamiento (OSPF).(ej., 224.0.0.5 para OSPF).
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
