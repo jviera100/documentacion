@@ -1,6 +1,6 @@
 # Recursos Imprescindibles para la Búsqueda de Empleo con IA
 
-Aquí tienes una lista de recursos y herramientas impulsadas por IA para optimizar tu búsqueda de empleo:
+Aquí tienes una lista de recursos y herramientas impulsadas por IA para optimizar tu búsqueda de empleo: (solo la primera es gratis)
 
 *   **Eztrackr**
     *   Enlace: [https://eztrackr.app/?ref=ben](https://eztrackr.app/?ref=ben)
