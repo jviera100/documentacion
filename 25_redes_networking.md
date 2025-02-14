@@ -170,17 +170,17 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
 *   **Unidifusión y Difusión:** No tienen rangos específicos fijos. Las de unidifusión son todas las IPs que *no* son privadas, loopback, APIPA, experimentales o multidifusión. Las de difusión dependen de la máscara de subred.
 
 *   **Quién Asigna las IPs?** IANA da bloques de IPs a los **RIRs**, quienes las asignan a los ISPs.
-    
+
     La *Internet Assigned Numbers Authority* (IANA) es responsable de administrar globalmente el espacio de direcciones IP. IANA delega bloques de direcciones IP a los *Registros Regionales de Internet* (RIRs), que son organizaciones responsables de la asignación y registro de direcciones IP dentro de una región geográfica específica. Los RIRs, a su vez, asignan bloques más pequeños de direcciones a los *Proveedores de Servicios de Internet* (ISPs) y a otras organizaciones dentro de su región.
-    
+
     **Los cinco RIRs son:**
-    
+
     *   **AfriNIC:** Para África.
     *   **APNIC:** Para Asia-Pacífico.
     *   **ARIN:** Para Norteamérica.
     *   **LACNIC:** Para Latinoamérica y el Caribe.
     *   **RIPE NCC:** Para Europa, Oriente Medio y partes de Asia Central.
-    
+
     Esta estructura jerárquica asegura una gestión eficiente y organizada del espacio de direcciones IP en todo el mundo.
 
 ## Segmentación de la Red: Dominios de Difusión y Subredes
@@ -223,7 +223,17 @@ Las direcciones IPv6, que tienen 128 bits (cuatro veces el tamaño de una direcc
 
 **Importante:** La regla 2 (compresión con "::") se aplica a cada dirección IPv6 de forma *independiente*.  Esto significa que puedes usar `::` en *múltiples direcciones IPv6 diferentes*, siempre y cuando cada una de esas direcciones cumpla con la condición de tener una secuencia contigua de hextetos cero, y solo se aplique una vez *dentro de esa dirección específica*.
 
+## **Síntesis: Direccionamiento IPv4 Estático vs. Dinámico**
 
+El direccionamiento IPv4 puede ser estático o dinámico.
+
+*   **Estático:** El administrador de red configura manualmente la dirección IP, máscara de subred y puerta de enlace predeterminada en cada host. Es útil para dispositivos que necesitan una dirección IP consistente (servidores, impresoras). Ofrece mayor control, pero es propenso a errores y requiere una gestión cuidadosa de las direcciones.
+
+*   **Dinámico (DHCP):** El protocolo DHCP asigna automáticamente la dirección IP, máscara de subred, puerta de enlace predeterminada y otra información de configuración a los hosts. Es preferible en redes grandes porque reduce la carga administrativa y minimiza los errores. Las direcciones se arriendan, lo que permite la reutilización de direcciones IP cuando un host se desconecta.
+
+**Servidores DHCP:**
+
+Los servidores DHCP pueden ser dispositivos dedicados, routers inalámbricos (en redes domésticas y pequeñas empresas), o incluso proporcionados por el ISP. En redes domésticas, el router inalámbrico actúa como cliente DHCP para obtener una dirección IP pública del ISP y como servidor DHCP para asignar direcciones IP privadas a los hosts internos.
 
 ### Glosario de Acrónimos y Siglas:
 
