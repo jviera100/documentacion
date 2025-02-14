@@ -223,7 +223,7 @@ Las direcciones IPv6, que tienen 128 bits (cuatro veces el tamaño de una direcc
 
 **Importante:** La regla 2 (compresión con "::") se aplica a cada dirección IPv6 de forma *independiente*.  Esto significa que puedes usar `::` en *múltiples direcciones IPv6 diferentes*, siempre y cuando cada una de esas direcciones cumpla con la condición de tener una secuencia contigua de hextetos cero, y solo se aplique una vez *dentro de esa dirección específica*.
 
-## **Síntesis: Direccionamiento IPv4 Estático vs. Dinámico**
+## **Síntesis: Direccionamiento IPv4 Estático vs. Dinámico, Límites de Red y NAT**
 
 El direccionamiento IPv4 puede ser estático o dinámico.
 
@@ -238,9 +238,13 @@ El direccionamiento IPv4 puede ser estático o dinámico.
     *   **DHCP Request:** El cliente responde al servidor *solicitando* la dirección IP ofrecida.  El cliente difunde una `DHCPREQUEST` al servidor que le ha ofertado.
     *   **DHCP Acknowledge (ACK):** El servidor DHCP confirma la asignación de la dirección IP al cliente con un **DHCPACK**. Este mensaje indica que el cliente es capaz de usar la información IP proporcionada.
 
-**Servidores DHCP:**
+**Límites de Red y Puertas de Enlace:**
 
-Los servidores DHCP pueden ser dispositivos dedicados, routers inalámbricos (en redes domésticas y pequeñas empresas), o incluso proporcionados por el ISP. En redes domésticas, el router inalámbrico actúa como cliente DHCP para obtener una dirección IP pública del ISP y como servidor DHCP para asignar direcciones IP privadas a los hosts internos. El router mantiene un **pool de direcciones** para asignar. En la mayoria de routers la IP `192.168.0.1` actua como puerta de enlace predeterminada, desde donde comienza a asignar direcciones a los hosts. La principal ventaja de DHCP es que las concesiones de direcciones son temporales. Cuando un dispositivo movil se desconecta, la concesion vuelve al *pool* para poder ser utilizada nuevamente.
+Los enrutadores actúan como puertas de enlace que permiten que hosts en diferentes redes se comuniquen.  Cada interfaz del enrutador está conectada a una red diferente.  La dirección IP de la interfaz del enrutador sirve como la puerta de enlace predeterminada para los hosts en su red. En redes domésticas, el router inalámbrico, además de ser servidor DHCP, sirve como conexión entre la red interna y la red del proveedor de internet.
+
+**Traducción de Direcciones de Red (NAT):**
+
+Dado que las direcciones IPv4 públicas son limitadas, **NAT** permite que múltiples dispositivos en una red privada (con direcciones IP privadas, ej. 192.168.x.x) compartan una única dirección IP pública para acceder a Internet. El enrutador, actuando como servidor NAT, traduce las direcciones IP privadas internas a la dirección IP pública proporcionada por el ISP. Cuando el tráfico regresa de Internet, el enrutador utiliza información de puerto para determinar a qué dispositivo interno debe reenviar el tráfico. NAT es una parte fundamental de la funcionalidad de la mayoría de los enrutadores domésticos y de pequeñas empresas.
 
 ### Glosario de Acrónimos y Siglas:
 
