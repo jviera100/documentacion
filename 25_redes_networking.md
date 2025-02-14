@@ -190,6 +190,29 @@ Esta sección explora cómo dividir una red en segmentos más pequeños para mej
 
 *   Mejora el rendimiento y la seguridad.
 
+## **Abreviando Direcciones IPv6 (4x el Tamaño de IPv4)**
+
+Las direcciones IPv6, que tienen 128 bits (cuatro veces el tamaño de una dirección IPv4 de 32 bits), se componen de 8 hextetos (grupos hexadecimales de 16 bits) separados por dos puntos. Para simplificar su representación, se aplican dos reglas de abreviación:
+
+**1. Regla 1: Omitir Ceros Iniciales (por Hexteto, en Toda la Dirección):**
+
+*   **Aplicación:** A *cada* hexteto individual dentro de la dirección IPv6, lo que significa que se puede aplicar hasta en los 8 hextetos de la dirección.
+*   **Acción:** Eliminar cualquier cero(s) que aparezca al comienzo de cada hexteto.
+*   **Cobertura:** Al aplicarse a cada hexteto, esta regla afecta *hasta* los 128 bits (todos los dígitos) de la dirección completa y permite la eliminación de ceros *en cualquier parte* de la dirección, siempre y cuando estén al inicio de un hexteto. Es, en ese sentido, más "invasiva" porque afecta a una mayor cantidad de dígitos individuales.
+*   **Ejemplo:** `2001:0DB8:000A:0001` se simplifica a `2001:DB8:A:1` (ceros iniciales removidos en 4 hextetos distintos).
+
+**2. Regla 2: Compresión con "::" (por Dirección IPv6):**
+
+*   **Aplicación:** A la *dirección IPv6 completa*.
+*   **Acción:** Reemplazar una *única* secuencia contigua de *uno o más* hextetos *completamente cero* por `::`.
+*   **Restricción:** Solo puede usarse *una vez* por dirección IPv6.
+*   **Cobertura:** Aunque puede reemplazar múltiples hextetos a la vez, solo se aplica en una *única* ubicación dentro de la dirección.
+*   **Ejemplo:** `2001:0DB8:0000:0000:0000:0000:0000:0200` se simplifica a `2001:DB8::200`
+
+**Importante:** La regla 2 (compresión con "::") se aplica a cada dirección IPv6 de forma *independiente*.  Esto significa que puedes usar `::` en *múltiples direcciones IPv6 diferentes*, siempre y cuando cada una de esas direcciones cumpla con la condición de tener una secuencia contigua de hextetos cero, y solo se aplique una vez *dentro de esa dirección específica*.
+
+
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:

@@ -113,7 +113,7 @@
     my_string.strip()
     ```
 
-#### 12. Slicing
+#### 12. Slicing = doble dos puntos [: :]
 - **Slicing**: Filtra lista por índices.
     ```python
     my_list[start:end:step]
