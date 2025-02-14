@@ -170,6 +170,18 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
 *   **Unidifusión y Difusión:** No tienen rangos específicos fijos. Las de unidifusión son todas las IPs que *no* son privadas, loopback, APIPA, experimentales o multidifusión. Las de difusión dependen de la máscara de subred.
 
 *   **Quién Asigna las IPs?** IANA da bloques de IPs a los **RIRs**, quienes las asignan a los ISPs.
+    
+    La *Internet Assigned Numbers Authority* (IANA) es responsable de administrar globalmente el espacio de direcciones IP. IANA delega bloques de direcciones IP a los *Registros Regionales de Internet* (RIRs), que son organizaciones responsables de la asignación y registro de direcciones IP dentro de una región geográfica específica. Los RIRs, a su vez, asignan bloques más pequeños de direcciones a los *Proveedores de Servicios de Internet* (ISPs) y a otras organizaciones dentro de su región.
+    
+    **Los cinco RIRs son:**
+    
+    *   **AfriNIC:** Para África.
+    *   **APNIC:** Para Asia-Pacífico.
+    *   **ARIN:** Para Norteamérica.
+    *   **LACNIC:** Para Latinoamérica y el Caribe.
+    *   **RIPE NCC:** Para Europa, Oriente Medio y partes de Asia Central.
+    
+    Esta estructura jerárquica asegura una gestión eficiente y organizada del espacio de direcciones IP en todo el mundo.
 
 ## Segmentación de la Red: Dominios de Difusión y Subredes
 
