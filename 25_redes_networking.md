@@ -227,13 +227,20 @@ Las direcciones IPv6, que tienen 128 bits (cuatro veces el tamaño de una direcc
 
 El direccionamiento IPv4 puede ser estático o dinámico.
 
-*   **Estático:** El administrador de red configura manualmente la dirección IP, máscara de subred y puerta de enlace predeterminada en cada host. Es útil para dispositivos que necesitan una dirección IP consistente (servidores, impresoras). Ofrece mayor control, pero es propenso a errores y requiere una gestión cuidadosa de las direcciones.
+*   **Estático:** El administrador de red configura manualmente la dirección IP, máscara de subred y puerta de enlace predeterminada en cada host. Es útil para dispositivos que necesitan una dirección IP consistente (servidores, impresoras). Ofrece mayor control, pero es propenso a errores, requiere una gestión cuidadosa de las direcciones, y es lento de implementar en grandes redes.
 
-*   **Dinámico (DHCP):** El protocolo DHCP asigna automáticamente la dirección IP, máscara de subred, puerta de enlace predeterminada y otra información de configuración a los hosts. Es preferible en redes grandes porque reduce la carga administrativa y minimiza los errores. Las direcciones se arriendan, lo que permite la reutilización de direcciones IP cuando un host se desconecta.
+*   **Dinámico (DHCP):** El protocolo DHCP asigna automáticamente la dirección IP, máscara de subred, puerta de enlace predeterminada y otra información de configuración a los hosts. Es preferible en redes grandes porque reduce la carga administrativa, minimiza los errores y permite la reutilización de direcciones IP a través del **arrendamiento (lease)**.
+
+    El proceso de asignación DHCP involucra mensajes **DORA (Discover, Offer, Request, Acknowledge)**. Este proceso asegura que cada dispositivo que necesite una dirección IP la obtenga de manera única y automatizada. DHCP es el método preferido para asignar direcciones en redes grandes por que reduce la carga del equipo de soporte y elimina errores de configuracion.
+
+    *   **DHCP Discover:** El cliente (recién conectado o reiniciado) difunde un mensaje (broadcast) a la dirección **255.255.255.255** para encontrar servidores DHCP.  Este mensaje indica que el cliente *busca* un servidor DHCP.
+    *   **DHCP Offer:** El servidor DHCP responde con un **DHCP Offer**, *ofreciendo* una dirección IP disponible, máscara de subred, puerta de enlace predeterminada y tiempo de arrendamiento.
+    *   **DHCP Request:** El cliente responde al servidor *solicitando* la dirección IP ofrecida.  El cliente difunde una `DHCPREQUEST` al servidor que le ha ofertado.
+    *   **DHCP Acknowledge (ACK):** El servidor DHCP confirma la asignación de la dirección IP al cliente con un **DHCPACK**. Este mensaje indica que el cliente es capaz de usar la información IP proporcionada.
 
 **Servidores DHCP:**
 
-Los servidores DHCP pueden ser dispositivos dedicados, routers inalámbricos (en redes domésticas y pequeñas empresas), o incluso proporcionados por el ISP. En redes domésticas, el router inalámbrico actúa como cliente DHCP para obtener una dirección IP pública del ISP y como servidor DHCP para asignar direcciones IP privadas a los hosts internos.
+Los servidores DHCP pueden ser dispositivos dedicados, routers inalámbricos (en redes domésticas y pequeñas empresas), o incluso proporcionados por el ISP. En redes domésticas, el router inalámbrico actúa como cliente DHCP para obtener una dirección IP pública del ISP y como servidor DHCP para asignar direcciones IP privadas a los hosts internos. El router mantiene un **pool de direcciones** para asignar. En la mayoria de routers la IP `192.168.0.1` actua como puerta de enlace predeterminada, desde donde comienza a asignar direcciones a los hosts. La principal ventaja de DHCP es que las concesiones de direcciones son temporales. Cuando un dispositivo movil se desconecta, la concesion vuelve al *pool* para poder ser utilizada nuevamente.
 
 ### Glosario de Acrónimos y Siglas:
 
