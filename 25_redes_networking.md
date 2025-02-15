@@ -483,6 +483,154 @@ A continuación, una tabla que resume los protocolos más comunes y sus respecti
 *   Utiliza tecnología entre pares similar a la mensajería instantánea.
 *   Para llamadas a teléfonos convencionales (PSTN) se requiere una puerta de enlace.
 
+## 17.1 Comandos de solución de problemas
+
+### 17.1.1 Descripción General de los Comandos de Solución de Problemas
+
+*   Utilidades de software para identificar problemas de red, generalmente proporcionadas como comandos de línea de comandos (CLI).
+*   Sintaxis puede variar según el sistema operativo.
+*   **Utilidades comunes:**
+    *   `ipconfig`: Muestra información de configuración IP.
+    *   `ping`: Prueba conexiones con otros hosts IP.
+    *   `netstat`: Muestra las conexiones de red.
+    *   `tracert`: Muestra la ruta exacta recorrida hasta el destino.
+    *   `nslookup`: Solicita información sobre un dominio directamente a un servidor de nombres.
+
+### 17.1.2 El comando `ipconfig`
+
+*   Permite visualizar la configuración IP actual de un host.
+*   **Opciones y uso:**
+    *   `ipconfig`: Muestra información básica: Dirección IP, máscara de subred y gateway predeterminado. Útil para verificar rápidamente la configuración IP actual.
+        ```
+        C:\> ipconfig
+
+        Configuración IP de Windows
+
+
+        Ethernet adaptador Ethernet:
+
+           Estado de los medios . . . . . . . . . . : Medios desconectados
+           Sufijo DNS específico de la conexión. :
+
+        Adaptador LAN inalámbrico Wi-Fi:
+
+           Sufijo DNS específico de la conexión. : lan
+           Dirección IPv6 de enlace local. . . . . : fe80::a1cc:4239:d3ab:2675%6
+           Dirección IPv4. . . . . . . . . . . : 10.10.10.130
+           Máscara de subred . . . . . . . . . . : 255.255.255.0
+           Puerta de enlace predeterminada . . . . . . . . . : 10.10.10.1
+
+        C:\>
+        ```
+    *   `ipconfig /all`: Muestra información detallada: Dirección MAC, direcciones IP de gateway y DNS, si DHCP está activado (e información relacionada). Útil para verificar si el DHCP asignó correctamente la configuración IP.
+         ```
+        C:\> ipconfig/all
+
+        Configuración IP de Windows
+
+           Host Name . . . . . . . . . . . . : your-a9270112e3
+           Primary Dns Suffix . . . . . . . :
+           Node Type . . . . . . . . . . . . : Hybrid
+           IP Routing Enabled. . . . . . . . : No
+           WINS Proxy Enabled. . . . . . . . : No
+           DNS Suffix Search List. . . . . . : lan
+
+        Ethernet adaptador Ethernet:
+
+           Media State . . . . . . . . . . . : Media disconnected
+           Connection-specific DNS Suffix . :
+           Description . . . . . . . . . . . : Realtek PCIe GBE Family Controller
+           Physical Address. . . . . . . . . : 00-16-D4-02-5A-EC
+           DHCP Enabled. . . . . . . . . . . : Yes
+           Autoconfiguration Enabled . . . . : Yes
+
+        Adaptador LAN inalámbrico Wi-Fi:
+
+           Connection-specific DNS Suffix . : lan
+           Description . . . . . . . . . . . : Intel(R) Dual Band Wireless-AC 3165
+           Physical Address. . . . . . . . . : 00-13-02-47-8C-6A
+           DHCP Enabled. . . . . . . . . . . : Yes
+           Autoconfiguration Enabled . . . . : Yes
+           Link-local IPv6 Address . . . . . : fe80::a1cc:4239:d3ab:2675%6(Preferred)
+           IPv4 Address. . . . . . . . . . . : 10.10.10.130(Preferred)
+           Subnet Mask . . . . . . . . . . . : 255.255.255.0
+           Lease Obtained. . . . . . . . . . : Wednesday, September 2, 2020 10:03:43 PM
+           Lease Expires . . . . . . . . . . : Friday, September 11, 2020 10:23:36 AM
+           Default Gateway . . . . . . . . . : 10.10.10.1
+           DHCP Server . . . . . . . . . . . : 10.10.10.1
+           DHCPv6 IAID . . . . . . . . . . . : 98604135
+           DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-1E-21-A5-84-44-A8-42-FC-0D-6F
+           DNS Servers . . . . . . . . . . . : 10.10.10.1
+           NetBIOS over Tcpip. . . . . . . . : Enabled
+
+        C:\>
+        ```
+
+    *   `ipconfig /release`: Libera la configuración DHCP actual (si la hay). Útil cuando un dispositivo necesita obtener una nueva configuración IP del servidor DHCP.
+    *   `ipconfig /renew`: Solicita una nueva configuración IP del servidor DHCP. Útil cuando un dispositivo tiene una configuración IP incorrecta u obsoleta y necesita renovarla.
+        ```
+        C:\> ipconfig/release
+
+        Configuración IP de Windows
+
+        No operation can be performed on Ethernet while it has its media disconnected.
+
+        Ethernet adaptador Ethernet:
+
+           Media State . . . . . . . . . . . : Media disconnected
+           Connection-specific DNS Suffix . :
+
+        Adaptador LAN inalámbrico Wi-Fi:
+
+           Connection-specific DNS Suffix . :
+           Link-local IPv6 Address . . . . . : fe80::a1cc:4239:d3ab:2675%6
+           Default Gateway . . . . . . . . . :
+
+        C:\> ipconfig /renew
+
+        Configuración IP de Windows
+
+        No operation can be performed on Ethernet while it has its media disconnected.
+
+        Ethernet adaptador Ethernet:
+
+           Media State . . . . . . . . . . . : Media disconnected
+           Connection-specific DNS Suffix . :
+
+        Adaptador LAN inalámbrico Wi-Fi:
+
+           Connection-specific DNS Suffix . : lan
+           Link-local IPv6 Address . . . . . : fe80::a1cc:4239:d3ab:2675%6
+           IPv4 Address. . . . . . . . . . . : 10.10.10.130
+           Subnet Mask . . . . . . . . . . . : 255.255.255.0
+           Default Gateway . . . . . . . . . : 10.10.10.1
+
+        C:\>
+        ```
+*   Si después de la configuración IP el host no puede obtener información actualizada del servidor DHCP, verifique la conexión física (luz de enlace).
+
+### 17.1.4 El comando `ping`
+
+*   La mayoría de los dispositivos habilitados para IP admiten el comando `ping`.
+*   Prueba la conectividad de red, indicando si un host es accesible o no.
+*   Sintaxis: `ping` [dirección IP] o `ping` [nombre de host]
+*   Si el host de destino recibe la solicitud de eco (ICMP), responde con una respuesta de eco. La recepción de la respuesta de eco indica conectividad.
+*   Si se hace `ping` a un nombre, primero se resuelve la dirección IP con un servidor DNS. Un `ping` a la dirección IP sin resolución de DNS indica que la resolución de nombre está fallando.
+*   Si funciona el `ping` a la dirección IP, pero no funciona el `ping` al nombre, es muy probable que exista un problema con DNS.
+*   Si los comandos de `ping` enviados tanto al nombre como a la dirección IP son exitosos, pero el usuario aún no puede acceder a la aplicación, lo más probable es que el problema resida en la aplicación en el host de destino (no se está ejecutando, puerto bloqueado, etc.).
+*   Si no funciona ninguno de los dos comandos `ping`, el problema es la conectividad de red en la ruta hacia el destino. Probar el gateway predeterminado ayuda a aislar si el problema es local o externo.
+*   Un `ping` puede fallar debido a cortafuegos en el origen, destino o en la ruta.
+
+## 17.1.5 Resultados de ping
+
+*   El comando `ping` básico suele enviar cuatro ecos.
+
+## 17.2.1 ¿Qué aprendí en este módulo?
+
+*   `nslookup`: Directamente solicita al servidor de nombres información sobre un dominio de destino.
+*   `netstat`: Muestra las conexiones de red activas. Ayuda a identificar si una conexión es activa o no.
+
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
