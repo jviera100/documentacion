@@ -369,6 +369,22 @@ Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es co
 *   Informa: protocolos, direcciones (local/externa), puertos, estado. Permite identificar conexiones y seguridad.
 *   Se usa para enumerar: protocolos, dirección local y puertos, dirección extranjera y puertos, y el estado de la conexión.
 
+### 16.2.1 Servicios de Aplicaciones de Red Comunes
+
+*   Servicios comunes: búsquedas, redes sociales, video/audio, compras, correo, mensajería.
+*   Dependen de TCP/IP para transmisión confiable.
+
+**Servicios Comunes y sus Protocolos:**
+
+*   **DNS (Sistema de Nombres de Dominio):** Resuelve nombres de dominio a direcciones IP.
+*   **SSH (Secure Shell):** Acceso remoto seguro a servidores y dispositivos de red.
+*   **SMTP (Protocolo Simple de Transferencia de Correo):** Envía correos electrónicos y archivos adjuntos.
+*   **POP (Protocolo de Oficina de Correos):** Recupera correos electrónicos y archivos adjuntos.
+*   **IMAP (Protocolo de Acceso a Mensajes de Internet):** Recupera correos electrónicos y archivos adjuntos.
+*   **DHCP (Protocolo de Configuración Dinámica de Host):** Configura automáticamente la información IP.
+*   **HTTP (Protocolo de Transferencia de Hipertexto):** Solicita y transfiere páginas web.
+*   **FTP (Protocolo de Transferencia de Archivos):** Transferencia interactiva de archivos.
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
