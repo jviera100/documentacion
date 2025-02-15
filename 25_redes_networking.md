@@ -326,6 +326,49 @@ Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es co
 
 **En resumen:** La tabla de enrutamiento permite al enrutador dirigir el tráfico. Contiene redes e interfaces de salida, y la decisión se basa en la IP destino. Sin una ruta específica, usa la predeterminada y el host usará para contactar otras redes fuera de su dominio local el Gateway.
 
+**LAN (Red de Área Local):**
+
+*   Red(es) bajo un mismo control administrativo.
+*   Varía en tamaño (hogar a edificios múltiples).
+*   Usa Ethernet/inalámbrico, alta velocidad.
+*   Intranet: LAN privada para una organización.
+
+## **TCP y UDP**
+
+*   **TCP (Transmission Control Protocol):**
+    *   Entrega confiable de datos.
+    *   Divide mensajes en segmentos numerados.
+    *   Realiza seguimiento de segmentos enviados y retransmite los perdidos.
+    *   Utilizado donde la integridad de los datos es crucial.
+*   **UDP (User Datagram Protocol):**
+    *   Entrega "mejor esfuerzo" sin confirmación de recepción.
+    *   Rápido, pero no garantiza la entrega.
+    *   Adecuado para audio y VoIP (transmisión en tiempo real).
+
+## **Números de Puerto**
+
+*   Identifican protocolos y servicios en la capa de transporte (TCP/UDP).
+*   Cada mensaje tiene puerto de origen y destino.
+*   El cliente se preconfigura para usar un puerto de destino ya registrado en Internet para cada servicio.
+*   Asignados y administrados por ICANN.
+    *   **Puertos Conocidos (1-1023):** Servicios comunes (FTP: 21, TFTP: 69, HTTP: 80 - web, SMTP: 25 - mensajes, DNS: 53 - traductor de nombres de dominio a IP).
+    *   **Puertos Registrados (1024-49151):** Usados por organizaciones para aplicaciones específicas (ej: IM).
+    *   **Puertos Privados/Dinámicos/Efímeros (49152-65535):** Generalmente puerto origen, uso libre por aplicaciones.
+*   Puerto origen: Generado dinámicamente (puerto efímero) para identificar una conversación.
+*   Puerto destino: Indica al servidor el servicio solicitado.
+
+## **Sockets**
+
+*   Combinación de una dirección IP y un número de puerto (origen o destino).
+*   Generalmente, el puerto de origen es un puerto efímero (asignado dinámicamente).
+*   Permiten distinguir entre diferentes procesos en un cliente o conexiones a un servidor.
+
+## **El Comando `netstat`**
+
+*   Muestra conexiones TCP activas.
+*   Informa: protocolos, direcciones (local/externa), puertos, estado. Permite identificar conexiones y seguridad.
+*   Se usa para enumerar: protocolos, dirección local y puertos, dirección extranjera y puertos, y el estado de la conexión.
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
