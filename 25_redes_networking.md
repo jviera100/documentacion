@@ -387,6 +387,25 @@ Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es co
 *   **HTTP (Protocolo de Transferencia de Hipertexto):** Solicita y transfiere páginas web.
 *   **FTP (Protocolo de Transferencia de Archivos):** Transferencia interactiva de archivos.
 
+A continuación, una tabla que resume los protocolos más comunes y sus respectivos puertos y protocolos de transporte:
+
+| Número de Puerto | Transporte | Protocolo de Aplicación                                  |
+| ---------------- | ---------- | --------------------------------------------------------- |
+| 20               | TCP        | Protocolo de Transferencia de Archivos (FTP) - Datos     |
+| 21               | TCP        | FTP - Control                                             |
+| 22               | TCP        | Secure Shell (SSH)                                        |
+| 23               | TCP        | Telnet                                                    |
+| 25               | TCP        | Protocolo Simple de Transferencia de Correo (SMTP)         |
+| 53               | UDP, TCP   | Servicio de Nombres de Dominio (DNS)                      |
+| 67               | UDP        | Protocolo de Configuración Dinámica de Host (DHCP): Servidor |
+| 68               | UDP        | DHCP - Cliente                                           |
+| 69               | UDP        | Protocolo Trivial de Transferencia de Archivos (TFTP)    |
+| 80               | TCP        | Protocolo de Transferencia de Hipertexto (HTTP)            |
+| 110              | TCP        | Protocolo de Oficina de Correos, versión 3 (POP3)         |
+| 143              | TCP        | Protocolo de Acceso a Mensajes de Internet (IMAP)        |
+| 161              | UDP        | Protocolo Simple de Administración de Redes (SNMP)        |
+| 443              | TCP        | Protocolo Seguro de Transferencia de Hipertexto (HTTPS)    |
+
 ## 16.3 Sistema de Nombres de Dominio (DNS)
 
 *   Los clientes DNS solicitan la dirección IP correspondiente a un nombre de dominio a los servidores DNS.
@@ -464,7 +483,6 @@ Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es co
 *   Utiliza tecnología entre pares similar a la mensajería instantánea.
 *   Para llamadas a teléfonos convencionales (PSTN) se requiere una puerta de enlace.
 
-
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
@@ -480,9 +498,3 @@ Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es co
 *   #### Interferencias de Medios de Red:
     *   **EMI (Electromagnetic Interference):** Interferencia Electromagnética.
     *   **RFI (Radio Frequency Interference):** Interferencia de Radiofrecuencia.
-
-
-
-
-
-
