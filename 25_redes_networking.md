@@ -306,6 +306,26 @@ Esta sección explica cómo los dispositivos se encuentran en la red local (LAN)
 
 **En resumen:** Las difusiones permiten que todos se encuentren, pero ARP ayuda a los dispositivos a encontrar a alguien específico (su MAC), y los enrutadores limitan el alcance de las difusiones para evitar la congestión.
 
+## **Tabla de Enrutamiento - El "Mapa" del Enrutador para Enviar Datos**
+
+Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es como su "mapa".
+
+*   **Tabla de Enrutamiento: ¿Qué contiene?**
+    *   Redes de destino.
+    *   Interfaces de salida (puertos).
+*   **¿Cómo se llena?**
+    *   Redes conectadas directamente (automáticamente).
+    *   Configuración manual.
+    *   Intercambio dinámico con otros enrutadores.
+*   **¿Cómo decide el enrutador?**
+    *   Examina la dirección IP de destino del paquete.
+    *   Busca en la tabla la mejor ruta a esa red.
+*   **Ruta Predeterminada: El "Plan B"**
+    *   Si no encuentra la red en la tabla, usa la ruta predeterminada.
+*  **El host envía información al Gateway Predeterminado de su LAN**
+
+**En resumen:** La tabla de enrutamiento permite al enrutador dirigir el tráfico. Contiene redes e interfaces de salida, y la decisión se basa en la IP destino. Sin una ruta específica, usa la predeterminada y el host usará para contactar otras redes fuera de su dominio local el Gateway.
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
