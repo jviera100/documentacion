@@ -369,6 +369,8 @@ Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es co
 *   Informa: protocolos, direcciones (local/externa), puertos, estado. Permite identificar conexiones y seguridad.
 *   Se usa para enumerar: protocolos, dirección local y puertos, dirección extranjera y puertos, y el estado de la conexión.
 
+## 16.2 Servicios de Aplicaciones de Red
+
 ### 16.2.1 Servicios de Aplicaciones de Red Comunes
 
 *   Servicios comunes: búsquedas, redes sociales, video/audio, compras, correo, mensajería.
@@ -385,12 +387,87 @@ Los enrutadores dirigen el tráfico usando la *tabla de enrutamiento*, que es co
 *   **HTTP (Protocolo de Transferencia de Hipertexto):** Solicita y transfiere páginas web.
 *   **FTP (Protocolo de Transferencia de Archivos):** Transferencia interactiva de archivos.
 
+## 16.3 Sistema de Nombres de Dominio (DNS)
+
+*   Los clientes DNS solicitan la dirección IP correspondiente a un nombre de dominio a los servidores DNS.
+*   DHCP usualmente configura el servidor DNS en redes domésticas a través del router.
+
+### 16.3.3 Comprobador de Sintaxis — El Comando `nslookup`
+
+*   `nslookup` se utiliza para consultar servidores DNS y obtener la dirección IP asociada a un nombre de dominio.
+*   Ejemplo: Para obtener la dirección IP de www.cisco.com, un cliente DNS solicita al servidor DNS la dirección IP antes de enviar su solicitud HTTP.
+
+## 16.4 HTTP y HTML
+
+### 16.4.2 HTTP y HTML
+
+*   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto para solicitar servicios web utilizando la dirección IP y el puerto 80.
+*   **HTML (Hypertext Markup Language):** Lenguaje de marcado utilizado para codificar el contenido de las páginas web, indicando al navegador cómo formatear la página, qué gráficos y fuentes usar.
+*   **HTTPS (HTTP Secure):** Versión segura de HTTP que utiliza protocolos de transporte seguros, enviando solicitudes al puerto 443.
+
+## 16.5 Clientes y Servidores FTP
+
+### 16.5.1 Protocolo de Transferencia de Archivos
+
+*   **FTP (File Transfer Protocol):** Método sencillo para transferir archivos entre computadoras. Permite subir y descargar archivos, y administrar archivos de forma remota (eliminar, renombrar).
+*   Utiliza dos puertos para la comunicación:
+    *   Puerto 21 (TCP): Conexión de control (solicitudes).
+    *   Puerto 20 (TCP): Transferencia de datos.
+*   El software cliente FTP viene incorporado en los sistemas operativos y en la mayoría de los exploradores Web.
+
+## 16.6 Terminales Virtuales
+
+### 16.6.2 Telnet
+
+*   **Telnet:** Protocolo para emulación de terminales basados en texto a través de la red.
+    *   Utiliza el puerto 23 (TCP).
+    *   Permite ejecutar comandos remotamente como si estuviera conectado localmente.
+    *   **Inseguro:** Transmite datos sin cifrar.
+
+### 16.6.3 Problemas de Seguridad con Telnet
+
+*   **SSH (Secure Shell):** Alternativa segura a Telnet que proporciona:
+    *   Inicio de sesión remoto seguro.
+    *   Autenticación más sólida.
+    *   Transporte de datos cifrados.
+*   **Recomendación:** Usar SSH en lugar de Telnet siempre que sea posible.
+
+## 16.7 Correo Electrónico y Mensajería
+
+### 16.7.1 Clientes y Servidores de Correo Electrónico
+
+*   El correo electrónico es una aplicación cliente/servidor popular en Internet.
+*   Los buzones se identifican como: `usuario@empresa.dominio`
+*   Protocolos utilizados: SMTP, POP3 e IMAP4
+
+### 16.7.2 Protocolos de Correo Electrónico
+
+*   **SMTP (Simple Mail Transfer Protocol):**
+    *   Utilizado para enviar correos electrónicos del cliente al servidor local y entre servidores.
+    *   Puerto 25.
+*   **POP3 (Post Office Protocol version 3):**
+    *   Recibe y almacena mensajes para sus usuarios.
+    *   Descarga los mensajes al cliente.
+    *   Puerto 110.
+*   **IMAP4 (Internet Message Access Protocol version 4):**
+    *   Recibe y almacena los mensajes.
+    *   Conserva los mensajes en el servidor a menos que el usuario los elimine.
+    *   Puerto 143.
+
+### 16.7.3 Mensajería de Texto
+
+*   La mensajería de texto (mensajería instantánea, mensajes directos, etc.) permite la comunicación en tiempo real a través de Internet.
+
+### 16.7.4 Llamadas Telefónicas por Internet
+
+*   La telefonía por Internet (VoIP) convierte señales de voz analógicas en datos digitales.
+*   Utiliza tecnología entre pares similar a la mensajería instantánea.
+*   Para llamadas a teléfonos convencionales (PSTN) se requiere una puerta de enlace.
+
+
 ### Glosario de Acrónimos y Siglas:
 
 *   #### Servicios y Protocolos de Red:
-    *   **DNS (Domain Name System):** Sistema de nombres de dominio (traduce nombres de dominio a direcciones IP).
-    *   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto (para la web).
-    *   **SMTP (Simple Mail Transfer Protocol):** Protocolo simple de transferencia de correo (para enviar emails).
     *   **UDP (User Datagram Protocol):** Protocolo de datagramas de usuario (protocolo rápido, no confiable).
     *   **IP (Internet Protocol):** Protocolo de Internet (para enrutamiento).
 
