@@ -630,6 +630,25 @@ A continuación, una tabla que resume los protocolos más comunes y sus respecti
 *   `nslookup`: Directamente solicita al servidor de nombres información sobre un dominio de destino.
 *   `netstat`: Muestra las conexiones de red activas. Ayuda a identificar si una conexión es activa o no.
 
+# Pilares de una Red Confiable y Diseño Jerárquico
+
+Una arquitectura de red confiable se basa en cuatro pilares fundamentales:
+
+*   **Tolerancia a Fallas:** Redundancia de rutas para asegurar la continuidad del servicio ante fallos.
+*   **Escalabilidad:** Capacidad de crecer y adaptarse a nuevas demandas sin degradar el rendimiento.
+*   **Calidad de Servicio (QoS):** Priorización del tráfico para garantizar una experiencia óptima, especialmente para aplicaciones en tiempo real.
+*   **Seguridad:** Protección de la infraestructura y los datos mediante confidencialidad, integridad y disponibilidad.
+
+## Diseño de Redes Jerárquico
+
+Para una gestión eficiente, las redes se estructuran jerárquicamente. Conceptos clave:
+
+*   **Direcciones Físicas (MAC) vs. Lógicas (IP):** La dirección MAC identifica un dispositivo de forma única, mientras que la IP define su ubicación lógica en la red. Las direcciones IP se componen de una parte de red y una parte de host.
+*   **Jerarquía para la Escalabilidad:** Dividir redes grandes en segmentos más pequeños facilita la administración y reduce el tráfico de difusión.
+*   **Modelo de Tres Capas de diseño de la red física/lógica.:**
+    *   **Acceso:** Proporciona conectividad a los dispositivos finales.
+    *   **Distribución:** Controla el flujo de información entre las redes de acceso.
+    *   **Núcleo (Core):** Transporte de alta velocidad de grandes volúmenes de datos entre múltiples redes.
 
 ### Glosario de Acrónimos y Siglas:
 
