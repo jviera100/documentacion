@@ -101,8 +101,6 @@ b.  En la pantalla Nombre y sistema operativo, escriba Ubuntu en el campo Nombre
 
 c.  En la pantalla Tamaño de memoria, **aumente la cantidad de RAM teniendo en cuenta que la memoria de la máquina virtual siempre debe estar en el área verde. Si se excede el área verde, tendrá un efecto adverso en el rendimiento del host.** Haga clic en Siguiente para continuar.
 
-    *   **Recomendación:** Para mejorar el rendimiento de la máquina virtual, se recomienda asignar la mayor cantidad de RAM posible dentro del área verde.
-
 d.  En la pantalla Unidad de disco duro, haga clic en Crear para crear ahora un disco duro virtual.
 
 e.  En la pantalla Tipo de archivo de unidad de disco duro, utilice las configuraciones de tipo de archivo predeterminado de VDI (imagen de disco de VirtualBox). Haga clic en Siguiente para continuar.
@@ -113,11 +111,14 @@ g.  En la pantalla Ubicación y tamaño del archivo, puede ajustar la unidad de 
 
 h.  Una vez que se creó la unidad de disco duro, la máquina virtual nueva aparece en una lista en la ventana Oracle VM VirtualBox Administrador. Seleccione Ubuntu.
 
-    *   **Configuración Opcional para Mejor Rendimiento:** Antes de iniciar la máquina virtual, puede mejorar su rendimiento asignando más núcleos de CPU.
-        1.  Haga clic derecho en la máquina virtual Ubuntu y seleccione "Configuración".
-        2.  Vaya a la sección "Sistema" y luego a la pestaña "Procesador".
-        3.  Aumente la cantidad de CPU asignadas a la máquina virtual, teniendo en cuenta los recursos de su computadora host. **Es importante mantenerse dentro de los límites recomendados para evitar afectar el rendimiento del host.**
-        4.  Haga clic en "Aceptar".
+   * **Configuración Opcional para Mejor Rendimiento (RAM y CPU):** Antes de iniciar la máquina virtual por primera vez, puede mejorar su rendimiento ajustando la cantidad de RAM y núcleos de CPU asignados a la máquina virtual. Para acceder a esta configuración:
+
+      1.  En la ventana principal del **VirtualBox Manager** (la ventana donde se listan tus máquinas virtuales), haga clic derecho en la máquina virtual Ubuntu y seleccione "Configuración".  **Esta es la ventana de configuración *general* de la máquina virtual, no la ventana de configuración dentro de la propia máquina virtual Ubuntu.**
+      2.  Vaya a la sección "Sistema".
+      3.  En la pestaña "Placa Base", **aumente la cantidad de RAM**, asegurándose de permanecer dentro de la zona verde para evitar afectar el rendimiento del sistema *host*.
+      4.  Vaya a la pestaña "Procesador".
+      5.  **Aumente la cantidad de CPU** asignadas a la máquina virtual, teniendo en cuenta los recursos de su computadora *host*. **Es importante mantenerse dentro de los límites recomendados para evitar afectar el rendimiento del *host*.**
+      6.  Haga clic en "Aceptar".
 
 i.  Seleccione Ubuntu y haga clic en Iniciar en el menú superior.
 
@@ -125,9 +126,9 @@ i.  Seleccione Ubuntu y haga clic en Iniciar en el menú superior.
 
 #### Paso 1: Monte la imagen.
 
-a.  En la ventana Administrador de Oracle VM Virtualbox, Haga clic con el botón secundario del mouse en Ubuntu y seleccione Configuración. En la ventana Ubuntu – Configuración, haga clic en Almacenamiento en el panel izquierdo. Haga clic en Vacío en el panel central. En el panel derecho, haga clic en el símbolo de CD y seleccione la ubicación de la imagen de Ubuntu. Haga clic en Aceptar para continuar.
+a.  En la ventana principal del **Administrador de Oracle VM Virtualbox**, Haga clic con el botón secundario del mouse en Ubuntu y seleccione "Configuración". En la ventana Ubuntu – Configuración, haga clic en "Almacenamiento" en el panel izquierdo. Haga clic en "Vacío" en el panel central. En el panel derecho, haga clic en el símbolo de CD y seleccione la ubicación de la imagen de Ubuntu. Haga clic en "Aceptar" para continuar. **Recuerda, esta es la ventana de configuración *general* en el VirtualBox Manager.**
 
-b.  En la ventana Administrador de Oracle VM VirtualBox, haga clic en Iniciar en el menú superior.
+b.  En la ventana principal del **Administrador de Oracle VM VirtualBox**, haga clic en Iniciar en el menú superior.
 
 #### Paso 2: Instale el sistema operativo.
 
@@ -147,14 +148,14 @@ f.  El sistema operativo Ubuntu ahora está instalando en la máquina virtual. E
 
 #### Paso 3: Desmontar la Imagen ISO (Importante)
 
-a.  Una vez completada la instalación y después de reiniciar la máquina virtual por primera vez, **antes de volver a encender la máquina virtual**, vuelva a la ventana Administrador de Oracle VM VirtualBox.
-b.  Haga clic con el botón secundario del mouse en Ubuntu y seleccione "Configuración".
+a.  Una vez completada la instalación y después de reiniciar la máquina virtual por primera vez, **antes de volver a encender la máquina virtual**, vuelva a la ventana principal del **Administrador de Oracle VM VirtualBox**.
+b.  Haga clic con el botón secundario del mouse en Ubuntu y seleccione "Configuración". **De nuevo, nos referimos a la ventana de configuración *general* en el VirtualBox Manager.**
 c.  En la ventana Ubuntu – Configuración, haga clic en "Almacenamiento" en el panel izquierdo.
-d.  Haga clic en la imagen montada de Ubuntu en el panel central (bajo "Controlador IDE").
-e.  En el panel derecho, haga clic en el símbolo de CD y, luego, en "Quitar disco de la unidad virtual".
+d.  En el panel central, bajo "Controlador IDE", **haga clic en la imagen ISO de Ubuntu que aparece listada** (por ejemplo, "ubuntu-22.04.1-desktop-amd64.iso").  Verás esta configuración como una previsualización de toda la configuración de almacenamiento.
+e.  En el panel derecho, haga clic en el icono del CD y, luego, en "Quitar disco de la unidad virtual".
 f.  Haga clic en "Aceptar" para continuar.
 
-    **Este paso es crucial para que la máquina virtual arranque desde el disco duro virtual y no desde la imagen ISO en cada inicio.**
+    **Este paso es crucial para que la máquina virtual arranque desde el disco duro virtual y no desde la imagen ISO en cada inicio. Si no se realiza este paso, la máquina podría intentar arrancar desde la ISO nuevamente, o mostrar un error.**
 
 g.  En la VM de Ubuntu, haga clic en "Reiniciar ahora" si aún no se ha reiniciado.
 
@@ -164,12 +165,12 @@ En esta parte, instalará las Guest Additions de VirtualBox y explorará la inte
 
 #### Paso 1: Instalar Guest Additions
 
-a.  Inicie sesión en su máquina virtual con Ubuntu utilizando las credenciales de usuario que creó en la parte anterior.
+a.  Inicie sesión en su máquina virtual con Ubuntu utilizando las credenciales de usuario que creó en la parte anterior. **Ahora estamos trabajando *dentro* de la máquina virtual Ubuntu.**
 
 b.  La ventana del escritorio de Ubuntu puede ser más pequeña que lo esperado. Esto sucede, en particular, con las pantallas de alta resolución.
 
 c.  **Instalar Guest Additions:** Para solucionar problemas de resolución y mejorar la integración con el sistema host, instale las Guest Additions.
-    1.  En la ventana de la máquina virtual, haga clic en "Dispositivos" en el menú superior.
+    1.  En la ventana de la máquina virtual Ubuntu, haga clic en "Dispositivos" en el menú superior.
     2.  Seleccione "Insertar imagen de CD de Guest Additions...". Esto montará un CD virtual dentro de la máquina virtual.
 
 d.  **Ejecutar el Instalador de Guest Additions:** Dependiendo de la configuración de Ubuntu, el instalador de Guest Additions puede ejecutarse automáticamente. Si esto ocurre, siga las instrucciones en pantalla. Si no ocurre, siga estos pasos:
@@ -181,13 +182,3 @@ d.  **Ejecutar el Instalador de Guest Additions:** Dependiendo de la configuraci
     5.  **Esperar la Instalación:** Espere a que se complete la instalación de Guest Additions. Verá mensajes en la terminal mientras se instala.
 
 e.  **Reiniciar la Máquina Virtual:** Una vez que se complete la instalación, reinicie la máquina virtual.  Haga clic en el menú del ángulo superior derecho y en Cerrar. Haga clic en Reiniciar para reiniciar Ubuntu.
-
-#### Paso 2: Abrir un navegador web
-
-a.  Vuelva a iniciar sesión en Ubuntu. Una vez que haya iniciado sesión, puede cambiar el tamaño de la ventana de la máquina virtual.
-
-b.  Abra un navegador web. Según la distribución de Linux, es posible que deba buscar un navegador web o que ya haya un enlace a un navegador web en el escritorio.
-
-c.  Busque un emulador de terminal para acceder a la interfaz de línea de comandos. Utilizará un emulador de terminal en prácticas de laboratorio posteriores.
-
-d.  Explore la distribución instalada de Linux y busque algunas aplicaciones que puede utilizar.
