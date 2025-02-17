@@ -126,9 +126,9 @@ i.  Seleccione Ubuntu y haga clic en Iniciar en el menú superior.
 
 #### Paso 1: Monte la imagen.
 
-a.  En la ventana principal del **Administrador de Oracle VM Virtualbox**, Haga clic con el botón secundario del mouse en Ubuntu y seleccione "Configuración". En la ventana Ubuntu – Configuración, haga clic en "Almacenamiento" en el panel izquierdo. Haga clic en "Vacío" en el panel central. En el panel derecho, haga clic en el símbolo de CD y seleccione la ubicación de la imagen de Ubuntu. Haga clic en "Aceptar" para continuar. **Recuerda, esta es la ventana de configuración *general* en el VirtualBox Manager.**
+a.  En la ventana principal del **Administrador de Oracle VM Virtualbox** (donde se listan tus máquinas virtuales), haz clic con el botón secundario del mouse en Ubuntu y selecciona "Configuración". En la ventana Ubuntu – Configuración, haz clic en "Almacenamiento" en el panel izquierdo. Haz clic en "Vacío" en el panel central. En el panel derecho, haz clic en el símbolo de CD y selecciona la ubicación de la imagen de Ubuntu. Haz clic en "Aceptar" para continuar. **Recuerda, esta es la ventana de configuración *general* en el VirtualBox Manager.**
 
-b.  En la ventana principal del **Administrador de Oracle VM VirtualBox**, haga clic en Iniciar en el menú superior.
+b.  En la ventana principal del **Administrador de Oracle VM VirtualBox**, haz clic en Iniciar en el menú superior.
 
 #### Paso 2: Instale el sistema operativo.
 
@@ -146,18 +146,18 @@ e.  En la pantalla ¿Quién es usted?, proporcione su nombre y elija una contras
 
 f.  El sistema operativo Ubuntu ahora está instalando en la máquina virtual. Esto puede tardar varios minutos.
 
-#### Paso 3: Desmontar la Imagen ISO (Importante)
+#### Paso 3: Desmontar la Imagen ISO (Crítico)
 
-a.  Una vez completada la instalación y después de reiniciar la máquina virtual por primera vez, **antes de volver a encender la máquina virtual**, vuelva a la ventana principal del **Administrador de Oracle VM VirtualBox**.
-b.  Haga clic con el botón secundario del mouse en Ubuntu y seleccione "Configuración". **De nuevo, nos referimos a la ventana de configuración *general* en el VirtualBox Manager.**
-c.  En la ventana Ubuntu – Configuración, haga clic en "Almacenamiento" en el panel izquierdo.
-d.  En el panel central, bajo "Controlador IDE", **haga clic en la imagen ISO de Ubuntu que aparece listada** (por ejemplo, "ubuntu-22.04.1-desktop-amd64.iso").  Verás esta configuración como una previsualización de toda la configuración de almacenamiento.
-e.  En el panel derecho, haga clic en el icono del CD y, luego, en "Quitar disco de la unidad virtual".
-f.  Haga clic en "Aceptar" para continuar.
+a. Una vez que la máquina virtual se haya reiniciado después de la instalación de Ubuntu, **antes de volver a encender la máquina virtual**, regresa a la ventana principal del **Administrador de Oracle VM VirtualBox**.
+b. **NO** hagas clic derecho en la máquina virtual Ubuntu y selecciones "Configuración". **Este paso se realiza directamente en la ventana principal del VirtualBox Manager.**
+c. En la sección "Almacenamiento", busca la sección "Controlador IDE". Debajo de "Controlador IDE", **deberías ver "Dispositivo IDE secundario maestro" mostrando el nombre del archivo ISO de Ubuntu que descargaste** (por ejemplo, "ubuntu-22.04.1-desktop-amd64.iso").
+d. **Haz clic en el nombre del archivo ISO (Dispositivo IDE secundario maestro)**. Al pasar el mouse por encima, el nombre del archivo ISO debería cambiar de color (por ejemplo, de blanco a celeste).
+e. Al hacer clic, **se abrirá un menú desplegable**. En este menú desplegable, **selecciona "Quitar disco"**.
+f. Después de seleccionar "Quitar disco", el "Dispositivo IDE secundario maestro" debería mostrar ahora "Vacío".
+g. Ahora, puedes iniciar la máquina virtual Ubuntu. Arrancará desde el disco duro virtual (SATA) donde instalaste Ubuntu, en lugar de intentar arrancar nuevamente desde la imagen ISO.
 
-    **Este paso es crucial para que la máquina virtual arranque desde el disco duro virtual y no desde la imagen ISO en cada inicio. Si no se realiza este paso, la máquina podría intentar arrancar desde la ISO nuevamente, o mostrar un error.**
+**Este paso es *CRÍTICO* para asegurar que la máquina virtual arranque correctamente desde el disco duro virtual en los siguientes inicios. Si se omite, la máquina virtual podría intentar reinstalar Ubuntu cada vez que se inicie.**
 
-g.  En la VM de Ubuntu, haga clic en "Reiniciar ahora" si aún no se ha reiniciado.
 
 ### Parte 3: Explorar la interfaz gráfica de usuario
 
