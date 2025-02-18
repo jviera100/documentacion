@@ -197,7 +197,7 @@ Esta guía proporciona métodos simplificados para ajustar la resolución de pan
         ```
 
 5.  **Ajustar la resolución manualmente (si es necesario):**
-    *   Si la pantalla no se ajusta automáticamente, abre la configuración de Ubuntu: Ve a Configuración > Pantalla.
+    *   Si la pantalla no se ajusta automáticamente, abre la configuración de Ubuntu: Ve a Configuración > Monitores.
     *   Elige la resolución que mejor se adapte a tu pantalla.
 
 Con estos sencillos pasos, Ubuntu debería verse a pantalla completa en VirtualBox.
