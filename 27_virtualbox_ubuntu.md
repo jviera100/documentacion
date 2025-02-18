@@ -149,7 +149,7 @@ f.  El sistema operativo Ubuntu ahora está instalando en la máquina virtual. E
 #### Paso 3: Desmontar la Imagen ISO (Crítico)
 
 a. Una vez que la máquina virtual se haya reiniciado después de la instalación de Ubuntu, **antes de volver a encender la máquina virtual**, regresa a la ventana principal del **Administrador de Oracle VM VirtualBox**.
-b. **NO** hagas clic derecho en la máquina virtual Ubuntu y selecciones "Configuración". **Este paso se realiza directamente en la ventana principal del VirtualBox Manager.**
+b. **NO** hagas clic derecho en la máquina virtual Ubuntu y ni selecciones "Configuración". **Este paso se realiza directamente en la ventana principal del VirtualBox Manager.**
 c. En la sección "Almacenamiento", busca la sección "Controlador IDE". Debajo de "Controlador IDE", **deberías ver "Dispositivo IDE secundario maestro" mostrando el nombre del archivo ISO de Ubuntu que descargaste** (por ejemplo, "ubuntu-22.04.1-desktop-amd64.iso").
 d. **Haz clic en el nombre del archivo ISO (Dispositivo IDE secundario maestro)**. Al pasar el mouse por encima, el nombre del archivo ISO debería cambiar de color (por ejemplo, de blanco a celeste).
 e. Al hacer clic, **se abrirá un menú desplegable**. En este menú desplegable, **selecciona "Quitar disco"**.
@@ -163,22 +163,42 @@ g. Ahora, puedes iniciar la máquina virtual Ubuntu. Arrancará desde el disco d
 
 En esta parte, instalará las Guest Additions de VirtualBox y explorará la interfaz gráfica de usuario (GUI) de Ubuntu.
 
-#### Paso 1: Instalar Guest Additions
+# Cómo ajustar la resolución de pantalla de Ubuntu en VirtualBox
 
-a.  Inicie sesión en su máquina virtual con Ubuntu utilizando las credenciales de usuario que creó en la parte anterior. **Ahora estamos trabajando *dentro* de la máquina virtual Ubuntu.**
+Esta guía proporciona métodos simplificados para ajustar la resolución de pantalla de Ubuntu en VirtualBox.
 
-b.  La ventana del escritorio de Ubuntu puede ser más pequeña que lo esperado. Esto sucede, en particular, con las pantallas de alta resolución.
+---
 
-c.  **Instalar Guest Additions:** Para solucionar problemas de resolución y mejorar la integración con el sistema host, instale las Guest Additions.
-    1.  En la ventana de la máquina virtual Ubuntu, haga clic en "Dispositivos" en el menú superior.
-    2.  Seleccione "Insertar imagen de CD de Guest Additions...". Esto montará un CD virtual dentro de la máquina virtual.
+**Pasos:**
 
-d.  **Ejecutar el Instalador de Guest Additions:** Dependiendo de la configuración de Ubuntu, el instalador de Guest Additions puede ejecutarse automáticamente. Si esto ocurre, siga las instrucciones en pantalla. Si no ocurre, siga estos pasos:
+1.  **Insertar la imagen del CD de Complementos de Invitado:**
+    *   En VirtualBox, haz clic en el menú superior: Dispositivos > Insertar imagen de CD de los Complementos de Invitado.
+    *   Aparecerá un icono de CD en la barra vertical de Ubuntu, con un nombre similar a "VBox_GAs_7.1.4".
 
-    1.  **Abrir el Administrador de Archivos:** Haga clic en el icono del administrador de archivos en el dock de Ubuntu (generalmente un icono con forma de carpeta).
-    2.  **Navegar al CD de Guest Additions:** En el panel izquierdo, busque y haga clic en el CD de Guest Additions. Puede que se llame "VBoxGuestAdditions".
-    3.  **Ejecutar el Instalador:** Dentro del CD, busque un archivo llamado `autorun.sh` o similar (puede variar según la versión). Haga clic derecho en este archivo y seleccione "Ejecutar" o "Ejecutar en una Terminal".
-    4.  **Autenticar:** Si se le solicita, ingrese la contraseña que usó para iniciar sesión en Ubuntu y haga clic en "Autenticar".
-    5.  **Esperar la Instalación:** Espere a que se complete la instalación de Guest Additions. Verá mensajes en la terminal mientras se instala.
+2.  **Verificar el CD y ejecutar el instalador:**
+    *   Abre la aplicación "Archivos" en Ubuntu y busca un archivo llamado `autorun.sh`.
+    *   Haz clic derecho sobre el archivo y selecciona "Ejecutar como un programa". Esto abrirá una terminal.
+    *   Espera a que termine el proceso, la terminal se cerrará sola.
 
-e.  **Reiniciar la Máquina Virtual:** Una vez que se complete la instalación, reinicie la máquina virtual.  Haga clic en el menú del ángulo superior derecho y en Cerrar. Haga clic en Reiniciar para reiniciar Ubuntu.
+3.  **Instalar dependencias (si es necesario):**
+    *   Si ves errores durante la instalación o la pantalla no se ajusta correctamente, abre una terminal y ejecuta:
+
+        ```bash
+        sudo apt update
+        sudo apt install gcc make perl
+        ```
+
+4.  **Reiniciar (si es necesario):**
+
+    *   En la mayoría de los casos, la pantalla se ajustará automáticamente. Si no, reinicia la máquina virtual:
+
+        ```bash
+        sudo reboot
+        ```
+
+5.  **Ajustar la resolución manualmente (si es necesario):**
+    *   Si la pantalla no se ajusta automáticamente, abre la configuración de Ubuntu: Ve a Configuración > Pantalla.
+    *   Elige la resolución que mejor se adapte a tu pantalla.
+
+Con estos sencillos pasos, Ubuntu debería verse a pantalla completa en VirtualBox.
+
