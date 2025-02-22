@@ -9,21 +9,32 @@
 ### **Principales Normas Internacionales de Contabilidad (NIC) - Resumen Práctico**
 
 1.  **NIC 1 - Presentación de Estados Financieros:**
-    *   *Definición:* Establece la base para la presentación de los estados financieros de propósito general.
-    *   *Ejemplo:* El holding consolida los estados financieros de todas sus UENs.
+    *   *Definición:* Establece la base para la presentación de los estados financieros de propósito general. Los estados financieros completos incluyen:
+        *   **Estado de Situación Financiera (Balance General)**
+        *   **Estado del Resultado Integral (Estado de Resultados)**
+        *   **Estado de Flujos de Efectivo**
+        *   **Estado de Cambios en el Patrimonio**
+        *   **Notas a los Estados Financieros, que comprenden un resumen de las políticas contables significativas y otra información explicativa.**
+    *   *Ejemplo:* El holding consolida los estados financieros de todas sus UENs, presentando una visión unificada de su desempeño en el **Estado de Situación Financiera, Estado del Resultado Integral, Estado de Flujos de Efectivo, Estado de Cambios en el Patrimonio** y las **Notas a los Estados Financieros**.
 
 2.  **NIC 2 - Inventarios:**
-    *   *Definición:* Medición del costo de los inventarios y reconocimiento como gasto.
+    * *   *Definición:* Medición del costo de los inventarios y reconocimiento como gasto.
     *   *Ejemplo (UEN Agricultura):* Cosecha de uvas.
-        *   *Escenario 1: Deterioro*
+        *   *Escenario 1: Costo vs. Valor Neto Realizable (VNR)*
+            *   Costo por kg de uva: $50
+            *   Precio de venta estimado: $60/kg
+            *   Costos de venta estimados: $10/kg
+            *   VNR = $60 - $10 = $50/kg
+            *   Como Costo = VNR, se valúa a $50/kg
+        *   *Escenario 2: Deterioro (Costo > VNR)*
             *   Costo por kg de uva: $50
             *   Precio de venta estimado: $55/kg
             *   Costos de venta estimados: $15/kg
             *   VNR = $55 - $15 = $40/kg
-            *   Pérdida por Deterioro: $10/kg
-        *   *Contabilización (ajuste al cierre):*
-            *   Débito: Pérdida por Deterioro de Inventario
-            *   Crédito: Provisión por Deterioro de Inventario
+            *   Como Costo ($50) > VNR ($40), se debe reconocer una pérdida por deterioro de $10/kg
+        *   *Contabilización (ajuste al cierre del Escenario 2):*
+            *   Débito: Pérdida por Deterioro de Inventario $10/kg * Cantidad total de uvas
+            *   Crédito: Provisión por Deterioro de Inventario $10/kg * Cantidad total de uvas
 
 3.  **NIC 7 - Estado de Flujos de Efectivo:**
     *   *Definición:* Clasificación de los flujos de efectivo por actividades.
@@ -66,40 +77,7 @@
             *   Débito: Activo por Impuesto Diferido $1,250
             *   Crédito: Ingreso por Impuesto a las Ganancias $1,250
 
-7.  **NIC 19 - Beneficios a los Empleados:**
-    *   *Definición:* Tratamiento de todos los beneficios a los empleados.
-    *   *Ejemplo:* (El cálculo del pasivo por beneficios definidos es complejo y generalmente requiere un actuario).
-        *   *Contabilización (ejemplo simplificado, sueldo):*
-            *   Débito: Gasto por Sueldos
-            *   Crédito: Sueldos por Pagar
-            *   Crédito: Retenciones por Pagar (Impuestos, AFP, etc.)
-
-8.  **NIC 21 - Moneda Extranjera:**
-    *   *Definición:* Incluir transacciones en moneda extranjera en los estados financieros.
-    *   *Ejemplo (UEN Software):* Venta de licencias en USD.
-        *   *Ejemplo:* Venta de Licencia por $10,000 USD, Tipo de Cambio a la Fecha de Venta: $800 CLP/USD
-            *   *Contabilización Inicial:*
-                *   Débito: Cuentas por Cobrar (USD) $8,000,000
-                *   Crédito: Ingresos por Ventas $8,000,000
-            *   *Escenario al Cierre:* El tipo de cambio es ahora $820 CLP/USD.
-            *   *Ajuste:* Ganancia por Diferencia de Cambio = $10,000 USD * ($820 - $800) = $200,000
-            *   *Contabilización al Cierre:*
-                *   Débito: Cuentas por Cobrar (USD) $200,000
-                *   Crédito: Ganancia por Diferencia de Cambio $200,000
-
-9.  **NIC 23 - Costos por Préstamos:**
-    *   *Definición:* Tratamiento de los costos por préstamos.
-    *   *Ejemplo (UEN Inmobiliaria):* Intereses capitalizados en la construcción de un edificio.
-        *   *Ejemplo:* Intereses capitalizables: $50,000
-        *   *Contabilización:*
-            *   Débito: Edificio en Construcción $50,000
-            *   Crédito: Intereses por Pagar $50,000
-
-10. **NIC 24 - Partes Relacionadas:**
-    *   *Definición:* Revelación de información sobre relaciones y transacciones con partes relacionadas.
-    *   *Ejemplo:* Arrendamiento a una empresa controlada por un accionista. (La contabilización sería normal, pero se revela la relación).
-
-11. **NIC 16 - Propiedades, Planta y Equipo (PP&E), NIC 36 - Deterioro del Valor de los Activos, NIC 37 - Provisiones, Pasivos y Activos Contingentes (Agrupadas por relación):**
+7. **NIC 16 - Propiedades, Planta y Equipo (PP&E), NIC 36 - Deterioro del Valor de los Activos, NIC 37 - Provisiones, Pasivos y Activos Contingentes (Agrupadas por relación):**
     *   *Definición NIC 16:* Reconocimiento, medición, depreciación de activos fijos.
     *   *Definición NIC 36:* Asegurar que los activos no estén contabilizados por un importe superior a su importe recuperable.
     *   *Definición NIC 37:* Cuándo reconocer y cómo medir una provisión.
@@ -134,7 +112,46 @@
             *   Débito: Gasto por Demanda Legal $30,000
             *   Crédito: Provisión para Demandas Legales $30,000
 
-12. **NIC 38 - Activos Intangibles:**
+8. **NIC 17 - Arrendamientos:** **Reemplazada por NIIF 16**
+
+9. **NIC 18 - Ingresos de Actividades Ordinarias:** **Reemplazada por NIIF 15**
+
+10.  **NIC 19 - Beneficios a los Empleados:**
+    *   *Definición:* Tratamiento de todos los beneficios a los empleados.
+    *   *Ejemplo:* (El cálculo del pasivo por beneficios definidos es complejo y generalmente requiere un actuario).
+        *   *Contabilización (ejemplo simplificado, sueldo):*
+            *   Débito: Gasto por Sueldos
+            *   Crédito: Sueldos por Pagar
+            *   Crédito: Retenciones por Pagar (Impuestos, AFP, etc.)
+
+11.  **NIC 21 - Moneda Extranjera:**
+    *   *Definición:* Incluir transacciones en moneda extranjera en los estados financieros.
+    *   *Ejemplo (UEN Software):* Venta de licencias en USD.
+        *   *Ejemplo:* Venta de Licencia por $10,000 USD, Tipo de Cambio a la Fecha de Venta: $800 CLP/USD
+            *   *Contabilización Inicial:*
+                *   Débito: Cuentas por Cobrar (USD) $8,000,000
+                *   Crédito: Ingresos por Ventas $8,000,000
+            *   *Escenario al Cierre:* El tipo de cambio es ahora $820 CLP/USD.
+            *   *Ajuste:* Ganancia por Diferencia de Cambio = $10,000 USD * ($820 - $800) = $200,000
+            *   *Contabilización al Cierre:*
+                *   Débito: Cuentas por Cobrar (USD) $200,000
+                *   Crédito: Ganancia por Diferencia de Cambio $200,000
+
+12.  **NIC 23 - Costos por Préstamos:**
+    *   *Definición:* Tratamiento de los costos por préstamos.
+    *   *Ejemplo (UEN Inmobiliaria):* Intereses capitalizados en la construcción de un edificio.
+        *   *Ejemplo:* Intereses capitalizables: $50,000
+        *   *Contabilización:*
+            *   Débito: Edificio en Construcción $50,000
+            *   Crédito: Intereses por Pagar $50,000
+
+13.  **NIC 24 - Partes Relacionadas:**
+    *   *Definición:* Revelación de información sobre relaciones y transacciones con partes relacionadas.
+    *   *Ejemplo:* Arrendamiento a una empresa controlada por un accionista. (La contabilización sería normal, pero se revela la relación).
+
+
+
+14. **NIC 38 - Activos Intangibles:**
     *   *Definición:* Tratamiento contable de activos intangibles.
     *   *Ejemplo (UEN Software):* Desarrollo de un nuevo software.
         *   *Ejemplo:* Costos de Desarrollo Capitalizados: $100,000, Vida Útil: 5 años, Amortización Lineal = $20,000/año
@@ -142,28 +159,82 @@
             *   Débito: Gasto por Amortización $20,000
             *   Crédito: Amortización Acumulada $20,000
 
-13. **NIC 40 - Propiedades de Inversión:**
+15. **NIC 40 - Propiedades de Inversión:**
     *   *Definición:* Tratamiento contable de propiedades mantenidas para obtener rentas o plusvalías.
     *   *Ejemplo:* Edificio comprado para arrendar. (Dependiendo de la política contable, puede medirse al costo o al valor razonable).
 
-14. **NIC 41 - Agricultura:**
+16. **NIC 41 - Agricultura:**
     *   *Definición:* Tratamiento contable para la actividad agrícola.
     *   *Ejemplo:* Medición de activos biológicos (árboles frutales) a su valor razonable menos los costos de venta.
 
-### **NIIF/IFRS Clave - Resumen con Ejemplos**
+### **NIIF/IFRS Clave - Resumen con Ejemplos y Contabilizaciones**
 
 *   **NIIF 3 - Combinaciones de Negocios:**
     *   *Definición:* Contabilización de una adquisición.
-    *   *Ejemplo:* El holding adquiere una nueva empresa.
+    *   *Ejemplo:* El holding adquiere una nueva empresa (UEN Minera).
+        *   *Valor Razonable de Activos Netos Identificables Adquiridos:* $800,000
+        *   *Precio Pagado:* $1,000,000
+        *   *Plusvalía (Goodwill):* $1,000,000 - $800,000 = $200,000
+        *   *Contabilización:*
+            *   Débito: Activos (Valor Razonable) $800,000
+            *   Débito: Plusvalía (Goodwill) $200,000
+            *   Crédito: Pasivos (Valor Razonable) (Valor de los pasivos de la minera)
+            *   Crédito: Banco (Efectivo Pagado) $1,000,000
+
 *   **NIIF 5 - Activos No Corrientes Mantenidos para la Venta y Operaciones Discontinuadas:**
     *   *Definición:* Clasificación y medición de activos para la venta.
-    *   *Ejemplo:* Una UEN se clasifica como mantenida para la venta.
+    *   *Ejemplo:* La UEN Agricultura se clasifica como mantenida para la venta.
+        *   *Importe en Libros de la UEN Agricultura:* $500,000
+        *   *Valor Razonable Menos Costos de Venta:* $450,000
+        *   *Pérdida por Deterioro (si el valor razonable menos costos de venta es menor que el importe en libros):* $50,000
+        *   *Contabilización:*
+            *   Débito: Pérdida por Deterioro $50,000
+            *   Crédito: Activos de la UEN Agricultura $50,000
+            *   *Reclasificación:*
+            *   Débito: Activos No Corrientes Mantenidos para la Venta $450,000
+            *   Crédito: Activos de la UEN Agricultura $450,000
+
 *   **NIIF 9 - Instrumentos Financieros:**
     *   *Definición:* Clasificación y medición de activos y pasivos financieros.
-    *   *Ejemplo:* Inversiones en bonos.
+    *   *Ejemplo:* Inversiones en bonos (clasificados como "a valor razonable con cambios en resultados").
+        *   *Costo de los Bonos:* $100,000
+        *   *Valor Razonable al Final del Periodo:* $110,000
+        *   *Ganancia por Valor Razonable:* $10,000
+        *   *Contabilización:*
+            *   Débito: Inversiones en Bonos $10,000
+            *   Crédito: Ganancia por Valuación de Instrumentos Financieros $10,000
+
 *   **NIIF 15 - Ingresos de Contratos con Clientes (Reemplaza NIC 18):**
     *   *Definición:* Reconocimiento de ingresos.
-    *   *Ejemplo (UEN Software):* Venta de una licencia de software con soporte técnico continuo. (Ver detalles en la versión anterior).
+    *   *Ejemplo (UEN Software):* Venta de una licencia de software con soporte técnico continuo.
+        *   *Pasos:*
+            *   Identificar el contrato.
+            *   Identificar las obligaciones de desempeño (licencia y soporte).
+            *   Determinar el precio de la transacción: $120,000 ($100,000 por la licencia y $20,000 por el soporte anual durante 2 años)
+            *   Asignar el precio a las obligaciones de desempeño.
+            *   *Reconocer el ingreso:*
+                *   *Al entregar la licencia:*
+                    *   Débito: Banco/Cuentas por Cobrar $100,000
+                    *   Crédito: Ingresos por Licencia de Software $100,000
+                *   *Anualmente por el soporte técnico:*
+                    *   Débito: Banco/Cuentas por Cobrar $10,000
+                    *   Crédito: Ingresos por Soporte Técnico $10,000 (por cada año)
+
 *   **NIIF 16 - Arrendamientos (Reemplaza NIC 17):**
     *   *Definición:* Contabilización de arrendamientos.
-    *   *Ejemplo (UEN Inmobiliaria):* Arrendamiento de un edificio de oficinas. (Ver detalles en la versión anterior).
+    *   *Ejemplo (UEN Inmobiliaria):* Arrendamiento de un edificio de oficinas.
+        *   *Ejemplo:*
+            *   Plazo del Arrendamiento: 5 años
+            *   Pago Anual: $100,000
+            *   Tasa de Descuento Implícita: 5%
+            *   Valor Presente de los Pagos (aproximado): $432,948
+        *   *Contabilización Inicial:*
+            *   Débito: Activo por Derecho de Uso $432,948
+            *   Crédito: Pasivo por Arrendamiento $432,948
+        *   *Contabilización Anual (Pago y Depreciación):*
+            *   Débito: Gasto por Intereses (calculado sobre el pasivo)
+            *   Débito: Pasivo por Arrendamiento (reducción del pasivo)
+            *   Crédito: Banco $100,000 (pago anual)
+            *   Débito: Gasto por Depreciación (del Activo por Derecho de Uso)
+            *   Crédito: Depreciación Acumulada (del Activo por Derecho de Uso)
+
