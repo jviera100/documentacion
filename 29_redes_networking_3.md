@@ -29,6 +29,8 @@ conversión del número decimal a su equivalente binario de 8 bits.  La tabla or
 
 | Bit (2^0) | Bit (2^1) | Bit (2^2) | Bit (2^3) | Bit (2^4) | Bit (2^5) | Bit (2^6) | Bit (2^7) |
 |---|---|---|---|---|---|---|---|
+| Base: 2  | Base: 2  | Base: 2  | Base: 2  | Base: 2  | Base: 2  | Base: 2  | Base: 2  |
+| Exponente: 0 | Exponente: 1 | Exponente: 2 | Exponente: 3 | Exponente: 4 | Exponente: 5 | Exponente: 6 | Exponente: 7 |
 |  Posición: 1 | Posición: 2 | Posición: 4 | Posición: 8 | Posición: 16 | Posición: 32 | Posición: 64 | Posición: 128 |
 |  0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
 
@@ -41,4 +43,4 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 *   128 (2^7)
 *   64 (2^6)
 
-128 + 64 = 192.  Por lo tanto, los bits correspondientes a esas posiciones son 1, y los demás son 0.
+128 + 64 = 192.  Por lo tanto, los bits correspondientes a esas posiciones son 1, y los demás son 0.  El resultado binario se lee de derecha a izquierda dentro de la tabla.
