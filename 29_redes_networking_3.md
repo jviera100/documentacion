@@ -10,9 +10,8 @@ La tabla ilustra el proceso de conversión del número decimal 192 a su equivale
 
 **Tabla de Conversión (Horizontal):**
 
-|   | Bit (2^7) | Bit (2^6) | Bit (2^5) | Bit (2^4) | Bit (2^3) | Bit (2^2) | Bit (2^1) | Bit (2^0) |
-|---|---|---|---|---|---|---|---|---|
 | **Valor Decimal** | 192 |   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|
 | **Base** | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |
 | **Exponente** | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 | **Posición** | 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1 |
