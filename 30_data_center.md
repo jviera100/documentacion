@@ -4,29 +4,75 @@
 
 *   ¿Qué es un Data Center? Definición y Componentes.
 *   Importancia de los Data Centers en la Infraestructura Tecnológica Actual.
-*   **Estándares ANSI/TIA-942:** Clasificación, Criterios, Normas.
+*   **Estándares ANSI/TIA-942:** Clasificación, Criterios, Normas, **versión 2017 (instalaciones)**
 
 ### 2. Fundamentos de los Estándares ANSI/TIA-942
 
 *   **¿Qué es un Estándar?**
-    *   Definición según ISO: acuerdos documentados con especificaciones técnicas.
-    *   Regulan la transmisión en sistemas de comunicación.
+    *   Definición (ISO): Acuerdos documentados con especificaciones técnicas, reglas, guías, definiciones para asegurar el cumplimiento de materiales, productos, procesos y servicios.
+    *   En Telecomunicaciones: Normas y recomendaciones técnicas que regulan la transmisión en los sistemas de comunicaciones. Deben estar documentados.
+*   **¿Qué es Criterio?**
+         Regla o norma conforme a la cual se establece un juicio o se toma una determinación:
+              1.Regla o norma conforme a la cual se establece un juicio o se toma una determinación: Ej.
+                    “El ascenso se otorgará de acuerdo con el criterio de antigüedad en la
+                             empresa”.
+              2. Opinión, juicio o decisión que se adopta sobre una cosa: Ej.
+                  “Según el criterio del árbitro, no hubo falta en la jugada”.
+              3. Capacidad para adoptar esta opinión, juicio o decisión: Ej.
+                   “No entiendo de leyes y carezco de criterio para juzgar el caso”.
+
+*   **¿Criterio Estándar?:** Deberá (obligación) o Debería (sugerido).
+
 *   **Tipos de Estándares:**
-    *   **De Facto:** Alta aceptación pero no oficiales.
-    *   **De Jure:** Definidos por organizaciones oficiales (ITU, OSI, ANSI).
-    *   **Propietarios:** Propiedad de una corporación.
+    *   **De Facto:** Alta aceptación pero no oficiales (penetración en el mercado).
+    *   **De Jure:** Definidos por organizaciones oficiales (ITU, OSI, ANSI); desarrollados con contribuciones de múltiples áreas del conocimiento.
+        *   *Diferencias con "De Facto":* son promulgados por grupos de gente de diferentes aéreas del conocimiento que contribuye con ideas, recursos, y otros elementos para ayudar al desarrollo y definición de un estándar especifico.
+    *   **Propietarios:** Propiedad absoluta de una corporación, uso limitado. Se usa este esquema para "atar" al cliente a sus productos.
+
+*   **¿Criterios de Especificación?:**
+
+            Dos categorías de criterios se especifican; obligatoria y de asesoramiento. Los
+        requisitos obligatorios son designados por la palabra “deberá”; requisitos de
+       asesoramiento son designados por las palabras “debería”, “puede” o “deseable” que se
+        utilizan indistintamente en la presente Norma.
+
+                 Criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
+
 *   **Organismos de Estándares:**
-    *   Organizaciones Oficiales: ITU, NEC, ANSI, EIA, TIA.
+    *   Organizaciones Oficiales: Integrados por consultores independientes y representantes gubernamentales. Ejemplos: ITU, NEC, ANSI, EIA, TIA.
+        *   Colocar aquí Figura 4: Resumen de organismo ofíciales (Fuente: MVEL 2019)
     *   Consorcios.
     *   Fabricantes.
+        *   Colocar aquí Figura 3: Tipos de Estándar (Fuente: MVEL 2019)
+*   **Organizaciones Oficiales clave**
+    *   **ITU (Unión Internacional de Telecomunicaciones):** Desarrolla estándares para telefonía, telegrafía, interfaces, redes. La ITU-T migra desde la más conocida CCITT.
+    *   **NEC (National Electric Code):** Estándar de seguridad para infraestructura, define prácticas de instalación eléctrica. Se conoce como ANSI/NFPA-70.
+    *   **ANSI (American National Standards Institute):** Coordina la estandarización voluntaria en el sector privado de EE.UU.
+    *   **EIA (Electronics Industry Association):** Desarrolla normas para componentes electrónicos, electrónica del consumidor, información electrónica y telecomunicaciones.
+    *   **TIA (Telecommunications Industry Association):** Desarrolla normas de cableado industrial voluntario.
 *   **Versiones del Estándar ANSI/TIA-942:**
     *   Original (2005), Mejoras (2012), Vigente (2017).
+    *   ANSI/TIA-942-A (Agosto 2012): Telecommunications Infrastructure Standard for Data Centers (ANSI/TIA-942-A-2012 APROBADO: AGOSTO 2, 2012)
+    *   El estándar ANSI/TIA-942-A reemplaza a ANSI/TIA-942 (Abril 2005) y sus adendas, incorporando su contenido técnico.
+        * Colocar aquí Figura 6: Versión liberada. (Fuente: TIA)
+        * link estándar Link DC
+*   **Aprobación de la Norma ANSI/TIA-942-A:**
+    *   Aprobada por el Subcomité TR 42.2 de la TIA, el Comité TR 42.2 de Ingeniería Técnica de TIA y el ANSI. Se revisa cada 5 años.
+*    **Relación con Otros Estándares TIA:**
+        * ANSI/TIA-568-C.0, Generic Telecommunications Cabling for Customer Premises
+        * ANSI/TIA-568-C.1, Commercial Building Telecommunications Cabling Standard
+        * ANSI/TIA-568-C.2, Balanced Twisted-Pair Cabling and Components
+        * ANSI/TIA-568-C.3, Optical Fiber Cabling Components Standard
+        * ANSI/TIA-569-C, Telecommunications Pathways and Spaces
+        * ANSI/TIA-606-B, Administration Standard for Telecommunications Infrastructure
+        * ANSI/TIA-607-B, Telecommunications Bonding and Grounding (Earthing) for Customer Premises
+        * ANSI/TIA-758-B, Customer-Owned Outside Plant Telecommunications Infrastructure Standard
+
 *   **Propósito y Alcance del Estándar:**
     *   Requisitos y directrices para el diseño e instalación de Data Centers.
     *   Infraestructura de telecomunicaciones para Data Centers de cualquier tamaño.
-*   **Especificación de Criterios:**
-    *   **Deberá (Obligación):** Requisitos mínimos aceptables.
-    *   **Debería (Sugerido):** Mejoran el rendimiento general.
+    *   Considera el diseño desde las primeras etapas de la construcción.
+*   **Definición de Términos Clave:** Incluir definición del estándar (2.2 Definición de términos).
 
 ### 3. Componentes Clave de la Infraestructura de un Data Center
 
@@ -34,290 +80,278 @@ Un Data Center se puede dividir en 4 grandes categorías de infraestructura:
 
 #### 3.1. Infraestructura de Soporte y Espacios Físicos (Estructura del edificio)
 
-*   **Piso Técnico (Raised Floor):**
-    *   Superficie elevada para ocultar cables y distribuir aire.
-*   **Pasillos Fríos y Calientes:**
-    *   Separación térmica en la disposición de racks.
-*   **Shafts:**
-    *   Conductos verticales u horizontales para cables, aire acondicionado o tuberías.
-*   **Elevadores y Montacargas:**
-    *   Para mover equipos pesados dentro del Data Center.
+*   **Piso Técnico (Raised Floor):** Superficie elevada para ocultar cables y distribuir aire.
+*   **Pasillos Fríos y Calientes:** Separación térmica en la disposición de racks.
+*   **Shafts (Conductos cerrados):**
+        *Conducto vertical (ducto vertical o pasillo técnico)*
+            Sistemas entrenamiento (piso acceso)
+             elavadornes o monta Cargas
+        * Pueden ser para cables, sistemas de enfriamiento, u otros servicios.
+*   **Elevadores y Montacargas:** Para mover equipos pesados dentro del Data Center.
 
-    Ejemplo: El piso técnico puede actuar como un shaft horizontal si se usa para enfriamiento.
+    *Ejemplo:* El piso técnico puede actuar como un shaft horizontal si se usa para enfriamiento.
 
 #### 3.2. Infraestructura de Cableado y Distribución de Energía (Soportes para cables)
 
-*   **Cable Tray (Bandejas Portacables):**
-    *   Estructuras abiertas para organizar cables de red o energía.
-*   **Overhead Cabling (Cableado Aéreo):**
-    *   Cables suspendidos en racks sobre los servidores.
-*   **Power Distribution Units (PDU):**
-    *   Regletas que distribuyen energía a los racks.
+*   **Cable Tray (Bandejas Portacables):** Estructuras abiertas para organizar cables de red o energía.
+*   **Overhead Cabling (Cableado Aéreo):** Cables suspendidos en racks sobre los servidores.
+*   **Power Distribution Units (PDU):** Regletas que distribuyen energía a los racks.
+*   * Soportes cableados
+   * Sistema distribucion de Aine
 
-    Diferencia clave:
+    *Diferencia Clave:*
 
     *   Cable Tray y Overhead son solo formas de organizar los cables.
     *   Shafts son conductos cerrados que protegen y transportan cables dentro del edificio.
 
 #### 3.3. Infraestructura de Equipos Tecnológicos (Dónde van los servidores)
 
-*   **Racks:**
-    *   Estructuras metálicas donde se instalan servidores y switches.
-*   **Cabinas de almacenamiento:**
-    *   Equipos dedicados a almacenar datos a gran escala.
-*   **Switches y Routers:**
-    *   Equipos de red que gestionan el tráfico de datos.
+*   **Racks:** Estructuras metálicas donde se instalan servidores y switches.
+            *  Sala de en dehadones = sala de RACK
+            *  distancia entre RACK 60CM -80CM (anden = distancia entre rack y muro)
+*   **Cabinas de almacenamiento:** Equipos dedicados a almacenar datos a gran escala.
+*   **Switches y Routers:** Equipos de red que gestionan el tráfico de datos.
 
-    Diferencia clave:
+    *Diferencia Clave:*
 
     *   Los racks son el lugar físico donde se montan los servidores.
     *   Los cables de datos y energía llegan a los racks desde los cable trays o overhead cabling.
 
 #### 3.4. Infraestructura de Climatización y Seguridad (Enfriamiento y protección)
 
-*   **CRAC / CRAH (Unidades de Enfriamiento):**
-    *   Equipos que generan aire frío.
-*   **Raised Floor (Piso Técnico):**
-    *   Se usa para distribuir aire frío debajo de los racks.
-*   **Sistemas de Supresión de Incendios:**
-    *   Rociadores especiales o gas inerte.
+*   **CRAC / CRAH (Unidades de Enfriamiento):** Equipos que generan aire frío.
+*   **Raised Floor (Piso Técnico):** Se usa para distribuir aire frío debajo de los racks.
+*   **Sistemas de Supresión de Incendios:** Rociadores especiales o gas inerte.
 
-    Diferencia clave:
+    *Diferencia Clave:*
 
-    *   El enfriamiento puede ser por piso elevado (raised floor) o ductos overhead.
+    *   El enfriamiento puede ser por piso técnico o ductos overhead.
     *   El shaft puede usarse para distribuir aire, pero no siempre lo hace.
 
-### 4. Buenas Prácticas y Diseño de Cableado en Racks
-
+### 4. Diseño y Montaje en Rack: Prácticas Recomendadas
+*Colocar aquí diapositivas de la 13 a la 16*
 *   **Organización del Cableado:**
     *   Utilizar organizadores verticales y horizontales para mantener el cableado ordenado.
-    *   Evitar el uso de amarras plásticas; preferir velcro para no dañar los cables.
-*   **Ancho de Banda y Espacio:**
-    *   Andén ancho de 80 cm para facilitar el movimiento y mantenimiento.
+    *   **RACK con velcro ✓ NO Amarras Plásticas ✗**
+*   **Ancho de Banda y Espacio:** Andén ancho de 80 cm (estándar) para facilitar el movimiento y mantenimiento.
+
 *   **Jerarquía de Colores para Cables:**
-    *   Núcleo (Core): Azul
-    *   Distribución: Rojo
-    *   Acceso: Amarillo, Blanco y Gris
-*   **Ejemplos Visuales:** (Imágenes de malas y buenas prácticas se incluirían aquí - descripción del contenido)
-    *   Mala práctica: cables desorganizados, amarras plásticas ajustadas.
-    *   Buena práctica: cables ordenados con velcro, rutas claras y accesibles.
+    *   Switch Núcleo (Core): Blanco = datos.
+    *   Switch Distribución: Gris = datos. (entre 8 a 16 bocas y puerta de entrada)
+    *   Switch Acceso: Azul = datos. (entre 1 a 24 bocas y 2 puerta de entrada)
+    *   Voz : ROJO
+    *   Misc: Amarillo (alarmas / CCTVCamaras seguridad)
+        * Conhtno - Centro Operación Conhtno
+      *  NOC - Centro Operacion red
+
 *   **Diseño de Aterramiento:**
-    *   Preparación de cancha
-    *   Aterramientos
-    *   Aterramientos pilar
-    *   Aterramientos base de piso falso
-    *   Aterramientos PDU
-    *   TGD: Talero general de distribución
-    *   Alcance de la norma para grandes edificios. Estándar JSTD-607-A , pp. 6-7
+    * Preparación de cancha, Aterramientos pilar, Aterramientos base de piso falso, Aterramientos PDU, TGD (Talero general de distribución), Alcance de la norma (JSTD-607-A).
+        *  Colocar aquí figuras Aterramientos
 
 ### 5. Electricidad en el Data Center
+Colocar aquí diapositivas de la 47 a la 53*
 
 *   **Fuentes de Energía:**
-    *   Aterramiento: conexión a tierra para seguridad y rendimiento.
-    *   Generadores: respaldo en caso de fallas de energía.
-    *   UPS (Uninterruptible Power Supply): alimentación continua para evitar interrupciones.
-*   **Aterramiento:**
-    *   Aterramientos pilar
-    *   Aterramientos base de piso falso
-    *   Aterramientos PDU
+    * UPS = Fuente de Alimentacion interrupida (bateria externa) y Proteccion Fluctuaciones de Voltaje
+    *   Aterramiento: Conexión a tierra para seguridad y rendimiento.
+    *   Generadores: Respaldo en caso de fallas de energía.
+        * Motor diésel Cat®
+              • Diseñado y optimizado para un bajo consumo de combustible.
+              • Rendimiento confiable probado en miles de aplicaciones en todo el mundo
+           * Conjunto de Grupos generadores
+              • Acepta el 100% de carga en bloque en un solo paso y cumple con otros requisitos
+                   de carga NFPA 110.
+             • Cumple requisitos con la norma ISO 8528-5 G3.
+            • Confiabilidad verificada mediante vibración torsional, consumo de combustible,
+                 consumo de aceite, rendimiento transitorio y pruebas de resistencia.
+     * *Colocar aquí Figura. Generador Diesel Cat® 3512
+Fuente : CAT*
+*Colocar aquí  Figura. Generador
+Fuente : <https://cgcweb.cl/pages/generadores-electricos>*
+    *   UPS (Uninterruptible Power Supply): Alimentación continua para evitar interrupciones.
 
-#### Características UPS
-
-*   Battery Type : VRLA (batería de ácido-plomo regulada por válvula)
-*   Typical recharge time : 3 hour(s)
-*   Replacement Battery : RBC55
-*   RBC Quantity : 2
-*   Typical Backup Timeat Half Load : 26.7 minutes (2000 Watts)
-*   Typical Backup Timeat Full Load: 9.4 minutes (4000 Watts)
-*   Runtime Chart : Smart-UPS
-
+        *  Colocar aquí  *Características UPS:*
+           *  Battery Type: VRLA (batería de ácido-plomo regulada por válvula).
+            * Typical Recharge Time: 3 hour(s).
+            * Replacement Battery: RBC55.
+            * RBC Quantity: 2.
+            * Typical Backup Time at Half Load: 26.7 minutes (2000 Watts).
+            * Typical Backup Time at Full Load: 9.4 minutes (4000 Watts).
+           * Runtime Chart: Smart-UPS.
+        * Colocar aquí  *Figura. Unidad de sistema potencia (UPS) Unidad
+      Smart-UPS RT de APC, 20 kVA y 230 V, para rack
+             Fuente:*
+         Colocar aquí  *Figura. Unidad de sistema potencia (UPS) en Rack
+          Fuente: APC*
+              Micro Data Center 43 U
+            <https://www.youtube.com/watch?v=uRjDRua94sM>
+         *Colocar aquí Figura. Frontis UPS
+           Fuente : Data Sheet de marca APC capacidad de 5KVA
+           Colocar aquí Figura. Posterior UPS
+            Fuente : Data Sheet de marca APC capacidad de 5KVA*
+         *Colocar aquí Figura 03. Marca KOLFF
+              Fuente : <https://www.kolff-e.com/>
+<https://www.youtube.com/watch?v=EqEyDEMp0mM&t=2s>*
 *   **Emisiones de Equipos:** Control del ruido electromagnético.
-
-####  Protección contra incendios:
-
-*   Los sistemas de protección contra incendios y los extintores portátiles deben cumplir con la NFPA-75. Los sistemas de rociadores en las salas de computación deben ser sistemas de acción previa.
-
-####  Conexión y puesta a tierra (conexión a tierra):
-
-*   Consulte ANSI / TIA-607-B para conocer los requisitos de conexión y conexión a tierra para salas de computadoras, gabinetes de equipos y racks.
-
-####  Poder Eléctrico:
-
-*   Los circuitos de suministro separados que sirven a la computadora se proporcionarán y terminarán en su propio panel o paneles eléctricos. La sala de computadoras debe tener tomacorrientes dúplex (120 V 20 A) para herramientas eléctricas, equipos de limpieza y equipos que no sean adecuados para enchufarlos en las regletas de alimentación del gabinete del equipo. Los tomacorrientes no deben estar en las mismas unidades de distribución de energía (PDU) o paneles eléctricos que los circuitos eléctricos utilizados para los equipos de telecomunicaciones y computadoras en la habitación. Los tomacorrientes deben estar separados a una distancia de 3,65 m (12 pies) a lo largo de las paredes de la sala de computadoras, o más cerca si así lo especifican las ordenanzas locales, y se puede alcanzar mediante un cable de 4,5 m (15 pies) (según los Artículos 210 y 645 de NEC).
+        *Colocar aquí Figura. Sistema de control ambiental
+             Fuente : Sistema NEC en WEB*
+              *Colocar aquí Figura. Condiciones de emisión
+              Control ambiental
+               Recorrido Virtual Datacenter Control Ambiental
+                <https://www.youtube.com/watch?v=2qneyAAIoEo>
+    *Protección contra incendios:* Cumplir con NFPA-75 para sistemas de protección y extintores. Usar sistemas de acción previa para rociadores.
+    *Conexión y puesta a tierra:* Cumplir con ANSI / TIA-607-B para conexión y tierra de salas, gabinetes y racks.
+    *Poder Eléctrico:* Circuitos separados a paneles eléctricos propios, tomacorrientes dúplex (120 V 20 A) separados en PDU/paneles diferentes a los de equipos.
 
 ### 6. Control de Temperatura y Humedad
+Colocar aquí diapositivas de la 54 a la 60
+*    Rango Temperatura: 18°-27°C Humedad: 40%-60%
 
 *   Importancia de mantener condiciones óptimas.
 *   Parámetros Operacionales:
     *   Temperatura de bulbo seco: 20 °C a 25 °C.
     *   Humedad relativa: 40% a 55%.
     *   Máxima Rocío: 21 °C.
-    *   Máx. velocidad de cambio: 5 °C/Hr.
-*   Monitoreo y control del sistema de refrigeración.
-El enrutamiento del cableado de
+    *   Velocidad de cambio: 5 °C/Hr.
+  Colocar aquí *Figura 3 - Requerimientos de
+       temperatura y humedad para
+              espacios de telecomunicaciones.
+             Fuente : ANSI/TIA-569-C pp.14*
 
-telecomunicaciones dentro de los
-
+*   El enrutamiento del cableado de
+ telecomunicaciones dentro de los
 gabinetes, racks y otros sistemas
-
 de gabinetes no debe obstaculizar
-
 el enfriamiento adecuado del
-
 equipo dentro de los gabinetes
-
 (por ejemplo, evitar el
-
 enrutamiento del cableado frente a
-
 los respiraderos). Se debe
-
 mantener un flujo de aire
-
 suficiente según lo requiera el
-
 fabricante del equipo.
-
+Colocar aquí *Figura 8: Ejemplos de cables de enrutamiento y contención del flujo de aire
+Fuentes :Estándar ANSI/TIA-942-A , pp. 20*
+Piso de Acceso = Shaft Horizontal
 ### 7. Arquitectura Lógica de un Data Center
-
+Colocar aquí Diapositivas de la 63 a la 71
 *   **Capas de la Red:**
-    *   Núcleo (Core): Alta velocidad y capacidad.
-    *   Distribución: Agregación del tráfico.
-    *   Acceso: Conexión a los servidores.
+        * Núcleo : Switch Core.
+        * Distribución :Switch Distribución.
+         * Acceso : Switch Acceso +2 PE
+        * Núcleo (Core): Alta velocidad y capacidad.
+        * Distribución: Agregación del tráfico.
+        * Acceso: Conexión a los servidores.
+Colocar aquí diagrama de niveles de SWITCH RACK que creo al inicio
 *   **Switches:**
     *   Definición y función de switches en cada capa.
-    *   Switches tienen bocas y una puerta de entrada
+    *   Los switches tienen "bocas" (puertos) y una "puerta de entrada" (interfaz de administración).
 *   **Cableado Horizontal:** Top-of-Rack (ToR) vs End-of-Row (EoR).
 *   **Latencia:**
-    *   Fibra óptica vs Satélite: ventajas de la fibra óptica en términos de latencia.
+          * Sobre 10ms
+               * Sobne 10MS satelital.
+               *Fibra optica entre 1as y 65ms
+    *   Fibra óptica vs Satélite: Ventajas de la fibra óptica en términos de latencia: menor, mayor velocidad y ancho de banda, retransmisiones terrestres directas (sin el viaje al espacio).
+*   **Tecnología de la Fibra Óptica:** Transmisión de datos mediante pulsos de luz a través de hilos delgados de vidrio o plástico, la luz se refleja internamente (reflexión interna total) manteniendo la señal y transmitiendo a grandes distancias con poca pérdida.
+* *DNS = Agenda de IP y Nombre de Dominio*
 
-        * La latencia en fibra optica es mucho menor que la del Satelite
-
-        *La luz viaja por la fibra optica con una velocidad considerablemente superior a la que puede viajar la señal de un satelite.
-        *Fibra utiliza retransmisiones terrestres directas, mientras que el satélite implica un viaje ida y vuelta al espacio, lo que añade un retraso considerable.
-        *La fibra optica ofrece mayor ancho de banda y por lo tanto una menor latencia que la comunicacion satelital.
-*   **Tecnología de la Fibra Óptica:**
-    *   Cómo funciona la transmisión de datos por luz.
-
-        * La fibra optica funciona mediante la transmisión de pulsos de luz a traves de hilos delgados de vidrio o plastico. Cuando la luz entra en la fibra, se refleja internamente (reflexión interna total) manteniendo la señal luminica confinada dentro del hilo y permitiendo que se transmita a grandes distancias con muy poca perdida de señal.
+*  *ICANN = Institución administra IP*
+*  *Coc = Centro Operación Conhtno*
+*  *NOC = Centro Operacion red*
 
 ### 8. Infraestructura como Servicio (IaaS)
-
-*   **CaaS (Communication as a Service):**
-    *   Ofrecer al cliente la capacidad de interacción y colaboración en tiempo real.
-*   **BDaaS (Database as a Service):**
-    *   Servicios de big data a través de la computación en nube.
-*   **NaaS (Network as a Service):**
-    *   Configurar, mantener y liberar la conectividad de la red como un servicio en la nube.
-*   **IaaS (Infraestructure as a Service):**
-    *   Capacidades de computación, almacenamiento y red para ejecutar aplicaciones.
-*   **PaaS (Platform as a Service):**
-    *   Ofrecer capacidades de tipo plataforma.
-*   **SaaS (Software as a Service):**
-    *   Ofrecer capacidades de tipo aplicación.
+Colocar Aquí diapositivas de la 73 a la 79
+*   **CaaS (Communication as a Service):** Ofrecer al cliente la capacidad de interacción y colaboración en tiempo real.
+*   **BDaaS (Database as a Service):** Servicios de big data a través de la computación en nube.
+*   **NaaS (Network as a Service):** Configurar, mantener y liberar la conectividad de la red como un servicio en la nube.
+*   **IaaS (Infraestructure as a Service):** Capacidades de computación, almacenamiento y red para ejecutar aplicaciones.
+*   **PaaS (Platform as a Service):** Ofrecer capacidades de tipo plataforma.
+*   **SaaS (Software as a Service):** Ofrecer capacidades de tipo aplicación.
 
 ### 9. Diseño e Implementación de Data Centers Virtuales
+Colocar Aquí diapositivas de la 81 a la 101
+*   **¿Qué es la Virtualización?** Crear servicios de TI útiles mediante recursos que normalmente se ejecutan en el hardware.
+*   **Herramientas de Virtualización:** Cisco Workload Optimization Manager, Schneider Electric EcoStruxure IT Expert, VMware vSphere 6.5, ManageEngine OpManager 12.3.
+*   **Problemas de Interconexión de Redes en la Computación en la Nube:** Coordinación de la virtualización, control de tecnologías de red heterogéneas, reconfiguración a la demanda.
+*   **Conceptos de Diseño e Implementación de un Data Center Virtual:**
+          *Definir metas y objetivos.
+           *Alcance del proyecto.
+           *Roles y responsabilidad
+         *Matriz de responsabilidad
+ * *Colocar aquí: Grafico 2.8 PMBOK6ta Edición*
 
-*   **¿Qué es la Virtualización?**
-    *   Crear servicios de TI útiles mediante recursos que normalmente se ejecutan en el hardware.
-*   **Herramientas de Virtualización:**
-    *   Cisco Workload Optimization Manager, Schneider Electric EcoStruxure IT Expert, VMware vSphere 6.5, ManageEngine OpManager 12.3.
-*   **Problemas de Interconexión de Redes en la Computación en la Nube:**
-    *   Coordinación de la virtualización.
-    *   Control de tecnologías de red heterogéneas.
-    *   Reconfiguración a la demanda.
-*    **Diseño y Planificación Data Center Virtual**
-    *Definir metas y objetivos.
-    *Alcance del proyecto.
-    *Roles y responsabilidad
-    *Matriz de responsabilidad
-*     **Control y Ejecución del Proyecto**
-      * Entender, profundizar y aplicar los conceptos del proceso de Planificación
-
-          * “Elementos de Control del proyecto”:
+*   **Control y Ejecución del Proyecto:**
+            *  Enfoque de Planificación: Se exploran aspectos de alcance, tiempo, costo, calidad, comunicaciones, recursos humanos, riesgos, adquisiciones y participación.
+ Colocar aquí:  Definición de equipos y roles. PMBOK6ta Edición
+            “Elementos de Control del proyecto”:
                * Comunicaciones
-               * Calidad Alcance
-               * Planificación
-               * Finanzas Riesgo
+                *Calidad Alcance
+                *Planificación
+                 *Finanzas Riesgo
                * Contrato
-               * Recursos
+                *Recursos
+         Colocar aquí: *Figura. Control y ejecución PMBOK6ta Edición*
 
-*  **Conceptos de Implementación**
-
-            • 1.-Brindar visibilidad y control sobre aplicaciones personalizadas del centro de datos.
-               * No solo sobre aplicaciones web como Facebook y Twitter y micro aplicaciones relacionadas que los
-                        dispositivos de seguridad del perímetro de Internet inspeccionan.
-             • 2.-Manejar flujos de tráfico asimétricos y transacciones de aplicaciones entre dispositivos y centros de datos.
-               *  La seguridad debe estar integrada en la estructura del centro de datos y no quedarse en el perímetro. Las
-                  soluciones perimetrales no pueden inspeccionar ni el tráfico de entrada y salida, ni los flujos de tráfico entre
-                  aplicaciones. Este último representa la mayor parte del tráfico del centro de datos de la actualidad. Si el
-                  tráfico de aplicaciones se debe enviar del perímetro del centro de datos al firewall de última generación para
-                  su inspección y, luego, se le debe redirigir a la capa de cómputo (en un bucle cerrado), la solución perjudica
-                  el flujo de tráfico dinámico que los centros de datos modernos requieren.
-
-            • 3.-Adaptarse a medida que los centros de datos evolucionan :
-               * Los modelos SDN, tanto físicos como virtuales, y de última generación.
-              • 4.-Abordar toda la secuencia del ataque: antes, durante y después de este.
-              • 5.-Proteger la totalidad de la red:
+    * **Conceptos de Implementación:**
+           *Visibilidad y control sobre aplicaciones personalizadas del centro de datos.
+               * Manejar flujos de tráfico asimétricos y transacciones de aplicaciones entre dispositivos y centros de datos.
+                  *Adaptarse a medida que los centros de datos evolucionan :
+                  *Abordar toda la secuencia del ataque: antes, durante y después de este.
+            * Proteger la totalidad de la red:
 
 *  **Aspectos importantes**
-            *  Lo que las organizaciones requieren es un equipo estrella, no un equipo de estrellas.
+
+           *  Lo que las organizaciones requieren es un equipo estrella, no un equipo de estrellas.
             *  Debes saber que controlas y a quien.
-            *  Los riegos son parte del Control.
+            * Los riegos son parte del Control.
             * Los indicadores te hablan , escúchalos.
             *  Debes actuar rápido, si tienes duda consultar al equipo.
 
-* * **Certificación**
-              * ¿Qué es certificar?
-              * ¿Qué certifico?
-              * ¿Como Certifico?
-              * ¿Cuándo Certifico?
-              * ¿Poque Certifico?
+#### 9.1 Cerficacion y Cierre
 
-* **Cierre del Proyecto**
-
-             *"Formalizar la aceptación del Proyecto”
-               * Realizar el Cierre Administrativo (Internos y Externos)
-               * Completando los requerimientos y entregables (Todos).
-             *"LECCIONES APRENDÍAS”
-             * ¿Qué fue bien hecho? y ¿Qué no se hizo?.
-              * Registra par futuros proyectos.
-              * Realizar una encuesta sobre el desempeño del equipo.
-              * Realizar métricas con datos objetivos.
-                         * Alcance
-                         * Costos
-                         * Plazo
-                         * Calidad
-             * Análisis de los resultados con altura de mira.
+* **Certificación**
+               * ¿Qué es certificar?
+                * ¿Qué certifico?
+                  * ¿Como Certifico?
+                    * ¿Cuándo Certifico?
+                    * ¿Poque Certifico?
+ *Plan de Cierre “Propósito”*
+   *      “Formalizar la aceptación del Proyecto”
+                   * Realizar el Cierre Administrativo (Internos y Externos)
+                  * Completando los requerimientos y entregables (Todos).
+ *”LECCIONES APRENDÍDAS”*
+                    * ¿Qué fue bien hecho? y ¿Qué no se hizo?.
+                     * Registra par futuros proyectos.
+                  * Realizar una encuesta sobre el desempeño del equipo.
+                   * Realizar métricas con datos objetivos.
+                                  Alcance
+                                   *Costos
+                                 *Plazo
+                                 * Calidad
+* Colocar aquí - *Gráfico 4-13. Diagrama de Flujo de Datos de Cerrar el
+Proyecto o Fase
+Fuente: Fundamentos para la dirección de proyectos PMBOK6ta Edición*
 
 ### 10. Software de Monitoreo para Infraestructura de Data Centers
-
-*   **Herramientas:**
-    *   IO.AR
-    *   ManageEngine OpManager
-    *    Quest Big Brother (DELL)
-    *   Schneider Electric StruxureWare Operations
-*    **Opciones de Monitoreo**
-                 * Respaldo de energía
-                       * Recopilación de datos para
-                          simulación en tiempo real
-                  *  Aire en rack
-                  *  Pantallazo de reporte de energia
+Colocar aquí diapositivas de la 105 a la 113.
+*   **Herramientas:** IO.AR, ManageEngine OpManager, Quest Big Brother (DELL), Schneider Electric StruxureWare Operations
+   **Opciones de Monitoreo:** Respaldo de energía, Aire en rack, Pantallazo de reporte de energia
+*Colocar aquí figuras 3, 4 y 5, de Schneider Electric Operations*
 
 ### 11. Consideraciones de Tiering en el Diseño del Data Center
+Colocar aquí diapositivas de la 17 a la 23
 
-*   **Criterios para niveles TIER 1, TIER 2, TIER 3 y TIER 4**.
-*   Secciones del ANSI-TIA 942 que aplican por Nivel.
-       * telecomunicaciones
-               * arquitectural
-              *  eléctrica
-              *   mecánica
-####  **Consideraciones sobre Criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
+*  *  Alcance la norma para grandes edificios. Estándar JSTD-607-A , pp. 6-7*
+*   **Criterios para niveles TIER 1, TIER 2, TIER 3 y TIER 4:** Secciones del ANSI-TIA 942 que aplican por Nivel (telecomunicaciones, arquitectural, eléctrica, mecánica).
+    * **Criterios:** DEBERÁ (obligación) o DEBERÍA (sugerido)
+        *   *Consideraciones sobre Criterios:* los criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
+              * Colocar aquí *Figura: Diagrama de TIER"
 
 ### 12. Lista de referencias de la norma y videos
+Colocar aquí Diapositiva 114
 
-####   * **Bibliografía de apoyo**
-     LOS 5 CENTROS DE DATOS MÁS GRANDES DEL MUNDO #BarraLibre
+* *Bibliografia de apoyo*
+LOS 5 CENTROS DE DATOS MÁS GRANDES DEL MUNDO #BarraLibre
            <https://www.youtube.com/watch?v=E5hDY9W42lk>
      Elementos de un Datacenter
            <https://www.youtube.com/watch?v=-HX2c_zGRX4>
@@ -346,29 +380,4 @@ fabricante del equipo.
          Tour 360º - #Datacenter Movistar
               <https://www.youtube.com/watch?v=LnxqE0XSaKU>
            Conoce un centro de datos de Facebook por dentro
-             <https://www.youtube.com/watch?v=Ft9ce8vwwx0>
-         Data Center Rebuild
-          <https://www.youtube.com/watch?v=653PUAI0G8s>
-       ¿Por qué Microsoft tiene Centros de Datos Submarinos?
-              <https://www.youtube.com/watch?v=ZwPZXizvpqw>
-         Data center submarinos: la información de Internet, guardada bajo el mar
-              <https://www.youtube.com/watch?v=c8pcM3kaQOg>
-         Cableado Estructurado en Vivo
-             <https://www.youtube.com/watch?v=XL1WfksfHC4>
-          Construcción de Canalizaciones ( REDES DE DATOS)
-            <https://www.youtube.com/watch?v=NZmQ6IvCfgw>
-            ¿Qué son los Racks en un Datacenter? | HostDime
-            <https://www.youtube.com/watch?v=KqYuZMLp5cI>
-         EcoStruxure IT: Coolin Optimize
-          <https://www.youtube.com/watch?v=c1NXW4tU6to>
-        Piso técnico del data center Nebula de HostDime
-            <https://www.youtube.com/watch?v=XZYCgAmYscs>
-         Kidde Fire Systems: sistemas de detección y extinción de incendios
-             <https://www.youtube.com/watch?v=SjZKsKXL-hI>
-          Tecnología Faragauss
-              <https://www.youtube.com/watch?v=0i1vXolla0o>
-              Los cables submarinos
-               <https://www.youtube.com/watch?v=nMmKo6p38Io>
-
-### 13. Cierre
-*Consultas*
+             <https://www.youtube.com/watch
