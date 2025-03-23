@@ -1,12 +1,12 @@
-## Taller de Cableado y Data Center (DC)
+# Taller de Cableado y Data Center (DC)
 
-### 1. Introducción a Data Centers y Estándares
+# 1. Introducción a Data Centers y Estándares
 
 *   ¿Qué es un Data Center? Definición y Componentes.
 *   Importancia de los Data Centers en la Infraestructura Tecnológica Actual.
 *   **Estándares ANSI/TIA-942:** Clasificación, Criterios, Normas, **versión 2017 (instalaciones)**
 
-### 2. Fundamentos de los Estándares ANSI/TIA-942
+# 2. Fundamentos de los Estándares ANSI/TIA-942
 
 *   **¿Qué es un Estándar?**
     *   Definición (ISO): Acuerdos documentados con especificaciones técnicas, reglas, guías, definiciones para asegurar el cumplimiento de materiales, productos, procesos y servicios.
@@ -81,262 +81,322 @@
     *   Considera el diseño desde las primeras etapas de la construcción.
 *   **Definición de Términos Clave:** Incluir definición del estándar (2.2 Definición de términos).
 
-### 3. Componentes Clave de la Infraestructura de un Data Center
+# **3. Componentes Clave de la Infraestructura de un Data Center**  
 
-Un Data Center se puede dividir en 4 grandes categorías de infraestructura:
+La infraestructura de un Data Center se organiza en cuatro áreas principales:  
 
-#### 3.1. Infraestructura de Soporte y Espacios Físicos (Estructura del edificio)
-*  *  Alcance la norma para edificios. Estándar Ansi/Tia-569-C, pp. XV*
+## **3.1. Espacios Físicos y Climatización**  
+Define la estructura del edificio y la distribución térmica del equipo:  
 
-*   **Piso Técnico (Raised Floor):** Superficie elevada para ocultar cables y distribuir aire.
-*   **Pasillos Fríos y Calientes:** Separación térmica en la disposición de racks.
-*   **Shafts (Conductos cerrados):**
-        *Conducto vertical (ducto vertical o pasillo técnico)*
-            Sistemas entrenamiento (piso acceso)
-             elavadornes o monta Cargas
-        * Pueden ser para cables, sistemas de enfriamiento, u otros servicios.
-*   **Elevadores y Montacargas:** Para mover equipos pesados dentro del Data Center.
+- **Piso Técnico (Raised Floor):** También llamado *piso de acceso*, es una superficie elevada que oculta cableado y distribuye aire frío desde el sistema de climatización. Funciona como un **shaft horizontal** cuando se usa para enfriamiento.  
+- **Shafts:** Conductos verticales u horizontales que albergan cableado, sistemas de ventilación u otros servicios.  
+- **Zonificación térmica:** Distribución de racks en **pasillos fríos y calientes** para optimizar la disipación del calor.  
+- **Accesos y transporte:** Elevadores y montacargas diseñados para mover equipos pesados.  
 
-    *Ejemplo:* El piso técnico puede actuar como un shaft horizontal si se usa para enfriamiento.
+📌 *Nota:* El **piso técnico** y los **shafts** pueden formar parte del sistema de climatización dependiendo del diseño del Data Center.  
 
-#### 3.2. Infraestructura de Cableado y Distribución de Energía (Soportes para cables)
+## **3.2. Cableado y Distribución de Energía**  
+Estructuras que organizan y suministran conectividad eléctrica y de red:  
 
-*   **Cable Tray (Bandejas Portacables):** Estructuras abiertas para organizar cables de red o energía.
-*   **Overhead Cabling (Cableado Aéreo):** Cables suspendidos en racks sobre los servidores.
-*   **Power Distribution Units (PDU):** Regletas que distribuyen energía a los racks.
-*   * Soportes cableados
-   * Sistema distribucion de Aine
+- **Bandejas portacables (Cable Tray):** Estructuras abiertas que soportan y organizan cables de datos y energía. No son racks móviles, pero permiten reconfigurar el cableado fácilmente.  
+- **Cableado Aéreo (Overhead Cabling):** Alternativa al piso técnico donde los cables se montan sobre los racks.  
+- **Unidades de distribución eléctrica (PDU):** Regletas que suministran energía a los equipos dentro de los racks.  
 
-    *Diferencia Clave:*
+📌 *Nota:* Mientras que las **bandejas** y el **cableado aéreo** organizan cables, los **shafts** los transportan en espacios cerrados dentro del edificio.  
 
-    *   Cable Tray y Overhead son solo formas de organizar los cables.
-    *   Shafts son conductos cerrados que protegen y transportan cables dentro del edificio.
+## **3.3. Equipos Tecnológicos**  
+Infraestructura donde se instalan y operan los sistemas informáticos:  
 
-#### 3.3. Infraestructura de Equipos Tecnológicos (Dónde van los servidores)
+- **Racks:** Estructuras metálicas donde se montan servidores, switches y otros dispositivos.  
+- **Cabinas de almacenamiento:** Equipos dedicados al resguardo de grandes volúmenes de datos, no una habitación de racks.  
+- **Switches y Routers:** Dispositivos encargados de gestionar el tráfico de red.  
 
-*   **Racks:** Estructuras metálicas donde se instalan servidores y switches.
-            *  Sala de en dehadones = sala de RACK
-            *  distancia entre RACK 60CM -80CM (anden = distancia entre rack y muro)
-*   **Cabinas de almacenamiento:** Equipos dedicados a almacenar datos a gran escala.
-*   **Switches y Routers:** Equipos de red que gestionan el tráfico de datos.
+📌 *Nota:* Los racks alojan los equipos, mientras que el cableado y la energía llegan a ellos desde las bandejas o el cableado aéreo.  
 
-    *Diferencia Clave:*
+---
 
-    *   Los racks son el lugar físico donde se montan los servidores.
-    *   Los cables de datos y energía llegan a los racks desde los cable trays o overhead cabling.
+## **Respuestas a tus preguntas:**  
+1. **¿Piso técnico es lo mismo que piso de acceso?** Sí, ambos términos se refieren a la superficie elevada que permite ocultar cableado y distribuir aire frío.  
+2. **¿El piso técnico es un shaft horizontal?** Sí, si se usa para la distribución de aire o cableado.  
+3. **¿Las bandejas son como racks móviles?** No, las bandejas portacables solo organizan el cableado y permiten cambios rápidos, pero no almacenan equipos como un rack.  
+4. **¿Las cabinas de almacenamiento son habitaciones de racks?** No, son equipos diseñados específicamente para almacenar grandes volúmenes de datos, generalmente dentro de racks, no una sala completa.  
 
-#### 3.4. Infraestructura de Climatización y Seguridad (Enfriamiento y protección)
+# **4. Electricidad en el Data Center**  
 
-*   **CRAC / CRAH (Unidades de Enfriamiento):** Equipos que generan aire frío.
-*   **Raised Floor (Piso Técnico):** Se usa para distribuir aire frío debajo de los racks.
-*   **Sistemas de Supresión de Incendios:** Rociadores especiales o gas inerte.
+La infraestructura eléctrica en un Data Center garantiza la continuidad operativa, la seguridad y la eficiencia energética.  
 
-    *Diferencia Clave:*
+## **4.1. Fuentes de Energía**  
 
-    *   El enfriamiento puede ser por piso técnico o ductos overhead.
-    *   El shaft puede usarse para distribuir aire, pero no siempre lo hace.
- 
+- **UPS (Uninterruptible Power Supply):** Fuente de alimentación ininterrumpida que protege contra fluctuaciones de voltaje y cortes de energía.  
+  - **Tipo de batería:** VRLA (batería de ácido-plomo regulada por válvula).  
+  - **Tiempo típico de recarga:** 3 horas.  
+  - **Batería de reemplazo:** RBC55 (cantidad: 2).  
+  - **Tiempo de respaldo:**  
+    - Carga media (2000 W): 26.7 minutos.  
+    - Carga máxima (4000 W): 9.4 minutos.  
+  - **Ejemplo:** Smart-UPS RT de APC, 20 kVA y 230 V para rack.  
 
-### 4. Electricidad en el Data Center
+  📌 *Fuente:* [Micro Data Center 43 U](https://www.youtube.com/watch?v=uRjDRua94sM), Data Sheet de marca APC (capacidad de 5KVA).  
 
+- **Generadores de Respaldo:**  
+  - **Motor diésel Cat®:**  
+    - Optimizado para bajo consumo de combustible.  
+    - Probado en diversas aplicaciones a nivel mundial.  
+  - **Grupos generadores:**  
+    - Acepta el 100% de carga en bloque en un solo paso (cumple NFPA 110).  
+    - Cumple con la norma ISO 8528-5 G3.  
+    - Verificación de confiabilidad mediante pruebas de vibración torsional, consumo de combustible, rendimiento transitorio y resistencia.  
 
-*   **Fuentes de Energía:**
-    * UPS = Fuente de Alimentacion interrupida (bateria externa) y Proteccion Fluctuaciones de Voltaje
-    *   Aterramiento: Conexión a tierra para seguridad y rendimiento.
-    *   Generadores: Respaldo en caso de fallas de energía.
-        * Motor diésel Cat®
-              • Diseñado y optimizado para un bajo consumo de combustible.
-              • Rendimiento confiable probado en miles de aplicaciones en todo el mundo
-           * Conjunto de Grupos generadores
-              • Acepta el 100% de carga en bloque en un solo paso y cumple con otros requisitos
-                   de carga NFPA 110.
-             • Cumple requisitos con la norma ISO 8528-5 G3.
-            • Confiabilidad verificada mediante vibración torsional, consumo de combustible,
-                 consumo de aceite, rendimiento transitorio y pruebas de resistencia.
-     
-Fuente : <https://cgcweb.cl/pages/generadores-electricos>*
-    *   UPS (Uninterruptible Power Supply): Alimentación continua para evitar interrupciones.
+  📌 *Fuente:* [CGC Web - Generadores Eléctricos](https://cgcweb.cl/pages/generadores-electricos).  
 
-        
-           *  Battery Type: VRLA (batería de ácido-plomo regulada por válvula).
-            * Typical Recharge Time: 3 hour(s).
-            * Replacement Battery: RBC55.
-            * RBC Quantity: 2.
-            * Typical Backup Time at Half Load: 26.7 minutes (2000 Watts).
-            * Typical Backup Time at Full Load: 9.4 minutes (4000 Watts).
-           * Runtime Chart: Smart-UPS.
-        
-      Smart-UPS RT de APC, 20 kVA y 230 V, para rack
-             Fuente:*
-         
-              Micro Data Center 43 U
-            <https://www.youtube.com/watch?v=uRjDRua94sM>
-        
-           Fuente : Data Sheet de marca APC capacidad de 5KVA
-           
-            Fuente : Data Sheet de marca APC capacidad de 5KVA*
-         
-              Fuente : <https://www.kolff-e.com/>
-<https://www.youtube.com/watch?v=EqEyDEMp0mM&t=2s>*
-*   **Emisiones de Equipos:** Control del ruido electromagnético.
-        
-               Recorrido Virtual Datacenter Control Ambiental
-                <https://www.youtube.com/watch?v=2qneyAAIoEo>
-    *Protección contra incendios:* Cumplir con NFPA-75 para sistemas de protección y extintores. Usar sistemas de acción previa para rociadores.
-    *Conexión y puesta a tierra:* Cumplir con ANSI / TIA-607-B para conexión y tierra de salas, gabinetes y racks.
-    *Poder Eléctrico:* Circuitos separados a paneles eléctricos propios, tomacorrientes dúplex (120 V 20 A) separados en PDU/paneles diferentes a los de equipos.
+- **Aterramiento:** Conexión a tierra para mejorar seguridad y rendimiento.  
 
-### 5. Control de Temperatura y Humedad
+## **4.2. Protección y Normativas**  
 
-*    Rango Temperatura: 18°-27°C Humedad: 40%-60%
+- **Emisiones de Equipos:** Control del ruido electromagnético.  
+  📌 *Fuente:* [Recorrido Virtual Datacenter - Control Ambiental](https://www.youtube.com/watch?v=2qneyAAIoEo).  
 
-*   Importancia de mantener condiciones óptimas.
-*   Parámetros Operacionales:
-    *   Temperatura de bulbo seco: 20 °C a 25 °C.
-    *   Humedad relativa: 40% a 55%.
-    *   Máxima Rocío: 21 °C.
-    *   Velocidad de cambio: 5 °C/Hr.
-  Requerimientos de temperatura y humedad para
-              espacios de telecomunicaciones.
-             Fuente : ANSI/TIA-569-C pp.14*
+- **Protección contra Incendios:**  
+  - Cumplir con **NFPA-75** para sistemas de protección y extintores.  
+  - Uso de sistemas de acción previa en rociadores para evitar daños en los equipos.  
 
-*   El enrutamiento del cableado de
- telecomunicaciones dentro de los
-gabinetes, racks y otros sistemas
-de gabinetes no debe obstaculizar
-el enfriamiento adecuado del
-equipo dentro de los gabinetes
-(por ejemplo, evitar el
-enrutamiento del cableado frente a
-los respiraderos). Se debe
-mantener un flujo de aire
-suficiente según lo requiera el
-fabricante del equipo.
-Ejemplos de cables de enrutamiento y contención del flujo de aire
-Fuentes :Estándar ANSI/TIA-942-A , pp. 20*
-Piso de Acceso = Shaft Horizontal
+- **Conexión y Puesta a Tierra:**  
+  - Cumplimiento de **ANSI/TIA-607-B** para conexión y tierra en salas, gabinetes y racks.  
 
-### 6. Arquitectura Lógica de un Data Center
+- **Distribución de Energía:**  
+  - Circuitos eléctricos independientes con paneles exclusivos.  
+  - Uso de tomacorrientes dúplex (120 V, 20 A) separados en PDU/paneles distintos para aislar la alimentación de los equipos.  
 
-*   **Capas de la Red y Jerarquía de Colores para Cables:**
-        * Switch Núcleo (Core): cable Blanco = datos. Alta velocidad y capacidad.
-        * Switch Distribución: cable Gris = datos. (entre 8 a 16 bocas y puerta de entrada) Agregación del tráfico.
-        * Switch Acceso: cable Azul = datos. (entre 1 a 24 bocas y 2 puerta de entrada) Conexión a los servidores.(racks)
-        * Voz : cable ROJO
-        * Miscelaneo: cable Amarillo (alarmas / CCTVCamaras seguridad)
-        * COC - Centro Operación Control
-        * NOC - Centro Operacion red
-*   **Switches:**
-    *   Definición y función de switches en cada capa.
-    *   Los switches tienen "bocas" (puertos) y una "puerta de entrada" (interfaz de administración).
-*   **Diseño de Aterramiento:**
-      * Preparación de cancha, Aterramientos pilar, Aterramientos base de piso falso, Aterramientos PDU, TGD (Talero general de distribución), Alcance de la norma (JSTD-607-A).
-          
-*   **Cableado Horizontal:** Top-of-Rack (ToR) vs End-of-Row (EoR).
-*   *   **Organización del Cableado:**
-    *   Utilizar organizadores verticales y horizontales para mantener el cableado ordenado.
-    *   **RACK con velcro ✓ NO Amarras Plásticas ✗**
-*   **Ancho de Banda y Espacio:** Andén ancho de 80 cm (estándar) para facilitar el movimiento y mantenimiento.
-*   **Latencia:**
-          * Sobre 10ms
-               * Sobne 10MS satelital.
-               *Fibra optica entre 1as y 65ms
-    *   Fibra óptica vs Satélite: Ventajas de la fibra óptica en términos de latencia: menor, mayor velocidad y ancho de banda, retransmisiones terrestres directas (sin el viaje al espacio).
-*   **Tecnología de la Fibra Óptica:** Transmisión de datos mediante pulsos de luz a través de hilos delgados de vidrio o plástico, la luz se refleja internamente (reflexión interna total) manteniendo la señal y transmitiendo a grandes distancias con poca pérdida.
-* *DNS = Agenda de IP y Nombre de Dominio*
+📌 *Fuentes adicionales:*  
+[Kolff-e](https://www.kolff-e.com/) | [Vídeo explicativo](https://www.youtube.com/watch?v=EqEyDEMp0mM&t=2s). 
 
-*  *ICANN = Institución administra IP*
-*  *Coc = Centro Operación Conhtno*
-*  *NOC = Centro Operacion red*
+# **5. Control de Temperatura y Humedad**  
 
-### 7. Infraestructura como Servicio (IaaS)
+El control de temperatura y humedad en un Data Center es esencial para garantizar el rendimiento y la vida útil de los equipos.  
 
-*   **CaaS (Communication as a Service):** Ofrecer al cliente la capacidad de interacción y colaboración en tiempo real.
-*   **BDaaS (Database as a Service):** Servicios de big data a través de la computación en nube.
-*   **NaaS (Network as a Service):** Configurar, mantener y liberar la conectividad de la red como un servicio en la nube.
-*   **IaaS (Infraestructure as a Service):** Capacidades de computación, almacenamiento y red para ejecutar aplicaciones.
-*   **PaaS (Platform as a Service):** Ofrecer capacidades de tipo plataforma.
-*   **SaaS (Software as a Service):** Ofrecer capacidades de tipo aplicación.
+## **5.1. Parámetros de Operación**  
 
-### 8. Diseño e Implementación de Data Centers Virtuales
+- **Rango recomendado:**  
+  - **Temperatura:** 18°C - 27°C.  
+  - **Humedad relativa:** 40% - 60%.  
+- **Condiciones óptimas para equipos:**  
+  - **Temperatura de bulbo seco:** 20°C - 25°C.  
+  - **Humedad relativa:** 40% - 55%.  
+  - **Máxima temperatura de rocío:** 21°C.  
+  - **Velocidad de cambio de temperatura:** 5°C/Hr.  
 
-*   **¿Qué es la Virtualización?** Crear servicios de TI útiles mediante recursos que normalmente se ejecutan en el hardware.
-*   **Herramientas de Virtualización:** Cisco Workload Optimization Manager, Schneider Electric EcoStruxure IT Expert, VMware vSphere 6.5, ManageEngine OpManager 12.3.
-*   **Problemas de Interconexión de Redes en la Computación en la Nube:** Coordinación de la virtualización, control de tecnologías de red heterogéneas, reconfiguración a la demanda.
-*   **Conceptos de Diseño e Implementación de un Data Center Virtual:**
-          *Definir metas y objetivos.
-           *Alcance del proyecto.
-           *Roles y responsabilidad
-         *Matriz de responsabilidad
+📌 *Fuente:* ANSI/TIA-569-C (pp.14).  
 
+## **5.2. Flujo de Aire y Cableado**  
 
-*   **Control y Ejecución del Proyecto:**
-            *  Enfoque de Planificación: Se exploran aspectos de alcance, tiempo, costo, calidad, comunicaciones, recursos humanos, riesgos, adquisiciones y participación.
+- **Distribución del cableado:**  
+  - No debe obstruir el flujo de aire dentro de los gabinetes y racks.  
+  - Evitar el enrutamiento del cableado frente a los respiraderos.  
+  - Mantener un flujo de aire suficiente según lo requiera el fabricante del equipo.  
 
-            “Elementos de Control del proyecto”:
-               * Comunicaciones
-                *Calidad Alcance
-                *Planificación
-                 *Finanzas Riesgo
-               * Contrato
-                *Recursos
-        
+📌 *Fuente:* ANSI/TIA-942-A (pp.20).  
 
-    * **Conceptos de Implementación:**
-           *Visibilidad y control sobre aplicaciones personalizadas del centro de datos.
-               * Manejar flujos de tráfico asimétricos y transacciones de aplicaciones entre dispositivos y centros de datos.
-                  *Adaptarse a medida que los centros de datos evolucionan :
-                  *Abordar toda la secuencia del ataque: antes, durante y después de este.
-            * Proteger la totalidad de la red:
+## **5.3. Infraestructura de Enfriamiento**  
 
-*  **Aspectos importantes**
+- **Piso de Acceso = Shaft Horizontal:**  
+  - Permite la circulación eficiente del aire y el enrutamiento del cableado sin afectar la refrigeración.  
+  
+# **6. Arquitectura Lógica de un Data Center**
 
-           *  Lo que las organizaciones requieren es un equipo estrella, no un equipo de estrellas.
-            *  Debes saber que controlas y a quien.
-            * Los riegos son parte del Control.
-            * Los indicadores te hablan , escúchalos.
-            *  Debes actuar rápido, si tienes duda consultar al equipo.
+## **6.1. Capas de la Red y Jerarquía de Colores para Cables**
 
-#### 8.1 Cerficacion y Cierre
+- **Switch Núcleo (Core):**  
+  - **Cable Blanco:** Datos. Alta velocidad y capacidad.
+- **Switch Distribución:**  
+  - **Cable Gris:** Datos. (entre 8 a 16 bocas y puerta de entrada) Agregación del tráfico.
+- **Switch Acceso:**  
+  - **Cable Azul:** Datos. (entre 1 a 24 bocas y 2 puerta de entrada) Conexión a los servidores (racks).
+- **Voz:**  
+  - **Cable Rojo.**
+- **Misceláneo:**  
+  - **Cable Amarillo (alarmas, cámaras de seguridad CCTV).**
+- **COC - Centro de Operación Control.**
+- **NOC - Centro de Operación Red.**
 
-* **Certificación**
-               * ¿Qué es certificar?
-                * ¿Qué certifico?
-                  * ¿Como Certifico?
-                    * ¿Cuándo Certifico?
-                    * ¿Poque Certifico?
- *Plan de Cierre “Propósito”*
-   *      “Formalizar la aceptación del Proyecto”
-                   * Realizar el Cierre Administrativo (Internos y Externos)
-                  * Completando los requerimientos y entregables (Todos).
- *”LECCIONES APRENDÍDAS”*
-                    * ¿Qué fue bien hecho? y ¿Qué no se hizo?.
-                     * Registra par futuros proyectos.
-                  * Realizar una encuesta sobre el desempeño del equipo.
-                   * Realizar métricas con datos objetivos.
-                                  Alcance
-                                   *Costos
-                                 *Plazo
-                                 * Calidad
-Diagrama de Flujo de Datos de Cerrar el Proyecto o Fase
-Fuente: Fundamentos para la dirección de proyectos PMBOK6ta Edición*
+## **6.2. Switches**
 
-### 9. Software de Monitoreo para Infraestructura de Data Centers
+- Definición y función de switches en cada capa.
+- Los switches tienen "bocas" (puertos) y una "puerta de entrada" (interfaz de administración).
 
-*   **Herramientas:** IO.AR, ManageEngine OpManager, Quest Big Brother (DELL), Schneider Electric StruxureWare Operations
-   **Opciones de Monitoreo:** Respaldo de energía, Aire en rack, Pantallazo de reporte de energia
+## **6.3. Diseño de Aterramiento**
 
+- **Aterramiento**: Conexión de todos los equipos y componentes eléctricos a tierra para garantizar la seguridad y el buen funcionamiento de los sistemas eléctricos del Data Center. El aterramiento protege los equipos contra sobrecargas eléctricas y descargas de energía. Además, asegura la estabilidad de las señales eléctricas y minimiza los riesgos de choques eléctricos para los operarios y el personal que esté en el centro de datos. El sistema de aterrizaje debe cumplir con normativas específicas como la **JSTD-607-A**.
+- Preparación de cancha, aterramientos pilar, aterramientos base de piso falso, aterramientos PDU, TGD (Tablero General de Distribución).
+- Alcance de la norma: **JSTD-607-A**.
 
-### 10. Consideraciones de Tiering en el Diseño del Data Center
+## **6.4. Cableado Horizontal**
 
+- **Top-of-Rack (ToR)** vs **End-of-Row (EoR).**
 
-*  *  Alcance la norma para grandes edificios. Estándar JSTD-607-A , pp. 6-7*
-*   **Criterios para niveles TIER 1, TIER 2, TIER 3 y TIER 4:** Secciones del ANSI-TIA 942 que aplican por Nivel (telecomunicaciones, arquitectural, eléctrica, mecánica).
-    * **Criterios:** DEBERÁ (obligación) o DEBERÍA (sugerido)
-        *   *Consideraciones sobre Criterios:* los criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
-              
+## **6.5. Organización del Cableado**
 
-### 11. Lista de referencias de la norma y videos
+- Utilizar organizadores verticales y horizontales para mantener el cableado ordenado.
+- **RACK con velcro ✓ NO amarras plásticas ✗.**
+
+## **6.6. Ancho de Banda y Espacio**
+
+- Andén ancho de **80 cm** (estándar) para facilitar el movimiento y mantenimiento.
+
+## **6.7. Latencia**
+
+- **Sobre 10ms:**
+  - **Satelital:** Sobres 10ms.
+  - **Fibra óptica:** Entre 1ms y 65ms.
+
+- **Fibra óptica vs Satélite:**
+  - Ventajas de la fibra óptica en términos de latencia: menor latencia, mayor velocidad y ancho de banda, retransmisiones terrestres directas (sin el viaje al espacio).
+
+## **6.8. Tecnología de la Fibra Óptica**
+
+- Transmisión de datos mediante pulsos de luz a través de hilos delgados de vidrio o plástico.
+- La luz se refleja internamente (reflexión interna total), manteniendo la señal y transmitiéndola a grandes distancias con poca pérdida.
+
+## **6.9. Conceptos Adicionales**
+
+- **DNS** = Agenda de IP y Nombre de Dominio.
+- **ICANN** = Institución que administra las IP.
+- **COC** = Centro de Operación Control.
+- **NOC** = Centro de Operación Red.
+
+# **7. Infraestructura como Servicio (IaaS)**
+
+- **CaaS (Communication as a Service):** Ofrecer al cliente la capacidad de interacción y colaboración en tiempo real.
+- **BDaaS (Database as a Service):** Servicios de big data a través de la computación en la nube.
+- **NaaS (Network as a Service):** Configurar, mantener y liberar la conectividad de la red como un servicio en la nube.
+- **IaaS (Infrastructure as a Service):** Capacidades de computación, almacenamiento y red para ejecutar aplicaciones.
+- **PaaS (Platform as a Service):** Ofrecer capacidades de tipo plataforma.
+- **SaaS (Software as a Service):** Ofrecer capacidades de tipo aplicación.
+
+# **8. Diseño e Implementación de Data Centers Virtuales**
+
+## **¿Qué es la Virtualización?**
+- Crear servicios de TI útiles mediante recursos que normalmente se ejecutan en el hardware.
+
+## **Herramientas de Virtualización:**
+- Cisco Workload Optimization Manager.
+- Schneider Electric EcoStruxure IT Expert.
+- VMware vSphere 6.5.
+- ManageEngine OpManager 12.3.
+
+## **Problemas de Interconexión de Redes en la Computación en la Nube:**
+- Coordinación de la virtualización, control de tecnologías de red heterogéneas, reconfiguración a la demanda.
+
+## **Conceptos de Diseño e Implementación de un Data Center Virtual:**
+- **Definir metas y objetivos.**
+- **Alcance del proyecto.**
+- **Roles y responsabilidad.**
+- **Matriz de responsabilidad.**
+
+## **Control y Ejecución del Proyecto:**
+- **Enfoque de Planificación:** Se exploran aspectos de alcance, tiempo, costo, calidad, comunicaciones, recursos humanos, riesgos, adquisiciones y participación.
+
+- **Elementos de Control del Proyecto:**
+  - Comunicaciones.
+  - Calidad.
+  - Alcance.
+  - Planificación.
+  - Finanzas.
+  - Riesgo.
+  - Contrato.
+  - Recursos.
+
+## **Conceptos de Implementación:**
+- Visibilidad y control sobre aplicaciones personalizadas del centro de datos.
+- Manejar flujos de tráfico asimétricos y transacciones de aplicaciones entre dispositivos y centros de datos.
+- Adaptarse a medida que los centros de datos evolucionan:
+  - Abordar toda la secuencia del ataque: antes, durante y después de este.
+- Proteger la totalidad de la red.
+
+## **Aspectos Importantes:**
+- Lo que las organizaciones requieren es un equipo estrella, no un equipo de estrellas.
+- Debes saber qué controlas y a quién.
+- Los riesgos son parte del control.
+- Los indicadores te hablan, escúchalos.
+- Debes actuar rápido; si tienes duda, consultar al equipo.
+
+## **8.1 Certificación y Cierre**
+
+- **Certificación**
+  - **¿Qué es certificar?**
+  - **¿Qué certifico?**
+  - **¿Cómo certifico?**
+  - **¿Cuándo certifico?**
+  - **¿Por qué certifico?**
+
+- **Plan de Cierre “Propósito”**
+  - **Formalizar la aceptación del proyecto.**
+  - Realizar el cierre administrativo (internos y externos).
+  - Completando los requerimientos y entregables (todos).
+  - **Lecciones aprendidas:**
+    - ¿Qué fue bien hecho? ¿Qué no se hizo?
+    - Registra para futuros proyectos.
+    - Realizar una encuesta sobre el desempeño del equipo.
+    - Realizar métricas con datos objetivos (alcance, costos, plazo, calidad).
+
+**Diagrama de Flujo de Datos de Cerrar el Proyecto o Fase.**
+Fuente: **Fundamentos para la dirección de proyectos PMBOK 6ta Edición.**
+
+---
+
+# **9. Software de Monitoreo para Infraestructura de Data Centers**
+
+- **Herramientas:**
+  - IO.AR.
+  - ManageEngine OpManager.
+  - Quest Big Brother (DELL).
+  - Schneider Electric StruxureWare Operations.
+
+- **Opciones de Monitoreo:**
+  - Respaldo de energía.
+  - Aire en rack.
+  - Pantallazo de reporte de energía.
+
+# **10. Niveles TIER en el Diseño del Data Center**
+
+Los **niveles TIER** son una clasificación utilizada para medir la capacidad, resiliencia y redundancia de un **data center**. Esta clasificación permite evaluar la confiabilidad y la continuidad operativa de un centro de datos frente a fallos. Los niveles TIER son definidos por el **ANSI/TIA-942**, una norma para centros de datos, y se dividen en **cuatro niveles**.
+
+## **TIER 1 (Básico)**
+- **Características:**
+  - El centro de datos tiene un solo camino de energía y refrigeración, lo que lo hace susceptible a caídas en caso de fallos.
+  - No tiene redundancia en sus sistemas de soporte (como energía y refrigeración).
+  - Apropiado para pequeños centros de datos o para operaciones no críticas.
+- **Disponibilidad anual:** 99.671% (28.8 horas de inactividad al año).
+
+## **TIER 2 (Redundante)**
+- **Características:**
+  - Redundancia en los componentes críticos, como fuentes de alimentación y sistemas de refrigeración.
+  - Un solo camino para la energía y la refrigeración, pero con componentes de respaldo.
+  - Apto para aplicaciones de negocio que no pueden tolerar tiempos de inactividad prolongados.
+- **Disponibilidad anual:** 99.741% (22 horas de inactividad al año).
+
+## **TIER 3 (Activo)**
+- **Características:**
+  - Múltiples caminos de energía y refrigeración, aunque solo uno está en uso en un momento dado.
+  - Redundancia activa en todos los sistemas, con separación de los caminos de energía y refrigeración.
+  - Permite realizar mantenimiento o reparaciones sin afectar las operaciones.
+- **Disponibilidad anual:** 99.982% (1.6 horas de inactividad al año).
+
+## **TIER 4 (Fault-Tolerant)**
+- **Características:**
+  - Totalmente redundante y tolerante a fallos, con duplicación de todos los componentes críticos.
+  - Los caminos son completamente separados para asegurar la disponibilidad continua.
+  - Ideal para empresas con los requisitos más estrictos de disponibilidad y operaciones 24/7.
+- **Disponibilidad anual:** 99.995% (0.4 horas de inactividad al año).
+
+## **Resumen de Disponibilidad Anual**
+- **TIER 1:** 99.671% de disponibilidad (28.8 horas de inactividad al año).
+- **TIER 2:** 99.741% de disponibilidad (22 horas de inactividad al año).
+- **TIER 3:** 99.982% de disponibilidad (1.6 horas de inactividad al año).
+- **TIER 4:** 99.995% de disponibilidad (0.4 horas de inactividad al año).
+
+A medida que aumenta el nivel TIER, se incrementa la redundancia y la capacidad del centro de datos para mantener la continuidad operativa frente a fallos.
+
+# **11. Lista de referencias de la norma y videos**
 
 
 * *Bibliografia de apoyo*
@@ -370,3 +430,57 @@ LOS 5 CENTROS DE DATOS MÁS GRANDES DEL MUNDO #BarraLibre
               <https://www.youtube.com/watch?v=LnxqE0XSaKU>
            Conoce un centro de datos de Facebook por dentro
              <https://www.youtube.com/watch
+
+# **12. Cuadrante Mágico de Gartner**
+
+El **Cuadrante Mágico de Gartner** es una herramienta que proporciona una representación visual de las posiciones de los proveedores en un mercado determinado, evaluándolos según dos dimensiones clave:
+
+- **Ejecución Completa**: Capacidad de un proveedor para entregar productos y servicios de manera efectiva.
+- **Visión Completa**: Capacidad para anticipar tendencias del mercado y planificar el futuro.
+
+Los proveedores se clasifican en cuatro categorías:
+
+1. **Líderes**: Fuertes en ejecución y con visión clara para el futuro.
+2. **Desafiantes**: Buena ejecución, pero con visión limitada.
+3. **Visionarios**: Buenas ideas, pero ejecución inconsistente.
+4. **Niche Players (Jugadores de nicho)**: Especialización en nichos específicos, con capacidades limitadas.
+
+---
+
+# **13. Clasificación de Proveedores por Producto y Calidad-Precio**
+
+## 1. **Servicios en la Nube (Cloud Services)**
+
+| **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
+|------------------------------|--------------------------|--------------------------|--------------------------|
+| **Proveedor**                | Amazon Web Services (AWS), Microsoft Azure, Google Cloud | IBM Cloud, Oracle Cloud | DigitalOcean, Linode |
+
+## 2. **Soluciones LAN (Redes de Área Local)**
+
+| **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
+|------------------------------|--------------------------|--------------------------|--------------------------|
+| **Proveedor**                | Cisco, Arista Networks   | Juniper Networks, Huawei | Ubiquiti Networks         |
+
+## 3. **Almacenamiento (Storage)**
+
+| **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
+|------------------------------|--------------------------|--------------------------|--------------------------|
+| **Proveedor**                | Dell EMC, NetApp         | HPE, Hitachi Vantara     | Western Digital, Seagate |
+
+## 4. **Cableado (Cabling)**
+
+| **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
+|------------------------------|--------------------------|--------------------------|--------------------------|
+| **Proveedor**                | Belden, Legrand          | Siemon, Panduit          | Cable Matters, Mediabridge|
+
+## 5. **Networking (Redes)**
+
+| **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
+|------------------------------|--------------------------|--------------------------|--------------------------|
+| **Proveedor**                | Cisco, Arista Networks   | Juniper Networks, Huawei | TP-Link, NETGEAR          |
+
+## 6. **UPS (Sistemas de Alimentación Ininterrumpida)**
+
+| **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
+|------------------------------|--------------------------|--------------------------|--------------------------|
+| **Proveedor**                | APC, Eaton               | Vertiv, CyberPower       | Tripp Lite, Kstar        |
