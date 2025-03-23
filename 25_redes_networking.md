@@ -53,7 +53,8 @@
     * **OSI:** Modelo conceptual (cómo *debería* funcionar).
     * **OSI (Open Systems Interconnection):** Interconexión de sistemas abiertos (modelo de referencia para redes).* 
 
-* **Tabla Comparativa de Capas TCP/IP vs. OSI:**
+* **Tabla Comparativa de Capas TCP/IP vs. OSI:**up
+
 | **Nº** | **Capa TCP/IP** | **Capa OSI** | **Función Principal** | **Detalles Clave y Ejemplos Prácticos** | **¿Cómo Recordarlo Fácil?** |
 |---|---|---|---|---|---|
 | 7 | Aplicación | Aplicación | **(Usuario y Servicios)**: Proporciona la interfaz para que las aplicaciones de red interactúen con el usuario y ofrezcan servicios. | * Define la forma en que las aplicaciones acceden a la red. Incluye protocolos para correo electrónico (SMTP, POP3, IMAP), web (HTTP, HTTPS), transferencia de archivos (FTP), acceso remoto (SSH), nombres de dominio (DNS), etc. * **Ejemplo:** Usar Outlook para enviar un correo (la aplicación interactúa con los protocolos SMTP para enviar y POP3/IMAP para recibir). | **El programa que usas:** ¡El navegador, el correo, el juego en línea! |
