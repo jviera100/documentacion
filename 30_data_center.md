@@ -485,3 +485,9 @@ Los proveedores se clasifican en cuatro categorías:
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | APC, Eaton               | Vertiv, CyberPower       | Tripp Lite, Kstar        |
 
+## 7. **Proveedores de Servidores**
+
+| **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
+|------------------------------|--------------------------|--------------------------|--------------------------|
+| **Proveedor**                | IBM, Dell, Hewlett Packard | Lenovo, Cisco            | Supermicro, Fujitsu      |
+
