@@ -1,12 +1,12 @@
-# Taller de Cableado y Data Center (DC)
+# **Taller de Cableado y Data Center (DC)**
 
-# 1. Introducción a Data Centers y Estándares
+# **1. Introducción a Data Centers y Estándares**
 
 *   ¿Qué es un Data Center? Definición y Componentes.
 *   Importancia de los Data Centers en la Infraestructura Tecnológica Actual.
 *   **Estándares ANSI/TIA-942:** Clasificación, Criterios, Normas, **versión 2017 (instalaciones)**
 
-# 2. Fundamentos de los Estándares ANSI/TIA-942
+# **2. Fundamentos de los Estándares ANSI/TIA-942**
 
 *   **¿Qué es un Estándar?**
     *   Definición (ISO): Acuerdos documentados con especificaciones técnicas, reglas, guías, definiciones para asegurar el cumplimiento de materiales, productos, procesos y servicios.
@@ -484,3 +484,4 @@ Los proveedores se clasifican en cuatro categorías:
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | APC, Eaton               | Vertiv, CyberPower       | Tripp Lite, Kstar        |
+
