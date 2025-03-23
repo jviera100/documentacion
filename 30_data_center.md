@@ -36,14 +36,15 @@
        asesoramiento son designados por las palabras “debería”, “puede” o “deseable” que se
         utilizan indistintamente en la presente Norma.
 
-                 Criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
+                * Criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. 
+                * Criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
 
 *   **Organismos de Estándares:**
     *   Organizaciones Oficiales: Integrados por consultores independientes y representantes gubernamentales. Ejemplos: ITU, NEC, ANSI, EIA, TIA.
-        *   Colocar aquí Figura 4: Resumen de organismo ofíciales (Fuente: MVEL 2019)
+        
     *   Consorcios.
     *   Fabricantes.
-        *   Colocar aquí Figura 3: Tipos de Estándar (Fuente: MVEL 2019)
+        
 *   **Organizaciones Oficiales clave**
     *   **ITU (Unión Internacional de Telecomunicaciones):** Desarrolla estándares para telefonía, telegrafía, interfaces, redes. La ITU-T migra desde la más conocida CCITT.
     *   **NEC (National Electric Code):** Estándar de seguridad para infraestructura, define prácticas de instalación eléctrica. Se conoce como ANSI/NFPA-70.
@@ -54,8 +55,8 @@
     *   Original (2005), Mejoras (2012), Vigente (2017).
     *   ANSI/TIA-942-A (Agosto 2012): Telecommunications Infrastructure Standard for Data Centers (ANSI/TIA-942-A-2012 APROBADO: AGOSTO 2, 2012)
     *   El estándar ANSI/TIA-942-A reemplaza a ANSI/TIA-942 (Abril 2005) y sus adendas, incorporando su contenido técnico.
-        * Colocar aquí Figura 6: Versión liberada. (Fuente: TIA)
-        * link estándar Link DC
+        
+        
 *   **Aprobación de la Norma ANSI/TIA-942-A:**
     *   Aprobada por el Subcomité TR 42.2 de la TIA, el Comité TR 42.2 de Ingeniería Técnica de TIA y el ANSI. Se revisa cada 5 años.
 *    **Relación con Otros Estándares TIA:**
@@ -127,29 +128,10 @@ Un Data Center se puede dividir en 4 grandes categorías de infraestructura:
 
     *   El enfriamiento puede ser por piso técnico o ductos overhead.
     *   El shaft puede usarse para distribuir aire, pero no siempre lo hace.
+ 
 
-### 4. Diseño y Montaje en Rack: Prácticas Recomendadas
-*Colocar aquí diapositivas de la 13 a la 16*
-*   **Organización del Cableado:**
-    *   Utilizar organizadores verticales y horizontales para mantener el cableado ordenado.
-    *   **RACK con velcro ✓ NO Amarras Plásticas ✗**
-*   **Ancho de Banda y Espacio:** Andén ancho de 80 cm (estándar) para facilitar el movimiento y mantenimiento.
+### 4. Electricidad en el Data Center
 
-*   **Jerarquía de Colores para Cables:**
-    *   Switch Núcleo (Core): Blanco = datos.
-    *   Switch Distribución: Gris = datos. (entre 8 a 16 bocas y puerta de entrada)
-    *   Switch Acceso: Azul = datos. (entre 1 a 24 bocas y 2 puerta de entrada)
-    *   Voz : ROJO
-    *   Misc: Amarillo (alarmas / CCTVCamaras seguridad)
-        * Conhtno - Centro Operación Conhtno
-      *  NOC - Centro Operacion red
-
-*   **Diseño de Aterramiento:**
-    * Preparación de cancha, Aterramientos pilar, Aterramientos base de piso falso, Aterramientos PDU, TGD (Talero general de distribución), Alcance de la norma (JSTD-607-A).
-        *  Colocar aquí figuras Aterramientos
-
-### 5. Electricidad en el Data Center
-Colocar aquí diapositivas de la 47 a la 53*
 
 *   **Fuentes de Energía:**
     * UPS = Fuente de Alimentacion interrupida (bateria externa) y Proteccion Fluctuaciones de Voltaje
@@ -164,13 +146,11 @@ Colocar aquí diapositivas de la 47 a la 53*
              • Cumple requisitos con la norma ISO 8528-5 G3.
             • Confiabilidad verificada mediante vibración torsional, consumo de combustible,
                  consumo de aceite, rendimiento transitorio y pruebas de resistencia.
-     * *Colocar aquí Figura. Generador Diesel Cat® 3512
-Fuente : CAT*
-*Colocar aquí  Figura. Generador
+     
 Fuente : <https://cgcweb.cl/pages/generadores-electricos>*
     *   UPS (Uninterruptible Power Supply): Alimentación continua para evitar interrupciones.
 
-        *  Colocar aquí  *Características UPS:*
+        
            *  Battery Type: VRLA (batería de ácido-plomo regulada por válvula).
             * Typical Recharge Time: 3 hour(s).
             * Replacement Battery: RBC55.
@@ -178,33 +158,29 @@ Fuente : <https://cgcweb.cl/pages/generadores-electricos>*
             * Typical Backup Time at Half Load: 26.7 minutes (2000 Watts).
             * Typical Backup Time at Full Load: 9.4 minutes (4000 Watts).
            * Runtime Chart: Smart-UPS.
-        * Colocar aquí  *Figura. Unidad de sistema potencia (UPS) Unidad
+        
       Smart-UPS RT de APC, 20 kVA y 230 V, para rack
              Fuente:*
-         Colocar aquí  *Figura. Unidad de sistema potencia (UPS) en Rack
-          Fuente: APC*
+         
               Micro Data Center 43 U
             <https://www.youtube.com/watch?v=uRjDRua94sM>
-         *Colocar aquí Figura. Frontis UPS
+        
            Fuente : Data Sheet de marca APC capacidad de 5KVA
-           Colocar aquí Figura. Posterior UPS
+           
             Fuente : Data Sheet de marca APC capacidad de 5KVA*
-         *Colocar aquí Figura 03. Marca KOLFF
+         
               Fuente : <https://www.kolff-e.com/>
 <https://www.youtube.com/watch?v=EqEyDEMp0mM&t=2s>*
 *   **Emisiones de Equipos:** Control del ruido electromagnético.
-        *Colocar aquí Figura. Sistema de control ambiental
-             Fuente : Sistema NEC en WEB*
-              *Colocar aquí Figura. Condiciones de emisión
-              Control ambiental
+        
                Recorrido Virtual Datacenter Control Ambiental
                 <https://www.youtube.com/watch?v=2qneyAAIoEo>
     *Protección contra incendios:* Cumplir con NFPA-75 para sistemas de protección y extintores. Usar sistemas de acción previa para rociadores.
     *Conexión y puesta a tierra:* Cumplir con ANSI / TIA-607-B para conexión y tierra de salas, gabinetes y racks.
     *Poder Eléctrico:* Circuitos separados a paneles eléctricos propios, tomacorrientes dúplex (120 V 20 A) separados en PDU/paneles diferentes a los de equipos.
 
-### 6. Control de Temperatura y Humedad
-Colocar aquí diapositivas de la 54 a la 60
+### 5. Control de Temperatura y Humedad
+
 *    Rango Temperatura: 18°-27°C Humedad: 40%-60%
 
 *   Importancia de mantener condiciones óptimas.
@@ -213,8 +189,7 @@ Colocar aquí diapositivas de la 54 a la 60
     *   Humedad relativa: 40% a 55%.
     *   Máxima Rocío: 21 °C.
     *   Velocidad de cambio: 5 °C/Hr.
-  Colocar aquí *Figura 3 - Requerimientos de
-       temperatura y humedad para
+  Requerimientos de temperatura y humedad para
               espacios de telecomunicaciones.
              Fuente : ANSI/TIA-569-C pp.14*
 
@@ -230,23 +205,31 @@ los respiraderos). Se debe
 mantener un flujo de aire
 suficiente según lo requiera el
 fabricante del equipo.
-Colocar aquí *Figura 8: Ejemplos de cables de enrutamiento y contención del flujo de aire
+Ejemplos de cables de enrutamiento y contención del flujo de aire
 Fuentes :Estándar ANSI/TIA-942-A , pp. 20*
 Piso de Acceso = Shaft Horizontal
-### 7. Arquitectura Lógica de un Data Center
-Colocar aquí Diapositivas de la 63 a la 71
-*   **Capas de la Red:**
-        * Núcleo : Switch Core.
-        * Distribución :Switch Distribución.
-         * Acceso : Switch Acceso +2 PE
-        * Núcleo (Core): Alta velocidad y capacidad.
-        * Distribución: Agregación del tráfico.
-        * Acceso: Conexión a los servidores.
-Colocar aquí diagrama de niveles de SWITCH RACK que creo al inicio
+
+### 6. Arquitectura Lógica de un Data Center
+
+*   **Capas de la Red y Jerarquía de Colores para Cables:**
+        * Switch Núcleo (Core): cable Blanco = datos. Alta velocidad y capacidad.
+        * Switch Distribución: cable Gris = datos. (entre 8 a 16 bocas y puerta de entrada) Agregación del tráfico.
+        * Switch Acceso: cable Azul = datos. (entre 1 a 24 bocas y 2 puerta de entrada) Conexión a los servidores.(racks)
+        * Voz : cable ROJO
+        * Miscelaneo: cable Amarillo (alarmas / CCTVCamaras seguridad)
+        * COC - Centro Operación Control
+        * NOC - Centro Operacion red
 *   **Switches:**
     *   Definición y función de switches en cada capa.
     *   Los switches tienen "bocas" (puertos) y una "puerta de entrada" (interfaz de administración).
+*   **Diseño de Aterramiento:**
+      * Preparación de cancha, Aterramientos pilar, Aterramientos base de piso falso, Aterramientos PDU, TGD (Talero general de distribución), Alcance de la norma (JSTD-607-A).
+          
 *   **Cableado Horizontal:** Top-of-Rack (ToR) vs End-of-Row (EoR).
+*   *   **Organización del Cableado:**
+    *   Utilizar organizadores verticales y horizontales para mantener el cableado ordenado.
+    *   **RACK con velcro ✓ NO Amarras Plásticas ✗**
+*   **Ancho de Banda y Espacio:** Andén ancho de 80 cm (estándar) para facilitar el movimiento y mantenimiento.
 *   **Latencia:**
           * Sobre 10ms
                * Sobne 10MS satelital.
@@ -259,8 +242,8 @@ Colocar aquí diagrama de niveles de SWITCH RACK que creo al inicio
 *  *Coc = Centro Operación Conhtno*
 *  *NOC = Centro Operacion red*
 
-### 8. Infraestructura como Servicio (IaaS)
-Colocar Aquí diapositivas de la 73 a la 79
+### 7. Infraestructura como Servicio (IaaS)
+
 *   **CaaS (Communication as a Service):** Ofrecer al cliente la capacidad de interacción y colaboración en tiempo real.
 *   **BDaaS (Database as a Service):** Servicios de big data a través de la computación en nube.
 *   **NaaS (Network as a Service):** Configurar, mantener y liberar la conectividad de la red como un servicio en la nube.
@@ -268,8 +251,8 @@ Colocar Aquí diapositivas de la 73 a la 79
 *   **PaaS (Platform as a Service):** Ofrecer capacidades de tipo plataforma.
 *   **SaaS (Software as a Service):** Ofrecer capacidades de tipo aplicación.
 
-### 9. Diseño e Implementación de Data Centers Virtuales
-Colocar Aquí diapositivas de la 81 a la 101
+### 8. Diseño e Implementación de Data Centers Virtuales
+
 *   **¿Qué es la Virtualización?** Crear servicios de TI útiles mediante recursos que normalmente se ejecutan en el hardware.
 *   **Herramientas de Virtualización:** Cisco Workload Optimization Manager, Schneider Electric EcoStruxure IT Expert, VMware vSphere 6.5, ManageEngine OpManager 12.3.
 *   **Problemas de Interconexión de Redes en la Computación en la Nube:** Coordinación de la virtualización, control de tecnologías de red heterogéneas, reconfiguración a la demanda.
@@ -278,11 +261,11 @@ Colocar Aquí diapositivas de la 81 a la 101
            *Alcance del proyecto.
            *Roles y responsabilidad
          *Matriz de responsabilidad
- * *Colocar aquí: Grafico 2.8 PMBOK6ta Edición*
+
 
 *   **Control y Ejecución del Proyecto:**
             *  Enfoque de Planificación: Se exploran aspectos de alcance, tiempo, costo, calidad, comunicaciones, recursos humanos, riesgos, adquisiciones y participación.
- Colocar aquí:  Definición de equipos y roles. PMBOK6ta Edición
+
             “Elementos de Control del proyecto”:
                * Comunicaciones
                 *Calidad Alcance
@@ -290,7 +273,7 @@ Colocar Aquí diapositivas de la 81 a la 101
                  *Finanzas Riesgo
                * Contrato
                 *Recursos
-         Colocar aquí: *Figura. Control y ejecución PMBOK6ta Edición*
+        
 
     * **Conceptos de Implementación:**
            *Visibilidad y control sobre aplicaciones personalizadas del centro de datos.
@@ -307,7 +290,7 @@ Colocar Aquí diapositivas de la 81 a la 101
             * Los indicadores te hablan , escúchalos.
             *  Debes actuar rápido, si tienes duda consultar al equipo.
 
-#### 9.1 Cerficacion y Cierre
+#### 8.1 Cerficacion y Cierre
 
 * **Certificación**
                * ¿Qué es certificar?
@@ -328,27 +311,26 @@ Colocar Aquí diapositivas de la 81 a la 101
                                    *Costos
                                  *Plazo
                                  * Calidad
-* Colocar aquí - *Gráfico 4-13. Diagrama de Flujo de Datos de Cerrar el
-Proyecto o Fase
+Diagrama de Flujo de Datos de Cerrar el Proyecto o Fase
 Fuente: Fundamentos para la dirección de proyectos PMBOK6ta Edición*
 
-### 10. Software de Monitoreo para Infraestructura de Data Centers
-Colocar aquí diapositivas de la 105 a la 113.
+### 9. Software de Monitoreo para Infraestructura de Data Centers
+
 *   **Herramientas:** IO.AR, ManageEngine OpManager, Quest Big Brother (DELL), Schneider Electric StruxureWare Operations
    **Opciones de Monitoreo:** Respaldo de energía, Aire en rack, Pantallazo de reporte de energia
-*Colocar aquí figuras 3, 4 y 5, de Schneider Electric Operations*
 
-### 11. Consideraciones de Tiering en el Diseño del Data Center
-Colocar aquí diapositivas de la 17 a la 23
+
+### 10. Consideraciones de Tiering en el Diseño del Data Center
+
 
 *  *  Alcance la norma para grandes edificios. Estándar JSTD-607-A , pp. 6-7*
 *   **Criterios para niveles TIER 1, TIER 2, TIER 3 y TIER 4:** Secciones del ANSI-TIA 942 que aplican por Nivel (telecomunicaciones, arquitectural, eléctrica, mecánica).
     * **Criterios:** DEBERÁ (obligación) o DEBERÍA (sugerido)
         *   *Consideraciones sobre Criterios:* los criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
-              * Colocar aquí *Figura: Diagrama de TIER"
+              
 
-### 12. Lista de referencias de la norma y videos
-Colocar aquí Diapositiva 114
+### 11. Lista de referencias de la norma y videos
+
 
 * *Bibliografia de apoyo*
 LOS 5 CENTROS DE DATOS MÁS GRANDES DEL MUNDO #BarraLibre
