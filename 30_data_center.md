@@ -1,4 +1,4 @@
-## Taller de Cableado y Data Center
+## Taller de Cableado y Data Center (DC)
 
 ### 1. Introducción a Data Centers y Estándares
 
@@ -39,7 +39,8 @@
                 * Criterios obligatorios se aplican generalmente a la protección, el rendimiento, la administración y compatibilidad; que especifican los requisitos mínimos aceptables absolutos. 
                 * Criterios de asesoramiento o deseables se presentan cuando su consecución mejorará el rendimiento general del sistema de cableado en todas sus aplicaciones contempladas.
 
-*   **Organismos de Estándares:**
+*   **Tipos de Organismos de Estándares:**
+*   **Organismos Oficiales:**
     *   Organizaciones Oficiales: Integrados por consultores independientes y representantes gubernamentales. Ejemplos: ITU, NEC, ANSI, EIA, TIA.
         
     *   Consorcios.
@@ -47,10 +48,15 @@
         
 *   **Organizaciones Oficiales clave**
     *   **ITU (Unión Internacional de Telecomunicaciones):** Desarrolla estándares para telefonía, telegrafía, interfaces, redes. La ITU-T migra desde la más conocida CCITT.
-    *   **NEC (National Electric Code):** Estándar de seguridad para infraestructura, define prácticas de instalación eléctrica. Se conoce como ANSI/NFPA-70.
     *   **ANSI (American National Standards Institute):** Coordina la estandarización voluntaria en el sector privado de EE.UU.
     *   **EIA (Electronics Industry Association):** Desarrolla normas para componentes electrónicos, electrónica del consumidor, información electrónica y telecomunicaciones.
     *   **TIA (Telecommunications Industry Association):** Desarrolla normas de cableado industrial voluntario.
+    *   **NEC (National Electric Code):** Estándar de seguridad para infraestructura, define prácticas de instalación eléctrica. Se conoce como ANSI/NFPA-70.
+    *   **ISO (International Organization for Standardization):** Desarrolla estándares internacionales en una amplia gama de campos, incluyendo la gestión de la calidad, la seguridad y la sostenibilidad.
+    *   **IEEE (Institute of Electrical and Electronics Engineers):** Desarrolla estándares en áreas como la ingeniería eléctrica, la electrónica, la informática y las telecomunicaciones.
+    
+    
+    
 *   **Versiones del Estándar ANSI/TIA-942:**
     *   Original (2005), Mejoras (2012), Vigente (2017).
     *   ANSI/TIA-942-A (Agosto 2012): Telecommunications Infrastructure Standard for Data Centers (ANSI/TIA-942-A-2012 APROBADO: AGOSTO 2, 2012)
@@ -80,6 +86,7 @@
 Un Data Center se puede dividir en 4 grandes categorías de infraestructura:
 
 #### 3.1. Infraestructura de Soporte y Espacios Físicos (Estructura del edificio)
+*  *  Alcance la norma para edificios. Estándar Ansi/Tia-569-C, pp. XV*
 
 *   **Piso Técnico (Raised Floor):** Superficie elevada para ocultar cables y distribuir aire.
 *   **Pasillos Fríos y Calientes:** Separación térmica en la disposición de racks.

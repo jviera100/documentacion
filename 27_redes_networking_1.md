@@ -31,6 +31,39 @@
 | **WMAN (Wireless MAN)**      | MAN que utiliza tecnología inalámbrica para conectar áreas extensas dentro de una ciudad.                             | Ciudad o área metropolitana | Proveedor de internet que ofrece acceso inalámbrico de banda ancha en una ciudad | WiMAX (IEEE 802.16)             |
 | **WWAN (Wireless WAN)**      | WAN que utiliza tecnologías inalámbricas (celular) para proporcionar acceso a Internet en áreas extensas.             | Regional, Nacional, Global   | Acceso a Internet en un teléfono móvil a través de la red celular (4G/5G) | 3G, 4G LTE, 5G NR               |
 
+**Infraestructura y Comunicación en Redes**
+
+**Red de Área Local (LAN), Segmentación y Componentes**
+
+Una LAN (Local Area Network) conecta dispositivos dentro de un área geográfica limitada (casa, oficina, edificio). Su infraestructura incluye:
+
+*   **Switches:** Facilitan la comunicación conmutando paquetes de datos entre dispositivos. Han reemplazado a los antiguos bridges, que solo conectaban segmentos de red en función de direcciones MAC.
+*   **Routers:** Conectan la LAN con otras redes (como Internet) y enrutan el tráfico entre ellas. Un tipo avanzado es el ISR (Integrated Services Router), que incorpora funciones adicionales como seguridad (firewall, VPN) y voz (VoIP).
+*   **Dispositivos Finales:** Computadoras, servidores, impresoras, teléfonos IP, entre otros.
+*   **Cables y Tarjetas de Red (NIC):** Permiten la conexión física de los dispositivos a la LAN mediante Ethernet o fibra óptica.
+*   **Puntos de Acceso Inalámbricos (WAPs):** Expanden la conectividad de la LAN de manera inalámbrica.
+
+Para mejorar la eficiencia y organización dentro de una LAN, se utilizan **VLANs (Redes Locales Virtuales)**, que segmentan la red de forma lógica, permitiendo agrupar dispositivos en distintas redes independientes dentro de un mismo switch físico.
+
+**Componentes Internos de un Router**
+
+Un router gestiona la comunicación entre redes y cuenta con varios componentes esenciales:
+
+*   **CPU:** Procesa instrucciones y administra el tráfico de red.
+*   **Memoria RAM:** Almacena temporalmente la tabla de enrutamiento, el búfer de paquetes y configuraciones en uso.
+*   **Memoria Flash:** Guarda el sistema operativo del router y la configuración de inicio.
+*   **NVRAM:** Conserva de forma permanente la configuración de arranque.
+*   **Interfaces:** Puertos físicos (Ethernet, Serial, etc.) para la conexión con otras redes.
+*   **Fuente de Alimentación:** Suministra energía al dispositivo.
+
+**Comunicación en Redes**
+
+El tráfico de datos en una red se clasifica en:
+
+*   **Unicast:** Un remitente transmite datos a un único destinatario.
+*   **Multicast (Multidifusión):** Un remitente envía datos a un grupo de destinatarios específicos.
+*   **Multidifusión:** Similar a multicast, pero con la capacidad de que los destinatarios puedan unirse o salir dinámicamente del grupo de transmisión.
+  
 ### Modelos de Comunicación de Red (Síntesis Funcional):
 
 * **Objetivo:** Comunicación entre dispositivos en la red.
