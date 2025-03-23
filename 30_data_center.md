@@ -1,4 +1,4 @@
-# **Taller de Cableado y Data Center (DC)**
+# **Taller de Cableado y Data Center (DC)**(Primera Guia Parte A)
 
 # **1. Introducción a Data Centers y Estándares**
 
@@ -397,8 +397,10 @@ La **clasificación TIER** es una forma de medir la **disponibilidad** y **redun
 
 A medida que aumenta el nivel TIER, se incrementa la redundancia y la capacidad del centro de datos para mantener la continuidad operativa frente a fallos.
 
-# **11. Lista de referencias de la norma y videos**
 
+
+
+# **11. Lista de referencias de la norma y videos**
 
 * *Bibliografia de apoyo*
 LOS 5 CENTROS DE DATOS MÁS GRANDES DEL MUNDO #BarraLibre
@@ -432,7 +434,11 @@ LOS 5 CENTROS DE DATOS MÁS GRANDES DEL MUNDO #BarraLibre
            Conoce un centro de datos de Facebook por dentro
              <https://www.youtube.com/watch
 
-# **12. Cuadrante Mágico de Gartner** (segunda Guia)
+# **1.0 1A Unidad: Infraestructura Física del Data Center(24 horas)**(segunda Guia Parte A)
+
+## **1.1 Clasificación de Data Center según el Estándar ANSI/TIA-942**
+
+### **1.1.1 Cuadrante Mágico de Gartner** 
 
 El **Cuadrante Mágico de Gartner** es una herramienta que proporciona una representación visual de las posiciones de los proveedores en un mercado determinado, evaluándolos según dos dimensiones clave:
 
@@ -448,55 +454,55 @@ Los proveedores se clasifican en cuatro categorías:
 
 ---
 
-# **13. Clasificación de Proveedores por Producto y Calidad-Precio componentes Data Center según Cuadrante Mágico de Gartner**
+### **1.1.2 Clasificación de Proveedores por Producto y Calidad-Precio componentes Data Center según Cuadrante Mágico de Gartner**
 
-## 1. **Servicios en la Nube (Cloud Services)**
+#### **1.1.2.1 Servicios en la Nube (Cloud Services)**
 
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | Amazon Web Services (AWS), Microsoft Azure, Google Cloud | IBM Cloud, Oracle Cloud | DigitalOcean, Linode |
 
-## 2. **Soluciones LAN (Redes de Área Local)**
+#### **1.1.2.2 Soluciones LAN (Redes de Área Local)**
 
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | Cisco, Arista Networks   | Juniper Networks, Huawei | Ubiquiti Networks         |
 
-## 3. **Almacenamiento (Storage)**
+#### **1.1.2.3 Almacenamiento (Storage)**
 
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | Dell EMC, NetApp         | HPE, Hitachi Vantara     | Western Digital, Seagate |
 
-## 4. **Cableado (Cabling)**
+#### **1.1.2.4 Cableado (Cabling)**
 
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | Belden, Legrand          | Siemon, Panduit          | Cable Matters, Mediabridge|
 
-## 5. **Networking (Redes)**
+#### **1.1.2.5 Networking (Redes)**
 
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | Cisco, Arista Networks   | Juniper Networks, Huawei | TP-Link, NETGEAR          |
 
-## 6. **UPS (Sistemas de Alimentación Ininterrumpida)**
+#### **1.1.2.6 UPS (Sistemas de Alimentación Ininterrumpida)**
 
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | APC, Eaton               | Vertiv, CyberPower       | Tripp Lite, Kstar        |
 
-## 7. **Proveedores de Servidores**
+#### **1.1.2.7 Proveedores de Servidores**
 
 | **Categoría**                | **Alta Calidad-Precio**  | **Media Calidad-Precio** | **Baja Calidad-Precio**   |
 |------------------------------|--------------------------|--------------------------|--------------------------|
 | **Proveedor**                | IBM, Dell, Hewlett Packard | Lenovo, Cisco            | Supermicro, Fujitsu      |
 
-# **14. Clasificación de Data Center según el Estándar ANSI/TIA-942**
+### **1.1.3 Clasificación de Data Center según el Estándar ANSI/TIA-942**
 
 El **estándar ANSI/TIA-942** establece requisitos para el diseño e instalación de centros de datos, dividiéndolos en **criterios obligatorios** (deberá) y **criterios sugeridos** (debería). Estos criterios son utilizados para evaluar y clasificar los centros de datos de acuerdo con su capacidad, seguridad, redundancia y eficiencia.
 
-## Clasificación según el Cumplimiento de los Criterios del Estándar
+##### Clasificación según el Cumplimiento de los Criterios del Estándar
 
 | **Criterio**                        | **Obligatorio (Deberá)**                                    | **Sugerido (Debería)**                              |
 |-------------------------------------|------------------------------------------------------------|-----------------------------------------------------|
@@ -509,19 +515,19 @@ El **estándar ANSI/TIA-942** establece requisitos para el diseño e instalació
 | **Conformidad con Normativas**       | Cumple con normativas locales e internacionales.           | Certificaciones adicionales (ISO, etc.).             |
 | **Recuperación ante Desastres**      | Plan básico de recuperación ante desastres.                 | Planes detallados y simulacros regulares.            |
 
-# **15. Áreas Funcionales y Espacios Operacionales**
+## **1.2 Áreas Funcionales y Espacios Operacionales**
 
-## Definición de Términos:
+### Definición de Términos:
 **Centro de Datos (DC):**  
 Es un edificio o una parte de un edificio cuya función principal es albergar una sala de computadoras y sus áreas de apoyo.
 
-## Sitio del Edificio
+### Sitio del Edificio
 El **casco del edificio** abarca varias áreas funcionales dentro y fuera del centro de datos, entre ellas:
 
 1. **Espacio de oficina en general.**
 2. **Telecomunicaciones y equipamiento de los espacios fuera del centro de datos.**
 
-## Áreas del Centro de Datos
+### Áreas del Centro de Datos
 El **Centro de Datos** incluye varias zonas clave:
 
 1. **Oficinas personales de apoyo.**  
@@ -569,15 +575,15 @@ El **Centro de Datos** incluye varias zonas clave:
 Este conjunto de **áreas funcionales y operacionales** dentro del centro de datos está diseñado para garantizar la eficiencia operativa, la conectividad, la seguridad y la redundancia necesarias para su correcto funcionamiento. Cada área cumple una función específica para mantener la integridad y la continuidad de los servicios del centro de datos.
 
 
-# **16. Distribución de Equipamiento y Hardware para Montaje de un Rack en un Centro de Datos**
+## **1.3 Distribución de Equipamiento y Hardware para Montaje de un Rack**
 
-## **1. Introducción:**
+### **1.3.1 Introducción:**
 En un centro de datos, la correcta organización del equipamiento y hardware en racks es crucial para asegurar la eficiencia, la seguridad y la accesibilidad. Esto incluye el montaje de racks para servidores, switches, unidades de almacenamiento, entre otros componentes. Para facilitar la organización y la gestión de estos equipos, se utilizan identificadores basados en un sistema de coordenadas tipo "rejilla" (como en un tablero de ajedrez) que permiten localizar y hacer seguimiento a cada componente dentro del espacio del centro de datos.
 
-## **2. Identificación de Espacios de Telecomunicaciones (TS):**
+### **1.3.2 Identificación de Espacios de Telecomunicaciones (TS):**
 Los espacios de telecomunicaciones dentro de un centro de datos se identifican con coordenadas específicas. Estas coordenadas están basadas en un sistema de "rejilla" que organiza el centro de datos en **filas** y **columnas**.
 
-### **Ejemplo de Coordenadas de Espacio de Telecomunicaciones:**
+#### **Ejemplo de Coordenadas de Espacio de Telecomunicaciones:**
 - **FS:**
   - **F** = Caracteres numéricos que indican el **piso** del edificio donde se encuentra el espacio.
   - **S** = Caracteres alfanuméricos que identifican de forma única el **espacio de telecomunicaciones** (TS) o la **sala de computadoras** en ese piso.
@@ -587,37 +593,37 @@ Los espacios de telecomunicaciones dentro de un centro de datos se identifican c
 **Ejemplo:** `TS: 11,AB02`  
 Esto indica que el espacio de telecomunicaciones está en el **piso 11**, en la fila **AB**, columna **02**.
 
-## **3. Coordinación y Etiquetado de Espacios:**
+### **1.3.3 Coordinación y Etiquetado de Espacios:**
 Las **coordenadas de la cuadrícula** se colocan en las **paredes** del centro de datos, con **etiquetas grandes y legibles** que permitan identificar fácilmente cada área desde la distancia. Las marcas de los **pisos** o **techos** deben estar protegidas para evitar daños.
 
-### **Etiquetas de Coordenadas y Ubicación del Gabinete:**
+#### **Etiquetas de Coordenadas y Ubicación del Gabinete:**
 - Las **esquinas de los gabinetes** se utilizan para identificar la ubicación de la red en el centro de datos. Normalmente, la **ubicación frontal** de cada gabinete se refiere al **Cold Aisle**, mientras que la **parte trasera** se refiere al **Hot Aisle**.
 
 **Ejemplo:**
 - **Cold Aisle:** Frente de los gabinetes (donde se ubican los servidores).
 - **Hot Aisle:** Parte trasera de los gabinetes (donde se concentran las salidas de aire caliente).
 
-## **4. Distribución de los Gabinetes y Racks:**
+### **1.3.4 Distribución de los Gabinetes y Racks:**
 Cada fila de gabinetes dentro de la sala de telecomunicaciones debe estar etiquetada con un **identificador de fila** único. Estos identificadores son secuenciales, lo que asegura una organización lógica para el acceso y la administración de los racks.
 
-### **Ejemplo de Etiquetas de Fila de Gabinetes:**
+#### **Ejemplo de Etiquetas de Fila de Gabinetes:**
 Cada fila debe ser etiquetada en ambos extremos de la fila con el **número de fila**. Estos números son secuenciales y únicos para cada fila dentro de la sala.
 
 **Ejemplo de Gabinete de Sala de Telecomunicaciones:**
 - Gabinete **1** en la fila **A** y gabinete **2** en la fila **B**, con sus identificadores respectivos (por ejemplo: **A01**, **B02**).
 
-## **5. Tipos de Racks y Montaje:**
+### **1.3.5 Tipos de Racks y Montaje:**
 
-### **Rack Mural:**
+#### **Rack Mural:**
 El **rack mural** se monta en las paredes del centro de datos y es ideal para almacenar equipos de telecomunicaciones más pequeños o componentes auxiliares. Es comúnmente utilizado para almacenamiento de **servidores compactos** y **equipo de red**.
 
-### **Rack Pedestal:**
+#### **Rack Pedestal:**
 El **rack pedestal** se monta sobre el suelo y permite el almacenamiento de equipos más grandes, como **servidores dedicados** y **switches de red**. Este tipo de rack es ideal cuando se requiere mayor capacidad y se necesita un acceso más fácil a los equipos.
 
-### **Rack de Tablero de Distribución:**
+#### **Rack de Tablero de Distribución:**
 El **rack de tablero de distribución** se utiliza para organizar y distribuir cables y conexiones dentro de la sala de telecomunicaciones. Estos racks pueden ser montados en **paredes o aéreo**, dependiendo de la distribución del centro de datos.
 
-## **6. Componentes de un Rack de Servidor Dedicado:**
+### **1.3.6 Componentes de un Rack de Servidor Dedicado:**
 Un **rack de servidor dedicado** en un centro de datos es esencial para alojar los servidores, unidades de almacenamiento, **discos duros**, **switches de red** y otros componentes críticos. A continuación, se describen los principales elementos:
 
 1. **Servidores Dedicados:**  
@@ -632,31 +638,31 @@ Un **rack de servidor dedicado** en un centro de datos es esencial para alojar l
 4. **Componentes de Distribución y Acceso:**  
    Estos incluyen **paneles de parcheo**, **cables de fibra óptica** o **cables de cobre** para la distribución de señales entre los servidores y otros equipos dentro del rack. Los **puntos de acceso** también son importantes para garantizar la conectividad inalámbrica en ciertas áreas.
 
-## **7. Esquema General de Distribución en Sala de Telecomunicaciones:**
+### **1.3.7 Esquema General de Distribución en Sala de Telecomunicaciones:**
 
-### **Mural o Aéreo:**
+#### **Mural o Aéreo:**
 - **Rack Mural:** Ideal para equipos pequeños.
 - **Rack Aéreo:** Montado en el techo para aprovechar el espacio y reducir la obstrucción de cables en el suelo.
 
-## **Conclusión:**
+### **Conclusión:**
 La distribución de racks en un centro de datos es esencial para la eficiencia operativa. Cada componente, desde el servidor hasta el switch de red, debe estar correctamente ubicado y etiquetado con un sistema de coordenadas claro para facilitar el mantenimiento y las futuras expansiones. Además, el uso de diferentes tipos de racks, ya sea mural, pedestal o de distribución, asegura una organización efectiva del espacio.
 
-# **17. Electricidad en Centros de Datos: Aterramiento, Generadores, UPS y Emisiones de Equipos**
+## **1.4 Electricidad (Aterramiento, Generadores, UPS y Emisiones de Equipos)**
 
-## **1. Aterramiento y Conexión a Tierra**
+### **1.4.1 Aterramiento y Conexión a Tierra**
 
-### **Aterramento Base de Piso Falso**
+#### **1.4.1.1 Aterramento Base de Piso Falso**
 El **aterramiento** adecuado es esencial para proteger los equipos electrónicos de un centro de datos. La base del piso falso debe contar con un sistema de aterramento que proporcione una conexión segura a tierra, minimizando el riesgo de fallos eléctricos o daños a los equipos debido a descargas eléctricas.
 
-### **Aterramento PDU**
+#### **1.4.1.2 Aterramento PDU**
 Las **Unidades de Distribución de Energía** (PDU) deben contar con un sistema de aterramento confiable para asegurar la seguridad eléctrica y el buen funcionamiento de los equipos que alimentan.
 
-### **Normativa de Conexión a Tierra**
+#### **1.4.1.3 Normativa de Conexión a Tierra**
 Se debe seguir la normativa **ANSI/TIA-607-B** para los requisitos de conexión a tierra en salas de computadoras, gabinetes de equipos y racks. Esta norma define los lineamientos para la instalación de un sistema de aterramento físico adecuado en un centro de datos.
 
-## **2. Generadores Diesel y UPS (Uninterruptible Power Supply)**
+### **1.4.2 Generadores Diesel**
 
-### **Generador Diesel Cat® 3512**
+#### **1.4.2.1 Generador Diesel Cat® 3512**
 El **Generador Diesel Cat® 3512** está diseñado para optimizar el consumo de combustible, ofreciendo un rendimiento confiable con miles de aplicaciones en todo el mundo.
 
 - **Motor Diesel Cat®:** 
@@ -667,7 +673,11 @@ El **Generador Diesel Cat® 3512** está diseñado para optimizar el consumo de 
   - Cumple con la normativa ISO 8528-5 G3 y los requisitos de carga NFPA 110.
   - Verificación de confiabilidad mediante pruebas de vibración torsional, consumo de combustible, y resistencia.
 
-### **Unidad UPS (Smart-UPS RT de APC)**
+### **1.4.3 UPS y Emisiones de Equipos**
+
+#### **1.4.3.1 UPS (Uninterruptible Power Supply)**
+
+##### **Unidad UPS (Smart-UPS RT de APC)**
 - **UPS en Rack (20 kVA y 230 V):** 
   - Proporciona una fuente de alimentación ininterrumpida a equipos críticos.
   - **Smart-UPS RT** ofrece un rendimiento confiable y protección ante cortes de energía.
@@ -678,10 +688,10 @@ El **Generador Diesel Cat® 3512** está diseñado para optimizar el consumo de 
 - **Posterior:**
   - Incluye conexiones para alimentación y comunicación con otros equipos.
 
-### **UPS Monofásico**
+##### **UPS Monofásico**
 - Un **UPS monofásico** puede ser utilizado para equipos menos exigentes en términos de potencia. Este tipo de UPS ofrece protección contra cortes de energía, protegiendo los equipos críticos del centro de datos.
 
-## **3. Protección Contra Incendios**
+#### **1.4.3.2 Protección Contra Incendios**
 
 Los sistemas de protección contra incendios en centros de datos deben cumplir con la normativa **NFPA-75**. Además, los sistemas de rociadores en las salas de computación deben ser **de acción previa**.
 
@@ -691,17 +701,17 @@ Los sistemas de protección contra incendios en centros de datos deben cumplir c
 - **Protección Contra Incendios en Centros de Datos:**
   - [Video en YouTube](https://www.youtube.com/watch?v=z_xNIjr_T98)
 
-## **4. Requerimientos Eléctricos**
+##### **Requerimientos Eléctricos**
 
-### **Distribución de Energía**
+###### **Distribución de Energía**
 Los circuitos de suministro de energía para los equipos informáticos deben estar distribuidos y terminar en paneles eléctricos específicos para los equipos de telecomunicaciones y computadoras. La instalación de **tomacorrientes** separados es fundamental para evitar interferencias.
 
 - **Tomacorrientes Dúplex (120V, 20A):** Usados para equipos no conectados a las regletas de alimentación.
 - Los **tomacorrientes** deben estar separados a una distancia de **3,65 m** (12 pies) a lo largo de las paredes de la sala de computadoras.
 
-## **5. Condiciones de Emisión: Temperatura y Humedad**
+### **1.4.4 Condiciones de Emisión: Temperatura y Humedad**
 
-### **Parámetros Operacionales**
+#### **1.4.4.1 Parámetros Operacionales**
 La **temperatura y humedad** deben controlarse para asegurar la operación continua y eficiente de los equipos.
 
 - **Temperatura de Bulbo Seco:** 20°C (68°F) a 25°C (77°F).
@@ -712,32 +722,34 @@ La **temperatura y humedad** deben controlarse para asegurar la operación conti
 **Medición de Temperatura y Humedad:**
 Se debe medir a **1,5 m (5 pies)** sobre el nivel del suelo, cada **3 a 6 m (10 a 30 pies)** a lo largo de la línea central de los pasillos fríos y en la toma de aire de los equipos.
 
-## **6. Requerimientos de Temperatura y Humedad en Espacios de Telecomunicaciones**
+#### **1.4.4.2 Requerimientos de Temperatura y Humedad en Espacios de Telecomunicaciones**
 
 Los espacios de telecomunicaciones deben cumplir con los **requerimientos de temperatura y humedad** establecidos por normas específicas, clasificadas como **Clase A, B y C**.
 
-### **Mapa de Calor en Centros de Datos**
+##### **Mapa de Calor en Centros de Datos**
 El uso de **programas de monitoreo** permite generar un **mapa de calor** para evaluar la eficiencia del sistema de refrigeración en tiempo real.
 
 - **Sensor de Temperatura en Cada Rack:** 
   - Utilizado para monitorear la temperatura en tiempo real y detectar posibles problemas de refrigeración.
 
-## **7. Enrutamiento de Cables y Flujo de Aire**
+#### **1.4.4.3 Enrutamiento de Cables y Flujo de Aire**
 
-### **Enrutamiento del Cableado de Telecomunicaciones**
+##### **Enrutamiento del Cableado de Telecomunicaciones**
 El **cableado** no debe bloquear el flujo de aire necesario para enfriar los equipos dentro de los gabinetes. Se deben evitar los cables que obstruyan **los respiraderos**.
 
-### **Flujo de Aire en el Centro de Datos**
+##### **Flujo de Aire en el Centro de Datos**
 El flujo de aire adecuado es esencial para el enfriamiento efectivo del equipo dentro del centro de datos. Se debe mantener el **flujo de aire suficiente**, tal como lo indique el fabricante del equipo.
 
-## **8. Sistema de Refrigeración en Centros de Datos**
+#### **1.4.4.4 Sistema de Refrigeración en Centros de Datos**
 
-### **Unidad de Aire Acondicionado para Data Center**
+##### **1.4.4.4.1 Unidad de Aire Acondicionado para Data Center**
 Las **unidades de aire acondicionado** especializadas en **centros de datos** garantizan que las condiciones de temperatura y humedad sean las adecuadas para el funcionamiento de los equipos. El monitoreo constante de la temperatura y humedad es esencial para mantener la estabilidad de la operación.
 
-# **18. Arquitectura Lógica de un Data Center**
+# **2.0 1A Unidad: Infraestructura Física del Data Center(24 horas)**(segunda Guia Parte B)
 
-## Áreas Críticas de un Data Center
+## **2.1 Arquitectura Lógica de un Data Center**
+
+## **2.1.1 Áreas Críticas de un Data Center**
 
 1. **Capacidad de Potencia**  
    La energía es esencial para mantener todos los sistemas funcionando sin interrupciones.
@@ -762,7 +774,7 @@ Las **unidades de aire acondicionado** especializadas en **centros de datos** ga
 
 ---
 
-## Tipos de Redes en un Data Center
+## **2.1.2 Tipos de Redes en un Data Center**
 
 - **LAN (Red de Área Local)**: Utilizada para la conectividad dentro del centro de datos.
 - **MAN (Red de Área Metropolitana)**: Usada para conectar varios data centers en una ciudad o área metropolitana.
@@ -771,7 +783,7 @@ Las **unidades de aire acondicionado** especializadas en **centros de datos** ga
 
 ---
 
-## Topologías Lógicas de Red en Centros de Datos
+## **2.1.3 Topologías Lógicas de Red en Centros de Datos**
 
 ### 1. Topología de Top-of-Rack (ToR)
 
@@ -797,7 +809,7 @@ Las **unidades de aire acondicionado** especializadas en **centros de datos** ga
 
 ---
 
-## Conmutadores y Diseño de Conexiones
+## **2.1.4Conmutadores y Diseño de Conexiones**
 
 - **Conmutador Top-of-Rack (ToR)**:
   - Es un conmutador de 1 a 2 unidades de rack que se instala dentro del mismo rack que los servidores, proporcionando una conectividad directa y eficiente.
@@ -807,7 +819,7 @@ Las **unidades de aire acondicionado** especializadas en **centros de datos** ga
 
 ---
 
-## Modelos de Acceso a Servidores
+## **2.1.5 Modelos de Acceso a Servidores**
 
 - **Top-of-Many-Racks (ToMR)**:  
   Cada conmutador se conecta a varios racks, lo que permite una administración más sencilla y una distribución eficiente de la carga de trabajo.
@@ -821,7 +833,7 @@ Las **unidades de aire acondicionado** especializadas en **centros de datos** ga
 
 - La **distribución de energía** y **capacidad de enfriamiento** son factores críticos para determinar cuántos servidores se pueden instalar por gabinete o rack. Ambos son fundamentales para asegurar que los equipos operen a su máxima eficiencia sin riesgos de sobrecalentamiento o apagones por falta de energía.
 
-# **19. Infraestructura de un Data Center como Servicio (XaaS)**
+## **2.2 Infraestructura de un Data Center como Servicio (XaaS)**
 
 XaaS (Everything as a Service) se refiere a la provisión de diversos servicios a través de la computación en la nube, permitiendo a los usuarios acceder a recursos y funcionalidades sin la necesidad de poseer y mantener la infraestructura subyacente.
 
@@ -839,4 +851,124 @@ XaaS (Everything as a Service) se refiere a la provisión de diversos servicios 
 
 *   **Software como Servicio (SaaS):** Ofrece acceso a aplicaciones completas a través de la nube, eliminando la necesidad de instalar y mantener software localmente.
 
-# **k**
+## **2.3 Diseño e Implementación de Data Centers Virtuales**
+
+### **2.3.1 Virtualización: Fundamentos**
+
+*   **Definición:** La virtualización permite crear servicios de TI útiles mediante recursos que normalmente se ejecutan directamente en el hardware. Facilita el uso completo de la capacidad de una máquina física, distribuyendo sus recursos entre múltiples usuarios o entornos.
+
+### **2.3.2 Herramientas de Virtualización:**
+
+*   **Cisco Workload Optimization Manager:** Optimiza las cargas de trabajo en diversas plataformas, escalando recursos dinámicamente en respuesta a la demanda. Integra Intel Data Center Manager para administrar el uso, los costos y el estado (temperatura, energía) de los centros de datos en tiempo real.
+*   **Schneider Electric EcoStruxure IT Expert:** Servicio para la gestión de centros de datos híbridos, accesible desde ordenadores y dispositivos móviles.
+*   **VMware vSphere 6.5:** Permite a los clientes ejecutar, gestionar, conectar y proteger aplicaciones en un entorno operativo común a través de diferentes clouds y dispositivos.
+*   **ManageEngine OpManager 12.3:** Software de monitoreo de red que admite entornos de TI de múltiples proveedores y es escalable para adaptarse a las necesidades de cada organización.
+
+### **2.3.3 Desafíos de la Interconexión de Redes en la Nube:**
+
+*   **Coordinación de la Virtualización:** Asegurar que la red proporcione un soporte adecuado y flexible para las aplicaciones en la red cuando se ejecutan dentro de una arquitectura de sistema compleja y diversa, incluyendo la migración dinámica y estática de máquinas virtuales (VM).
+*   **Control Armonizado de Tecnologías Heterogéneas:** Utilizar diversas tecnologías de red para garantizar la conectividad de extremo a extremo, requiriendo mecanismos de control eficientes.
+*   **Reconfiguración a la Demanda:** Permitir la reconfiguración dinámica de los recursos de computación y almacenamiento para satisfacer cambios en los requisitos, como el cambio de ancho de banda, la modificación de la topología de red o la adición de nuevos elementos de red.
+
+### **2.3.4 Proceso de Diseño e Implementación:**
+
+*   **Estimación de Requisitos:** Determinar los requisitos de telecomunicaciones, espacio, energía y enfriamiento a plena capacidad, anticipando las tendencias futuras.
+*   **Coordinación con Arquitectos e Ingenieros:** Proporcionar los requisitos de espacio, energía, refrigeración, seguridad, carga del piso, conexión a tierra, protección eléctrica y otros requisitos de las instalaciones.
+*   **Plano del Piso del Equipo:** Crear un plano que incluya la ubicación de las salas principales y los espacios para salas de entrada, áreas de distribución principal, áreas de distribución intermedias, áreas de distribución horizontal, áreas de distribución de zonas y áreas de distribución de equipos.
+*   **Diseño del Sistema de Cableado:** Diseñar un sistema de cableado de telecomunicaciones basado en las necesidades de los equipos futuros existentes y planificados que se ubicarán en el centro de datos.
+
+### **2.3.5 Planificación del Proyecto:**
+
+*   Elaborar por anticipado las metas y los objetivos que se quieren cumplir y además defina las tácticas para llegar allí, por lo cual es considerado el modelo teórico para actuar en el futuro.
+*   La PLANIFICACIÓN es la base de las funciones administrativas, ya que da lugar a que las demás funciones se puedan realizar. explorarán todos los aspectos de alcance, tiempo, costo, calidad, comunicaciones, recursos humanos, riesgos, adquisiciones y participación de los interesados.
+*   Entender , profundizar y aplicar los conceptos del proceso de Planificación.
+    *   El equipo del proyecto
+    *   Miembros del equipo y director del proyecto
+    *   Definir metas y objetivos.
+    *   Formula del objetivo del proyecto
+    *   Introducción plan del proyecto
+    *   Alcance del proyecto
+    *   Desarrollo EDT o WBS.
+    *   Roles y responsabilidad
+    *   Matriz de responsabilidad
+    *   Sistema de calendarización
+    *   Costos del proyecto
+    *   Plan de los riesgos en el proyecto
+    *   El entorno de las comunicaciones
+
+### **2.3.6 Elementos Clave para una Implementación Segura:**
+
+*   Visibilidad y control sobre aplicaciones personalizadas del centro de datos.
+*   Manejo de flujos de tráfico asimétricos y transacciones de aplicaciones entre dispositivos y centros de datos.
+*   Adaptación a la evolución de los centros de datos (SDN, entornos híbridos).
+*   Abordar la secuencia completa del ataque (antes, durante y después).
+*   Protección de la totalidad de la red, reconociendo las conexiones remotas a recursos críticos.
+
+### **2.3.7 Factores Críticos de Éxito:**
+
+*   Construir un equipo estrella, no un equipo de estrellas.
+*   Tener claridad sobre qué se controla y a quién.
+*   Gestionar los riesgos como parte del control.
+*   Escuchar y actuar sobre los indicadores.
+*   Actuar rápidamente, consultando al equipo en caso de duda.
+
+### **2.3.8 Certificación y Cierre del Proyecto:**
+
+*   Formalizar la aceptación del Proyecto, Realizar el Cierre Administrativo (Internos y Externos) Completando los requerimientos y entregables (Todos).
+*   ¿Qué fue bien hecho? y ¿Qué no se hizo? Registrar para futuros proyectos.
+*   Realizar una encuesta sobre el desempeño del equipo y métricas con datos objetivos en: Alcance, Costos, Plazo, Calidad y Análisis de los resultados.
+
+## **2.4 Funcionalidades y herramientas de Software de Monitoreo para Infraestructura de Data Centers**
+
+**Objetivo:** Supervisar el estado, el rendimiento y la eficiencia de la infraestructura de un Data Center, permitiendo una gestión proactiva y la optimización de los recursos.
+
+**Herramientas y Funcionalidades:**
+
+1.  **Programa de monitoreo en tres partes:**
+    * Edge control
+    * Conected products
+    * Edge control
+
+2.  **IO.AR:** Aplicaciones para iPad (detalles específicos no proporcionados).
+
+3.  **ManageEngine OpManager:**
+    *   Tablero de instrumentos de gestión que captura mensajes SNMP (Protocolo Simple de Administración de Red).
+    *   Soporta entornos de TI de múltiples proveedores y es escalable.
+
+4.  **Quest Big Brother (DELL):**
+    *   Software de gestión de centros de datos con un módulo llamado Big Brother.
+    *   Monitorea externamente servicios TCP (HTTP, Telnet, FTP, SSH, SMTP) y la presencia básica con Ping.
+    *   Panel simple con indicadores de estado rojo/verde.
+    *   Control de servicios para asegurar la disponibilidad en un puerto específico.
+    *   Software cliente opcional para monitorear estadísticas internas (CPU, memoria, disco) en servidores o estaciones de trabajo (disponible para Windows y UNIX/Linux).
+
+5.  **IT Manager from Smarter Apps Inc:**
+    *   Permite el control sobre servicios de nube (Amazon Web Services, aplicaciones de Google).
+    *   Administra servidores usando SSH, Telnet, Windows RDP, VNC, y Apple Remote Desktop.
+    *   Herramientas de red incorporadas (Ping, Traceroute) para solucionar problemas.
+
+6.  **Schneider Electric StruxureWare Operations (Visor):**
+    *   Aplicación para iPhone y iPad que muestra el uso de energía, refrigeración, red y espacio de rack, según lo informado por el software de administración StruxureWare.
+    *   Panel de control con gráfico de radio del uso actual en comparación con la capacidad actual.
+    *   Cuadros de mando con gráficos de líneas que muestran el uso de la capacidad en el tiempo (semana, mes, semestre, año).
+    *   Incluye datos de demostración para la evaluación (la evaluación del software de servidor requiere la creación de una maqueta con representantes de APC/Schneider Electric).
+
+**Opciones de Monitoreo:**
+
+*   **Respaldo de energía:** Supervisión del estado y rendimiento de los sistemas de respaldo de energía (UPS, generadores).
+*   **Aire en Rack:** Control de la temperatura y el flujo de aire dentro de los racks.
+*   **Pantalla de Reporte de Energía:** Visualización del consumo de energía y métricas relacionadas.
+*   **Recopilación de datos para simulación en tiempo real:** Uso de los datos de monitoreo para simular y analizar el impacto de cambios en la energía y el enfriamiento del Data Center.
+*   **cooling optimize benchmark**
+*   **Vista frontal de la fila de racks de TI dentro de la sala de TI:**
+
+**Topologías Lógicas de Red en Data Centers:**
+
+*   Bus
+*   Anillo
+*   Estrella
+*   Malla
+*   Jerárquica
+*   Estrella Extendida
+
+##
