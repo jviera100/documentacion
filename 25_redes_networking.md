@@ -15,17 +15,18 @@
 
 ### 3. Tipos de Redes:
 
-**LAN (Local Area Network - Red de Área Local):**
-* Red en área limitada (casa, oficina). Conexión por cable (Ethernet).
+| Tipo de Red (Alámbrica)        | Descripción                                                                          | Área de Cobertura        | Ejemplo Típico                                  |
+| ----------------------------- | ------------------------------------------------------------------------------------ | ------------------------ | ------------------------------------------------- |
+| **LAN (Local Area Network)**   | Red en área limitada usando cables para la conexión.                               | Casa, oficina, edificio  | Red de una oficina conectada por cable Ethernet   |
+| **MAN (Metropolitan Area Network)** | Red en área metropolitana, usualmente para interconectar LANs distantes.              | Ciudad                     | Red de un gobierno municipal que conecta sus edificios |
+| **WAN (Wide Area Network)**    | Red en área extensa que abarca países o el mundo.                                   | País, Mundo                | Red corporativa que conecta sucursales en diferentes países |
 
-**WLAN (Wireless Local Area Network - Red de Área Local Inalámbrica):**
-* LAN inalámbrica (Wi-Fi).
-
-**MAN (Metropolitan Area Network):**
-* Red en área metropolitana (ciudad).
-
-**WAN (Wide Area Network):**
-* Red en área extensa (país, mundo). Internet es la WAN más grande.
+| Tipo de Red (Inalámbrica)    | Descripción                                                                                                           | Área de Cobertura           | Ejemplo Típico                                                         | Tecnología Principal(es)       |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ----------------------------------------------------------------------- | ------------------------------- |
+| **WPAN (Wireless PAN)**      | Red para conectar dispositivos personales muy cercanos entre sí.                                                      | Pocos metros                | Auriculares Bluetooth conectados a un teléfono                           | Bluetooth, Zigbee              |
+| **WLAN (Wireless LAN)**      | LAN que utiliza tecnología inalámbrica (Wi-Fi) para la conexión.                                                    | Casa, oficina, cafetería       | Acceso a Internet en una casa u oficina a través de un router Wi-Fi      | Wi-Fi (IEEE 802.11)              |
+| **WMAN (Wireless MAN)**      | MAN que utiliza tecnología inalámbrica para conectar áreas extensas dentro de una ciudad.                             | Ciudad o área metropolitana | Proveedor de internet que ofrece acceso inalámbrico de banda ancha en una ciudad | WiMAX (IEEE 802.16)             |
+| **WWAN (Wireless WAN)**      | WAN que utiliza tecnologías inalámbricas (celular) para proporcionar acceso a Internet en áreas extensas.             | Regional, Nacional, Global   | Acceso a Internet en un teléfono móvil a través de la red celular (4G/5G) | 3G, 4G LTE, 5G NR               |
 
 **Servidor DNS (Domain Name System):**
 * "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
