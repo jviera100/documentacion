@@ -13,6 +13,9 @@
 **SSID (Service Set Identifier - Identificador del Conjunto de Servicios):**
 * Nombre de la red Wi-Fi.
 
+**Servidor DNS (Domain Name System):**
+* "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
+
 ### 3. Tipos de Redes:
 
 | Tipo de Red (Alámbrica)        | Descripción                                                                          | Área de Cobertura        | Ejemplo Típico                                  |
@@ -27,9 +30,6 @@
 | **WLAN (Wireless LAN)**      | LAN que utiliza tecnología inalámbrica (Wi-Fi) para la conexión.                                                    | Casa, oficina, cafetería       | Acceso a Internet en una casa u oficina a través de un router Wi-Fi      | Wi-Fi (IEEE 802.11)              |
 | **WMAN (Wireless MAN)**      | MAN que utiliza tecnología inalámbrica para conectar áreas extensas dentro de una ciudad.                             | Ciudad o área metropolitana | Proveedor de internet que ofrece acceso inalámbrico de banda ancha en una ciudad | WiMAX (IEEE 802.16)             |
 | **WWAN (Wireless WAN)**      | WAN que utiliza tecnologías inalámbricas (celular) para proporcionar acceso a Internet en áreas extensas.             | Regional, Nacional, Global   | Acceso a Internet en un teléfono móvil a través de la red celular (4G/5G) | 3G, 4G LTE, 5G NR               |
-
-**Servidor DNS (Domain Name System):**
-* "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
 
 ### Modelos de Comunicación de Red (Síntesis Funcional):
 
