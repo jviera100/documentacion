@@ -47,13 +47,28 @@
     *   Fabricantes.
         
 *   **Organizaciones Oficiales clave**
-    *   **ITU (Unión Internacional de Telecomunicaciones):** Desarrolla estándares para telefonía, telegrafía, interfaces, redes. La ITU-T migra desde la más conocida CCITT.
-    *   **ANSI (American National Standards Institute):** Coordina la estandarización voluntaria en el sector privado de EE.UU.
-    *   **EIA (Electronics Industry Association):** Desarrolla normas para componentes electrónicos, electrónica del consumidor, información electrónica y telecomunicaciones.
-    *   **TIA (Telecommunications Industry Association):** Desarrolla normas de cableado industrial voluntario.
-    *   **NEC (National Electric Code):** Estándar de seguridad para infraestructura, define prácticas de instalación eléctrica. Se conoce como ANSI/NFPA-70.
-    *   **ISO (International Organization for Standardization):** Desarrolla estándares internacionales en una amplia gama de campos, incluyendo la gestión de la calidad, la seguridad y la sostenibilidad.
-    *   **IEEE (Institute of Electrical and Electronics Engineers):** Desarrolla estándares en áreas como la ingeniería eléctrica, la electrónica, la informática y las telecomunicaciones.
+  
+    *   **ITU (Unión Internacional de Telecomunicaciones):** Desarrolla estándares para telefonía, telegrafía, interfaces, redes. La ITU-T migra desde la más conocida CCITT. [www.itu.int](www.itu.int)
+    *   **ANSI (American National Standards Institute):** Coordina la estandarización voluntaria en el sector privado de EE.UU. [www.ansi.org](www.ansi.org)
+    *   **EIA (Electronics Industry Association):** Desarrolla normas para componentes electrónicos, electrónica del consumidor, información electrónica y telecomunicaciones. [www.eia.org](www.eia.org)
+    *   **TIA (Telecommunications Industry Association):** Desarrolla normas de cableado industrial voluntario. [www.tiaonline.org](www.tiaonline.org)
+    *   **NEC (National Electric Code):** Estándar de seguridad para infraestructura, define prácticas de instalación eléctrica. Se conoce como ANSI/NFPA-70. [www.nfpa.org](www.nfpa.org) *Nota: El NEC es publicado por la NFPA.*
+    *   **ISO (International Organization for Standardization):** Desarrolla estándares internacionales en una amplia gama de campos, incluyendo la gestión de la calidad, la seguridad y la sostenibilidad. [www.iso.ch](www.iso.ch)
+    *   **IEEE (Institute of Electrical and Electronics Engineers):** Desarrolla estándares en áreas como la ingeniería eléctrica, la electrónica, la informática y las telecomunicaciones. [www.ieee.org](www.ieee.org)
+  
+*   **Organizaciones Oficiales**
+    
+    *   **ASTM:** American Society for Testing and Materials - Desarrolla estándares técnicos para materiales, productos, sistemas y servicios. [www.astm.org](www.astm.org)
+    *   **BICSI:** Building Industry Consulting Service International - Desarrolla estándares y ofrece capacitación para profesionales de la industria de la construcción y las TIC. [www.bicsi.org](www.bicsi.org)
+    *   **CSA:** Canadian Standards Association International - Desarrolla estándares técnicos y de seguridad para una amplia gama de productos. [www.csa-international.org](www.csa-international.org)
+    *   **FCC:** Federal Communications Commission - Regula las comunicaciones interestatales e internacionales por radio, televisión, cable y satélite en los EE. UU. [www.fcc.org](www.fcc.org)
+    *   **IEC:** International Electrotechnical Commission - Desarrolla estándares internacionales para todas las tecnologías eléctricas, electrónicas y relacionadas. [www.iec.ch](www.iec.ch)
+    *   **IPC:** The Institute for Interconnecting and Packaging Electronic Circuits - Asociación comercial que establece estándares para el ensamblaje y fabricación de placas de circuito impreso. [www.ipc.org](www.ipc.org)
+    *   **NEMA:** National Electrical Manufacturers Association - Desarrolla estándares técnicos para productos eléctricos y electromédicos. [www.nema.org](www.nema.org)
+    *   **NFPA:** National Fire Protection Association - Establece códigos y estándares para la prevención de incendios y la seguridad eléctrica. [www.nfpa.org](www.nfpa.org)
+    *   **SCTE:** Society of Cable Telecommunications Engineers - Organización para profesionales de la industria de la televisión por cable, telecomunicaciones e internet de banda ancha. [www.scte.org](www.scte.org)
+    *   **Telcordia Technologies:** (Ahora parte de Ericsson)  Desarrolla estándares y requisitos para equipos y sistemas de telecomunicaciones. [www.telcordia.com](www.telcordia.com)
+    *   **UL:** Underwriters Laboratories - Certifica la seguridad de productos eléctricos y electrónicos. [www.ul.com](www.ul.com)
     
     
     
@@ -517,17 +532,17 @@ El **estándar ANSI/TIA-942** establece requisitos para el diseño e instalació
 
 ## **1.2 Áreas Funcionales y Espacios Operacionales**
 
-### Definición de Términos:
+### **1.2.1 Definición de Términos:**
 **Centro de Datos (DC):**  
 Es un edificio o una parte de un edificio cuya función principal es albergar una sala de computadoras y sus áreas de apoyo.
 
-### Sitio del Edificio
+### **1.2.2 Sitio del Edificio**
 El **casco del edificio** abarca varias áreas funcionales dentro y fuera del centro de datos, entre ellas:
 
 1. **Espacio de oficina en general.**
 2. **Telecomunicaciones y equipamiento de los espacios fuera del centro de datos.**
 
-### Áreas del Centro de Datos
+### **1.2.3 Áreas del Centro de Datos**
 El **Centro de Datos** incluye varias zonas clave:
 
 1. **Oficinas personales de apoyo.**  
@@ -569,11 +584,25 @@ El **Centro de Datos** incluye varias zonas clave:
 
     3.9 **Shaft:**  
         Espacios verticales que permiten la distribución de cables, conducciones y otros servicios críticos dentro del centro de datos.
+    4.0 "**External Network Interface (ENI):** *Interfaz entre el cableado de la sala de computadoras y el cableado externo.*"
 
 ---
 
 Este conjunto de **áreas funcionales y operacionales** dentro del centro de datos está diseñado para garantizar la eficiencia operativa, la conectividad, la seguridad y la redundancia necesarias para su correcto funcionamiento. Cada área cumple una función específica para mantener la integridad y la continuidad de los servicios del centro de datos.
 
+### **1.2.4 Áreas de distribución:**
+
+    *   **Main Distribution Area (MDA):** *Área de distribución principal. Espacio que incluye la interconexión principal (MC). Puede incluir la interconexión horizontal (HC) y la interconexión intermedia (IC). Es central y principal en todo centro de datos.*
+    *   **Intermediate Distribution Area (IDA):** *Opcional. Espacio que soporta la interconexión intermedia en centros de datos grandes, permitiendo una segunda capa de cableado (Cabling Subsystem 2) cuando el Cabling Subsystem 3 desde la MDA no es suficiente. Puede incluir equipo activo.*
+    *   **Horizontal Distribution Area (HDA):** *Área de distribución horizontal.  Sirve las EDAs. Generalmente incluye switches LAN, SAN y KVM.*
+    *   **Equipment Distribution Area (EDA):** *Área de distribución del equipamiento.  Espacio destinado a los equipos de usuario, incluyendo servidores y equipos de telecomunicaciones.*
+    *   **Zone Distribution Area (ZDA):** *Área donde se ubica un punto de consolidación entre el cableado horizontal y el equipo. Limitada a 288 conexiones, sin cross-connection y sin equipo activo.*
+  
+### **1.2.5 Puntos de Salida**
+    *   "**Equipment Outlet (EO):** *Punto de conexión más externo en una topología jerárquica en estrella.*"
+    *    "**Consolidation Point (CP):** *Punto de interconexión opcional dentro de una ZDA.*"
+#### **1.2.5.4 Tr**
+    *   "**Telecommunications Room (TR):** *Espacio que soporta el cableado a áreas fuera del computer room. Puede estar combinada con un MDA, IDA o HDA.*"
 
 ## **1.3 Distribución de Equipamiento y Hardware para Montaje de un Rack**
 
@@ -721,6 +750,8 @@ La **temperatura y humedad** deben controlarse para asegurar la operación conti
 
 **Medición de Temperatura y Humedad:**
 Se debe medir a **1,5 m (5 pies)** sobre el nivel del suelo, cada **3 a 6 m (10 a 30 pies)** a lo largo de la línea central de los pasillos fríos y en la toma de aire de los equipos.
+
+*   ***Advertencia de energía ininterrumpible:*** En la entrada a la sala con equipos de respaldo UPS, se debe colocar un letrero con la leyenda *“WARNING – Uninterruptible power is present in this area. Power will be present at equipment even in the event of a total building shutdown at the main service disconnect.”*.
 
 #### **1.4.4.2 Requerimientos de Temperatura y Humedad en Espacios de Telecomunicaciones**
 
@@ -895,6 +926,9 @@ XaaS (Everything as a Service) se refiere a la provisión de diversos servicios 
     *   Costos del proyecto
     *   Plan de los riesgos en el proyecto
     *   El entorno de las comunicaciones
+#### **2.3.5.1 Consideraciones de Eficiencia Energética:**
+
+           La planificación del proyecto de cableado deberá considerar aquellos aspectos de la norma ANSI/TIA942-A enfocados en la eficiencia enérgetica, buscando optimizar los flujos de aire, evitar el exceso de cableado, eliminando aquellos cables abandonados y planificando la estructura,  de acuerdo a las dimensiones físicas del cableado y su impacto con el enfriamiento de la sala.
 
 ### **2.3.6 Elementos Clave para una Implementación Segura:**
 
