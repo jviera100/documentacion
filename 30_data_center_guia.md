@@ -278,14 +278,19 @@ El control de temperatura y humedad en un Data Center es esencial para garantiza
 - **COC** = Centro de Operación Control.
 - **NOC** = Centro de Operación Red.
 
-# **7. Infraestructura como Servicio (IaaS)**
+# **7. ☁️ **Modelos de Servicios en la Nube (Cloud Computing):**
 
-- **CaaS (Communication as a Service):** Ofrecer al cliente la capacidad de interacción y colaboración en tiempo real.
-- **BDaaS (Database as a Service):** Servicios de big data a través de la computación en la nube.
-- **NaaS (Network as a Service):** Configurar, mantener y liberar la conectividad de la red como un servicio en la nube.
-- **IaaS (Infrastructure as a Service):** Capacidades de computación, almacenamiento y red para ejecutar aplicaciones.
-- **PaaS (Platform as a Service):** Ofrecer capacidades de tipo plataforma.
-- **SaaS (Software as a Service):** Ofrecer capacidades de tipo aplicación.
+| Acrónimo | Significado                   | ¿Qué ofrece?                                            | Ejemplo                                     |
+| :------- | :---------------------------- | :------------------------------------------------------ | :------------------------------------------ |
+| **SaaS** | Software as a Service         | Software listo para usar desde la nube                  | Gmail, Salesforce, Zoom, Microsoft 365    |
+| **PaaS** | Platform as a Service         | Plataforma para desarrollar, desplegar y gestionar apps | Heroku, Google App Engine, AWS Elastic Beanstalk |
+| **IaaS** | Infrastructure as a Service   | Infraestructura virtual (servidores, redes, almac.)   | AWS EC2, Azure Virtual Machines, Google Compute Engine |
+| **FaaS** | Function as a Service         | Ejecutar código en respuesta a eventos, sin servidores  | AWS Lambda, Azure Functions, Google Cloud Functions |
+| **CaaS** | Communication as a Service    | APIs para integrar comunicaciones (voz, video, SMS)     | Twilio, Vonage (Nexmo), Sinch              |
+| **DBaaS**| Database as a Service         | Bases de datos gestionadas en la nube                 | AWS RDS, Azure SQL Database, MongoDB Atlas |
+| **NaaS** | Network as a Service          | Servicios de red bajo demanda (VPN, firewall, SD-WAN) | Cloudflare Magic WAN, Zscaler, Cato Networks |
+| **BaaS** | Backend as a Service          | Backend preconstruido para apps (autenticación, BD)   | Firebase, AWS Amplify                       |
+| **DaaS** | Desktop as a Service          | Escritorios virtuales accesibles desde la nube        | Amazon Workspaces, Azure Virtual Desktop  |
 
 # **8. Diseño e Implementación de Data Centers Virtuales**
 

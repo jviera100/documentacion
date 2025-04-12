@@ -1,4 +1,54 @@
-### Definiciones Clave de Redes:
+### 0. Definiciones Clave de Redes:
+
+#### 🌐 Internet: Conexión Global
+
+Internet es la conexión de equipos a través de redes, ya sean cableadas o inalámbricas.
+
+**Analogía:** Es como una persona que entra a un país:
+*   Debe identificarse.
+*   Necesita una dirección de origen.
+*   Necesita una dirección de destino.
+*   Tiene un tiempo de permanencia (implícito en las conexiones).
+
+Así es como los datos viajan e interactúan en la red global.
+
+#### 🧠 Modelo de Protocolos TCP/IP
+
+Un modelo fundamental para entender la comunicación en red:
+
+*   **Network Access (Acceso a la Red)** → **Ethernet** (Ejemplo de tecnología en esta capa)
+*   **Internet** → **IP** (Internet Protocol - Direccionamiento y enrutamiento)
+*   **Transport (Transporte)** → **TCP** (Transmission Control Protocol - Conexión confiable)
+*   **Application (Aplicación)** → **HTTP** (Hypertext Transfer Protocol - Para la web, por ejemplo)
+
+Cada capa tiene su función específica en el proceso de comunicación entre dispositivos.
+
+#### 💳 Network Interface Card (NIC)
+
+La **NIC** (Tarjeta de Interfaz de Red) es como el "carnet de identidad físico" de tu dispositivo para conectarse a la red.
+
+Puede ser de diferentes tipos:
+*   **NIC Ethernet:** Para conexión por cable.
+*   **NIC Wi-Fi:** Para conexión inalámbrica.
+*   **NIC Virtual:** Usada por software como VPNs o máquinas virtuales.
+
+👉 Un dispositivo puede tener varias NICs al mismo tiempo (por ejemplo, una Ethernet y una Wi-Fi), igual que una persona puede tener varios documentos (carnet, licencia, pasaporte). Cada una sirve para una conexión o propósito distinto.
+
+#### 🧾 La MAC es tu RUT
+
+La dirección **MAC** (Media Access Control) es el número de identificación *único y físico* asignado a cada NIC por el fabricante.
+
+**Analogía:** Así como tu RUT (o DNI) está impreso en tu carnet, la dirección MAC está "grabada" en el hardware de la NIC.
+
+#### 🧩 Nivel de Enlace de Datos – Capa 2 del Modelo OSI
+
+Esta capa se encarga de la comunicación directa entre dispositivos dentro de la *misma red local*. Aquí encontramos:
+
+*   Tecnologías como **Ethernet**.
+*   Dispositivos como el **Switch** (conmutador).
+*   Elementos de la trama como el **SFD** (Start Frame Delimiter - delimitador de inicio de trama).
+
+Organizaciones como la **IEEE** (Institute of Electrical and Electronics Engineers) definen los estándares para estas tecnologías (por ejemplo, IEEE 802.3 para Ethernet, IEEE 802.11 para Wi-Fi).
 
 ### 1. Tipos de Conexión a Internet:
 
@@ -55,14 +105,6 @@ Un router gestiona la comunicación entre redes y cuenta con varios componentes 
 *   **NVRAM:** Conserva de forma permanente la configuración de arranque.
 *   **Interfaces:** Puertos físicos (Ethernet, Serial, etc.) para la conexión con otras redes.
 *   **Fuente de Alimentación:** Suministra energía al dispositivo.
-
-**Comunicación en Redes**
-
-El tráfico de datos en una red se clasifica en:
-
-*   **Unicast:** Un remitente transmite datos a un único destinatario.
-*   **Multicast (Multidifusión):** Un remitente envía datos a un grupo de destinatarios específicos.
-*   **Multidifusión:** Similar a multicast, pero con la capacidad de que los destinatarios puedan unirse o salir dinámicamente del grupo de transmisión.
   
 ### Modelos de Comunicación de Red (Síntesis Funcional):
 
@@ -103,7 +145,7 @@ El tráfico de datos en una red se clasifica en:
 
 En la tecnología de redes, un diseño jerárquico implica dividir la red en niveles independientes. Cada nivel en la jerarquía proporciona funciones específicas que definen su rol dentro de la red general. Un diseño típico de red jerárquica incluye los siguientes niveles de switches:
 
-*   **Switches de Core (Núcleo):** Situados en la parte superior de la jerarquía, los switches de core son responsables de transportar grandes cantidades de tráfico de manera confiable y rápida. Su propósito es mover el tráfico lo más rápido posible. En este nivel, la velocidad y la latencia son preocupaciones primordiales.
+*   **Switches de Core (Conmutador de Núcleo):** Situados en la parte superior de la jerarquía, los switches de core son responsables de transportar grandes cantidades de tráfico de manera confiable y rápida. Su propósito es mover el tráfico lo más rápido posible. En este nivel, la velocidad y la latencia son preocupaciones primordiales.
 
 *   **Switches de Distribución (Distribution Layer):** Es el punto de comunicación entre los switches de acceso y los de core. Su función es proporcionar enrutamiento, filtrado y acceso a la WAN, y determinar cómo los paquetes pueden acceder al core. Aquí se implementan las políticas de red.
 
@@ -117,6 +159,20 @@ En la tecnología de redes, un diseño jerárquico implica dividir la red en niv
 | **Coaxial**         | Impulsos Eléctricos | Media (depende de la frecuencia)          | Interior/Exterior       | Moderado                | Moderado | Transmisión de señales de TV, conexión satelital. Como cables de cobre de compañías de TV.  | Conexión de un televisor a un servicio de cable, conexión satelital.    |
 | **Fibra Óptica**   | Pulsos de Luz   | Varios kilómetros o más               | Interior/Exterior (subterráneo, submarino) | Muy Alto               | Alto | Transmisión de datos a alta velocidad, inmune a interferencia. | Redes troncales, conexión de ciudades, centros de datos, compañías telefónicas. |
 | **Inalámbrico**     | Ondas Electromagnéticas | Variable (depende del estándar y entorno) | Interior/Exterior       | Bajo a Moderado           | Bajo a Moderado | Conexión de dispositivos sin cables mediante modulación de frecuencias. | Conexión de laptops, smartphones, tablets a redes Wi-Fi; Bluetooth; redes celulares. |
+
+### 🔧 ¿Qué es la Multiplexación?
+
+Es una técnica que permite combinar y enviar múltiples flujos de datos o señales a través de un **único canal de comunicación compartido** al mismo tiempo. Su objetivo principal es optimizar el uso del medio de transmisión y ahorrar recursos (como cables o espectro de radiofrecuencia).
+
+#### 📦 Tipos Principales de Multiplexación:
+
+| Tipo          | Explicación Simple                                                    | Ejemplo Práctico                                     |
+| :------------ | :-------------------------------------------------------------------- | :--------------------------------------------------- |
+| **FDM** (Frecuencia) | Cada señal viaja por una "banda" de frecuencia diferente dentro del canal. | Radio FM/AM, TV analógica por cable                |
+| **TDM** (Tiempo)    | Cada señal usa todo el ancho de banda del canal, pero en pequeños turnos de tiempo asignados. | Telefonía digital (líneas T1/E1), algunas redes SONET/SDH |
+| **WDM** (Long. de onda) | Específico para fibra óptica; múltiples señales viajan como diferentes "colores" (longitudes de onda) de luz. | Internet por fibra óptica de alta capacidad (DWDM, CWDM) |
+| **CDM** (Código)    | Cada señal se mezcla con un código único que permite separarlas en el receptor aunque usen la misma frecuencia/tiempo. | Redes celulares (CDMA, WCDMA), GPS                |
+| **SDM** (Espacial)  | Utiliza diferentes rutas físicas o antenas para transmitir señales separadas simultáneamente. | Antenas MIMO en Wi-Fi y 4G/5G, sistemas de fibra óptica paralela |
 
 ### Encapsulación y la Trama de Ethernet
 Este módulo explica el concepto de encapsulación y la estructura de la trama Ethernet:
@@ -192,6 +248,20 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
 
 *   **Multidifusión (1 a Grupo):** Envío a un grupo de hosts suscritos.
 
+**Comunicación en Redes**
+
+El tráfico de datos en una red se clasifica en:
+
+| Tipo       | Significado                     | ¿A quién va dirigido?                      | Ejemplo común                                    |
+| :--------- | :------------------------------ | :----------------------------------------- | :----------------------------------------------- |
+| Unicast    | "Uno a uno"                     | A un solo receptor específico              | Enviar un correo a una persona                   |
+| Broadcast  | "Uno a todos"                   | A todos los dispositivos de la red local   | DHCP al encender el PC, ARP Request              |
+| Multicast  | "Uno a muchos (grupo específico)" | A varios receptores que se unieron a un grupo | IPTV, videoconferencia en LAN, juegos online       |
+| Anycast    | "Uno al más cercano (entre varios)"| A uno solo, pero el más cercano geográficamente | Servidores DNS raíz, CDNs (Content Delivery Networks) |
+| Geocast    | "Uno a una zona geográfica"     | A dispositivos dentro de una ubicación     | Alertas de emergencia localizadas, redes vehiculares |
+| Narrowcast | "Uno a pocos seleccionados"     | A un público muy específico (más en medios) | Publicidad dirigida, TV de pago específica         |
+
+
 ## Tipos de Direcciones IPv4: Públicas vs. Privadas (y el Truco!)
 
 ### Direcciones IPv4: Tipos y Rangos (¡Identifícalas Fácil!)
@@ -212,6 +282,27 @@ Una dirección IPv4 tiene 32 bits, agrupados en cuatro bloques de 8 bits llamado
     *   **Multidifusión (224.0.0.0 - 239.255.255.255):** Envío a un grupo específico de hosts. *Comienza con 224 a 239* (ej: 224.0.0.5).
 
 *   **Unidifusión y Difusión:** No tienen rangos específicos fijos. Las de unidifusión son todas las IPs que *no* son privadas, loopback, APIPA, experimentales o multidifusión. Las de difusión dependen de la máscara de subred.
+
+## Clases de Direcciones IPv4
+
+📘 **Direccionamiento con Clase (Herencia de RFC 790)**  
+Fue el sistema original de asignación de direcciones IPv4, definido en 1981. Dividía el espacio IP en clases A, B, C, D y E, según el tamaño de la red.
+
+🔹 Las clases A, B y C tenían bits iniciales predefinidos, lo que limitaba la flexibilidad.  
+🔹 La ineficiencia fue una desventaja: muchas direcciones quedaban sin usar, especialmente en clases A y B.
+
+❌ **¿Por qué se dejó de usar?**  
+- No era eficiente ni escalable.  
+- Fue reemplazado por **CIDR (Classless Inter-Domain Routing)**, que permite mayor flexibilidad y aprovechamiento del espacio IP.
+
+| Clase | Rango de IP                         | Prefijo CIDR | Nº Hosts aprox. | Uso Principal                             |
+|-------|-------------------------------------|--------------|------------------|-------------------------------------------|
+| A     | 0.0.0.0 – 127.255.255.255           | /8           | +16 millones     | Redes muy grandes (Gobiernos, ISP, etc.)  |
+| B     | 128.0.0.0 – 191.255.255.255         | /16          | ~65 mil          | Redes medianas y grandes                  |
+| C     | 192.0.0.0 – 223.255.255.255         | /24          | 254              | Redes pequeñas (LANs, oficinas, etc.)     |
+| D     | 224.0.0.0 – 239.255.255.255         | —            | —                | 🟢 Multidifusión (Multicast)              |
+| E     | 240.0.0.0 – 255.255.255.255         | —            | —                | Reservado para pruebas/experimentos       |
+
 
 *   **Quién Asigna las IPs?** IANA da bloques de IPs a los **RIRs**, quienes las asignan a los ISPs.
 
