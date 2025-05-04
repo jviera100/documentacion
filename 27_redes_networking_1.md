@@ -401,12 +401,12 @@ Esta sección explica cómo las direcciones MAC (Media Access Control) y las dir
 
 *   **Conectar las Dos Direcciones: Los Traductores que Solicitan la MAC (ARP y ND)**
     *   ¿Cómo sabe tu dispositivo la dirección MAC del "edificio de al lado" o de la "oficina de correos local" si solo conoce la dirección IP? Aquí es donde entran en juego los "traductores", que *solicitan* la dirección MAC a partir de la dirección IP:
-        *   **ARP (Address Resolution Protocol):** Para redes IPv4. Es como preguntar: "¿Quién vive en la dirección IP 192.168.1.10? Necesito su dirección MAC".
-        *   **ICMPv6 Neighbor Discovery (ND):** Para redes IPv6. Es lo mismo que ARP, pero para la nueva generación de direcciones de Internet.
+        *   **ARP (Address Resolution Protocol):** Para protocolo redes IPv4 para encontrar la dirección física (MAC) de un dispositivo a partir de su dirección IP.. Es como preguntar: "¿Quién vive en la dirección IP 192.168.1.10? Necesito su dirección MAC".
+        *   **ICMPv6 Neighbor Discovery (ND):** Para protocolo redes IPv6. Es lo mismo que ARP, pero ND permite descubrir direcciones MAC, detectar vecinos en la red, y más funciones como autoconfiguración de direcciones.
 
 *   **¿Qué NO Hacen ARP/ND?**  Es importante entender que **ARP/ND no hacen lo mismo que NAT o DHCP**.
-    *   **NAT** permite que multiples dispositivos compartan una dirección IP pública para acceder a Internet.
-    *   **DHCP** asigna direcciones IP a los dispositivos.
+    *   **NAT (Network Address Translation)** permite que multiples dispositivos compartan una dirección IP pública para acceder a Internet.
+    *   **DHCP (Dynamic Host Configuration Protocol)** Asigna automáticamente direcciones IP y otros parámetros de red a los dispositivos cuando se conectan a la red.
 
     ARP/ND son para *descubrir la dirección MAC asociada a una dirección IP dentro de la red local*.
 
