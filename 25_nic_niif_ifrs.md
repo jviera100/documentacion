@@ -1,6 +1,18 @@
-## Normativa Contable en Chile: Resumen Práctico Detallado (Holding Diversificado)
+**Ley Facturación Electronica**: "El crédito fiscal se puede usar desde el acuse de recibo: ya sea manual (el mismo día de emisión) o automático (al octavo día desde la emisión), y se puede declarar hasta el tercer mes contado desde el mes del acuse.”
 
-**Ley Facturacion Electronica**: "El crédito fiscal se puede usar desde el acuse de recibo: ya sea manual (el mismo día de emisión) o automático (al octavo día desde la emisión), y se puede declarar hasta el tercer mes contado desde el mes del acuse.”
+| Concepto/Beneficio                  | Descripción/Regla Principal                                                                 | Detalles Clave/Excepciones                                                                                                                                                              |
+| :---------------------------------- | :------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Indemnización Años Servicio (IAS)** | Pago por antigüedad (1 mes/año o fracción >6m) en ciertos despidos.                       | **Topes:** 11 años (contratos post 14-ago-81) y base con tope 90 UF. <br> **Base:** Última remuneración *mensual* devengada (sueldo, gratif., comisión, HE, bonos fijos mens.). <br> **Excluye:** Asign. no imponibles, A. Familiar, aguinaldos esporádicos. |
+| **Aviso Previo**                    | Indemnización si no se avisa despido (Necesidades/Desahucio) con 30 días de antelación.      | Equivalente a última remuneración mensual devengada, con tope 90 UF.                                                                                                                      |
+| **Feriado (Vacaciones)**            | Pago de días de vacaciones acumulados y no utilizados.                                     | **Base:** 15 días hábiles/año. <br> **Progresivo:** +1 día por c/ 3 nuevos años *con mismo empleador*, tras 10 años totales cotizados.                                                  |
+| **Seguro de Cesantía (Imputación)** | Descuento permitido *directamente de la IAS*.                                               | Solo en despidos por Necesidades/Desahucio. <br> Se descuenta solo el **aporte del empleador** a la Cuenta Individual (CIC).                                                             |
+| **Otros Descuentos**                | Deducciones del *monto total líquido* a pagar en el finiquito.                              | Préstamos/anticipos pendientes, cotizaciones adeudadas por trabajador, cuotas sindicales (autorizadas). **No se descuentan de la IAS misma.**                                        |
+| **Fuero Maternal**                  | Protección contra el despido para trabajadoras embarazadas y hasta 1 año post-natal.        | Despido solo con **autorización judicial previa** (causa grave). <br> Despido sin autorización es **NULO** (reintegro + sueldos caídos). <br> No es un monto que se "paga" para despedir. |
+| **Trabajadores Casa Particular**    | Régimen especial de indemnización a todo evento.                                             | Empleador aporta **4.11% mensual** a cuenta individual AFP. <br> Se retira todo lo acumulado desde AFP al término (cualquier causa). <br> **Reemplaza IAS y Aviso Previo.**             |
+| **Trabajadores Independientes**     | No se rigen por normas de finiquito del Código del Trabajo.                                 | Relación civil/comercial (salvo prueba de subordinación). <br> Sin derecho a finiquito laboral estándar.                                                                               |
+
+
+## Normativa Contable en Chile: Resumen Práctico Detallado (Holding Diversificado)
 
 **Asumimos un Holding con UENs en:**
 
