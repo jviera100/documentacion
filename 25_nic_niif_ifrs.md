@@ -1,6 +1,24 @@
-## Normativa Contable en Chile para Credito Fiscal en Facturacion:
+## Facturación Electrónica, Acuse y Crédito Fiscal IVA en Chile - Puntos Clave y Riesgos
 
 **Ley Facturación Electronica**: "El crédito fiscal se puede usar desde el acuse de recibo: ya sea manual (el mismo día de emisión) o automático (al octavo día desde la emisión), y se puede declarar hasta el tercer mes contado desde el mes del acuse.”
+
+**1. Plazo para Uso del Crédito Fiscal (IVA):**
+
+*   **Regla:** El crédito fiscal se puede usar hasta el **tercer mes**, contado **desde el mes en que se otorga el "acuse de recibo"** (manual o automático al 8vo día).
+    *   *Base Legal:* Art. 24 y Art. 23 N°7 DL 825 (Ley del IVA).
+*   **Riesgos Asociados:**
+    *   **Riesgo 1 (Pérdida Definitiva - Receptor):** Si el crédito fiscal no se imputa en esta ventana de 3 meses, **se pierde permanentemente**, asumiendo el receptor (cliente) ese costo.
+
+**2. Mecanismo de Acuse de Recibo y sus Consecuencias:**
+
+*   **Regla:** El sistema requiere "acuse de recibo" para usar el crédito fiscal (Art. 23 N°7 DL 825) y presume conformidad si no hay rechazo explícito en 8 días ("acuse tácito") (Art. 9 Ley 19.983, para cesión/factoring).
+*   **Riesgos Derivados:**
+    *   **Riesgo 2 (Financiero/Comercial - Emisor):** El acuse (incluso tácito) habilita la cesión (factoring) y el crédito fiscal para el receptor antes del pago efectivo, exponiendo al emisor si el cliente no paga posteriormente.
+    *   **Riesgo 3 (Tributario/Fraude - Receptor):** El acuse tácito puede validar facturas falsas o incorrectas si el receptor no las rechaza activamente, habilitando un crédito fiscal indebido.
+    *   **Riesgo 4 (Operativo/Gestión - Receptor):** La gestión crítica (acuse/rechazo) debe hacerse en el **RCV del SII**, no solo en el ERP interno. No revisar el RCV a tiempo puede llevar a aceptar facturas incorrectas (Riesgo 3) o perder el crédito (Riesgo 1).
+    *   **Riesgo 5 (Sistémico/Control):** La **falta de obligación legal** de vincular Notas de Crédito a Facturas origen o de exigir Orden de Compra/Nota de Pedido como requisito formal dificulta la trazabilidad y el control de las operaciones.
+    *   **Riesgo 6 (Operativo/Información - Receptor):** La **notificación es pasiva**; el SII no alerta activamente al receptor sobre nuevas facturas. La responsabilidad de la revisión proactiva del RCV recae enteramente en el receptor.
+    *   **Riesgo 7 (Asimetría/Formalidad - Receptor):** **No existe un "acuse de recibo electrónico formal y activo" obligatorio** por parte del receptor hacia el sistema/proveedor que sea equivalente a la "emisión" del proveedor. El sistema se basa en la "no-objeción" (manual o tácita) dentro del RCV.
 
 ## Normativa sobre el Ingreso Mínimo Mensual en Chile
 
