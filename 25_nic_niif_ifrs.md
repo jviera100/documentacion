@@ -1,4 +1,23 @@
+## Normativa Contable en Chile para Credito Fiscal en Facturacion:
+
 **Ley Facturación Electronica**: "El crédito fiscal se puede usar desde el acuse de recibo: ya sea manual (el mismo día de emisión) o automático (al octavo día desde la emisión), y se puede declarar hasta el tercer mes contado desde el mes del acuse.”
+
+## Normativa sobre el Ingreso Mínimo Mensual en Chile
+
+Información clave sobre cómo debe cumplirse el Ingreso Mínimo Mensual (IMM) según la legislación chilena.
+
+**📘 Normativa aplicable**
+
+*   🔹 Código del Trabajo, artículo 42 letra a): Establece que el sueldo base es el estipendio obligatorio y fijo que debe recibir el trabajador por la prestación de sus servicios.
+*   🔹 Decreto Ley N° 670, artículo 8, inciso 3°: Dispone que para completar el ingreso mínimo no se consideran los pagos por horas extraordinarias, asignaciones, gratificaciones legales ni otros beneficios que no se paguen mes a mes o que constituyan devoluciones de gastos.
+
+**📄 Dictámenes de la Dirección del Trabajo**
+
+*   📌 Dictamen N° 190/13 de 11/01/2001: Señala que no es jurídicamente procedente enterar el ingreso mínimo mensual con la gratificación legal o convencional pagada mes a mes, ya sea que esta última revista o no el carácter de garantizada.
+*   📌 Dictamen N° 777/14 de 16/02/2015: Reitera que las remuneraciones variables, como bonos de productividad, no pueden ser consideradas para completar el sueldo base hasta alcanzar el IMM.
+*   📌 Dictamen N° 1588/027 de 27/04/2009: Establece que no corresponde enterar el nuevo monto del ingreso mínimo con cargo a las remuneraciones variables.
+
+## Normativa Contable en Chile para Finiquitos:
 
 | Concepto/Beneficio                  | Descripción/Regla Principal                                                                 | Detalles Clave/Excepciones                                                                                                                                                              |
 | :---------------------------------- | :------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
