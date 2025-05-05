@@ -1,6 +1,6 @@
 ## Facturación Electrónica, Acuse y Crédito Fiscal IVA en Chile - Puntos Clave y Riesgos
 
-**Ley Facturación Electronica**: "El crédito fiscal se puede usar desde el acuse de recibo: ya sea manual (el mismo día de emisión) o automático (al octavo día desde la emisión), y se puede declarar hasta el tercer mes contado desde el mes del acuse.”
+**Sintesis de Ley Facturación Electronica**: "El crédito fiscal se puede usar desde el acuse de recibo: ya sea manual (el mismo día de emisión) o automático (al octavo día desde la emisión), y se puede declarar hasta el tercer mes contado desde el mes del acuse.”
 
 **1. Plazo para Uso del Crédito Fiscal (IVA):**
 
