@@ -6,13 +6,13 @@
 
 *   **Regla:** El crédito fiscal se puede usar hasta el **tercer mes**, contado **desde el mes en que se otorga el "acuse de recibo"** (manual o automático al 8vo día).
     *   *Base Legal:* Art. 24 y Art. 23 N°7 DL 825 (Ley del IVA).
-*   **Riesgos Asociados:**
-    *   **Riesgo 1 (Pérdida Definitiva - Receptor):** Si el crédito fiscal no se imputa en esta ventana de 3 meses, **se pierde permanentemente**, asumiendo el receptor (cliente) ese costo.
 
 **2. Mecanismo de Acuse de Recibo y sus Consecuencias:**
 
 *   **Regla:** El sistema requiere "acuse de recibo" para usar el crédito fiscal (Art. 23 N°7 DL 825) y presume conformidad si no hay rechazo explícito en 8 días ("acuse tácito") (Art. 9 Ley 19.983, para cesión/factoring).
-*   **Riesgos Derivados:**
+  
+*   **Riesgos Asociados:**
+    *   **Riesgo 1 (Pérdida Definitiva - Receptor):** Si el crédito fiscal no se imputa en esta ventana de 3 meses, **se pierde permanentemente**, asumiendo el receptor (cliente) ese costo.
     *   **Riesgo 2 (Financiero/Comercial - Emisor):** El acuse (incluso tácito) habilita la cesión (factoring) y el crédito fiscal para el receptor antes del pago efectivo, exponiendo al emisor si el cliente no paga posteriormente.
     *   **Riesgo 3 (Tributario/Fraude - Receptor):** El acuse tácito puede validar facturas falsas o incorrectas si el receptor no las rechaza activamente, habilitando un crédito fiscal indebido.
     *   **Riesgo 4 (Operativo/Gestión - Receptor):** La gestión crítica (acuse/rechazo) debe hacerse en el **RCV del SII**, no solo en el ERP interno. No revisar el RCV a tiempo puede llevar a aceptar facturas incorrectas (Riesgo 3) o perder el crédito (Riesgo 1).
