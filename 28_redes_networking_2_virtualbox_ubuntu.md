@@ -156,7 +156,7 @@ La virtualización permite ejecutar múltiples sistemas operativos ("guests" o i
     *   **Para restaurar:** Selecciona la instantánea > "Restaurar".
 
 7.  **(B1 22) Personalización de Apariencia en el SO Invitado:**
-    *   Dentro de Ubuntu/Kali: Configuración > Apariencia/Pantalla/Accesibilidad para ajustar temas, iconos, tamaño de fuentes.
+    *   Dentro de Ubuntu/Kali: Aplicaciones/Configuración/Accesibilidad para ajustar temas, iconos, tamaño de fuentes.
 
 ---
 
