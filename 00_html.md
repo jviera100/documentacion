@@ -23,11 +23,12 @@
 ### 2. Etiquetas Comunes
 
 **Títulos y Párrafos**
-
+```html
 <h1>Título Principal</h1>
 <h2>Subtítulo</h2>
 <h3>Subtítulo menor</h3>
 <p>Este es un párrafo.</p>
+```
 
 **Contenedores**
 ```html
@@ -58,7 +59,7 @@
 ```
 
 ### 3. Clases, IDs y Etiquetas
-
+```html
 <!-- Selección por etiqueta -->
 <header>Encabezado</header>
 
@@ -67,6 +68,7 @@
 
 <!-- Selección por ID -->
 <section id="inicio">Sección con ID</section>
+```
 
 ### 4. Enlaces
 
@@ -81,7 +83,7 @@
 </a>
 ```
 - **Enlace interno (ancla)**
-
+```html
 <a href="#contacto">Ir a Contacto</a>
 
 <!-- Objetivo del ancla -->
@@ -89,8 +91,34 @@
   <h2>Contacto</h2>
 </section>
 <!-- 📌 Estos enlaces internos se llaman "anclas" y funcionan al usar IDs. -->
+```
 
-### 5. Comandos Útiles
+### 5. Comentarios y Bloques de Código en Markdown
+
+**🔸 Comentarios en HTML**
+
+Los comentarios se utilizan para dejar notas o instrucciones que no se mostrarán en la página web.
+
+<!-- Esto es un comentario en HTML -->
+
+**Definición:**  
+El comentario en HTML comienza con `<!--` y termina con `-->`. Todo lo que esté dentro no será visible en el navegador.
+
+---
+
+**🔸 Bloques de Código en Markdown (triple backtick)**
+
+Se utilizan para mostrar bloques de código de forma visible y con formato.
+
+```html
+<!-- Esto es visible porque está dentro de un bloque de código Markdown -->
+<h1>Título visible como ejemplo</h1>
+```
+
+**Definición:**  
+En Markdown, se utiliza triple backtick <code>\`\`\`</code> para abrir y cerrar un bloque de código. Se puede indicar el lenguaje (como `html`) para resaltar la sintaxis.
+
+### 6. Comandos Útiles
 
 - **Ctrl + C**: copia el código seleccionado.
 - **Ctrl + V**: Pega el código copiado.
@@ -104,7 +132,7 @@
 - **Ctrl + D**: Seleccionar la siguiente ocurrencia del texto.
 - **Ctrl + F**: Seleccionar todas las ocurrencias del mismo texto.
 
-### 6. Buenas Prácticas
+### 7. Buenas Prácticas
 
 - Utilizá siempre incluir el atributo `alt` en las imágenes para mejorar la accesibilidad.
 - Usá los títulos de forma jerárquica: (`<h1>`) solo una vez, seguido por (`<h2>`, `<h3>`, etc.).
