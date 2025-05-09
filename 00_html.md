@@ -120,17 +120,18 @@ En Markdown, se utiliza triple backtick <code>\`\`\`</code> para abrir y cerrar 
 
 ### 6. Comandos Útiles
 
-- **Ctrl + C**: copia el código seleccionado.
-- **Ctrl + V**: Pega el código copiado.
-- **Ctrl + A**: seleccionado todo el contenido.
-- **Ctrl + S**: Guardar el archivo actual.
-- **Ctrl + Z**: deshacer la última acción.
-- **Ctrl + Y**: rehacer la acción deshecha.
-- **Ctrl + P**: imprimir el documento.
-- **Ctrl + L**: Ajustar vista de línea del codigo al ancho de la pantalla.
-- **Ctrl + F**: Buscar texto en el archivo.
-- **Ctrl + D**: Seleccionar la siguiente ocurrencia del texto.
-- **Ctrl + F**: Seleccionar todas las ocurrencias del mismo texto.
+- `Ctrl + C`: copia el código seleccionado.
+- `Ctrl + V`: Pega el código copiado.
+- `Ctrl + A`: seleccionado todo el contenido.
+- `Ctrl + S`: Guardar el archivo actual.
+- `Ctrl + Z`: deshacer la última acción.
+- `Ctrl + Y`: rehacer la acción deshecha.
+- `Ctrl + P`: imprimir el documento.
+- `Ctrl + L`: Ajustar vista de línea del codigo al ancho de la pantalla.
+- `Ctrl + F`: Buscar texto en el archivo.
+- `Ctrl + D`: Seleccionar la siguiente ocurrencia del texto.
+- `Ctrl + F`: Seleccionar todas las ocurrencias del mismo texto.
+- `Ctrl + K + C`: mantiene el botón `Ctrl` presionado para presionar `K` y luego `C`. Esto convierte la selección en un comentario.
 
 ### 7. Buenas Prácticas
 

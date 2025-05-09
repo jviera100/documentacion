@@ -142,7 +142,14 @@
 
 ### 9. Comentarios
 
+Los comentarios se utilizan para dejar notas o instrucciones que no se mostrarán en la página web.
+
 **Comentarios en CSS**
 ```css
 /* Comentarios explicativos para entender el propósito del código. No afectan el diseño. */
 ```
+**Definición:**  
+El comentario en CSS comienza con `/*` y termina con `*/`. Todo lo que esté dentro no será visible en el navegador.
+
+<!-- Atajo Emmet -->
+- `Ctrl + K + C`: mantiene el botón `Ctrl` presionado para presionar `K` y luego `C`. Esto convierte la selección en un comentario.
