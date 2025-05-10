@@ -125,14 +125,14 @@ Restando la Dirección de Red y la de Broadcast, quedan **254 IPs usables**.
 
 ### 2. Conexión al Mundo Exterior: El Router y NAT
 
-Para que tus dispositivos con IPs privadas (en tu LAN) accedan a Internet (que usa IPs públicas), tu router es el intermediario esencial y utiliza **NAT (Network Address Translation)**.
+Para que tus dispositivos(hosts) con IPs privadas (en tu LAN) accedan a Internet (las cambia por IPs públicas WAN y en respuesta revierte de publica a privada), la IP de la puerta de enlace(gateway) de la interfaz de tu router es el intermediario esencial y utiliza **NAT (Network Address Translation)**.
 
 | Concepto                  | Tu PC (Host Privado)     | Router (Interfaz LAN)              | Router (Interfaz WAN)          | Internet (Servidor Externo) |
 |---------------------------|--------------------------|------------------------------------|--------------------------------|-----------------------------|
 | **Tipo de IP**            | Privada                  | Privada                            | Pública                        | Pública                     |
 | **Ejemplo IP / Interfaz** | `192.168.1.45/24`        | `192.168.1.1/24` (Interfaz LAN)    | `181.160.25.12` (Interfaz WAN) | `142.250.184.174` (Google)  |
 | **Visible para...**       | Solo dentro de tu LAN    | Solo dentro de tu LAN              | Todo Internet                  | Todo Internet               |
-| **Función / Rol**         | Dirección numérica que identifica al dispositivo y usa servicios de red    | Conecta el router a tu red local (LAN). Tiene una IP privada que es la puerta de enlace para tus dispositivos. **Puerta de Enlace (Gateway)**, Servidor DHCP, **Realizar NAT**: <br> 1. Recibe datos de la LAN. <br> 2. Cambia IP privada de origen por su IP pública WAN y registra. <br> 3. En respuestas, revierte la IP pública a la IP privada original del host. <br> *Resultado: Oculta IPs privadas y permite compartir una IP pública.* | Conecta el router a Internet (a través de tu ISP). Tiene la IP pública que te representa en Internet. | Proveedor de servicios           |
+| **Función / Rol**         | Dirección numérica que identifica al dispositivo y usa servicios de red    | Conecta el router a tu red local (LAN). Tiene una IP privada que es la puerta de enlace(Gateway) para tus dispositivos(hosts). | Conecta el router a Internet (a través de tu ISP). Tiene la IP pública que te representa en Internet. | Proveedor de servicios           |
 
 ### 4. Definiciones Esenciales
 
