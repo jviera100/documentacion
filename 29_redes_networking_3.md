@@ -125,14 +125,28 @@ Restando la Dirección de Red y la de Broadcast, quedan **254 IPs usables**.
 
 ### 2. Conexión al Mundo Exterior: El Router y NAT
 
-Para que tus dispositivos(hosts) con IPs privadas (en tu LAN) accedan a Internet (las cambia por IPs públicas WAN y en respuesta revierte de publica a privada), la IP de la puerta de enlace(gateway) de la interfaz de tu router es el intermediario esencial y utiliza **NAT (Network Address Translation)**.
+Para que tus dispositivos (hosts) con IPs privadas (en tu LAN) accedan a Internet, el router actúa como intermediario esencial. Utiliza **NAT (Network Address Translation)** para traducir la IP privada de tu dispositivo a su propia IP pública (de la interfaz WAN) al enviar datos, y revierte esta traducción para las respuestas entrantes. La IP de la interfaz LAN del router funciona como la **Puerta de Enlace (Gateway)** para tu red local.
 
-| Concepto                  | Tu PC (Host Privado)     | Router (Interfaz LAN)              | Router (Interfaz WAN)          | Internet (Servidor Externo) |
-|---------------------------|--------------------------|------------------------------------|--------------------------------|-----------------------------|
-| **Tipo de IP**            | Privada                  | Privada                            | Pública                        | Pública                     |
-| **Ejemplo IP / Interfaz** | `192.168.1.45/24`        | `192.168.1.1/24` (Interfaz LAN)    | `181.160.25.12` (Interfaz WAN) | `142.250.184.174` (Google)  |
-| **Visible para...**       | Solo dentro de tu LAN    | Solo dentro de tu LAN              | Todo Internet                  | Todo Internet               |
-| **Función / Rol**         | Dirección numérica que identifica al dispositivo y usa servicios de red    | Conecta el router a tu red local (LAN). Tiene una IP privada que es la puerta de enlace(Gateway) para tus dispositivos(hosts). | Conecta el router a Internet (a través de tu ISP). Tiene la IP pública que te representa en Internet. | Proveedor de servicios           |
+| Concepto                  | Tu PC (Host)                                  | Router (Interfaz LAN)                          | Router (Interfaz WAN)                             | Internet (Servidor Externo)        |
+|---------------------------|-----------------------------------------------|------------------------------------------------|---------------------------------------------------|------------------------------------|
+| **Tipo de IP (y Visibilidad)** | Privada <br>*(Solo visible en tu LAN)*      | Privada <br>*(Solo visible en tu LAN)*          | Pública <br>*(Visible para todo Internet)*        | Pública <br>*(Visible para todo Internet)* |
+| **Ejemplo IP / Interfaz** | `192.168.1.45/24`                             | `192.168.1.1/24` (Interfaz LAN)                | `181.160.25.12` (Interfaz WAN)                    | `142.250.184.174` (Google)         |
+| **Función / Rol Principal** | Usar servicios de red; identificado por su IP privada. | **Puerta de Enlace (Gateway)** para la LAN; puede actuar como Servidor DHCP; **Realiza NAT**. | Conexión a Internet; posee la IP pública que representa a la LAN en Internet. | Proveer servicios/contenido.       |
+
+
+### 3. Rangos Comunes de IP Privada (RFC 1918)
+
+Una vez que entendemos que existen IPs "Privadas" para uso interno y cómo NAT permite su conexión a Internet, es útil conocer cuáles son estos rangos de direcciones privadas estándar:
+
+| Rango de IP Privada             | Máscara de Subred (Bloque Completo) | Uso Típico / Implementación Común                                                                                                |
+|---------------------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `10.0.0.0` – `10.255.255.255`   | `255.0.0.0` (`/8`)                  | Empresas grandes (el bloque `/8` se subdivide en múltiples subredes más pequeñas).                                                  |
+| `172.16.0.0` – `172.31.255.255` | `255.240.0.0` (`/12`)                 | Empresas medianas (el bloque `/12` se subdivide en subredes).                                                                    |
+| `192.168.0.0` – `192.168.255.255`| `255.255.0.0` (`/16`)                 | **Hogares / Pequeñas Empresas:** Comúnmente se utiliza una subred `/24` de este bloque (ej: `192.168.1.0/24`, con 254 hosts usables). |
+
+*Nota: En cada subred creada, 2 IPs no son usables por hosts: la Dirección de Red y la Dirección de Broadcast.*
+
+---
 
 ### 4. Definiciones Esenciales
 
@@ -144,20 +158,6 @@ Para que tus dispositivos(hosts) con IPs privadas (en tu LAN) accedan a Internet
 | **NAT (Network Address Translation)** | Técnica usada por el router para permitir que múltiples dispositivos con IPs privadas compartan una única IP pública para acceder a Internet, traduciendo las direcciones en el proceso. |
 | **Cliente DHCP**                 | Dispositivo (como un PC) que solicita automáticamente su configuración de red (IP, máscara, gateway, DNS). |
 | **Servidor DHCP**                | Servidor (a menudo el router) que asigna y administra la configuración de red a los clientes DHCP. |
-
----
-
-### 5. Rangos Comunes de IP Privada (RFC 1918)
-
-Estos rangos de IP están reservados para redes privadas y no son visibles directamente en Internet. Tu router usa NAT para permitir la comunicación.
-
-| Rango de IP Privada             | Máscara de Subred (Bloque Completo) | Uso Típico / Implementación Común                                                                                                |
-|---------------------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `10.0.0.0` – `10.255.255.255`   | `255.0.0.0` (`/8`)                  | Empresas grandes (el bloque `/8` se subdivide en múltiples subredes más pequeñas).                                                  |
-| `172.16.0.0` – `172.31.255.255` | `255.240.0.0` (`/12`)                 | Empresas medianas (el bloque `/12` se subdivide en subredes).                                                                    |
-| `192.168.0.0` – `192.168.255.255`| `255.255.0.0` (`/16`)                 | **Hogares / Pequeñas Empresas:** Comúnmente se utiliza una subred `/24` de este bloque (ej: `192.168.1.0/24`, con 254 hosts usables). |
-
-*Nota: En cada subred creada, 2 IPs no son usables por hosts: la Dirección de Red y la Dirección de Broadcast.*
 
 ---
 
