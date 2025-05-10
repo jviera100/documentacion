@@ -2,7 +2,7 @@
 
 #### 🌐 Internet: Conexión Global
 
-Internet es la conexión de equipos a través de redes, ya sean cableadas o inalámbricas.
+internetwork, redes interconectadas(dispositivos), ya sean cableadas o inalámbricas.
 
 **Analogía:** Es como una persona que entra a un país:
 *   Debe identificarse.
