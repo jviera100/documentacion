@@ -142,7 +142,7 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 
 ## 🔑 Recuerda:
 
-Puerta de enlace (gateway) = IP logico de la interfaz
-interfaz = parte fisica del router
+*   Puerta de enlace (gateway) = IP logico de la interfaz
+*   interfaz = parte fisica del router
 
 
