@@ -155,9 +155,9 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 | 172.16.0.0 – 172.31.255.255 | 255.240.0.0 (/12)     | 12             | 20             | 1,048,574             | Empresas medianas   |
 | 192.168.0.0 – 192.168.255.255 | 255.255.255.0 (/24) | 24             | 8              | 254                   | Hogares / pequeñas  |
 
-*✅ En cada red, se restan 2 direcciones del total posible (una para la red y otra para broadcast).
-*🧠 Ejemplo con máscara /24 (192.168.1.0/24):
-   * 8 bits para hosts → 2⁸ = 256 combinaciones totales
+* 📝 En cada red, se restan 2 direcciones del total posible (una para la red y otra para broadcast).
+* 🧠 Ejemplo con máscara /24 (192.168.1.0/24):
+   * 🪛 8 bits para hosts → 2⁸ = 256 combinaciones totales
    * Se restan 2:
        * 192.168.1.0 → Dirección de red (todos los bits en 0)
        * 192.168.1.255 → Broadcast (todos los bits en 1)
