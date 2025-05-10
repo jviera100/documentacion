@@ -97,106 +97,140 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 ---------------------------------------------------------------
 # **NetGamesLatam_Cisco_Fundamentos de Redes:**
 
-✅ **1. Toda IP tiene dos partes:**
-Red + Host → Esto depende de la máscara de subred.
+✅ **1. Toda IP tiene dos partes: Parte de Red + Parte de Host**
+Esto siempre depende de la **máscara de subred**. La máscara te dice cuántos bits de la IP se usan para identificar la red y cuántos para identificar al host dentro de esa red.
 
-*Ejemplo:*
-`192.168.1.45` con máscara `/24`
-→ Red: `192.168.1.0`
-→ Host: `45`
-_(la parte host es la que cambia para identificar a cada dispositivo en la red local)_
+*   **Ejemplo:** `192.168.1.45` con máscara `/24` (o `255.255.255.0`)
+    *   **Parte de Red (los primeros 24 bits):** `192.168.1`
+    *   **Parte de Host (los últimos 8 bits):** `.45`
+    *   _La **Parte de Host** es la que cambia para identificar a cada dispositivo único DENTRO de la misma red local._
+    *   _La **Parte de Red** es común a todos los dispositivos DENTRO de esa misma red local._
 
-✅ **2. Dentro de una LAN (red interna):**
-Tu IP (como `192.168.1.45`) forma parte de una red local llamada `192.168.1.0/24`.
+✅ **2. Dentro de una LAN (Red Interna): La Subred**
+Tu IP (como `192.168.1.45/24`) significa que tu dispositivo pertenece a una **subred local específica**.
 
-En esa LAN:
+*   Para la IP `192.168.1.45` con máscara `/24`:
+    *   **Dirección de Red (o Identificador de Red):** `192.168.1.0`. Esta es la dirección que representa a *toda la subred* `192.168.1.0/24`. Se calcula poniendo a cero todos los bits de la "Parte de Host".
+    *   **Rango de IPs Asignables a Hosts:** `192.168.1.1` – `192.168.1.254`. Estas son las IPs que pueden usar tus dispositivos.
+    *   **Dirección de Broadcast:** `192.168.1.255`. Un mensaje enviado a esta IP llega a *todos* los dispositivos dentro de la subred `192.168.1.0/24`. Se calcula poniendo a uno todos los bits de la "Parte de Host".
 
-- `192.168.1.0` es la dirección de red → identifica a toda la red.
-- `192.168.1.1` – `192.168.1.254` son las IP asignables a dispositivos (hosts).
-- `192.168.1.255` es el broadcast → mensaje a todos los dispositivos de esa red.
+*   **Aclaración sobre "192.168.1.X":**
+    Cuando decimos "`192.168.1.X`", nos referimos de forma genérica a **cualquier dirección IP de host *válida*** dentro de la subred `192.168.1.0/24`. No es la "red" en sí misma, sino una IP *perteneciente* a esa red. La red como tal se identifica por `192.168.1.0/24`.
 
-Entonces, “`192.168.1.X`” no es toda la red, sino un rango de IPs de host dentro de la red `192.168.1.0/24`.
+✅ **3. NAT y el Router como Puente (Conexión entre Redes)**
+Tu router es el dispositivo clave que conecta diferentes redes.
 
-✅ **3. NAT y el router como puente:**
-Tu router:
+*   **Interfaz LAN (Local Area Network):**
+    *   Conectada a tu red interna.
+    *   Tiene una IP privada de esa red, que actúa como **Puerta de Enlace (Gateway)** para los dispositivos de tu LAN. Ejemplo: `192.168.1.1`.
+*   **Interfaz WAN (Wide Area Network):**
+    *   Conectada a la red de tu Proveedor de Servicios de Internet (ISP).
+    *   Tiene una **IP pública** asignada por tu ISP. Ejemplo: `181.160.25.12`.
 
-- Tiene una interfaz LAN (Local) con IP: `192.168.1.1` (por ejemplo).
-- Tiene una interfaz WAN (Internet) con IP pública: `181.160.25.12` (por ejemplo).
+*   **El Router Conecta:**
+    *   Tu **red privada interna (LAN)** (ej: `192.168.1.0/24`, con hosts como `192.168.1.45`)
+    *   Con la **red pública externa (WAN/Internet)**.
 
-Él conecta:
+*   🔁 **NAT (Network Address Translation) traduce:**
+    Cuando un dispositivo de tu LAN (ej: `192.168.1.45`) quiere comunicarse con Internet, el router:
+    1.  Recibe la petición del dispositivo LAN.
+    2.  **Reemplaza** la IP de origen privada (`192.168.1.45`) con su propia IP pública de la interfaz WAN (`181.160.25.12`).
+    3.  Utiliza un puerto único para rastrear la conexión (ej: `181.160.25.12:puerto_aleatorio`).
+    4.  Envía la petición a Internet.
+    5.  Cuando llega la respuesta a `181.160.25.12:puerto_aleatorio`, el router sabe a qué dispositivo interno (`192.168.1.45`) debe reenviarla.
 
-- Tu red privada (LAN) con IPs del tipo `192.168.X.X`
-- A la red pública (WAN), usando una sola IP pública mediante NAT.
-
-🔁 **NAT traduce:**
-Dispositivo LAN `192.168.1.45` → WAN `181.160.25.12:puerto`
+---
 
 ## 🧩 Tabla de diferencias y relaciones
 
 | Concepto                         | ¿Qué es?                                                                 | ¿Dónde está?                               | Relación con otros                                                |
 |----------------------------------|--------------------------------------------------------------------------|--------------------------------------------|-------------------------------------------------------------------|
-| 1. Enrutador (router)            | Dispositivo que conecta redes distintas.                                 | Físicamente entre dos redes                | Tiene interfaces. Proporciona el gateway a los hosts.             |
-| 2. Interfaz                      | Puerto físico o lógico de red en el router.                              | Parte del router                           | Cada interfaz tiene su propia IP y conecta una red distinta.        |
-| 3. Puerta de enlace (gateway)    | Dirección IP de la interfaz del router dentro de una red.              | En el router, vista desde el host          | Es la salida del host para ir a otra red.                         |
-| 4. Puerta de enlace predeterminada | Dirección IP configurada en el host como “salida por defecto”.         | En cada host                               | Suele coincidir con la IP del gateway (5).                      |
-| 5. Gateway interno (local gateway) | Dirección IP.  Otro nombre para la puerta de enlace dentro de una red local. | En la red local                            | Es el gateway hacia Internet (vía ISP).                           |
-| 6. Cliente DHCP                  | Dispositivo (como un host) que pide automáticamente configuración de red. | Cualquier host de la red                   | Recibe IP, máscara y gateway del servidor DHCP.                 |
-| 7. Servidor DHCP                 | Entrega configuración de red (IP, máscara, gateway, DNS, etc.) a los clientes. | En el router, generalmente                 | Es quien le da los datos necesarios al cliente DHCP.             |
-| 8. Red interna                  | Red local (LAN), donde están los dispositivos del hogar o empresa.       | Dentro del router                          | Usa IP privadas. Solo se comunica con Internet usando el gateway. |
-| 9. Red externa                  | Red del ISP o Internet.                                                  | Fuera del router (WAN)                     | Es lo que hay más allá del gateway predeterminado.               |
+| 1. Enrutador (router)            | Dispositivo que conecta redes distintas y enruta paquetes entre ellas.     | Físicamente entre dos o más redes          | Contiene interfaces. Proporciona la puerta de enlace (gateway) a los hosts. |
+| 2. Interfaz                      | Puerto físico o lógico de red en un dispositivo (ej: router, host).      | Parte del router o del host                | Cada interfaz en un router conecta a una red distinta y tiene su propia IP. |
+| 3. Puerta de enlace (gateway)    | Dirección IP de la interfaz del router que está *dentro* de una red local específica. | En la interfaz LAN del router, vista desde un host de esa LAN | Es la "salida" que usan los hosts de una red para alcanzar otras redes. |
+| 4. Puerta de enlace predeterminada | Dirección IP configurada en un host como su "salida por defecto" para tráfico destinado a redes externas. | Configurada en cada host de la red         | Suele ser la misma IP que la Puerta de Enlace (3) de su red local. |
+| 5. Gateway interno (local gateway) | Otro nombre para la Puerta de Enlace (3) o Puerta de Enlace Predeterminada (4) dentro de una red local. | En la red local                            | Es la IP del router en la LAN, que permite salir hacia Internet (vía ISP). |
+| 6. Cliente DHCP                  | Dispositivo (como un host) que solicita automáticamente configuración de red. | Cualquier host en la red                   | Recibe IP, máscara, gateway y DNS del Servidor DHCP (7).        |
+| 7. Servidor DHCP                 | Entrega configuración de red (IP, máscara, gateway, DNS, etc.) a los clientes DHCP. | Usualmente en el router (para redes domésticas/pequeñas) o un servidor dedicado. | Proporciona los datos de configuración al Cliente DHCP (6).        |
+| 8. Red interna (LAN)             | Red local (Local Area Network), donde están tus dispositivos privados.     | "Dentro" del router (conectada a su interfaz LAN) | Usa IPs privadas. Se comunica con redes externas a través de la puerta de enlace y NAT. |
+| 9. Red externa (WAN)             | Red amplia (Wide Area Network), típicamente Internet o la red del ISP.   | "Fuera" del router (conectada a su interfaz WAN) | Es lo que hay más allá de tu puerta de enlace predeterminada. Usa IPs públicas. |
+
+---
 
 ## 🧩 Esquema de funciones
 
 ```
 [ Nivel físico y conexión ]
-┌─────────────────────────────┐
-│ 1. Enrutador (Router)       │ ← Hardware que une redes distintas.
-│   └→ 2. Interfaces          │     Cada una conecta una red diferente.
-└─────────────────────────────┘
+┌───────────────────────────┐
+│ Enrutador (Router)        │ ← Hardware que une redes distintas.
+│   └→ Interfaces           │     Cada una conecta una red diferente y tiene su IP.
+└───────────────────────────┘     (ej: LAN IP 192.168.1.1, WAN IP 181.160.25.12)
 
-[ Configuración del host ]
-┌─────────────────────────────┐
-│ 8. Cliente DHCP             │ ← Pide datos automáticamente
-│   ← 9. Servidor DHCP        │     (usualmente el router)
-└─────────────────────────────┘
+[ Configuración del host (Automática) ]
+┌───────────────────────────┐
+│ Cliente DHCP              │ ← Pide datos automáticamente
+│   ← Servidor DHCP         │     (usualmente el router) le entrega:
+└───────────────────────────┘
 
-[ Parámetros que recibe el host ]
-┌─────────────────────────────┐
-│ IP propia                   │ ← Su identificación única en su red local, (ej: 192.168.1.45) 
-│ Máscara de subred           │ ← Le dice con quién puede hablar directamente en su red, (/24) 
-│ Gateway (Puerta de enlace)  │ ← IP de salida para llegar a otras redes (ej: 192.168.1.1) 
-│ DNS                         │ ← Para traducir dominios como google.com  (ej: 8.8.8.8)  
-└─────────────────────────────┘
+[ Parámetros que recibe el host desde el Servidor DHCP ]
+┌───────────────────────────┐
+│ IP propia                 │ ← Su identificación única en su red local (ej: 192.168.1.45) 
+│ Máscara de subred         │ ← Define la "Parte de Red" y "Parte de Host" de su IP 
+│                           │   (ej: /24 o 255.255.255.0) habla directamente en su red.
+│ Gateway(Puerta de enlace) │ ← IP de la interfaz LAN del router (ej: 192.168.1.1). 
+│                           │   Es la salida para llegar a otras redes.
+│ DNS                       │ ← Servidor para traducir nombres de dominio  
+│                           │   (ej: google.com) a IPs (ej: 8.8.8.8).  
+└───────────────────────────┘
 
-[ Límite de comunicación ]
-┌─────────────────────────────┐
-│ 11. Red interna (LAN)       │ ← Donde están tus dispositivos
-│ 12. Red externa (WAN)       │ ← Lo que está más allá del router, como Internet
-└─────────────────────────────┘
+[ Límite de comunicación y Traducción ]
+┌───────────────────────────┐
+│ Red interna (LAN)         │ ← Donde están tus dispositivos (ej: 192.168.1.0/24).
+│ ↕ (Router con NAT)        │ ← Traduce tus IPs internas privadas a una IP pública
+│ Red externa (WAN)         │ ← Internet, la red del ISP. Lo que está más allá del router.
+└───────────────────────────┘
 ```
 
 ## 🔑 Recuerda:
 
-*   Puerta de enlace (gateway) = IP logico de la interfaz
-*   interfaz = parte fisica del router
-*   Para dos hosts que están en la misma red = tendran diferente direccion IP y mac, mismo IP puerta de enlace (gateway)
-*   Para dos hosts que están en red diferentes = tendran diferente direccion IP y mac, diferente IP puerta de enlace (gateway)
+*   **Puerta de enlace (gateway):** Es una **dirección IP** (lógica) de una **interfaz** (física/lógica) del router, específica para una red.
+*   **Interfaz:** Es la conexión física o lógica del router (o host).
+*   **Para dos hosts en la MISMA red local (ej: `192.168.1.10` y `192.168.1.20` en `192.168.1.0/24`):**
+    *   Tendrán diferente Dirección IP de host (ej: `.10` vs `.20`).
+    *   Tendrán diferente Dirección MAC.
+    *   Compartirán la misma Parte de Red de su IP (ej: `192.168.1`).
+    *   Compartirán la misma Dirección de Red (ej: `192.168.1.0`).
+    *   Compartirán la misma Máscara de subred (ej: `/24`).
+    *   Compartirán la misma Puerta de Enlace Predeterminada (ej: `192.168.1.1`).
+*   **Para dos hosts en REDES DIFERENTES (ej: `192.168.1.10` y `10.0.0.5`):**
+    *   Tendrán diferente Dirección IP (y diferente Parte de Red).
+    *   Tendrán diferente Dirección MAC.
+    *   Tendrán diferente Dirección de Red.
+    *   Probablemente diferente Máscara de subred.
+    *   Tendrán diferente Puerta de Enlace Predeterminada.
+*   ✅ **NAT (Network Address Translation):** Técnica usada por el router para traducir las IPs privadas de tu red interna a una única IP pública (la de su interfaz WAN) para que tus dispositivos puedan navegar en Internet, y viceversa.
 
-## ✅ NAT (Network Address Translation) = técnica que traduce tus IPs internas privadas a una IP pública para que puedas navegar en Internet.
+---
 
-| Rango de IP privada        | Máscara de subred     | Bits para red | Bits para host | Nº de hosts posibles | Uso típico          |
-|---------------------------|------------------------|----------------|----------------|-----------------------|---------------------|
-| 10.0.0.0 – 10.255.255.255 | 255.0.0.0 (/8)         | 8              | 24             | 16,777,214            | Empresas grandes    |
-| 172.16.0.0 – 172.31.255.255 | 255.240.0.0 (/12)     | 12             | 20             | 1,048,574             | Empresas medianas   |
-| 192.168.0.0 – 192.168.255.255 | 255.255.255.0 (/24) | 24             | 8              | 254                   | Hogares / pequeñas  |
+## Rangos de IP Privada Comunes
 
-* 📝 En cada red, se restan 2 direcciones del total posible (una para la red y otra para broadcast).
-* 🧠 Ejemplo con máscara /24 (192.168.1.0/24):
-   * 🪛 8 bits para hosts → 2⁸ = 256 combinaciones totales
-   * Se restan 2:
-       * 192.168.1.0 → Dirección de red (todos los bits en 0)
-       * 192.168.1.255 → Broadcast o difusión (todos los bits en 1)
-       * ✅ 254 direcciones IP disponibles para hosts: 192.168.1.1 – 192.168.1.254
-* 📌 El “host” es la parte final de la dirección IP que identifica a cada dispositivo dentro de la red.
-*   ✅ El uso de /16 en redes privadas del bloque 172.16.0.0 – 172.31.255.255 depende del administrador, pero el rango oficial definido por la IETF es /12 > asi 172.16.0.0/12.
+| Rango de IP privada             | Máscara de subred (por defecto/común) | Bits para red (original) | Bits para host (original) | Nº de hosts posibles (con máscara por defecto) | Uso típico      |
+|---------------------------------|---------------------------------------|--------------------------|---------------------------|------------------------------------------------|-----------------|
+| `10.0.0.0` – `10.255.255.255`   | `255.0.0.0` (`/8`)                    | 8                        | 24                        | 16,777,214                                     | Empresas grandes|
+| `172.16.0.0` – `172.31.255.255` | `255.240.0.0` (`/12`)                 | 12                       | 20                        | 1,048,574                                      | Empresas medianas|
+| `192.168.0.0` – `192.168.255.255`| `255.255.0.0` (`/16` para el rango total, pero comúnmente se usa `/24` para subredes individuales como `192.168.1.0/24`) | 16 (para todo el bloque) | 16 (para todo el bloque) | 65,534 (si se usara todo el bloque /16)       | Hogares / Pequeñas (usando subredes /24) |
+
+📝 En cada subred, se restan 2 direcciones del total posible de combinaciones de la parte de host: una para la **dirección de red** y otra para la **dirección de broadcast**.
+
+🧠 **Ejemplo con máscara `/24` (para la subred `192.168.1.0/24`):**
+*   La máscara `/24` significa que los primeros 24 bits son para la Parte de Red (`192.168.1`) y los últimos 8 bits son para la Parte de Host.
+*   🪛 8 bits para la Parte de Host → 2⁸ = 256 combinaciones totales (de `0` a `255` para el último octeto).
+*   Se restan 2 direcciones especiales:
+    *   `192.168.1.0` → Dirección de Red (todos los bits de la Parte de Host son `0`).
+    *   `192.168.1.255` → Dirección de Broadcast (todos los bits de la Parte de Host son `1`).
+*   ✅ **254 direcciones IP disponibles para hosts:** `192.168.1.1` – `192.168.1.254`.
+*   📌 El "host" aquí se refiere a un dispositivo individual (PC, teléfono, etc.) dentro de la subred `192.168.1.0/24`. La "Parte de Host" de su IP (ej: `.45` en `192.168.1.45`) es lo que lo identifica unívocamente dentro de esa subred.
+
+✅ **Sobre el rango `172.16.0.0 – 172.31.255.255`:**
+El rango completo definido por la IETF para uso privado es `172.16.0.0/12`. Esto significa que las direcciones van desde `172.16.0.0` hasta `172.31.255.255`. Un administrador puede subdividir este gran bloque `/12` en subredes más pequeñas (como `/16`, `/24`, etc.) según las necesidades de la organización. Si se usa una máscara `/16` dentro de este rango, por ejemplo `172.16.0.0/16`, entonces la red sería `172.16.0.0`, los hosts irían de `172.16.0.1` a `172.16.255.254`, y el broadcast `172.16.255.255`.
 
