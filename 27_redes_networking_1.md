@@ -14,19 +14,10 @@ Para entender este complejo proceso, se utilizan modelos de referencia:
 
 1.  **Modelo TCP/IP (Transmission Control Protocol/Internet Protocol):**
     *   Un modelo práctico y el estándar de facto en Internet. Se organiza en capas:
-        *   **Acceso a la Red (Network Access):** Cómo los datos se mueven por el medio físico (Ej: Ethernet).
-        *   **Internet:**  *IP (Internet Protocol):* Protocolo de Internet (para Direccionamiento lógico y enrutamiento).
-        *   **Transporte (Transport):** Comunicación extremo a extremo, Entrega confiable (Ej: TCP, UDP).
-            *   *   *TCP (Transmission Control Protocol):*
-                *   Entrega confiable de datos.
-                *   Divide mensajes en segmentos numerados.
-                *   Realiza seguimiento de segmentos enviados y retransmite los perdidos.
-                *   Utilizado donde la integridad de los datos es crucial.
-                *   *UDP (User Datagram Protocol):*
-                *   Entrega "mejor esfuerzo" sin confirmación de recepción.
-                *   Rápido, pero no garantiza la entrega.
-                *   Adecuado para audio y VoIP (transmisión en tiempo real).
-        *   **Aplicación (Application):** Interfaz para aplicaciones de usuario (Ej: HTTP).
+        *   **Acceso a la Red (Network Access):** Cómo los datos se mueven por el medio físico y la red local.
+        *   **Internet:** Direccionamiento lógico y enrutamiento global (principal protocolo: **IP - Internet Protocol**).
+        *   **Transporte (Transport):** Comunicación extremo a extremo, confiable o rápida (principales protocolos: **TCP - Transmission Control Protocol**, **UDP - User Datagram Protocol**).
+        *   **Aplicación (Application):** Interfaz para aplicaciones de usuario y servicios de red (Ej: HTTP).
 
 2.  **Modelo OSI (Open Systems Interconnection):**
     *   Un modelo conceptual de 7 capas, más detallado, que ayuda a entender cada paso de la comunicación.
@@ -43,20 +34,18 @@ Para entender este complejo proceso, se utilizan modelos de referencia:
 | 2 | Acceso a la Red | Enlace de Datos | **(Enlace Local y Direccionamiento Físico)**: Transfiere datos entre dos nodos directamente conectados, definiendo el formato de las **tramas** y las direcciones MAC. | * **Creación de Tramas:** Los datos de la capa de Red se encapsulan en tramas en esta capa. Si faltan datos para completar la trama, se puede usar padding. * Controla el acceso al medio (MAC), maneja notificación de errores, la topología de red, control de flujo y direccionamiento físico (MAC). *Tu computadora, Tablet, PS5 comunicándose directamente con tu router a través de Ethernet o Wi-Fi gracias a su NIC inalámbrica con dirección MAC*. * **Ejemplo:** Switches y bridges conectando dispositivos en una red local. * **Subcapas (clave):** MAC (Media Access Control) y LLC (Logical Link Control). * **Ejemplo:** Tu computadora comunicándose directamente con tu router a través de Ethernet o Wi-Fi. * **Protocolos/Tecnologías:** CSMA/CD (en redes Ethernet antiguas, detección de colisión). | **La Calle Local:** ¡Entre tu casa y la avenida principal! |
 | 1 | Acceso a la Red | Física | **(Transmisión Física de Bits)**: Transmite los datos brutos (bits) a través del medio físico, definiendo voltajes, tasas de datos y conectores. | * Implementación en hardware, codificación de canal, representación de bits, voltaje, frecuencia, sincronización, conectores físicos, distancias y cableado. Medios de transmisión: Cables (Ethernet, UTP, FTP, SFTP), Radiofrecuencias (Wi-Fi, Bluetooth, ZigBee) *Ejemplo: Redes Wi-Fi unificadas que operan en 2.4 GHz y 5 GHz*, F.O. (Fibra Óptica), AP (Puntos de Acceso), Hubs. La capa física define las características de la transmisión, incluyendo el tipo de antena (direccional, omnidireccional, sectorial) Transmisión Simplex, Half-Duplex, Full-Duplex. * **Tecnologías:** SONET (con WDM "espacio" y TDMA "tiempo"), Ethernet, Wi-Fi, Bluetooth, ZigBee, USB. * **Componentes:** Activos (amplificadores, repetidores), Pasivos (cables, conectores). **Verifica la cantidad de bits, no la calidad.** * **Ejemplo:** Un cable Ethernet conectando tu computadora al router o las ondas de radio transmitiendo datos Wi-Fi. | **El Cable y las Ondas:** ¡La autopista de los bits! |
 
-A continuación, exploraremos los conceptos de red siguiendo la estructura del Modelo OSI, desde la capa más baja (Física) hasta la más alta (Aplicación), y cómo se relacionan con TCP/IP.
+A continuación, exploraremos los conceptos de red siguiendo la estructura del Modelo OSI.
 
 ---
 
 ## Capa 1: Física – La Transmisión de Bits
 
-*   **Dispositivos Finales:** Computadoras, servidores, impresoras, teléfonos IP, entre otros.
-
-*   **Función Principal (OSI):** Transmitir el flujo de bits (0s y 1s) a través del medio físico. Define características eléctricas, mecánicas y funcionales.
+*   **Función Principal (OSI):** Transmitir el flujo de bits (0s y 1s) a través del medio físico. Define características eléctricas, mecánicas y funcionales (voltajes, tasas de bits, conectores, tipos de cable, radiofrecuencias).
 *   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
 *   **PDU (Protocol Data Unit):** Bits.
 
 ### Medios de Red
-El "camino" por el que viajan los datos.
+El "camino" físico por el que viajan los datos.
 
 | Medio             | Tipo de Datos    | Distancia Máxima | Entorno de Instalación | Ancho de Banda/Velocidad | Costo | Funcionalidad                                               | Ejemplo de Uso                                   |
 |--------------------|-------------------|-------------------------------------------|-------------------------|--------------------------|-------|-------------------------------------------------------------|---------------------------------------------------|
@@ -78,76 +67,77 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
 | **CDM** (Código)    | Cada señal se mezcla con un código único que permite separarlas en el receptor aunque usen la misma frecuencia/tiempo. | Redes celulares (CDMA, WCDMA), GPS                |
 | **SDM** (Espacial)  | Utiliza diferentes rutas físicas o antenas para transmitir señales separadas simultáneamente. | Antenas MIMO en Wi-Fi y 4G/5G, sistemas de fibra óptica paralela |
 
-### Otros Conceptos de Capa 1:
-*   **Representación de Bits:** Cómo se codifican los 0s y 1s (voltajes, pulsos de luz).
-*   **Tasas de Datos:** Velocidad de transmisión.
-*   **Sincronización:** Coordinación entre emisor y receptor.
-*   **Conectores y Cables:** RJ45, LC, SC, etc.
+### Otros Conceptos y Dispositivos de Capa 1:
+*   **Codificación y Sincronización de Bits.**
 *   **Dispositivos de Capa 1:**
-    *   **Hubs (Concentradores):** Obsoletos. Repiten la señal a todos los puertos, creando un gran dominio de colisión.
-    *   **Repetidores:** Regeneran y amplifican la señal para extender la distancia.
-    *   **Transceptores (Transceivers):** Convierten señales de un tipo de medio a otro.
-    *   **Tarjetas de Red (NICs):** Tienen un componente físico para la conexión al medio.
+    *   **Hubs (Concentradores):** Obsoletos. Repiten la señal a todos los puertos.
+    *   **Repetidores:** Regeneran la señal para extender la distancia.
+    *   **Transceptores (Transceivers):** Convierten señales entre tipos de medios.
+    *   **Cables y Conectores:** (RJ45, Fibra LC/SC, etc.).
+    *   **Componente Físico de la NIC:** La parte de la tarjeta de red que se conecta al medio.
+*   **Dispositivos Finales:** (PCs, servidores, impresoras, teléfonos IP, etc.) se conectan físicamente en esta capa, aunque su operación completa abarca capas superiores.
 
 ---
 
 ## Capa 2: Enlace de Datos – Comunicación en la Red Local
 
-*   **Función Principal (OSI):** Transferencia confiable de datos (tramas) entre dos nodos directamente conectados en la *misma red local*. Direccionamiento físico (MAC), control de acceso al medio, detección de errores.
+*   **Función Principal (OSI):** Transferencia confiable de datos (en forma de **tramas**) entre dos nodos directamente conectados en la *misma red local (segmento de red)*. Se encarga del direccionamiento físico (MAC), control de acceso al medio, y detección de errores básicos.
 *   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
 *   **PDU (Protocol Data Unit):** Tramas.
-*   Organizaciones y Estándares de Internet:
-     *   **IEEE (Institute of Electrical and Electronics Engineers)** definen estándares para estas tecnologías (ej: IEEE 802.3 para Ethernet, IEEE 802.11 para Wi-Fi). 
-     *   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
-     *   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
-     *   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
 
-### 💳 Tarjeta de Interfaz de Red (NIC - Network Interface Card) es igual interfaz o gateway ?
-El hardware que conecta un dispositivo a la red. Opera en Capa 1 (física) y Capa 2 (enlace).
-*   **Función en Capa 2:** Implementa la dirección MAC y participa en la creación/recepción de tramas.
-*   **Tipos:** Ethernet (cable), Wi-Fi (inalámbrica), Virtual (software).
+### Organizaciones y Estándares Clave:
+*   **IEEE (Institute of Electrical and Electronics Engineers):** Define estándares como IEEE 802.3 (Ethernet) y IEEE 802.11 (Wi-Fi).
+*   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
+*   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
+*   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
+
+### 💳 Tarjeta de Interfaz de Red (NIC - Network Interface Card)
+Hardware que permite la conexión del dispositivo a la red.
+*   **Función en Capa 2:** Contiene la dirección MAC única, participa en la creación y procesamiento de tramas.
+*   **Tipos:** Ethernet (cable), Wi-Fi (inalámbrica), Virtual (para VMs, VPNs).
 *   **Analogía:** Como un carnet de identificación.
 
-### 🧾 Dirección MAC (Media Access Control) es tu mascara?
-Identificador *único y físico* de 48 bits (6 bytes) asignado a cada NIC por el fabricante.
-*   **Formato:** Hexadecimal (ej: `00:1A:2B:3C:4D:5E`).
+### 🧾 Dirección MAC (Media Access Control)
+Identificador *único y físico* de 48 bits (6 bytes hexadecimales, ej: `00:1A:2B:3C:4D:5E`) asignado a cada NIC por el fabricante.
+*   Es la dirección "local" utilizada para entregar tramas dentro de la misma LAN.
 *   **Analogía:** Como el número de serie de un dispositivo o el RUT/DNI impreso en un carnet. Es la dirección "local" para la entrega de tramas dentro de una LAN.
 
-* **Objetivo:** Comunicación entre dispositivos en la red.
+## Capa 2: Enlace de Datos – Comunicación en la Red Local
 
-* **Protocolos de Red (Fundamentos):**
-    * **Definición:** Reglas para que las computadoras se comuniquen correctamente.
-    * **Elementos Clave:**
-        * Formato del mensaje.
-        * Tamaño del mensaje.
-        * Sincronización (velocidad de transmisión).
-        * Codificación (conversión a bits).
-        * Encapsulación (agregar encabezados con direcciones).
-        * Patrón de mensaje (ej: Request/Response).
-  
+*   **Función Principal (OSI):** Transferencia confiable de datos (en forma de **tramas**) entre dos nodos directamente conectados en la *misma red local (segmento de red)*. Se encarga del direccionamiento físico (MAC), control de acceso al medio, y detección de errores básicos.
+*   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
+*   **PDU (Protocol Data Unit):** Tramas.
 
-### Encapsulación y la Trama de Ethernet
-Este módulo explica el concepto de encapsulación y la estructura de la trama Ethernet:
+### 🔄 El Proceso de Comunicación en Capa 2: Protocolos, Encapsulación y la Trama Ethernet
 
-**Encapsulación:** Es el proceso de envolver datos en un formato específico (trama) para su transmisión a través de la red. Similar a poner una carta dentro de un sobre.
+Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llamadas **protocolos de red**. Un concepto fundamental en estos protocolos es la **encapsulación**:
 
-**Trama Ethernet:** Actúa como un "sobre" para los datos, conteniendo información de origen y destino. El formato de la trama está determinado por el tipo de mensaje y el canal de transmisión.
+1.  **Protocolos de Red (Fundamentos, para iniciar capa 2):**
+    *   **Definición:** Un conjunto de reglas y convenciones que los dispositivos deben seguir para intercambiar información de manera correcta y comprensible. Definen el formato, tamaño, temporización(sincronizacion o velocidad), codificación(conversion a bits), encapsulación y patrones o secuencia de los mensajes(Request/Response).
+    *   **Objetivo:** Facilitar la comunicación estructurada y ordenada entre dispositivos.
 
-**Dirección MAC:** Cada tarjeta de interfaz de red (NIC) tiene una dirección MAC única que se utiliza para identificar el origen y el destino de la trama Ethernet.
+2.  **Encapsulación: Envolviendo los Datos para el Viaje (proceso capa 2)**
+    *   **Proceso:** A medida que los datos pasan de una capa superior (ej: Capa 3 - Red, con un paquete IP) a una capa inferior (ej: Capa 2 - Enlace de Datos), la capa inferior "envuelve" los datos de la capa superior. Esto implica añadir información de control propia de la capa, como encabezados (y a veces tráileres).
+    *   **Analogía:** Piensa en poner una carta (los datos del paquete IP) dentro de un sobre. El sobre (la trama de Capa 2) tiene su propia información (direcciones del remitente y destinatario local, sello).
 
-**Protocolo IP:** Similar al sobre en la analogía, el protocolo IP (ej. IPv6) es responsable de enviar el mensaje desde el origen al destino a través de la red.
+3.  **La Trama Ethernet: El "Sobre" de la Capa 2 (fin proceso capa 2)**
+    *   Cuando un paquete IP (de Capa 3) necesita ser enviado a través de una red local Ethernet, la Capa 2 lo encapsula dentro de una **Trama Ethernet**.
+    *   Esta trama es la unidad de datos que realmente viaja por el cable o el aire en la red local.
+    *   **Función Clave:** La trama Ethernet asegura que el paquete IP llegue al dispositivo correcto *dentro de la misma red local*.
 
+    **Componentes Esenciales de una Trama Ethernet (IEEE 802.3 / Ethernet II):**
 
-        * 
-*   **Encapsulación:** Proceso de envolver datos de capas superiores con encabezados (y a veces tráileres) de la capa actual.
-*   **Trama Ethernet:** La PDU de Capa 2 para redes Ethernet. Actúa como un "sobre" para los paquetes IP.
-    *   **Componentes Clave de una Trama Ethernet II:**
-        *   **Preámbulo y SFD (Start Frame Delimiter):** Sincronización e inicio de trama.
-        *   **Dirección MAC Destino:** MAC del receptor en la LAN.
-        *   **Dirección MAC Origen:** MAC del emisor en la LAN.
-        *   **EtherType (Tipo):** Indica el protocolo de Capa 3 encapsulado (ej: 0x0800 para IPv4).
-        *   **Datos (Payload):** El paquete de Capa 3 (ej: paquete IP). (46 a 1500 bytes).
-        *   **FCS (Frame Check Sequence):** Para detección de errores (CRC).
+    | Componente                      | Tamaño (Bytes) | Descripción                                                                                                                              |
+    |---------------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------|
+    | **Preámbulo**                   | 7              | Secuencia de bits alternantes (101010...) para sincronización del reloj del receptor.                                                      |
+    | **SFD (Start Frame Delimiter)** | 1              | Secuencia `10101011`. Indica que el siguiente byte es la Dirección MAC Destino y marca el inicio formal de la trama.                            |
+    | **Dirección MAC Destino**       | 6              | La dirección física (MAC) del dispositivo receptor en el segmento de red local. Si es `FF:FF:FF:FF:FF:FF`, es una trama de broadcast.       |
+    | **Dirección MAC Origen**        | 6              | La dirección física (MAC) del dispositivo emisor en el segmento de red local.                                                              |
+    | **EtherType / Longitud**        | 2              | Si valor ≥ 1536 (0x0600): Indica el protocolo de Capa 3 encapsulado (ej: `0x0800` para IPv4, `0x86DD` para IPv6). (Formato Ethernet II). Si valor ≤ 1500: Indica la longitud del campo de datos (Formato IEEE 802.3 original). |
+    | **Datos (Payload)**             | 46 - 1500      | Contiene el paquete de la capa superior (generalmente un paquete IP). Si es menor de 46 bytes, se añade relleno (padding).                 |
+    | **FCS (Frame Check Sequence)**  | 4              | Suma de verificación (CRC) calculada sobre la trama (desde MAC Destino hasta Datos). Permite al receptor detectar errores de transmisión.      |
+
+    *   **El Rol del Protocolo IP dentro de la Trama:** Mientras la Trama Ethernet (con direcciones MAC) se encarga de la entrega local, el paquete IP (contenido en el campo "Datos" de la trama) lleva las direcciones IP de origen y destino finales, que son usadas por los routers para el envío a través de múltiples redes (internetworking) hasta el destino final.
 
 ### 📡 Dispositivos de Capa 2
 *   **Switches (Conmutadores):**
