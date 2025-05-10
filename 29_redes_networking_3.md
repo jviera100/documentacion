@@ -117,7 +117,7 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 [ Nivel físico y conexión ]
 ┌─────────────────────────────┐
 │ 1. Enrutador (Router)       │ ← Hardware que une redes distintas.
-│   └→ 2. Interfaces           │     Cada una conecta una red diferente.
+│   └→ 2. Interfaces          │     Cada una conecta una red diferente.
 └─────────────────────────────┘
 
 [ Configuración del host ]
@@ -130,7 +130,7 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 ┌─────────────────────────────┐
 │ IP propia                   │ ← Su identificación única en su red local, (ej: 192.168.1.45) 
 │ Máscara de subred           │ ← Le dice con quién puede hablar directamente en su red, (/24) 
-│ 5/6/7. Gateway (Puerta de enlace) │ ← IP de salida para llegar a otras redes (ej: 192.168.1.1) 
+│ Gateway (Puerta de enlace)  │ ← IP de salida para llegar a otras redes (ej: 192.168.1.1) 
 └─────────────────────────────┘
 
 [ Límite de comunicación ]
