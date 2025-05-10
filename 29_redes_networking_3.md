@@ -144,5 +144,7 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 
 *   Puerta de enlace (gateway) = IP logico de la interfaz
 *   interfaz = parte fisica del router
+*   Para dos hosts que están en la misma red = tendran diferente direccion IP y mac, mismo IP puerta de enlace (gateway)
+*   Para dos hosts que están en red diferentes = tendran diferente direccion IP y mac, diferente IP puerta de enlace (gateway)
 
 
