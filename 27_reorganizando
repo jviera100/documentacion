@@ -1,20 +1,5 @@
 
 
-### Fundamentos de Protocolos de Red (Relevantes para todas las capas)
-*   **Definición:** Reglas y convenciones para la comunicación.
-*   **Elementos Clave:** Formato del mensaje, tamaño, temporización, encapsulación, patrones de mensaje (Request/Response).
-
-### 📄 Encapsulación y Trama Ethernet
-*   **Encapsulación General:** Proceso de añadir información de control (encabezados/tráileres) a los datos a medida que descienden por las capas del modelo OSI.
-*   **Trama Ethernet (IEEE 802.3):** Estructura de datos de Capa 2 para redes Ethernet.
-    *   **Componentes Clave:**
-        *   **Preámbulo y SFD (Start Frame Delimiter):** Sincronización e indicador de inicio de trama.
-        *   **Dirección MAC Destino:** Dirección física del receptor en la LAN.
-        *   **Dirección MAC Origen:** Dirección física del emisor en la LAN.
-        *   **EtherType/Longitud:** Indica el protocolo de Capa 3 encapsulado (ej: `0x0800` para IPv4) o la longitud del campo de datos.
-        *   **Datos (Payload):** El paquete de Capa 3 (ej: paquete IP). (46 a 1500 bytes).
-        *   **FCS (Frame Check Sequence):** Suma de verificación (CRC) para detección de errores en la trama.
-
 ### 📡 Dispositivos Primarios de Capa 2
 *   **Switches (Conmutadores):**
     *   Toman decisiones de reenvío inteligentes basadas en direcciones MAC destino de las tramas.

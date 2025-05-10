@@ -47,12 +47,12 @@ A continuación, exploraremos los conceptos de red siguiendo la estructura del M
 ### Medios de Red
 El "camino" físico por el que viajan los datos.
 
-| Medio             | Tipo de Datos    | Distancia Máxima | Entorno de Instalación | Ancho de Banda/Velocidad | Costo | Funcionalidad                                               | Ejemplo de Uso                                   |
+| Medio             | Tipo de Datos    | Distancia Máxima | Ancho de Banda/Velocidad | Funcionalidad                                               | Ejemplo de Uso                                   |
 |--------------------|-------------------|-------------------------------------------|-------------------------|--------------------------|-------|-------------------------------------------------------------|---------------------------------------------------|
-| **Par Trenzado (Cat5/5e/6/6a)** | Impulsos Eléctricos | Hasta 100 metros (Ethernet) | Interior (oficinas, hogares) | Moderado a Alto       | Bajo a Moderado | Conexión de dispositivos en redes Ethernet (LAN).  Base de la mayoría de redes locales. | Conectar una PC a un router en casa o en la oficina. |
-| **Coaxial**         | Impulsos Eléctricos | Media (depende de la frecuencia)          | Interior/Exterior       | Moderado                | Moderado | Transmisión de señales de TV, conexión satelital. Como cables de cobre de compañías de TV.  | Conexión de un televisor a un servicio de cable, conexión satelital.    |
-| **Fibra Óptica**   | Pulsos de Luz   | Varios kilómetros o más               | Interior/Exterior (subterráneo, submarino) | Muy Alto               | Alto | Transmisión de datos a alta velocidad, inmune a interferencia. | Redes troncales, conexión de ciudades, centros de datos, compañías telefónicas. |
-| **Inalámbrico**     | Ondas Electromagnéticas | Variable (depende del estándar y entorno) | Interior/Exterior       | Bajo a Moderado           | Bajo a Moderado | Conexión de dispositivos sin cables mediante modulación de frecuencias. | Conexión de laptops, smartphones, tablets a redes Wi-Fi; Bluetooth; redes celulares. |
+| **Par Trenzado (Cat5/5e/6/6a)** | Impulsos Eléctricos | Hasta 100 metros (Ethernet) | Moderado a Alto       | Conexión de dispositivos en redes Ethernet (LAN).  Base de la mayoría de redes locales. | Conectar una PC a un router en casa o en la oficina. |
+| **Coaxial**         | Impulsos Eléctricos | Media (depende de la frecuencia)          | Moderado | Transmisión de señales de TV, conexión satelital. Como cables de cobre de compañías de TV.  | Conexión de un televisor a un servicio de cable, conexión satelital.    |
+| **Fibra Óptica**   | Pulsos de Luz   | Varios kilómetros o más               | Muy Alto | Transmisión de datos a alta velocidad, inmune a interferencia. | Redes troncales, conexión de ciudades, centros de datos, compañías telefónicas. |
+| **Inalámbrico**     | Ondas Electromagnéticas | Variable (depende del estándar y entorno) | Bajo a Moderado           | Conexión de dispositivos sin cables mediante modulación de frecuencias. | Conexión de laptops, smartphones, tablets a redes Wi-Fi; Bluetooth; redes celulares. |
 
 *(EMI: Interferencia Electromagnética, RFI: Interferencia de Radiofrecuencia)*
 
