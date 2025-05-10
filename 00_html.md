@@ -106,7 +106,7 @@ El comentario en HTML comienza con `<!--` y termina con `-->`. Todo lo que esté
 
 ---
 
-**🔸 Bloques de Código en Markdown (triple backtick)**
+**🔸 Bloques de Código en Markdown (triple backtick o triple tilde)**
 
 Se utilizan para mostrar bloques de código de forma visible y con formato.
 
@@ -130,7 +130,7 @@ En Markdown, se utiliza triple backtick <code>\`\`\`</code> para abrir y cerrar 
 - `Ctrl + L`: Ajustar vista de línea del codigo al ancho de la pantalla.
 - `Ctrl + F`: Buscar texto en el archivo.
 - `Ctrl + D`: Seleccionar la siguiente ocurrencia del texto.
-- `Ctrl + F`: Seleccionar todas las ocurrencias del mismo texto.
+- `Ctrl + Shift + L`: Seleccionar todas las ocurrencias del mismo texto.
 - `Ctrl + K + C`: mantiene el botón `Ctrl` presionado para presionar `K` y luego `C`. Esto convierte la selección en un comentario.
 
 ### 7. Buenas Prácticas
