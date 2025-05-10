@@ -128,9 +128,9 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 
 [ Parámetros que recibe el host ]
 ┌─────────────────────────────┐
-│ IP propia                   │ ← Su identificación única
-│ Máscara de subred           │ ← Le dice con quién puede hablar directamente
-│ 5/6/7. Gateway (Puerta de enlace) │ ← IP de salida para llegar a otras redes
+│ IP propia                   │ ← Su identificación única en su red local, (ej: 192.168.1.45) 
+│ Máscara de subred           │ ← Le dice con quién puede hablar directamente en su red, (/24) 
+│ 5/6/7. Gateway (Puerta de enlace) │ ← IP de salida para llegar a otras redes (ej: 192.168.1.1) 
 └─────────────────────────────┘
 
 [ Límite de comunicación ]
@@ -147,7 +147,7 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 *   Para dos hosts que están en la misma red = tendran diferente direccion IP y mac, mismo IP puerta de enlace (gateway)
 *   Para dos hosts que están en red diferentes = tendran diferente direccion IP y mac, diferente IP puerta de enlace (gateway)
 
-## ✅ NAT (Network Address Translation) = técnica para asignar direcciones IP públicas
+## ✅ NAT (Network Address Translation) = técnica que traduce tus IPs internas privadas a una IP pública para que puedas navegar en Internet.
 
 | Rango de IP privada        | Máscara de subred     | Bits para red | Bits para host | Nº de hosts posibles | Uso típico          |
 |---------------------------|------------------------|----------------|----------------|-----------------------|---------------------|
