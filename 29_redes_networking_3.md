@@ -97,11 +97,39 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 ---------------------------------------------------------------
 # **NetGamesLatam_Cisco_Fundamentos de Redes:**
 
-| Punto Clave / Concepto           | Explicación Detallada                                                                                                                                                                                                                                                                                          | Ejemplo / Ilustración                                                                                                                                                                |
-|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **✅ 1. Partes de una IP**       | Toda dirección IP se compone de dos partes fundamentales: una porción que identifica la **Red** y otra que identifica al **Host** (dispositivo) dentro de esa red.<br>La **máscara de subred** es la que define qué parte de la IP corresponde a la red y qué parte al host.                               | **IP:** `192.168.1.45`<br>**Máscara:** `/24` (o `255.255.255.0`)<br><br>→ **Porción de Red:** `192.168.1.0`<br>→ **Porción de Host:** `.45`<br><br>_(La parte del host es la que varía para identificar unívocamente a cada dispositivo dentro de la misma red local)._ |
-| **✅ 2. Dentro de una LAN (Red Interna)** | Tu IP (ej: `192.168.1.45`) pertenece a una red local específica (ej: `192.168.1.0/24`).<br>Dentro de esta red local:<br>- La **dirección de red** identifica a toda la red en conjunto.<br>- Existe un **rango de IPs asignables** a los dispositivos (hosts).<br>- La **dirección de broadcast** se usa para enviar un mensaje a todos los dispositivos de esa red simultáneamente.<br><br>Es importante notar que una expresión como “`192.168.1.X`” no se refiere a *toda* la red, sino más bien al rango de direcciones de host posibles dentro de la red `192.168.1.0/24`. | **Para la red `192.168.1.0/24`:**<br><br>- **Dirección de Red:** `192.168.1.0`<br>  _(Identifica la red)_<br><br>- **IPs Asignables a Hosts:** `192.168.1.1` – `192.168.1.254`<br>  _(Para PCs, móviles, impresoras, etc.)_<br><br>- **Dirección de Broadcast:** `192.168.1.255`<br>  _(Mensaje para todos en la red 192.168.1.0)_ |
-| **✅ 3. NAT y el Router como Puente** | El router actúa como un puente entre tu red local (LAN) y la red externa (WAN/Internet).<br><br>**Interfaces del Router:**<br>- **Interfaz LAN (Local):** Conectada a tu red interna, tiene una IP privada (ej: `192.168.1.1`).<br>- **Interfaz WAN (Internet):** Conectada a la red de tu ISP, tiene una IP pública (ej: `181.160.25.12`).<br><br>El router utiliza **NAT (Network Address Translation)** para permitir que múltiples dispositivos en tu LAN (con IPs privadas) compartan una única IP pública para acceder a Internet. | **Proceso de NAT (Traducción):**<br><br>1. Tu dispositivo LAN (`192.168.1.45`) quiere acceder a un servidor en Internet.<br>2. Envía la petición a su puerta de enlace (el router, `192.168.1.1`).<br>3. El router **traduce** la IP de origen privada (`192.168.1.45`) por su IP pública (`181.160.25.12`) y le asigna un puerto de origen temporal (ej: `181.160.25.12:puerto_X`).<br>4. La petición sale a Internet desde `181.160.25.12:puerto_X`.<br>5. Cuando llega la respuesta del servidor a `181.160.25.12:puerto_X`, el router consulta su tabla NAT, ve que esa conexión pertenece a `192.168.1.45`, y reenvía la respuesta al dispositivo correcto en la LAN. |
+✅ **1. Toda IP tiene dos partes:**
+Red + Host → Esto depende de la máscara de subred.
+
+*Ejemplo:*
+`192.168.1.45` con máscara `/24`
+→ Red: `192.168.1.0`
+→ Host: `45`
+_(la parte host es la que cambia para identificar a cada dispositivo en la red local)_
+
+✅ **2. Dentro de una LAN (red interna):**
+Tu IP (como `192.168.1.45`) forma parte de una red local llamada `192.168.1.0/24`.
+
+En esa LAN:
+
+- `192.168.1.0` es la dirección de red → identifica a toda la red.
+- `192.168.1.1` – `192.168.1.254` son las IP asignables a dispositivos (hosts).
+- `192.168.1.255` es el broadcast → mensaje a todos los dispositivos de esa red.
+
+Entonces, “`192.168.1.X`” no es toda la red, sino un rango de IPs de host dentro de la red `192.168.1.0/24`.
+
+✅ **3. NAT y el router como puente:**
+Tu router:
+
+- Tiene una interfaz LAN (Local) con IP: `192.168.1.1` (por ejemplo).
+- Tiene una interfaz WAN (Internet) con IP pública: `181.160.25.12` (por ejemplo).
+
+Él conecta:
+
+- Tu red privada (LAN) con IPs del tipo `192.168.X.X`
+- A la red pública (WAN), usando una sola IP pública mediante NAT.
+
+🔁 **NAT traduce:**
+Dispositivo LAN `192.168.1.45` → WAN `181.160.25.12:puerto`
 
 ## 🧩 Tabla de diferencias y relaciones
 
