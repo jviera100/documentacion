@@ -122,36 +122,26 @@ Con `/24`, hay 8 bits para hosts (2⁸ = 256 combinaciones).
 Restando la Dirección de Red y la de Broadcast, quedan **254 IPs usables**.
 
 ---
+### 2. Conexión al Mundo Exterior: El Router, NAT y Visibilidad de IPs
 
-### 2. Conexión al Mundo Exterior: El Router y NAT
+Para que tus dispositivos con IPs privadas (en tu LAN) puedan acceder a Internet (que usa IPs públicas), tu router es el intermediario esencial. Utiliza una técnica llamada **NAT (Network Address Translation)**.
 
-Para que tus dispositivos con IPs privadas accedan a Internet (que usa IPs públicas), tu router utiliza **NAT (Network Address Translation)**.
+| Componente / Concepto          | Descripción                                                                                                                              | Tu PC (Host Privado) | Router (Interfaz LAN)         | Router (Interfaz WAN) | Internet (Servidor Externo) |
+|--------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|----------------------|-------------------------------|-----------------------|-----------------------------|
+| **Tipo de IP**                 | Indica si la IP es para uso interno (Privada) o visible en Internet (Pública).                                                             | Privada              | Privada                       | Pública               | Pública                     |
+| **Ejemplo de IP**              | Dirección numérica que identifica al dispositivo.                                                                                          | `192.168.1.45/24`    | `192.168.1.1/24`              | `181.160.25.12`       | `142.250.184.174` (Google)  |
+| **Visible para...**            | Quién puede "ver" directamente esta dirección IP.                                                                                        | Solo dentro de tu LAN | Solo dentro de tu LAN        | Todo Internet         | Todo Internet               |
+| **Función Principal**          | El rol que juega cada elemento.                                                                                                          | Usar servicios de red | **Puerta de Enlace (Gateway)** para la LAN, Servidor DHCP, Realizar **NAT** | Conectar a Internet   | Proveer servicios           |
+| **Interfaz LAN del Router**    | Conecta el router a tu red local (LAN). Tiene una IP privada que es la puerta de enlace para tus dispositivos.                              |                      | `192.168.1.1`                  |                       |                             |
+| **Interfaz WAN del Router**    | Conecta el router a Internet (a través de tu ISP). Tiene la IP pública que te representa en Internet.                                      |                      |                               | `181.160.25.12`       |                             |
+| **NAT (Network Address Translation)** | **Mecanismo de Traducción:** <br>1. **Salida:** Tu PC (`192.168.1.45`) envía datos al router (Gateway). <br>2. **Traducción:** El router cambia la IP de origen privada por su IP pública (`181.160.25.12`) y la envía a Internet, registrando la conexión. <br>3. **Retorno:** La respuesta llega a la IP pública del router. Éste consulta su registro y reenvía la respuesta al PC original. |                      | Es realizado por el router    | Implica esta IP       |                             |
+| **Efecto Principal de NAT**    | Permite que múltiples dispositivos con IPs privadas compartan una única IP pública para acceder a Internet, **ocultando las IPs privadas** de la red interna del mundo exterior. |                      |                               |                       |                             |
 
-| Componente Clave en el Router        | Función Principal                                                                                                                              | Ejemplo                                   |
-|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
-| **Interfaz LAN (IP Privada)**      | Conecta con tu red local. Actúa como **Puerta de Enlace (Gateway)** para tus dispositivos.                                                          | `192.168.1.1` (en la red `192.168.1.0/24`) |
-| **Interfaz WAN (IP Pública)**      | Conecta con Internet (a través de tu ISP). Esta es la IP que el mundo exterior ve.                                                               | `181.160.25.12` (asignada por el ISP)     |
-| **NAT (Network Address Translation)** | **Traduce IPs:** Cuando tu dispositivo (`IP Privada`) va a Internet, NAT cambia la IP de origen a la `IP Pública` del router. Al regresar la respuesta, NAT la devuelve a tu dispositivo. |                                           |
-
-**Funcionamiento y Efecto de NAT (Simplificado):**
--   **Salida:** Dispositivo (`192.168.1.45`) envía datos al router (su Gateway).
--   **Traducción:** El router reemplaza la IP privada de origen (`192.168.1.45`) por su IP pública (`181.160.25.12`) y registra esta asociación (usando puertos).
--   **Retorno:** Cuando la respuesta llega a la IP pública del router, este usa el registro para reenviar los datos al dispositivo interno correcto (`192.168.1.45`).
--   **Resultado Clave:** El mundo exterior solo ve la IP pública de tu router, **ocultando así tu IP privada** y permitiendo que múltiples dispositivos en tu LAN compartan una única IP pública para acceder a Internet.
-
----
-
-### 3. Conceptos Clave en tu Red (Resumen Visual)
-
-| Concepto        | Tu PC (Host)           | Tu Router (Interfaz LAN) | Tu Router (Interfaz WAN) | Internet (Servidor Externo)  |
-|----------------|------------------------|---------------------------|---------------------------|-------------------------------|
-| **Tipo de IP**     | Privada                | Privada                   | Pública                   | Pública                       |
-| **Ejemplo IP**     | `192.168.1.45/24`        | `192.168.1.1/24` (Gateway)  | `181.160.25.12`             | `142.250.184.174` (Google)      |
-| **Visible para…**  | Solo LAN               | Solo LAN                  | Todo Internet             | Todo Internet                 |
-| **Función**        | Usar servicios de red  | Gateway, DHCP, NAT        | Salida a Internet         | Proveer servicios             |
-
----
-
+**En resumen, gracias a NAT:**
+*   Tu **IP privada** (`192.168.1.45`) solo es visible dentro de tu red local.
+*   El **mundo exterior** (como Google) solo ve la **IP pública** de tu router (`181.160.25.12`).
+*   El router actúa como un "traductor" y "guardia de seguridad", manejando el flujo de datos entre tu red privada e Internet.
+  
 ### 4. Definiciones Esenciales
 
 | Concepto                         | ¿Qué es?                                                                 |
