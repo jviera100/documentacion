@@ -98,7 +98,7 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 # **NetGamesLatam_Cisco_Fundamentos de Redes:**
 
 ✅ **1. Toda IP tiene dos partes: Parte de Red + Parte de Host**
-Esto siempre depende de la **máscara de subred**. La máscara te dice cuántos bits de la IP se usan para identificar la red y cuántos para identificar al host dentro de esa red.
+Esto siempre depende de la **máscara de subred(Notación CIDR)**. La máscara te dice cuántos bits de la IP se usan para identificar la red y cuántos para identificar al host dentro de esa red.
 
 *   **Ejemplo:** `192.168.1.45` con máscara `/24` (o `255.255.255.0`)
     *   **Parte de Red (los primeros 24 bits):** `192.168.1`
@@ -118,7 +118,8 @@ Tu IP (como `192.168.1.45/24`) significa que tu dispositivo pertenece a una **su
     Cuando decimos "`192.168.1.X`", nos referimos de forma genérica a **cualquier dirección IP de host *válida*** dentro de la subred `192.168.1.0/24`. No es la "red" en sí misma, sino una IP *perteneciente* a esa red. La red como tal se identifica por `192.168.1.0/24`.
 
 ✅ **3. NAT y el Router como Puente (Conexión entre Redes)**
-Tu router es el dispositivo clave que conecta diferentes redes.
+ 
+NAT y la IP Externa Oculta: Correcto. Gracias a NAT, cuando te comunicas con un servidor en Internet (o cualquier otro dispositivo fuera de tu red local), ni tú ves su IP privada interna (si la tiene), ni ellos ven la tuya. Ambos ven la IP pública del router del otro extremo (o la IP pública directa del servidor si no está detrás de NAT). Tú solo conoces tu IP privada y la IP pública de tu router.
 
 *   **Interfaz LAN (Local Area Network):**
     *   Conectada a tu red interna.
