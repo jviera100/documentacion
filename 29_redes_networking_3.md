@@ -160,7 +160,7 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
    * 🪛 8 bits para hosts → 2⁸ = 256 combinaciones totales
    * Se restan 2:
        * 192.168.1.0 → Dirección de red (todos los bits en 0)
-       * 192.168.1.255 → Broadcast (todos los bits en 1)
+       * 192.168.1.255 → Broadcast o difusión (todos los bits en 1)
        * ✅ 254 direcciones IP disponibles para hosts: 192.168.1.1 – 192.168.1.254
 * 📌 El “host” es la parte final de la dirección IP que identifica a cada dispositivo dentro de la red.
 *   ✅ El uso de /16 en redes privadas del bloque 172.16.0.0 – 172.31.255.255 depende del administrador, pero el rango oficial definido por la IETF es /12 > asi 172.16.0.0/12.
