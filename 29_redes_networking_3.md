@@ -94,6 +94,57 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 
 
 
+---------------------------------------------------------------
+# **NetGamesLatam_Cisco_Fundamentos de Redes:**
 
+## 🧩 Tabla de diferencias y relaciones
+
+| Concepto                         | ¿Qué es?                                                                 | ¿Dónde está?                               | Relación con otros                                                |
+|----------------------------------|--------------------------------------------------------------------------|--------------------------------------------|-------------------------------------------------------------------|
+| 1. Enrutador (router)            | Dispositivo que conecta redes distintas.                                 | Físicamente entre dos redes                | Tiene interfaces. Proporciona el gateway a los hosts.             |
+| 2. Interfaz                      | Puerto físico o lógico de red en el router.                              | Parte del router                           | Cada interfaz tiene su propia IP y conecta una red distinta.        |
+| 5. Puerta de enlace (gateway)    | Dirección IP de la interfaz del router dentro de una red.              | En el router, vista desde el host          | Es la salida del host para ir a otra red.                         |
+| 6. Puerta de enlace predeterminada | Dirección IP configurada en el host como “salida por defecto”.         | En cada host                               | Suele coincidir con la IP del gateway (5).                      |
+| 7. Gateway interno (local gateway) | Dirección IP.  Otro nombre para la puerta de enlace dentro de una red local. | En la red local                            | Es el gateway hacia Internet (vía ISP).                           |
+| 8. Cliente DHCP                  | Dispositivo (como un host) que pide automáticamente configuración de red. | Cualquier host de la red                   | Recibe IP, máscara y gateway del servidor DHCP.                 |
+| 9. Servidor DHCP                 | Entrega configuración de red (IP, máscara, gateway, DNS, etc.) a los clientes. | En el router, generalmente                 | Es quien le da los datos necesarios al cliente DHCP.             |
+| 11. Red interna                  | Red local (LAN), donde están los dispositivos del hogar o empresa.       | Dentro del router                          | Usa IP privadas. Solo se comunica con Internet usando el gateway. |
+| 12. Red externa                  | Red del ISP o Internet.                                                  | Fuera del router (WAN)                     | Es lo que hay más allá del gateway predeterminado.               |
+
+## 🪜 Esquema en forma de peldaños / engranaje
+
+Aquí lo tienes en forma de niveles o funciones que colaboran pero no se repiten:
+
+[ Nivel físico y conexión ]
+
+[ Nivel físico y conexión ]
+┌─────────────────────────────┐
+│ 1. Enrutador (Router)       │ ← Hardware que une redes distintas.
+│   └→ 2. Interfaces           │     Cada una conecta una red diferente.
+└─────────────────────────────┘
+
+[ Configuración del host ]
+┌─────────────────────────────┐
+│ 8. Cliente DHCP             │ ← Pide datos automáticamente
+│   ← 9. Servidor DHCP        │     (usualmente el router)
+└─────────────────────────────┘
+
+[ Parámetros que recibe el host ]
+┌─────────────────────────────┐
+│ IP propia                   │ ← Su identificación única
+│ Máscara de subred           │ ← Le dice con quién puede hablar directamente
+│ 5/6/7. Gateway (Puerta de enlace) │ ← IP de salida para llegar a otras redes
+└─────────────────────────────┘
+
+[ Límite de comunicación ]
+┌─────────────────────────────┐
+│ 11. Red interna (LAN)       │ ← Donde están tus dispositivos
+│ 12. Red externa (WAN)       │ ← Lo que está más allá del router, como Internet
+└─────────────────────────────┘
+
+## 🔑 Recuerda:
+
+Puerta de enlace (gateway) = IP logico de la interfaz
+interfaz = parte fisica del router
 
 
