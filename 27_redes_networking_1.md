@@ -326,17 +326,32 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones.
 *   **ISR (Integrated Services Router):** Router que combina funciones de enrutamiento con otros servicios como firewall, VPN, telefonía IP.
 
 ### 🗺️ Tabla de Enrutamiento
-Base de datos que el router consulta para decidir cómo reenviar un paquete.
-*   **Contenido por entrada:**
-    *   Red de destino y máscara de subred.
-    *   Dirección IP del siguiente salto (el próximo router en la ruta) o la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* de salida directa si la red está conectada directamente.
-    *   Métrica (un valor que indica la "preferencia" o "costo" de la ruta).
-*   **Población de la Tabla:**
+Es una base de datos que un router (o incluso un host) utiliza para decidir cómo reenviar un paquete IP hacia su destino.
+*   🧩 Cada entrada contiene:
+    *   Red de destino y máscara de subred: Identifican a qué red pertenece un paquete.
+    *   Dirección IP del siguiente salto (Next Hop "el próximo router en la ruta") al que debe enviarse el paquete o la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* de salida si la red está conectada directamente.
+    *   Métrica (un valor que indica la "preferencia" o "costo" de la ruta). Se elige la ruta con menor métrica si hay varias posibles.
+*   🔄 ¿Cómo se llena la tabla?
     *   **Redes Conectadas Directamente(fisicamente):** Agregadas automáticamente a la tabla cuando una *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* del router es configurada con una dirección IP y está activa. El router sabe que puede alcanzar cualquier host en estas redes sin necesidad de otro router.
     *   **Rutas Estáticas:** Configuradas manualmente por un administrador.
     *   **Rutas Dinámicas:** Aprendidas a través de protocolos de enrutamiento (ej: RIP, EIGRP, OSPF, BGP) que intercambian información de enrutamiento con otros routers.
-*   **Ruta Predeterminada (Gateway of Last Resort):** Una ruta especial (a menudo `0.0.0.0/0`) que se usa si no existe una coincidencia más específica en la tabla para la red de destino. Dirige el tráfico hacia un router que tiene más conocimiento de la red (ej: el router del ISP).
+*   🚪 Ruta predeterminada (0.0.0.0/0)
+*   Conocida como (Gateway of Last Resort):** Una ruta especial (a menudo `0.0.0.0/0`) que se usa si no existe una coincidencia más específica en la tabla para la red de destino. Dirige el tráfico hacia un router que tiene más conocimiento de la red (ej: el router del ISP).
 *   *Puerta de Enlace Predeterminada (Default Gateway):* En un host, es la dirección IP de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* del router en su LAN a la que el host enviará todo el tráfico destinado a redes externas.
+
+### 📋 Ejemplo de Tabla de Enrutamiento
+
+| Red de destino | Máscara de subred | Puerta de enlace (Gateway) | Interfaz de salida | Métrica |
+|----------------|-------------------|-----------------------------|--------------------|---------|
+| 192.168.1.0     | 255.255.255.0     | 0.0.0.0                     | eth0               | 1       |
+| 10.0.0.0        | 255.0.0.0         | 192.168.1.1                 | eth0               | 10      |
+| 0.0.0.0         | 0.0.0.0           | 192.168.1.254               | eth0               | 20      |
+| 127.0.0.0       | 255.0.0.0         | 0.0.0.0                     | lo                 | 0       |
+
+> 📝 Nota:
+> - Las rutas con **gateway 0.0.0.0** indican redes directamente conectadas.
+> - La ruta `0.0.0.0/0` es la **ruta por defecto** que se usa cuando ninguna otra coincide.
+> - La **métrica** más baja tiene prioridad si hay rutas múltiples hacia el mismo destino.
 
 ### 🏢 Diseño de Red Jerárquico
 
@@ -383,8 +398,8 @@ Cuando un dispositivo necesita enviar un paquete:
 **Importante: Diferenciar ARP/NDP de otros protocolos:**
 *   **ARP/NDP:** Descubren la dirección MAC asociada a una IP *dentro de la misma red local*.
 *   **NAT (Network Address Translation):** Traduce IPs privadas a públicas (y viceversa) en el router frontera, para comunicarse afuera red WAN.
-*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN.
-*   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa (Bits en L1, Tramas en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
+*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS).
+*   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa del modelo OSI y cada capa añade su propia cabecera al pasar la información hacia abajo: (Bits en L1, Tramas(frames) en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
 ## Capa 4: Transporte – Comunicación Confiable o Rápida Extremo a Extremo
 
