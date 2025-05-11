@@ -36,8 +36,6 @@ Para entender este complejo proceso, se utilizan modelos de referencia:
 
 A continuación, exploraremos los conceptos de red siguiendo la estructura del Modelo OSI.
 
----
-
 ## Capa 1: Física – La Transmisión de Bits
 
 *   **Función Principal (OSI):** Transmitir el flujo de bits (0s y 1s) a través del medio físico. Define características eléctricas, mecánicas y funcionales (voltajes, tasas de bits, conectores, tipos de cable, radiofrecuencias).
@@ -76,8 +74,6 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
     *   **Cables y Conectores:** (RJ45, Fibra LC/SC, etc.).
     *   **Componente Físico de la NIC:** La parte de la tarjeta de red que se conecta al medio.
 *   **Dispositivos Finales:** (PCs, servidores, impresoras, teléfonos IP, etc.) se conectan físicamente en esta capa, aunque su operación completa abarca capas superiores.
-
----
 
 ## Capa 2: Enlace de Datos – Comunicación en la Red Local
 
@@ -177,7 +173,6 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 | **Multicast**| Un grupo de NICs en la LAN.                | `01:00:5E:xx:xx:xx` (para IPv4 multicast) |
 | **Broadcast**| Todas las NICs en el dominio de difusión.  | `FF:FF:FF:FF:FF:FF`            |
 
----
 *(Los routers NO reenvían broadcasts por defecto).*
 
 ## Capa 3: Red – Direccionamiento Lógico y Enrutamiento Global
@@ -231,8 +226,6 @@ La "Parte de Host" de la IP determina cuántos dispositivos pueden conectarse.
 Con `/24`, hay 8 bits para *dispositivos (hosts)* (2⁸ = 256 combinaciones).
 Restando la Dirección de Red y la de Broadcast, quedan **254 IPs usables**.
 
----
-
 #### 🏡 Direcciones IPv4 Públicas vs. Privadas
 *   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs.
 *   **Privadas:** Para uso en redes internas (LANs). No son enrutables directamente en Internet.
@@ -247,7 +240,6 @@ Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil con
 
 *Nota: En cada subred creada, 2 IPs no son usables por dispositivos (hosts): la Dirección de Red y la Dirección de Broadcast.*
 
----
 ### 3. Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation)
 
 Para que tus *dispositivos (hosts)* con IPs privadas (en tu LAN) accedan a Internet, el router actúa como intermediario esencial. Utiliza **NAT (Network Address Translation)** para traducir la IP privada de tu dispositivo a su propia IP pública (de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* WAN) al enviar datos, y revierte esta traducción para las respuestas entrantes. La IP de la interfaz LAN del router funciona como la *Puerta de Enlace (Gateway)* para tu red local.
@@ -345,8 +337,6 @@ Cuando un dispositivo necesita enviar un paquete:
 *   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN.
 *   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa (Bits en L1, Tramas en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
----
-
 ## Capa 4: Transporte – Comunicación Confiable o Rápida Extremo a Extremo
 
 *   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
@@ -376,8 +366,6 @@ Identificadores de 16 bits (0-65535) usados por TCP y UDP para diferenciar entre
 Una combinación única de una **dirección IP y un número de puerto**. Identifica un extremo de una conexión de red.
 *   Ejemplo: `192.168.1.100:49152` (IP del cliente y su puerto de origen efímero) conectándose a `203.0.113.10:80` (IP del servidor web y su puerto de destino HTTP).
 *   Permiten que un servidor maneje múltiples conexiones de clientes simultáneamente, incluso al mismo servicio, porque cada socket (combinación IP_origen:Puerto_origen + IP_destino:Puerto_destino) es único.
-
----
 
 ## Capas 5, 6 y 7: Sesión, Presentación y Aplicación – La interfaz *(API - Application Programming Interface)* con el Usuario y los Servicios de Red
 
@@ -439,8 +427,6 @@ Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
 *   **SSID (Service Set Identifier):** El nombre público de una red Wi-Fi, configurado en el Punto de Acceso.
 *   **Servidor DNS:** La dirección IP del servidor que el host usará para resolver nombres de dominio. A menudo se obtiene vía DHCP.
 * "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
-
----
 
 ## Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)*
 
@@ -507,3 +493,96 @@ Herramienta para consultar servidores DNS (Domain Name System).
 *   Puede usarse en modo interactivo para especificar servidores DNS a consultar, tipos de registros a buscar (A, MX, NS, CNAME, etc.).
 
 ---
+### Conversión de Decimal a Binario: Valor 192
+
+La tabla ilustra el proceso de conversión del número decimal 192 a su equivalente binario de 8 bits.
+
+*   **Valor decimal:** El número a convertir (en este caso, 192).
+*   **Base:** La base del sistema numérico binario (2).
+*   **Exponente:** El exponente de la base 2 para cada posición del bit.
+*   **Posición:** El valor posicional de cada bit (128, 64, 32, 16, 8, 4, 2, 1).
+*   **Bit:** El valor binario (0 o 1) que indica si la posición correspondiente contribuye al valor decimal.
+
+**Tabla de Conversión (Horizontal):**
+
+| **Valor Decimal** | 192 |   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|
+| **Base** | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |
+| **Exponente** | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+| **Posición** | 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1 |
+| **Bit** | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+**Resultado Binario:** 11000000
+
+**Explicación:**
+
+Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
+
+*   128 (2^7)
+*   64 (2^6)
+
+128 + 64 = 192. Por lo tanto, los bits correspondientes a esas posiciones son 1, y los demás son 0. El resultado binario se lee de izquierda a derecha dentro de la tabla, correspondiente al orden de los exponentes y posiciones.
+
+# convirtiendo desde tabla de conversion con calculos de decimal a hexadecimal y viceversa
+
+**1. Tabla de Conversión (Decimal <-> Hexadecimal) - Horizontal:**
+
+| Decimal: | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Hexadecimal: | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B | C | D | E | F |
+
+**2. Resumen del Cálculo:**
+
+*   **Decimal -> Hexadecimal (División):**
+    *   Divide sucesivamente por 16.
+    *   El cociente y el residuo de cada división se convierten a hexadecimal usando la tabla de conversión (arriba).  **Ejemplo:** 202 / 16 = 12 (C) residuo 10 (A) => CA
+*   **Hexadecimal -> Decimal (Multiplicación):**
+    *   Cada dígito hexadecimal se convierte a decimal usando la tabla de conversión (arriba).
+    *   Cada dígito decimal se multiplica por 16 elevado a la potencia de su posición (de derecha a izquierda, comenzando con 0).
+    *   Los resultados se suman. **Ejemplo:** 7D = (7 * 16^1) + (13 * 16^0) = 112 + 13 = 125
+
+# convirtiendo desde tabla de posicion y tabla conversion de decimal a binario a hexadecimal
+
+**Tabla de Conversión (decimal a Binario):**
+
+| **Valor decimal** | 197 |   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|
+| **Base** | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |
+| **Exponente** | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+| **Posición** | 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1 |
+| **Bit** | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 1 |
+
+128 + 64 + 4 + 1 = 197
+
+**Tabla de Conversión (Binario a hexadecimal):**
+
+| **Valor Binario** | 11000101 |   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|
+| **Exponente** | 3 | 2 | 1 | 0 | 3 | 2 | 1 | 0 |
+| **Posición** | 8 | 4 | 2 | 1 | 8 | 4 | 2 | 1 |
+| **Bit** | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 1 |
+
+el primero suma 8 + 4 = 12 = c (tabla conversion) y la otra mitad suma 4 + 1 = 5
+
+# convirtiendo desde tabla de posicion y tabla conversion de hexadecimal a binario a decimal
+
+**Tabla de Conversión (hexadecimal a Binario):**
+
+| **Valor Hexadecimal** | 9F |   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|
+| **Exponente** | 3 | 2 | 1 | 0 | 3 | 2 | 1 | 0 |
+| **Posición** | 8 | 4 | 2 | 1 | 8 | 4 | 2 | 1 |
+| **Bit** | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 |
+
+el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
+
+**Tabla de Conversión (Binario a decimal):**
+
+| **Valor Binario** | 10011111 |   |   |   |   |   |   |   |
+|---|---|---|---|---|---|---|---|---|
+| **Base** | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |
+| **Exponente** | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+| **Posición** | 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1 |
+| **Bit** | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 |
+
+128 + 16 + 8 +4 +2 +1 = 159
