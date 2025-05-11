@@ -140,7 +140,7 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
     *   **El Rol del Protocolo IP dentro de la Trama:** Mientras la Trama Ethernet (con direcciones MAC) se encarga de la entrega local, el paquete IP (contenido en el campo "Datos" de la trama) lleva las direcciones IP de origen y destino finales, que son usadas por los routers para el envío a través de múltiples redes (internetworking) hasta el destino final.
 
 ### 📡 Dispositivos Primarios de Capa 2
-*   **Switches (Conmutadores):**
+*   ***Switches (Conmutadores)*:**
     *   Toman decisiones de reenvío inteligentes basadas en direcciones MAC destino de las tramas.
     *   Crean una **tabla MAC** (o tabla CAM) que mapea direcciones MAC a puertos del switch.
     *   Cada puerto del switch es un **dominio de colisión** separado, reduciendo colisiones.
@@ -164,7 +164,7 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 *   *(MAN y WAN implican principalmente enrutamiento de Capa 3, aunque usan tecnologías de Capa 1 y 2 para los enlaces).*
 
 ### 🔪 Segmentación en Capa 2: VLANs y Dominios de Difusión
-*   **Dominio de Difusión:** Área de una red donde un broadcast enviado por un dispositivo es recibido por todos los demás. Los switches, por defecto, crean un solo dominio de difusión.
+*   **Dominio de Difusión:** Área de una red donde un broadcast enviado por un dispositivo es recibido por todos los demás. Los *switches (commutadores)*, por defecto, crean un solo dominio de difusión.
 *   **Problemas con Dominios de Difusión Grandes:** Excesivo tráfico de broadcast puede ralentizar la red.
 *   **VLANs (Virtual LANs):** Permiten segmentar lógicamente una red física (un switch) en múltiples dominios de difusión independientes.
     *   El tráfico entre VLANs diferentes requiere un dispositivo de Capa 3 (router o switch multicapa) para ser enrutado.
@@ -195,28 +195,68 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 *   - Decimal con puntos: `209.165.200.1`
 *   Cada paquete IP contiene una dirección IP de origen y una de destino.
 
+#### 🧠 ¿Qué es una Dirección IP?
+Una dirección IP (Internet Protocol) identifica de forma única a un dispositivo en una red. En redes locales (LAN), estas IPs se estructuran en dos partes:
 #### 🔍 Máscara de Subred (IPv4)
-Define qué parte de la dirección IP identifica la **RED** y qué parte identifica al **HOST** dentro de esa red.
-*   **Concepto:** IP = Porción de RED + Porción de HOST.
+Toda dirección IP en tu red local (como la de tu PC o teléfono) tiene dos componentes principales, definidos por su **máscara de subred**. La máscara se expresa comúnmente en **Notación CIDR** (ej: `/24`).
+La máscara de subred ➡️ IP = Porción de **RED** ➕ Porción de **HOST**.
+
 *   **Identificación:**
-    *   `255` en un octeto de la máscara -> octeto correspondiente en la IP es parte de la RED.
-    *   `0` en un octeto de la máscara -> octeto correspondiente en la IP es parte del HOST.
-*   **Cálculo Dirección de RED:** Tomar la porción de RED de la IP y poner a cero la porción de HOST.
+    *   `255` en un octeto de la máscara parte RED.
+    *   `0` en un octeto de la máscara parte HOST.
+*   **Cálculo Dirección de RED:** Tomar la porción de RED de la IP y reemplazar a cero la porción de HOST.
      *   **Ejemplo Rápido:**
      *   IP: `192.168.1.50`
-     *   Máscara: `255.255.255.0`
-     *   RED: `192.168.1`
+     *   Máscara: `255.255.255.0(/24)`
+     *   parte RED: `192.168.1`
+     *   parte HOST: `.50`
      *   Dirección de RED: `192.168.1.0`
-*   Dispositivos en la misma Dirección de RED pertenecen a la misma subred.
+*   Dispositivos en la misma parte de RED pertenecen a la misma subred.
+
+| Componente       | Descripción                                                                 | Ejemplo (`192.168.1.45/24`)         |
+|------------------|------------------------------------------------------------------------------|-----------------------------------|
+| **Parte de Red** | Identifica la "calle" o subred a la que pertenece el dispositivo. Es común a todos los dispositivos en la misma subred. | `192.168.1` (primeros 24 bits)      |
+| **Parte de Host**| Identifica el "número de casa" o dispositivo específico dentro de esa subred. Varía para cada dispositivo.  | `.45` (últimos 8 bits)              |
+
+Dentro de tu subred local (ej: `192.168.1.0/24`), existen tres tipos de direcciones IP importantes:
+
+| Tipo de IP en la Subred     | ¿Qué es?                                                                | Ejemplo (`192.168.1.0/24`)         |
+|-----------------------------|-------------------------------------------------------------------------|----------------------------------|
+| **Dirección de Red**            | Identifica a toda la subred. No se asigna a dispositivos.              | `192.168.1.0`                      |
+| **Direcciones de Host Usables** | Rango de IPs que pueden tener tus dispositivos (PCs, móviles, etc.).                        | `192.168.1.1` a `192.168.1.254`      |
+| **Dirección de Broadcast**      | Envía un mensaje a *todos* los dispositivos de esa subred simultáneamente.               | `192.168.1.255`                    |
+
+**Bits y Dispositivos**:
+La "Parte de Host" de la IP determina cuántos dispositivos pueden conectarse.
+Con `/24`, hay 8 bits para *dispositivos (hosts)* (2⁸ = 256 combinaciones).
+Restando la Dirección de Red y la de Broadcast, quedan **254 IPs usables**.
+
+---
 
 #### 🏡 Direcciones IPv4 Públicas vs. Privadas
 *   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs.
 *   **Privadas:** Para uso en redes internas (LANs). No son enrutables directamente en Internet.
-    *   **Rangos Privados RFC 1918:**
-        *   `10.0.0.0` a `10.255.255.255` (`10.0.0.0/8`)
-        *   `172.16.0.0` a `172.31.255.255` (`172.16.0.0/12`)
-        *   `192.168.0.0` a `192.168.255.255` (`192.168.0.0/16`)
-*   **NAT (Network Address Translation):** Proceso, usualmente en routers, que traduce direcciones IP privadas a una (o varias) dirección IP pública para permitir el acceso a Internet.
+#### Rangos Comunes de IP Privada (RFC 1918)
+Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil conocer cuáles son estos rangos de direcciones privadas estándar:
+
+| Rango de IP Privada             | Máscara de Subred (Bloque Completo) | Uso Típico / Implementación Común                                                                                                |
+|---------------------------------|-------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `10.0.0.0` – `10.255.255.255`   | `255.0.0.0` (`/8`)                  | Empresas grandes (el bloque `/8` se subdivide en múltiples subredes más pequeñas).                                                  |
+| `172.16.0.0` – `172.31.255.255` | `255.240.0.0` (`/12`)                 | Empresas medianas (el bloque `/12` se subdivide en subredes).                                                                    |
+| `192.168.0.0` – `192.168.255.255`| `255.255.0.0` (`/16`)                 | **Hogares / Pequeñas Empresas:** Comúnmente se utiliza una subred `/24` de este bloque (ej: `192.168.1.0/24`, con 254 hosts usables). |
+
+*Nota: En cada subred creada, 2 IPs no son usables por dispositivos (hosts): la Dirección de Red y la Dirección de Broadcast.*
+
+---
+### 3. Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation)
+
+Para que tus *dispositivos (hosts)* con IPs privadas (en tu LAN) accedan a Internet, el router actúa como intermediario esencial. Utiliza **NAT (Network Address Translation)** para traducir la IP privada de tu dispositivo a su propia IP pública (de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* WAN) al enviar datos, y revierte esta traducción para las respuestas entrantes. La IP de la interfaz LAN del router funciona como la *Puerta de Enlace (Gateway)* para tu red local.
+
+| Concepto                  | Tu PC (Host)                                  | Router (Interfaz LAN)                          | Router (Interfaz WAN)                             | Internet (Servidor Externo)        |
+|---------------------------|-----------------------------------------------|------------------------------------------------|---------------------------------------------------|------------------------------------|
+| **Tipo de IP (y Visibilidad)** | Privada <br>*(Solo visible en tu LAN)*      | Privada <br>*(Solo visible en tu LAN)*          | Pública <br>*(Visible para todo Internet)*        | Pública <br>*(Visible para todo Internet)* |
+| **Ejemplo IP / Interfaz** | `192.168.1.45/24`                             | `192.168.1.1/24` (Interfaz LAN)                | `181.160.25.12` (Interfaz WAN)                    | `142.250.184.174` (Google)         |
+| **Función / Rol Principal** | Usar servicios de red; identificado por su IP privada. | *Puerta de Enlace (Gateway)* para la LAN; puede actuar como Servidor DHCP; **Realiza NAT**. | Conexión a Internet; posee la IP pública que representa a la LAN en Internet. | Proveer servicios/contenido.       |
 
 #### ⚙️ Direcciones IPv4 Especiales
 *   **Loopback:** `127.0.0.0/8` (comúnmente `127.0.0.1`). Se usa para probar la pila TCP/IP del propio host.
@@ -227,7 +267,7 @@ Define qué parte de la dirección IP identifica la **RED** y qué parte identif
 #### 📜 Clases de Direcciones IPv4 (Histórico)
 Sistema original de asignación, obsoleto y reemplazado por **CIDR (Classless Inter-Domain Routing)** que permite máscaras de subred de longitud variable (VLSM) para un uso más eficiente del espacio de direcciones.
 
-| Clase | Rango de IP                         | Prefijo CIDR | Nº Hosts aprox. | Uso Principal                             |
+| Clase | Rango de IP                         | Prefijo CIDR | Nº *dispositivos (hosts)* aprox. | Uso Principal                             |
 |-------|-------------------------------------|--------------|------------------|-------------------------------------------|
 | A     | 0.0.0.0 – 127.255.255.255           | /8           | +16 millones     | Redes muy grandes (Gobiernos, ISP, etc.)  |
 | B     | 128.0.0.0 – 191.255.255.255         | /16          | ~65 mil          | Redes medianas y grandes                  |
@@ -257,7 +297,7 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones.
 
 ### ⚙️ Dispositivos de Capa 3: Routers (Enrutadores)
 *   Función principal: Conectar diferentes redes (subredes) y tomar decisiones de **enrutamiento** para reenviar paquetes entre ellas basándose en la dirección IP de destino.
-*   Cada interfaz de un router pertenece a una red IP diferente y, por lo tanto, a un dominio de difusión diferente. **Los routers no propagan broadcasts por defecto.**
+*   Cada *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* de un router pertenece a una red IP diferente y, por lo tanto, a un dominio de difusión diferente. **Los routers no propagan broadcasts por defecto.**
 *   **Componentes Internos Clave:**
     *   **CPU:** Ejecuta el sistema operativo y los procesos de enrutamiento.
     *   **RAM:** Almacena la tabla de enrutamiento activa, la configuración en ejecución (running-config), colas de paquetes. Es volátil.
@@ -271,17 +311,17 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones.
 Base de datos que el router consulta para decidir cómo reenviar un paquete.
 *   **Contenido por entrada:**
     *   Red de destino y máscara de subred.
-    *   Dirección IP del siguiente salto (el próximo router en la ruta) o la interfaz de salida directa si la red está conectada directamente.
+    *   Dirección IP del siguiente salto (el próximo router en la ruta) o la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* de salida directa si la red está conectada directamente.
     *   Métrica (un valor que indica la "preferencia" o "costo" de la ruta).
 *   **Población de la Tabla:**
-    *   **Redes Conectadas Directamente(fisicamente):** Agregadas automáticamente a la tabla cuando una interfaz(NIC) del router es configurada con una dirección IP y está activa. El router sabe que puede alcanzar cualquier host en estas redes sin necesidad de otro router.
+    *   **Redes Conectadas Directamente(fisicamente):** Agregadas automáticamente a la tabla cuando una *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* del router es configurada con una dirección IP y está activa. El router sabe que puede alcanzar cualquier host en estas redes sin necesidad de otro router.
     *   **Rutas Estáticas:** Configuradas manualmente por un administrador.
     *   **Rutas Dinámicas:** Aprendidas a través de protocolos de enrutamiento (ej: RIP, EIGRP, OSPF, BGP) que intercambian información de enrutamiento con otros routers.
 *   **Ruta Predeterminada (Gateway of Last Resort):** Una ruta especial (a menudo `0.0.0.0/0`) que se usa si no existe una coincidencia más específica en la tabla para la red de destino. Dirige el tráfico hacia un router que tiene más conocimiento de la red (ej: el router del ISP).
-*   **Puerta de Enlace Predeterminada (Default Gateway):** En un host, es la dirección IP de la interfaz del router en su LAN a la que el host enviará todo el tráfico destinado a redes externas.
+*   *Puerta de Enlace Predeterminada (Default Gateway):* En un host, es la dirección IP de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* del router en su LAN a la que el host enviará todo el tráfico destinado a redes externas.
 
 ### 🏢 Diseño de Red Jerárquico
-Modelo común para redes empresariales, usando switches y routers en capas para escalabilidad y eficiencia.
+Modelo común para redes empresariales, usando *switches (commutadores)* y routers en capas para escalabilidad y eficiencia.
 *   **Capa de Núcleo (Core):** Switches/routers de alta velocidad para transportar tráfico rápidamente entre diferentes partes de la red (ej: entre edificios o capas de distribución). Enfocada en velocidad y redundancia.
 *   **Capa de Distribución:** Punto de agregación para las capas de acceso. Implementa políticas de red, enrutamiento entre VLANs, QoS, y conecta al núcleo.
 *   **Capa de Acceso:** Donde los dispositivos finales (usuarios, impresoras) se conectan a la red, usualmente mediante switches de acceso que proporcionan conectividad y pueden implementar VLANs.
@@ -296,20 +336,20 @@ Cuando un dispositivo necesita enviar un paquete:
         2.  **ARP Reply (Unicast):** El dispositivo con [IP_Destino] responde directamente al emisor: "Yo tengo [IP_Destino], mi dirección MAC es [MAC_Destino]."
         3.  El emisor almacena esta correspondencia IP-MAC en su **tabla ARP (o caché ARP)** para uso futuro.
 2.  **Destino en una red remota:**
-    *   El dispositivo envía el paquete a la dirección MAC de su **Puerta de Enlace Predeterminada (Default Gateway)** (el router local).
+    *   El dispositivo envía el paquete a la dirección MAC de su *Puerta de Enlace Predeterminada (Default Gateway)* (el router local).
     *   El router, al recibir el paquete, consultará su tabla de enrutamiento y repetirá un proceso similar para encontrar la MAC del siguiente salto o del destino final si está directamente conectado.
 
 **Importante: Diferenciar ARP/NDP de otros protocolos:**
 *   **ARP/NDP:** Descubren la dirección MAC asociada a una IP *dentro de la misma red local*.
 *   **NAT (Network Address Translation):** Traduce IPs privadas a públicas (y viceversa) en el router frontera, para comunicarse afuera red WAN.
-*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP y otra configuración de red a los hosts(dispositivos) para comunicarse en red interna LAN.
+*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN.
 *   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa (Bits en L1, Tramas en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
 ---
 
 ## Capa 4: Transporte – Comunicación Confiable o Rápida Extremo a Extremo
 
-*   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en hosts diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
+*   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
 *   **Equivalente TCP/IP:** Capa de Transporte.
 *   **PDU (Protocol Data Unit):** Segmentos (TCP), Datagramas (UDP).
 
@@ -339,19 +379,19 @@ Una combinación única de una **dirección IP y un número de puerto**. Identif
 
 ---
 
-## Capas 5, 6 y 7: Sesión, Presentación y Aplicación – La Interfaz con el Usuario y los Servicios de Red
+## Capas 5, 6 y 7: Sesión, Presentación y Aplicación – La interfaz *(API - Application Programming Interface)* con el Usuario y los Servicios de Red
 
 En el modelo TCP/IP, las funciones de las capas de Sesión, Presentación y Aplicación del modelo OSI se consolidan en una única **Capa de Aplicación**.
 
 *   **Capa 5 (Sesión OSI):**
-    *   **Función:** Establece, gestiona y finaliza las "conversaciones" (sesiones) entre aplicaciones en diferentes hosts. Mantiene el diálogo y sincroniza la comunicación.
+    *   **Función:** Establece, gestiona y finaliza las "conversaciones" (sesiones) entre aplicaciones en diferentes *dispositivos (hosts)*. Mantiene el diálogo y sincroniza la comunicación.
 *   **Capa 6 (Presentación OSI):**
     *   **Función:** Asegura que los datos intercambiados sean comprensibles para las aplicaciones. Se encarga de la sintaxis y semántica de la información, incluyendo:
         *   **Formato de Datos y Codificación de Caracteres:** (ej: ASCII, EBCDIC, Unicode).
         *   **Cifrado y Descifrado:** Para la seguridad (ej: SSL/TLS opera conceptualmente aquí, aunque su implementación a menudo se extiende a otras capas).
         *   **Compresión y Descompresión:** Para reducir el tamaño de los datos.
 *   **Capa 7 (Aplicación OSI) / Capa de Aplicación (TCP/IP):**
-    *   **Función:** Proporciona la interfaz directa entre las aplicaciones que usan los usuarios (o procesos de sistema) y los servicios de red subyacentes. Define los protocolos que las aplicaciones usan para intercambiar datos.
+    *   **Función:** Proporciona la interfaz *(API - Application Programming Interface)* directa entre las aplicaciones que usan los usuarios (o procesos de sistema) y los servicios de red subyacentes. Define los protocolos que las aplicaciones usan para intercambiar datos.
 *   **PDU (Protocol Data Unit) en estas capas:** Generalmente se refiere como "Datos" o "Mensaje".
 
 ### 🌐 Servicios y Protocolos de Aplicación Comunes
@@ -375,10 +415,10 @@ En el modelo TCP/IP, las funciones de las capas de Sesión, Presentación y Apli
 *   **HTML (Hypertext Markup Language):** No es un protocolo de comunicación, sino un lenguaje de marcado usado para estructurar y presentar contenido en páginas web (transferido usando HTTP/HTTPS).
 *   **VoIP (Voice over IP):** Familia de tecnologías y protocolos (como SIP, RTP) para transmitir voz sobre redes IP.
 *   **SMS (Short Message Service):** Aunque asociado a móviles, su infraestructura puede interactuar con redes IP.
-*   **PSTN (Public Switched Telephone Network):** La red telefónica tradicional. Gateways VoIP-PSTN permiten llamadas entre ambas.
+*   **PSTN (Public Switched Telephone Network):** La red telefónica tradicional. *Puerta de Enlace (Gateways)* VoIP-PSTN permiten llamadas entre ambas.
            
 ### ⚙️ Configuración de Direcciones IP: Estática vs. Dinámica (DHCP)
-Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servicio de aplicación para la configuración de hosts.
+Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servicio de aplicación para la configuración de *dispositivos (hosts)*.
 *   **Estática:** La dirección IP, máscara de subred, puerta de enlace predeterminada y servidores DNS se configuran manualmente en cada host.
     *   **Ventajas:** Control predecible (bueno para servidores, impresoras).
     *   **Desventajas:** Consume tiempo, propenso a errores de configuración, difícil de gestionar en redes grandes.
@@ -402,12 +442,12 @@ Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
 
 ---
 
-## Herramientas de Solución de Problemas de Red (CLI - Interfaz de Línea de Comandos)
+## Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)*
 
 Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas.
 
 ### `ipconfig` (Windows) / `ifconfig` o `ip addr` (Linux/macOS)
-Muestra la configuración basica IP del host (IP, máscara, gateway).
+Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (Gateway)*).
 *   `ipconfig /all` (Windows): Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease).
 *   `ipconfig /release` (libera la concesión DHCP actual).
 *   `ipconfig /renew` (solicita una nueva concesión DHCP).
