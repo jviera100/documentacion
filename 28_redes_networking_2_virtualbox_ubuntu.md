@@ -1,69 +1,41 @@
-# Pilares de una Red Confiable, Diseño Jerárquico y Virtualización con Linux
-
-Este documento combina los conceptos de diseño de redes confiables y la virtualización, demostrando cómo la instalación de Linux en una máquina virtual se alinea con los principios de escalabilidad y flexibilidad de la nube.
-
-## Pilares de una Red Confiable
-
-Una arquitectura de red confiable se basa en cuatro pilares fundamentales:
-
-*   **Tolerancia a Fallas:** Redundancia de rutas para asegurar la continuidad del servicio ante fallos.
-*   **Escalabilidad:** Capacidad de crecer y adaptarse a nuevas demandas sin degradar el rendimiento.
-*   **Calidad de Servicio (QoS):** Priorización del tráfico para garantizar una experiencia óptima, especialmente para aplicaciones en tiempo real.
-*   **Seguridad:** Protección de la infraestructura y los datos mediante confidencialidad, integridad y disponibilidad.
-
-## Diseño de Redes Jerárquico
-
-Para una gestión eficiente, las redes se estructuran jerárquicamente. Conceptos clave:
-
-*   **Direcciones Físicas (MAC) vs. Lógicas (IP):** La dirección MAC identifica un dispositivo de forma única, mientras que la IP define su ubicación lógica en la red. Las direcciones IP se componen de una parte de red y una parte de host.
-*   **Jerarquía para la Escalabilidad:** Dividir redes grandes en segmentos más pequeños facilita la administración y reduce el tráfico de difusión.
-*   **Modelo de Tres Capas de diseño de la red física/lógica:**
-    *   **Acceso:** Proporciona conectividad a los dispositivos finales.
-    *   **Distribución:** Controla el flujo de información entre las redes de acceso.
-    *   **Núcleo (Core):** Transporte de alta velocidad de grandes volúmenes de datos entre múltiples redes.
-
-## La Nube, la Virtualización y Linux en una Máquina Virtual
-
-Este módulo introduce el concepto de la nube y cómo la **virtualización** es su base fundamental. La virtualización permite crear múltiples entornos informáticos (máquinas virtuales) dentro de un solo equipo físico, optimizando el uso de recursos y ofreciendo flexibilidad.  **La instalación de Linux en una máquina virtual es una excelente manera de comprender y experimentar con los principios de la virtualización y la nube.**
-
-**Tipos de Nubes:**
-
-*   **Nubes Públicas:** Servicios accesibles al público general a través de Internet.
-*   **Nubes Privadas:** Servicios dedicados a una organización específica.
-*   **Nubes Híbridas:** Combinación de nubes públicas y privadas.
-*   **Nubes Comunitarias:** Servicios diseñados para las necesidades de un grupo específico (ej. salud).
-
-**Virtualización: La Base de la Nube**
-
-La virtualización es la tecnología que hace posible la computación en la nube a gran escala. Permite ejecutar múltiples sistemas operativos y aplicaciones de manera simultánea en un solo servidor físico, maximizando la eficiencia y reduciendo costos.
-
-**Ventajas de la Virtualización (Resumen):**
-
-*   Menor costo (menos hardware, energía y espacio).
-*   Prototipos rápidos.
-*   Aprovisionamiento de servidores más rápido.
-*   Mayor tiempo de actividad y recuperación ante desastres mejorada.
-*   Soporte para tecnologías antiguas.
-
-**Hipervisores: Los Administradores de Máquinas Virtuales**
-
-El **hipervisor (emulador)** es el software que gestiona las máquinas virtuales, asignando recursos de la computadora física (CPU, memoria, disco) a cada una. Hay dos tipos principales:
-
-*   **Tipo 1 (Bare Metal):** Se instala directamente sobre el hardware. Más eficiente, usado en servidores (ej. VMware ESXi, Microsoft Hyper-V Server).
-*   **Tipo 2 (Hosted):** Se instala sobre un sistema operativo existente (Windows, macOS, Linux). Más fácil de usar para usuarios finales (ej. VirtualBox, VMware Workstation Player).  **Usaremos un hipervisor de Tipo 2 (VirtualBox) en esta guía.**
-
 ## **Guía: Instalación de Linux (Ubuntu/Kali) en VirtualBox y exploración de la GUI**
 
-## Objetivos de la Práctica
+Este documento es una guía paso a paso para instalar un sistema operativo Linux (como Ubuntu o Kali) dentro de una **máquina virtual (VM)** utilizando **VirtualBox**. La virtualización es una tecnología fundamental que permite ejecutar múltiples sistemas operativos en un solo computador físico, facilitando entornos de desarrollo, prueba y aprendizaje flexibles y aislados. Si bien la virtualización es una piedra angular de la computación en la nube, esta guía se enfoca en su aplicación local.
 
-*   Preparar el entorno para virtualización.
-*   Instalar Linux (ej. Ubuntu/Kali) en una Máquina Virtual (VM) usando VirtualBox.
-*   Explorar la Interfaz Gráfica de Usuario (GUI) del Linux instalado.
-    *(Posteriormente se explorará la línea de comandos).*
+## ¿Qué es la Virtualización?
+La **virtualización** crea versiones simuladas (virtuales) de recursos informáticos, como un sistema operativo completo, dentro de tu máquina física. Esto se logra mediante un software especializado.
 
-## Contexto: Virtualización
+**Ventajas Clave de Usar VMs Localmente:**
+*   Probar software y sistemas operativos diferentes sin afectar tu PC principal (host).
+*   Crear entornos de desarrollo o prueba aislados y fácilmente reproducibles.
+*   Aprender sobre la administración de sistemas operativos y la configuración de software en un entorno seguro.
+*   Facilita la ejecución de aplicaciones que requieren un sistema operativo diferente al de tu máquina host.
 
-La virtualización permite ejecutar múltiples sistemas operativos ("guests" o invitados) en una única computadora física ("host"), aprovechando el aumento de poder computacional (CPU multinúcleo, RAM abundante). Cada "guest" opera como una "máquina virtual" independiente.
+## Hipervisores: Los Motores de la Virtualización
+El **hipervisor** (también conocido como Monitor de Máquina Virtual o VMM, y a veces coloquialmente "emulador" aunque técnicamente hay diferencias) es el software que crea, ejecuta y gestiona las máquinas virtuales. Es responsable de asignar los recursos del hardware físico (CPU, memoria RAM, espacio en disco, periféricos de red) a cada VM de manera controlada.
+
+Existen dos tipos principales de hipervisores:
+
+*   **Tipo 1 (Bare Metal o Nativo):**
+    *   Se instala y ejecuta directamente sobre el hardware físico del computador, actuando como el propio sistema operativo base.
+    *   Son altamente eficientes y ofrecen el mejor rendimiento.
+    *   Comúnmente usados en entornos de servidor y centros de datos.
+    *   Ejemplos: VMware ESXi, Microsoft Hyper-V Server, KVM (integrado en Linux), Xen.
+
+*   **Tipo 2 (Hosted o Alojado):**
+    *   Se instala y ejecuta como una aplicación más sobre un sistema operativo ya existente (el "sistema operativo host", ej: Windows, macOS, Linux).
+    *   Son más fáciles de instalar y usar para usuarios finales y para propósitos de escritorio o desarrollo.
+    *   **En esta guía utilizaremos VirtualBox, un popular hipervisor de Tipo 2, gratuito y multiplataforma.**
+    *   Otros ejemplos: VMware Workstation Player/Pro, Parallels Desktop (para macOS).
+
+## Objetivos de esta Guía Práctica
+*   Descargar e instalar VirtualBox y una imagen ISO de Linux.
+*   Crear y configurar una nueva Máquina Virtual.
+*   Instalar Linux (Ubuntu o Kali Linux como ejemplos) en la VM.
+*   Instalar las VirtualBox Guest Additions para mejorar la usabilidad e integración.
+*   Dar un primer vistazo a la interfaz gráfica del Linux instalado.
+
+*(Esta guía se enfoca en la instalación y configuración inicial. La exploración avanzada de la línea de comandos (CLI) de Linux es un paso posterior).*
 
 **Recursos:**
 *   PC con ≥2GB RAM, ≥10-25GB disco libre.
