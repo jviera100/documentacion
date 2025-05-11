@@ -139,19 +139,16 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
     *   **El Rol del Protocolo IP dentro de la Trama:** Mientras la Trama Ethernet (con direcciones MAC) se encarga de la entrega local, el paquete IP (contenido en el campo "Datos" de la trama) lleva las direcciones IP de origen y destino finales, que son usadas por los routers para el envío a través de múltiples redes (internetworking) hasta el destino final.
 
-### 📡 Dispositivos de Capa 2
+### 📡 Dispositivos Primarios de Capa 2
 *   **Switches (Conmutadores):**
-    *   Propagan difusiones a *todas* las interfaces excepto la que recibió la difusión.
-    *   Toman decisiones de reenvío basadas en direcciones MAC.
-    *   Aprenden las MAC de los dispositivos conectados a cada puerto y las almacenan en una **tabla MAC**.
-    *   Segmentan dominios de colisión (cada puerto es un dominio de colisión).
-    *   Por defecto, un switch es un único **dominio de difusión** (broadcasts se reenvían a todos los puertos excepto el de origen).
+    *   Toman decisiones de reenvío inteligentes basadas en direcciones MAC destino de las tramas.
+    *   Crean una **tabla MAC** (o tabla CAM) que mapea direcciones MAC a puertos del switch.
+    *   Cada puerto del switch es un **dominio de colisión** separado, reduciendo colisiones.
+    *   Por defecto, un switch forma un único **dominio de difusión** (los broadcasts se inundan a todos los puertos excepto el de origen).
+*   **Puntos de Acceso Inalámbricos (WAP o AP - Wireless Access Point):** Permiten a dispositivos Wi-Fi conectarse a una red cableada. Actúan como un bridge entre el medio inalámbrico y el cableado.
 *   **Bridges (Puentes):** Predecesores de los switches, conectaban segmentos de red. Menos eficientes.
 *   **Routers:** Conectan la LAN con otras redes (como Internet) y enrutan el tráfico entre ellas. Un tipo avanzado es el ISR (Integrated Services Router), que incorpora funciones adicionales como seguridad (firewall, VPN) y voz (VoIP). *No* propagan difusiones, limitando el dominio.
 *   **Cables y Tarjetas de Red (NIC):** Permiten la conexión física de los dispositivos a la LAN mediante Ethernet o fibra óptica.
-*   **Puntos de Acceso Inalámbricos (WAP o AP - Wireless Access Point):** Conectan dispositivos inalámbricos a una red cableada, operando en Capa 2 (y Capa 1).
-
-Para mejorar la eficiencia y organización dentro de una LAN, se utilizan **VLANs (Redes Locales Virtuales)**, que segmentan la red de forma lógica, permitiendo agrupar dispositivos en distintas redes independientes dentro de un mismo switch físico.
 
 ### 🌐 Tipos de Redes por Alcance (Predominantemente Capa 1 y 2)
 
@@ -164,112 +161,71 @@ Para mejorar la eficiencia y organización dentro de una LAN, se utilizan **VLAN
 
 *   **W** delante de PAN, LAN, MAN, WAN (ej. **WLAN**) indica que la tecnología principal es inalámbrica (Wireless).
 *   *(WMAN, WWAN son las versiones inalámbricas, usan tecnologías como WiMAX, 4G/5G).*
+*   *(MAN y WAN implican principalmente enrutamiento de Capa 3, aunque usan tecnologías de Capa 1 y 2 para los enlaces).*
 
+### 🔪 Segmentación en Capa 2: VLANs y Dominios de Difusión
+*   **Dominio de Difusión:** Área de una red donde un broadcast enviado por un dispositivo es recibido por todos los demás. Los switches, por defecto, crean un solo dominio de difusión.
+*   **Problemas con Dominios de Difusión Grandes:** Excesivo tráfico de broadcast puede ralentizar la red.
+*   **VLANs (Virtual LANs):** Permiten segmentar lógicamente una red física (un switch) en múltiples dominios de difusión independientes.
+    *   El tráfico entre VLANs diferentes requiere un dispositivo de Capa 3 (router o switch multicapa) para ser enrutado.
+    *   Mejoran la seguridad, organización y gestión del tráfico.
 
-### 🔪 Segmentación en Capa 2: VLANs (Virtual LANs)
-Permiten segmentar lógicamente una red física (un switch) en múltiples redes de broadcast independientes.
-*   Dispositivos en diferentes VLANs no pueden comunicarse directamente sin un dispositivo de Capa 3 (router o switch multicapa).
-*   Mejora la seguridad, organización y gestión del tráfico, Solución: Subredes.
-
-### 🗣️ Comunicación en Capa 2: Unicast, Multicast, Broadcast
-*   **Unicast:** Trama dirigida a una única dirección MAC destino.
-*   **Multicast:** Trama dirigida a un grupo de direcciones MAC.
-*   **Broadcast:** Trama dirigida a todas las direcciones MAC en el dominio de difusión (MAC Destino: `FF:FF:FF:FF:FF:FF`).
-
-El tráfico de datos en una red se clasifica en:
-
-| Tipo       | Significado                     | ¿A quién va dirigido?                      | Ejemplo común                                    |
-| :--------- | :------------------------------ | :----------------------------------------- | :----------------------------------------------- |
-| Unicast    | "Uno a uno"                     | A un solo receptor específico              | Enviar un correo a una persona                   |
-| Broadcast  | "Uno a todos"                   | A todos los dispositivos de la red local   | DHCP al encender el PC, ARP Request              |
-| Multicast  | "Uno a muchos (grupo específico)" | A varios receptores que se unieron a un grupo | IPTV, videoconferencia en LAN, juegos online       |
-| Anycast    | "Uno al más cercano (entre varios)"| A uno solo, pero el más cercano geográficamente | Servidores DNS raíz, CDNs (Content Delivery Networks) |
-| Geocast    | "Uno a una zona geográfica"     | A dispositivos dentro de una ubicación     | Alertas de emergencia localizadas, redes vehiculares |
-| Narrowcast | "Uno a pocos seleccionados"     | A un público muy específico (más en medios) | Publicidad dirigida, TV de pago específica         |
-
+### 🗣️ Tipos de Comunicación (Direccionamiento) en Capa 2
+| Tipo       | Dirigido a...                              | MAC Destino Ejemplo            |
+|------------|--------------------------------------------|--------------------------------|
+| **Unicast**  | Una única NIC específica en la LAN.        | `00:1A:2B:3C:4D:5E`            |
+| **Multicast**| Un grupo de NICs en la LAN.                | `01:00:5E:xx:xx:xx` (para IPv4 multicast) |
+| **Broadcast**| Todas las NICs en el dominio de difusión.  | `FF:FF:FF:FF:FF:FF`            |
 
 ---
+*(Los routers NO reenvían broadcasts por defecto).*
 
 ## Capa 3: Red – Direccionamiento Lógico y Enrutamiento Global
 
-*   **Función Principal (OSI):** Proporcionar direccionamiento lógico (IP) y determinar la mejor ruta (enrutamiento) para los paquetes de datos a través de múltiples redes interconectadas (internetworking).
+*   **Función Principal (OSI):** Proporcionar direccionamiento lógico único (principalmente **IP - Internet Protocol**) a los dispositivos en la internetwork y determinar la mejor ruta (**enrutamiento**) para los **paquetes** de datos a través de múltiples redes interconectadas.
 *   **Equivalente TCP/IP:** Capa de Internet.
 *   **PDU (Protocol Data Unit):** Paquetes.
 
-### 📍 Direccionamiento Lógico: Protocolo IP (Internet Protocol)
-Principal protocolo de Capa 3. Proporciona un esquema de direccionamiento jerárquico y sin conexión ("mejor esfuerzo").
-
-#### Dirección IPv4 de 32 bits
-Una dirección IPv4 es necesaria para que un host pueda comunicarse en Internet y en redes LAN. Es una dirección lógica que debe ser única y configurarse correctamente tanto a nivel local como remoto para permitir la comunicación.
-
-Cada interfaz de red (como una tarjeta NIC) en un dispositivo final, como PC, servidores, impresoras de red o teléfonos IP, requiere una dirección IPv4. Los enrutadores también tienen direcciones IPv4 en sus interfaces para conectarse a redes IP.
-
-Cada paquete enviado en Internet incluye una dirección IPv4 de origen y destino, lo que garantiza que los datos lleguen al destino correcto y las respuestas sean enviadas al origen.
-*   Dirección lógica de 32 bits, única dentro de su red, necesaria para la comunicación, se convierten de binario a formato decimal para facilitar lectura.
-*   **Formato:** 4 octetos (bloques de 8 bits) en notación decimal separada por puntos.
-    **Ejemplo:**
-- Binario: `11010001101001011100100000000001`
-- Octetos: `11010001.10100101.11001000.00000001`
-- Decimal con puntos: `209.165.200.1`
-*   Cada paquete IP incluye IP de origen e IP de destino.
+### 📍 Direccionamiento IP (capa 3)
+#### Dirección IPv4 (32 bits)
+*   Dirección lógica, agrupada en cuatro octetos (bloques de 8 bits), usualmente representada en notación decimal separada por puntos.
+*   **Ejemplo:** 
+*   - Binario: `11010001101001011100100000000001`
+*   - Octetos: `11010001.10100101.11001000.00000001`
+*   - Decimal con puntos: `209.165.200.1`
+*   Cada paquete IP contiene una dirección IP de origen y una de destino.
 
 #### 🔍 Máscara de Subred (IPv4)
-
-**Concepto Clave:**  IP = RED + HOST. La MÁSCARA define la división.
-
-**Los Dos Trucos:**
-
-1.  **Máscara -> IP: Coordenadas RED/HOST:**
-    *   `255` en la máscara: El número correspondiente en la IP es RED.
-    *   `0` en la máscara: El número correspondiente en la IP es HOST.
-2.  **Calcular la Dirección de RED:**
-    *   Toma la parte de RED de la IP.
-    *   Redondea a cero la parte del HOST.  Ej: si el HOST era .50, ahora es .0
-
-**Ejemplo Rápido:**
-
-*   IP: `192.168.1.50`
-*   Máscara: `255.255.255.0`
-*   RED: `192.168.1`
-*   Dirección de RED: `192.168.1.0`
-
-**Misma Red?** Compara las Direcciones de RED. Si coinciden, ¡están en la misma red!
-
-Indica qué parte de la IP identifica la **RED** y qué parte al **HOST**.
-*   **IP = Porción de RED + Porción de HOST**
-*   **Cálculo Dirección de Red:**
-    1.  Identifica la porción de RED (donde la máscara tiene bits en 1, o `255` en decimal).
-    2.  Pon a cero la porción de HOST (donde la máscara tiene bits en 0, o `0` en decimal).
-*   **Ejemplo:**
-    *   IP: `192.168.1.50`, Máscara: `255.255.255.0`
-    *   Dirección de RED: `192.168.1.0`
-*   Dispositivos con la misma dirección de RED están en la misma subred.
-
-#### 🗣️ Comunicación IPv4: Unicast, Broadcast, Multicast
-
-| Tipo       | Significado                     | Dirigido a...                              | Dirección IP Destino Ejemplo                 |
-| :--------- | :------------------------------ | :----------------------------------------- | :------------------------------------------- |
-| **Unicast**  | "Uno a uno"                     | Un único host específico.                  | `192.168.1.50`                               |
-| **Broadcast**| "Uno a todos (en la subred)"    | Todos los hosts en la *misma subred*.      | `192.168.1.255` (si red es /24), `255.255.255.255` (limitada) |
-| **Multicast**| "Uno a muchos (grupo)"          | Un grupo de hosts suscritos.               | `224.0.0.5` (para OSPF)                      |
-
-*(Los routers NO reenvían broadcasts por defecto).*
+Define qué parte de la dirección IP identifica la **RED** y qué parte identifica al **HOST** dentro de esa red.
+*   **Concepto:** IP = Porción de RED + Porción de HOST.
+*   **Identificación:**
+    *   `255` en un octeto de la máscara -> octeto correspondiente en la IP es parte de la RED.
+    *   `0` en un octeto de la máscara -> octeto correspondiente en la IP es parte del HOST.
+*   **Cálculo Dirección de RED:** Tomar la porción de RED de la IP y poner a cero la porción de HOST.
+     *   **Ejemplo Rápido:**
+     *   IP: `192.168.1.50`
+     *   Máscara: `255.255.255.0`
+     *   RED: `192.168.1`
+     *   Dirección de RED: `192.168.1.0`
+*   Dispositivos en la misma Dirección de RED pertenecen a la misma subred.
 
 #### 🏡 Direcciones IPv4 Públicas vs. Privadas
 *   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs.
-*   **Privadas:** Para uso en redes internas (LANs). No enrutables en Internet.
-    *   Rangos: `10.0.0.0/8`, `172.16.0.0/12` (172.16.x.x - 172.31.x.x), `192.168.0.0/16`.
-*   **NAT (Network Address Translation):** Proceso (usualmente en routers) que traduce IPs privadas a una IP pública para acceder a Internet.
+*   **Privadas:** Para uso en redes internas (LANs). No son enrutables directamente en Internet.
+    *   **Rangos Privados RFC 1918:**
+        *   `10.0.0.0` a `10.255.255.255` (`10.0.0.0/8`)
+        *   `172.16.0.0` a `172.31.255.255` (`172.16.0.0/12`)
+        *   `192.168.0.0` a `192.168.255.255` (`192.168.0.0/16`)
+*   **NAT (Network Address Translation):** Proceso, usualmente en routers, que traduce direcciones IP privadas a una (o varias) dirección IP pública para permitir el acceso a Internet.
 
 #### ⚙️ Direcciones IPv4 Especiales
-*   **Loopback:** `127.0.0.0/8` (ej: `127.0.0.1`). Para probar la pila TCP/IP local.
-*   **Link-Local (APIPA - Automatic Private IP Addressing):** `169.254.0.0/16`. Autoasignada por Windows si no hay DHCP.
-*   **Experimental:** `240.0.0.0` a `255.255.255.254`. Para investigación.
-*   **Multidifusión (224.0.0.0 - 239.255.255.255):** Envío a un grupo específico de hosts. *Comienza con 224 a 239* (ej: 224.0.0.5).
-*   **Unidifusión y Difusión:** No tienen rangos específicos fijos. Las de unidifusión son todas las IPs que *no* son privadas, loopback, APIPA, experimentales o multidifusión. Las de difusión dependen de la máscara de subred.
+*   **Loopback:** `127.0.0.0/8` (comúnmente `127.0.0.1`). Se usa para probar la pila TCP/IP del propio host.
+*   **Link-Local (APIPA - Automatic Private IP Addressing):** `169.254.0.0/16`. Autoasignada por sistemas operativos (como Windows) si no se puede obtener una dirección IP de un servidor DHCP. Permite comunicación limitada en la red local.
+*   **Experimental (TEST-NET):** `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24` (reservadas para documentación y ejemplos).
+*   **Direcciones Reservadas (IANA):** Incluye rangos para multidifusión (`224.0.0.0/4`), futuro uso (`240.0.0.0/4`).
 
 #### 📜 Clases de Direcciones IPv4 (Histórico)
-Reemplazado por **CIDR (Classless Inter-Domain Routing)** para mayor flexibilidad.
+Sistema original de asignación, obsoleto y reemplazado por **CIDR (Classless Inter-Domain Routing)** que permite máscaras de subred de longitud variable (VLSM) para un uso más eficiente del espacio de direcciones.
 
 | Clase | Rango de IP                         | Prefijo CIDR | Nº Hosts aprox. | Uso Principal                             |
 |-------|-------------------------------------|--------------|------------------|-------------------------------------------|
@@ -280,79 +236,80 @@ Reemplazado por **CIDR (Classless Inter-Domain Routing)** para mayor flexibilida
 | E     | 240.0.0.0 – 255.255.255.255         | —            | —                | Reservado para pruebas/experimentos       |
 
 #### 🌐 Asignación de Direcciones IP
-*   **IANA (Internet Assigned Numbers Authority)** -> da bloques de IPs a los **RIRs (Regional Internet Registries)** (LACNIC, ARIN, etc.) -> quienes las asignan a los **ISPs (Internet Service Providers)** -> Usuarios finales.
+Jerarquía global:
+*   **IANA (Internet Assigned Numbers Authority)** -> da bloques de IPs a los **RIRs (Regional Internet Registries)** (LACNIC, ARIN, etc.) -> quienes las asignan a los **ISPs (Internet Service Providers)** y grandes organizaciones → Usuarios finales.
     
     **Los cinco RIRs son:**
-
     *   **AfriNIC:** Para África.
     *   **APNIC:** Para Asia-Pacífico.
     *   **ARIN:** Para Norteamérica.
     *   **LACNIC:** Para Latinoamérica y el Caribe.
     *   **RIPE NCC:** Para Europa, Oriente Medio y partes de Asia Central.
 
-#### 🚀 Dirección IPv6
-*   128 bits, formato hexadecimal (8 hextetos separados por `: `). Ej: `2001:0db8:85a3:0000:0000:8a2e:0370:7334`.
-*   **Abreviación:**
-    1.  Omitir ceros iniciales en cada hexteto (`0db8` -> `db8`, `0000` -> `0`).
-    2.  Reemplazar *una única* secuencia contigua de hextetos de ceros con `::`.
-        *   `2001:0db8:0000:0000:0000:0000:0000:0001` -> `2001:db8::1`
+#### 🚀 Dirección IPv6 (128 bits)
+Diseñada para suceder a IPv4 debido al agotamiento de direcciones.
+*   **Formato:** 8 grupos (hextetos) de 4 dígitos hexadecimales, separados por dos puntos (`:`).
+    *   Ej: `2001:0db8:85a3:0000:0000:8a2e:0370:7334`
+*   **Reglas de Abreviación:**
+    1.  **Omitir Ceros Iniciales:** En cualquier hexteto, los ceros a la izquierda se pueden omitir (ej: `0db8` → `db8`; `000a` → `a`). Un hexteto de `0000` se puede escribir como `0`.
+    2.  **Comprimir Secuencia de Ceros:** Una *única* secuencia contigua de hextetos que sean todos cero puede reemplazarse por dos puntos dobles (`::`). *Esta regla solo puede aplicarse una vez por dirección*.
+        *   Ej: `2001:0db8:0000:0000:0000:ff00:0042:8329` → `2001:db8::ff00:42:8329`
 
 ### ⚙️ Dispositivos de Capa 3: Routers (Enrutadores)
-*   Conectan diferentes redes (subredes).
-*   Toman decisiones de reenvío (enrutamiento) basadas en direcciones IP de destino.
-*   Utilizan una **tabla de enrutamiento** para determinar la mejor ruta manual o automaticamente.
-*   Cada interfaz de un router está en una red diferente y limita dominios de difusión.
-*   **Componentes Internos Router:** CPU, RAM (tabla de enrutamiento, config. activa), Memoria Flash (IOS), NVRAM (config. de inicio), Interfaces y Fuente de Alimentación.
-*   **ISR (Integrated Services Router):** Router con funciones adicionales (firewall, VPN).
+*   Función principal: Conectar diferentes redes (subredes) y tomar decisiones de **enrutamiento** para reenviar paquetes entre ellas basándose en la dirección IP de destino.
+*   Cada interfaz de un router pertenece a una red IP diferente y, por lo tanto, a un dominio de difusión diferente. **Los routers no propagan broadcasts por defecto.**
+*   **Componentes Internos Clave:**
+    *   **CPU:** Ejecuta el sistema operativo y los procesos de enrutamiento.
+    *   **RAM:** Almacena la tabla de enrutamiento activa, la configuración en ejecución (running-config), colas de paquetes. Es volátil.
+    *   **Memoria Flash:** Almacena la imagen del sistema operativo (ej: IOS en Cisco). Es no volátil.
+    *   **NVRAM (Non-Volatile RAM):** Almacena la configuración de inicio (startup-config). Es no volátil.
+    *   **Interfaces:** Puertos físicos (Ethernet, Serial, etc.) para conectar a diferentes redes.
+    *   **Fuente de Alimentación.**
+*   **ISR (Integrated Services Router):** Router que combina funciones de enrutamiento con otros servicios como firewall, VPN, telefonía IP.
 
 ### 🗺️ Tabla de Enrutamiento
-*   **Contenido:** Redes de destino, interfaz de salida, IP del siguiente salto, métrica.
-*   **Fuentes:** Redes conectadas directamente, rutas estáticas (manuales), rutas dinámicas (protocolos de enrutamiento como RIP, OSPF, EIGRP).
-*   **Ruta Predeterminada (Gateway of Last Resort):** `0.0.0.0/0`. Usada si no hay ruta específica. El host envía paquetes a redes externas a través de su **Puerta de Enlace Predeterminada (Default Gateway)** (la IP del router en su LAN).
+Base de datos que el router consulta para decidir cómo reenviar un paquete.
+*   **Contenido por entrada:**
+    *   Red de destino y máscara de subred.
+    *   Dirección IP del siguiente salto (el próximo router en la ruta) o la interfaz de salida directa si la red está conectada directamente.
+    *   Métrica (un valor que indica la "preferencia" o "costo" de la ruta).
+*   **Población de la Tabla:**
+    *   **Redes Conectadas Directamente(fisicamente):** Agregadas automáticamente a la tabla cuando una interfaz(NIC) del router es configurada con una dirección IP y está activa. El router sabe que puede alcanzar cualquier host en estas redes sin necesidad de otro router.
+    *   **Rutas Estáticas:** Configuradas manualmente por un administrador.
+    *   **Rutas Dinámicas:** Aprendidas a través de protocolos de enrutamiento (ej: RIP, EIGRP, OSPF, BGP) que intercambian información de enrutamiento con otros routers.
+*   **Ruta Predeterminada (Gateway of Last Resort):** Una ruta especial (a menudo `0.0.0.0/0`) que se usa si no existe una coincidencia más específica en la tabla para la red de destino. Dirige el tráfico hacia un router que tiene más conocimiento de la red (ej: el router del ISP).
+*   **Puerta de Enlace Predeterminada (Default Gateway):** En un host, es la dirección IP de la interfaz del router en su LAN a la que el host enviará todo el tráfico destinado a redes externas.
 
-### 🏢 Diseño de Red Jerárquico (Enrutamiento entre capas)
-Modelo para redes grandes que usa switches y routers en niveles:
-*   **Núcleo (Core):** Enrutamiento de alta velocidad entre áreas de distribución.
-*   **Distribución:** Agrega tráfico de acceso, aplica políticas, enruta entre VLANs.
-*   **Acceso:** Conecta dispositivos finales, segmenta con VLANs.
+### 🏢 Diseño de Red Jerárquico
+Modelo común para redes empresariales, usando switches y routers en capas para escalabilidad y eficiencia.
+*   **Capa de Núcleo (Core):** Switches/routers de alta velocidad para transportar tráfico rápidamente entre diferentes partes de la red (ej: entre edificios o capas de distribución). Enfocada en velocidad y redundancia.
+*   **Capa de Distribución:** Punto de agregación para las capas de acceso. Implementa políticas de red, enrutamiento entre VLANs, QoS, y conecta al núcleo.
+*   **Capa de Acceso:** Donde los dispositivos finales (usuarios, impresoras) se conectan a la red, usualmente mediante switches de acceso que proporcionan conectividad y pueden implementar VLANs.
 
+### 🤝 Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2)
+Cuando un dispositivo necesita enviar un paquete:
+1.  **Destino en la misma red local:**
+    *   El dispositivo conoce la IP de destino. Necesita la dirección MAC de destino para crear la trama de Capa 2.
+    *   Usa **ARP (Address Resolution Protocol)** para IPv4 o **NDP (Neighbor Discovery Protocol)** para IPv6.
+    *   **Proceso ARP:**
+        1.  **ARP Request (Broadcast):** El emisor envía un mensaje a toda la LAN: "¿Quién tiene la dirección IP [IP_Destino]? Por favor, envíame tu dirección MAC." (MAC destino de la trama: `FF:FF:FF:FF:FF:FF`).
+        2.  **ARP Reply (Unicast):** El dispositivo con [IP_Destino] responde directamente al emisor: "Yo tengo [IP_Destino], mi dirección MAC es [MAC_Destino]."
+        3.  El emisor almacena esta correspondencia IP-MAC en su **tabla ARP (o caché ARP)** para uso futuro.
+2.  **Destino en una red remota:**
+    *   El dispositivo envía el paquete a la dirección MAC de su **Puerta de Enlace Predeterminada (Default Gateway)** (el router local).
+    *   El router, al recibir el paquete, consultará su tabla de enrutamiento y repetirá un proceso similar para encontrar la MAC del siguiente salto o del destino final si está directamente conectado.
 
+**Importante: Diferenciar ARP/NDP de otros protocolos:**
+*   **ARP/NDP:** Descubren la dirección MAC asociada a una IP *dentro de la misma red local*.
+*   **NAT (Network Address Translation):** Traduce IPs privadas a públicas (y viceversa) en el router frontera, para comunicarse afuera red WAN.
+*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP y otra configuración de red a los hosts(dispositivos) para comunicarse en red interna LAN.
+*   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa (Bits en L1, Tramas en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
-### 🤝 Resolución de Direcciones IP a MAC (Interacción L3-L2)
-Para enviar un paquete a un host en la *misma red local*, se necesita su dirección MAC.
-*   **ARP (Address Resolution Protocol) - para IPv4:**
-*   Preguntando por la MAC (el "Nombre") conociendo la IP (el "Apellido")**
-*   Si un dispositivo (Host A) quiere enviar un mensaje *directamente* a otro (Host B) en la LAN, necesita la dirección MAC de Host B. ARP permite a Host A encontrar la MAC de Host B conociendo su IP.
-
-*   **El Proceso ARP: Preguntar, Escuchar, Recordar**
-
-    1.  **ARP Request:** Host A *difunde* una pregunta: "¿Quién tiene la IP X.X.X.X (Host B)?". La dirección MAC destino es `FF-FF-FF-FF-FF-FF` (difusión).
-
-    2.  **ARP Reply:** *Solo* Host B responde *directamente* a Host A con su dirección MAC.
-
-    3.  **Tabla ARP:** Host A guarda la IP y la MAC de Host B en su tabla ARP para uso futuro.
-
-**En resumen:** Las difusiones permiten que todos se encuentren, pero ARP ayuda a los dispositivos a encontrar a alguien específico (su MAC), y los enrutadores limitan el alcance de las difusiones para evitar la congestión.
-
-    1.  Host A quiere enviar a IP_B (en misma LAN).
-    2.  Host A envía ARP Request (broadcast): "¿Quién tiene IP_B? Dime tu MAC."
-    3.  Host B responde con ARP Reply (unicast): "Soy IP_B, mi MAC es MAC_B."
-    4.  Host A guarda `IP_B -> MAC_B` en su tabla ARP.
-*   **NDP (Neighbor Discovery Protocol) - para IPv6:**
-    *   Funciones similares a ARP (Neighbor Solicitation/Advertisement).
-    *   También para autoconfiguración de direcciones, detección de routers, etc.
-*   Si el destino está en una *red remota*, el host A envía el paquete a la MAC de su **Default Gateway (router)**. El router se encargará de encontrar la siguiente MAC en la ruta.
-    no confundirse entre estos conceptos:
-    *   **NAT (Network Address Translation)** permite que multiples dispositivos compartan una dirección IP pública para acceder a Internet.
-    *   **DHCP (Dynamic Host Configuration Protocol)** Asigna automáticamente direcciones IP y otros parámetros de red a los dispositivos cuando se conectan a la red.
-    *   **PDUs (Protocol Data Units):** Una PDU es simplemente un "paquete" de datos que se envía a través de la red, y la visualización de PDUs en Packet Tracer es una simplificación para fines didácticos.
-
-    ARP/ND son para *descubrir la dirección MAC asociada a una dirección IP dentro de la red local*.
 ---
 
 ## Capa 4: Transporte – Comunicación Confiable o Rápida Extremo a Extremo
 
-*   **Función Principal (OSI):** Proporciona comunicación lógica directa entre procesos de aplicación en diferentes hosts. Segmentación de datos, control de flujo, fiabilidad (TCP) o rapidez (UDP).
+*   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en hosts diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
 *   **Equivalente TCP/IP:** Capa de Transporte.
 *   **PDU (Protocol Data Unit):** Segmentos (TCP), Datagramas (UDP).
 
@@ -367,122 +324,146 @@ Para enviar un paquete a un host en la *misma red local*, se necesita su direcci
 | **Uso Típico**   | Web (HTTP/S), Email (SMTP), FTP, SSH    | Streaming (video/voz), DNS, DHCP, TFTP  |
 
 ### 🔢 Números de Puerto
-Identifican la aplicación o servicio específico en un host. Usados por TCP y UDP.
-*   **Puerto de Origen:** Elegido dinámicamente por el cliente (>1023) para identificar la conversación.
-*   **Puerto de Destino:** Indica el servicio solicitado en el servidor.
-*   **Rangos (administrados por IANA):**
-    *   **Conocidos (0-1023):** Servicios estándar (HTTP:80, HTTPS:443, FTP:21, SMTP:25, DNS:53).
-    *   **Registrados (1024-49151):** Para aplicaciones específicas.
-    *   **Dinámicos/Privados/Efímeros (49152-65535):** Puertos de origen temporales.
+Identificadores de 16 bits (0-65535) usados por TCP y UDP para diferenciar entre múltiples aplicaciones o procesos que se ejecutan en un host.
+*   **Puerto de Origen:** Elegido dinámicamente por el host cliente (generalmente un número alto, >1023) para identificar de forma única su lado de la conversación.
+*   **Puerto de Destino:** Usado por el cliente para indicar el servicio específico solicitado en el servidor (ej: puerto 80 para HTTP).
+*   **Rangos de Puertos (administrados por IANA):**
+    *   **Puertos Bien Conocidos (Well-Known Ports: 0-1023):** Reservados para servicios y aplicaciones estándar (HTTP: 80, HTTPS: 443, FTP: 21, SMTP: 25, DNS: 53).
+    *   **Puertos Registrados (Registered Ports: 1024-49151):** Pueden ser registrados por desarrolladores de software para aplicaciones específicas.
+    *   **Puertos Dinámicos/Privados/Efímeros (Dynamic/Private/Ephemeral Ports: 49152-65535):** Usados típicamente como puertos de origen temporales por los clientes.
 
 ### 🔌 Sockets
-Combinación de una dirección IP y un número de puerto (ej., `192.168.1.100:80`). Identifica un extremo de una comunicación de forma única.
+Una combinación única de una **dirección IP y un número de puerto**. Identifica un extremo de una conexión de red.
+*   Ejemplo: `192.168.1.100:49152` (IP del cliente y su puerto de origen efímero) conectándose a `203.0.113.10:80` (IP del servidor web y su puerto de destino HTTP).
+*   Permiten que un servidor maneje múltiples conexiones de clientes simultáneamente, incluso al mismo servicio, porque cada socket (combinación IP_origen:Puerto_origen + IP_destino:Puerto_destino) es único.
 
 ---
 
-## Capas 5, 6 y 7: Sesión, Presentación y Aplicación – La Interfaz con el Usuario
+## Capas 5, 6 y 7: Sesión, Presentación y Aplicación – La Interfaz con el Usuario y los Servicios de Red
 
-*   **Función Principal (OSI):**
-    *   **Capa 5 (Sesión):** Establece, gestiona y finaliza las conexiones (sesiones) entre aplicaciones.
-    *   **Capa 6 (Presentación):** Da formato a los datos (codificación, cifrado, compresión) para que sean entendibles por la aplicación.
-    *   **Capa 7 (Aplicación):** Proporciona la interfaz para que las aplicaciones de red interactúen con el usuario y ofrezcan servicios.
-*   **Equivalente TCP/IP:** Capa de Aplicación (engloba las funciones de las capas 5, 6 y 7 de OSI).
-*   **PDU (Protocol Data Unit):** Datos.
+En el modelo TCP/IP, las funciones de las capas de Sesión, Presentación y Aplicación del modelo OSI se consolidan en una única **Capa de Aplicación**.
+
+*   **Capa 5 (Sesión OSI):**
+    *   **Función:** Establece, gestiona y finaliza las "conversaciones" (sesiones) entre aplicaciones en diferentes hosts. Mantiene el diálogo y sincroniza la comunicación.
+*   **Capa 6 (Presentación OSI):**
+    *   **Función:** Asegura que los datos intercambiados sean comprensibles para las aplicaciones. Se encarga de la sintaxis y semántica de la información, incluyendo:
+        *   **Formato de Datos y Codificación de Caracteres:** (ej: ASCII, EBCDIC, Unicode).
+        *   **Cifrado y Descifrado:** Para la seguridad (ej: SSL/TLS opera conceptualmente aquí, aunque su implementación a menudo se extiende a otras capas).
+        *   **Compresión y Descompresión:** Para reducir el tamaño de los datos.
+*   **Capa 7 (Aplicación OSI) / Capa de Aplicación (TCP/IP):**
+    *   **Función:** Proporciona la interfaz directa entre las aplicaciones que usan los usuarios (o procesos de sistema) y los servicios de red subyacentes. Define los protocolos que las aplicaciones usan para intercambiar datos.
+*   **PDU (Protocol Data Unit) en estas capas:** Generalmente se refiere como "Datos" o "Mensaje".
 
 ### 🌐 Servicios y Protocolos de Aplicación Comunes
 
-| Protocolo | Puerto(s) | Transporte | Descripción                                               |
-| :-------- | :-------- | :--------- | :-------------------------------------------------------- |
-| **DNS (Domain Name System)**   | 53        | UDP, TCP   | Resuelve nombres de dominio a IP.                         |
-| **HTTP (Hypertext Transfer Protocol)**  | 80        | TCP        | Transferencia de hipertexto (páginas web).                 |
-| **HTML (Hypertext Markup Language)** | N/A (formato) | N/A       | Lenguaje para crear páginas web.                          |
-| **HTTPS (HTTP Secure)** | 443       | TCP        | HTTP seguro (cifrado con TLS/SSL).                       |
-| **FTP (File Transfer Protocol)**   | 20 (datos), 21 (control) | TCP   | Transferencia de archivos.                              |
-| **TFTP (Trivial FTP)**  | 69        | UDP        | Transferencia simple de archivos (sin autenticación).      |
-| **SMTP (Simple Mail Transfer Protocol)**  | 25        | TCP        | Envío de correo electrónico.                              |
-| **POP3 (Post Office Protocol v3)**  | 110       | TCP        | Recepción de correo (descarga al cliente).                |
-| **IMAP (Internet Message Access Protocol)**  | 143       | TCP        | Recepción de correo (mantiene en servidor).               |
-| **Telnet**| 23        | TCP        | Acceso remoto a terminal (inseguro, texto plano).         |
-| **SSH (Secure Shell)**   | 22        | TCP        | Acceso remoto a terminal seguro (cifrado).                |
-| **DHCP (Dynamic Host Configuration Protocol)**  | 67 (servidor), 68 (cliente) | UDP | Asignación automática de configuración IP.            |
-definiciones de la tabla:
-*   **HTTP (Hypertext Transfer Protocol):** Protocolo de transferencia de hipertexto para solicitar servicios web utilizando la dirección IP y el puerto 80.
-*   **HTML (Hypertext Markup Language):** Lenguaje de marcado utilizado para codificar el contenido de las páginas web, indicando al navegador cómo formatear la página, qué gráficos y fuentes usar.
-*   **HTTPS (HTTP Secure):** Versión segura de HTTP que utiliza protocolos de transporte seguros, enviando solicitudes al puerto 443.
-*   **FTP (File Transfer Protocol):** Método sencillo para transferir archivos entre computadoras. Permite subir y descargar archivos, y administrar archivos de forma remota (eliminar, renombrar).
-   *   Utiliza dos puertos para la comunicación:
-       *   Puerto 21 (TCP): Conexión de control (solicitudes).
-       *   Puerto 20 (TCP): Transferencia de datos.
-   *   El software cliente FTP viene incorporado en los sistemas operativos y en la mayoría de los exploradores Web.
-*   **Telnet:** Protocolo para emulación de terminales basados en texto a través de la red.
-       *   Utiliza el puerto 23 (TCP).
-       *   Permite ejecutar comandos remotamente como si estuviera conectado localmente.
-       *   **Inseguro:** Transmite datos sin cifrar.
-*   **SSH (Secure Shell):** Alternativa segura a Telnet que proporciona:
-       *   Inicio de sesión remoto seguro.
-       *   Autenticación más sólida.
-       *   Transporte de datos cifrados.
-       *   **Recomendación:** Usar SSH en lugar de Telnet siempre que sea posible. 
-*   **SMTP (Simple Mail Transfer Protocol):**
-       *   Utilizado para enviar correos electrónicos del cliente al servidor local y entre servidores.
-       *   Puerto 25.
-*   **POP3 (Post Office Protocol version 3):**
-       *   Recibe y almacena mensajes para sus usuarios.
-       *   Descarga los mensajes al cliente.
-       *   Puerto 110.
-*   **IMAP4 (Internet Message Access Protocol version 4):**
-       *   Recibe y almacena los mensajes.
-       *   Conserva los mensajes en el servidor a menos que el usuario los elimine.
-       *   Puerto 143.
-*   **SMS**La mensajería de texto (mensajería instantánea, mensajes directos, etc.) permite la comunicación en tiempo real a través de Internet.
-*   **VoIP**La telefonía por Internet (VoIP) convierte señales de voz analógicas en datos digitales. Utiliza tecnología entre pares similar a la mensajería instantánea.
-*   **PSTN**Para llamadas a teléfonos convencionales (PSTN) se requiere una puerta de enlace.
+| Protocolo                                | Puerto(s) Típicos | Transporte Usado | Descripción Breve                                                                |
+|------------------------------------------|-------------------|-------------------|----------------------------------------------------------------------------------|
+| **DNS (Domain Name System)**             | 53                | UDP (consultas), TCP (transferencias de zona) | Traduce nombres de dominio (ej: www.google.com) a direcciones IP.                    |
+| **HTTP (Hypertext Transfer Protocol)**     | 80                | TCP               | Protocolo para la transferencia de páginas web y otros recursos en la World Wide Web. |
+| **HTTPS (HTTP Secure)**                  | 443               | TCP               | Versión segura de HTTP; cifra la comunicación usando TLS/SSL.                    |
+| **FTP (File Transfer Protocol)**         | 21 (control), 20 (datos) | TCP            | Protocolo para transferir archivos entre cliente y servidor.                        |
+| **TFTP (Trivial File Transfer Protocol)**| 69                | UDP               | Versión simplificada de FTP, sin autenticación, para transferencias rápidas.          |
+| **SMTP (Simple Mail Transfer Protocol)**   | 25                | TCP               | Para enviar correo electrónico entre servidores y de cliente a servidor.            |
+| **POP3 (Post Office Protocol v3)**       | 110               | TCP               | Para recuperar correo electrónico de un servidor (generalmente descarga y borra del servidor). |
+| **IMAP (Internet Message Access Protocol)**| 143               | TCP               | Para acceder a correo electrónico en un servidor (mantiene los mensajes en el servidor). |
+| **Telnet**                               | 23                | TCP               | Protocolo de emulación de terminal remoto (inseguro, transmite en texto plano).       |
+| **SSH (Secure Shell)**                   | 22                | TCP               | Protocolo seguro para acceso remoto a terminal, transferencia de archivos (SFTP), y túneles. |
+| **DHCP (Dynamic Host Configuration Protocol)**| 67 (servidor), 68 (cliente) | UDP    | Asigna automáticamente direcciones IP y otra configuración de red a los hosts.      |
+| **SNMP (Simple Network Management Protocol)**| 161, 162          | UDP               | Para monitorizar y gestionar dispositivos de red.                                 |
+
+**Más Detalles sobre Protocolos Seleccionados:**
+*   **HTML (Hypertext Markup Language):** No es un protocolo de comunicación, sino un lenguaje de marcado usado para estructurar y presentar contenido en páginas web (transferido usando HTTP/HTTPS).
+*   **VoIP (Voice over IP):** Familia de tecnologías y protocolos (como SIP, RTP) para transmitir voz sobre redes IP.
+*   **SMS (Short Message Service):** Aunque asociado a móviles, su infraestructura puede interactuar con redes IP.
+*   **PSTN (Public Switched Telephone Network):** La red telefónica tradicional. Gateways VoIP-PSTN permiten llamadas entre ambas.
            
-#### Configuración IP: Estática vs. Dinámica (DHCP)
-*   **Estática:** Configuración manual de IP, máscara, gateway, DNS. Útil para servidores. Propenso a errores.
-*   **Dinámica (DHCP):**
-    *   Asigna automáticamente IP, máscara, gateway, DNS. Reduce errores y administración.
-    *   Proceso **DORA**: 
-        *   **DHCP Discover:** El cliente (recién conectado o reiniciado) difunde un mensaje (broadcast) a la dirección **255.255.255.255** para encontrar servidores DHCP.  Este mensaje indica que el cliente *busca* un servidor DHCP.
-        *   **DHCP Offer:** El servidor DHCP responde con un **DHCP Offer**, *ofreciendo* una dirección IP disponible, máscara de subred, puerta de enlace predeterminada y tiempo de arrendamiento.
-        *   **DHCP Request:** El cliente responde al servidor *solicitando* la dirección IP ofrecida.  El cliente difunde una `DHCPREQUEST` al servidor que le ha ofertado.
-        *   **DHCP Acknowledge (ACK):** El servidor DHCP confirma la asignación de la dirección IP al cliente con un **DHCPACK**. Este mensaje indica que el cliente es capaz de usar la información IP proporcionada.
-    *   **Arrendamiento (Lease):** Tiempo por el cual se asigna la IP.
+### ⚙️ Configuración de Direcciones IP: Estática vs. Dinámica (DHCP)
+Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servicio de aplicación para la configuración de hosts.
+*   **Estática:** La dirección IP, máscara de subred, puerta de enlace predeterminada y servidores DNS se configuran manualmente en cada host.
+    *   **Ventajas:** Control predecible (bueno para servidores, impresoras).
+    *   **Desventajas:** Consume tiempo, propenso a errores de configuración, difícil de gestionar en redes grandes.
+*   **Dinámica (usando DHCP):** Un servidor DHCP asigna automáticamente la configuración de red a los clientes.
+    *   **Ventajas:** Simplifica la administración, reduce errores, permite la reutilización eficiente de direcciones IP.
+    *   **Proceso DORA (Discover, Offer, Request, Acknowledge):**
+        1.  **Discover (Cliente → Servidor, Broadcast):** Cliente busca un servidor DHCP.
+        2.  **Offer (Servidor → Cliente, Unicast o Broadcast según cliente):** Servidor ofrece una configuración IP.
+        3.  **Request (Cliente → Servidor, Broadcast):** Cliente solicita la configuración ofrecida.
+        4.  **Acknowledge (Servidor → Cliente, Unicast o Broadcast según cliente):** Servidor DHCP confirma la asignación con un **DHCPACK** y el tiempo de **arrendamiento (lease)**.
 
-#### Tipos de Conexión a Internet
-*   **ISP (Proveedor de Servicios de Internet):** Empresa que provee acceso.
-*   **DSL (Línea de Suscriptor Digital):** Internet por líneas telefónicas de cobre. (Otras: Cable, Fibra, Satélite, Celular).
+### 🔗 Tipos de Conexión a Internet (Servicios)
+Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
+*   **DSL (Digital Subscriber Line):** Usa líneas telefónicas de cobre.
+*   Otros: Cable Modem, Fibra Óptica (FTTH), Satélite, Celular (3G/4G/5G).
 
-#### Identificadores de Red (Nivel Aplicación/Configuración)
-*   **SSID (Service Set Identifier):** Nombre de una red Wi-Fi.
-*   **Servidor DNS (Domain Name System):**
+### 📡 Identificadores de Red Comunes (Configuración de Usuario)
+*   **SSID (Service Set Identifier):** El nombre público de una red Wi-Fi, configurado en el Punto de Acceso.
+*   **Servidor DNS:** La dirección IP del servidor que el host usará para resolver nombres de dominio. A menudo se obtiene vía DHCP.
 * "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
 
 ---
 
-## Herramientas de Solución de Problemas (CLI)
+## Herramientas de Solución de Problemas de Red (CLI - Interfaz de Línea de Comandos)
 
-Comandos útiles para diagnosticar problemas de red.
+Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas.
 
 ### `ipconfig` (Windows) / `ifconfig` o `ip addr` (Linux/macOS)
-Muestra la configuración IP del host (IP, máscara, gateway, DNS, MAC).
-*   `ipconfig /all` (Windows): Información detallada.
-*   `ipconfig /release` y `ipconfig /renew` (Windows): Para liberar y renovar IP de DHCP.
+Muestra la configuración basica IP del host (IP, máscara, gateway).
+*   `ipconfig /all` (Windows): Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease).
+*   `ipconfig /release` (libera la concesión DHCP actual).
+*   `ipconfig /renew` (solicita una nueva concesión DHCP).
 
-### `ping` [destino_IP_o_nombre]
-Prueba conectividad de Capa 3 enviando ICMP Echo Request.
-*   Indica si el host es alcanzable y latencia.
-*   Falla si hay problemas de DNS (al usar nombre), enrutamiento, o firewall.
+### `ping` `[destino_IP_o_nombre_de_host]`(diagnostico de conección)
+Prueba la conectividad de Capa 3 (alcance IP) con un host destino enviando mensajes ICMP Echo Request y esperando ICMP Echo Reply.
+*   **Salida Típica:** Indica si el destino respondió, tiempo de ida y vuelta (latencia), TTL.
+    ```cmd
+    C:\> ping www.google.com
+    Haciendo ping a www.google.com [142.250.190.36] con 32 bytes de datos:
+    Respuesta desde 142.250.190.36: bytes=32 tiempo=10ms TTL=118
+    ```
+*   **Diagnóstico:**
+    *   Si `ping` a un nombre de host falla pero a su IP funciona -> Problema de resolución DNS.
+    *   Si `ping` a la IP falla -> Problema de enrutamiento, firewall bloqueando ICMP, o el host destino no está disponible.
+    *   Hacer `ping` a la puerta de enlace predeterminada puede ayudar a aislar si el problema es local o externo.
 
-### `tracert` (Windows) / `traceroute` (Linux/macOS) [destino]
-Muestra la ruta (saltos de routers) que toman los paquetes. Útil para ver dónde se pierde la conexión.
+### `tracert` (Windows) / `traceroute` (Linux/macOS) `[destino_IP_o_nombre_de_host]`(diagnostico de latencia)
+Muestra la ruta (la secuencia de routers o "saltos") que toman los paquetes para llegar al destino. Envía paquetes con TTL incremental.
+*   Útil para identificar dónde se está perdiendo la conectividad o dónde hay alta latencia en la ruta.
+    ```cmd
+    C:\> tracert www.google.com
+    Traza a la dirección www.google.com [142.250.190.36]
+    sobre un máximo de 30 saltos:
+      1    <1 ms    <1 ms    <1 ms  192.168.1.1
+      2     8 ms     7 ms     8 ms  router.isp.example.com [ISP_ROUTER_IP]
+      ...
+     10    10 ms     9 ms    10 ms  dfw28s01-in-f4.1e100.net [142.250.190.36]
+    Traza completa.
+    ```
 
-### `netstat`
-Muestra conexiones de red activas (TCP/UDP), puertos en escucha, tabla de enrutamiento.
-*   `netstat -ano` (Windows) / `netstat -tulnp` (Linux).
+### `netstat`(monitoreo de conecciones activas)
+Muestra información sobre conexiones de red activas, puertos en escucha, estadísticas de Ethernet, la tabla de enrutamiento IP, estadísticas de IPv4/IPv6, etc.
+*   **Windows:**
+    *   `netstat -a` (muestra todas las conexiones activas y puertos en escucha).
+    *   `netstat -n` (muestra direcciones y números de puerto en formato numérico).
+    *   `netstat -o` (muestra el ID del proceso propietario de cada conexión).
+    *   `netstat -r` (muestra la tabla de enrutamiento, similar a `route print`).
+    *   Combinado: `netstat -ano`
+*   **Linux:**
+    *   `netstat -tulnp` (muestra puertos TCP y UDP en escucha (`l`), sin resolver nombres (`n`), con el programa/PID (`p`)). (Nota: `netstat` puede estar obsoleto en algunas distros Linux, reemplazado por `ss`).
+    *   `ss -tulnp` (alternativa moderna a `netstat`).
 
-### `nslookup` [nombre_de_dominio]
-Consulta servidores DNS para resolver nombres de dominio a IPs (y viceversa).
+### `nslookup` `[nombre_de_dominio_o_IP]`(consulta a DNS nombre o IP de URI)
+Herramienta para consultar servidores DNS (Domain Name System).
+*   **Uso Básico:** Resuelve un nombre de dominio a una dirección IP, o viceversa (búsqueda inversa si se proporciona una IP).
+    ```cmd
+    C:\> nslookup www.google.com
+    Servidor:  mi.dns.local
+    Address:  192.168.1.1
+
+    Respuesta no autoritativa:
+    Nombre:  www.google.com
+    Addresses:  2607:f8b0:4004:c06::64
+                142.250.190.36
+    ```
+*   Puede usarse en modo interactivo para especificar servidores DNS a consultar, tipos de registros a buscar (A, MX, NS, CNAME, etc.).
 
 ---
-Espero que esta reorganización te sea mucho más útil. ¡Mucho éxito con tu estudio!
