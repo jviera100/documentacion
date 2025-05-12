@@ -366,7 +366,7 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones públicas IPv
     *   **Fuente de Alimentación.**
 *   **ISR (Integrated Services Router):** Router que combina funciones de enrutamiento con otros servicios como firewall, VPN, telefonía IP.
 
-### 🗺️ Tabla de Enrutamiento
+### 🗺️ Tabla de Enrutamiento (memoria)
 Es una base de datos que un router (o incluso un host) utiliza para decidir cómo reenviar un paquete IP hacia su destino.
 *   🧩 Cada entrada contiene:
     *   Red de destino y máscara de subred: Identifican a qué red pertenece un paquete.
