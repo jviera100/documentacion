@@ -220,9 +220,8 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
 Para entender cómo una dirección *IP (Internet Protocol)* individual se relaciona con su red, utilizamos la **máscara de subred**. Esta máscara divide la IP en una porción de **RED** (que identifica la subred) y una porción de **HOST** (que identifica los *dispositivos (hosts)* dentro de esa subred LAN).
 
-**IP del Dispositivo:** `192.168.1.50`
-**Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
-**Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
+*   **IP del Dispositivo:** `192.168.1.50`
+*   **Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
 
 | Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
 | :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
