@@ -269,7 +269,8 @@ Ambas son identificadores, pero operan en capas diferentes y tienen propósitos 
 
 #### 🏡 Direcciones IPv4 Públicas vs. Privadas
 *   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs, LIRs o RIRs.
-*   **Privadas:** Para uso en redes internas (LANs). No son enrutables directamente en Internet y pueden repetirse en diferentes LANs. Se requiere NAT para que los dispositivos con IP privada accedan a Internet.
+*   **Privadas:** Para uso en redes internas, son unicas solo en tu red (LANs). No son enrutables directamente en Internet y pueden repetirse en diferentes LANs. Se requiere NAT para que los dispositivos con IP privada accedan a Internet.
+  
 #### Rangos Comunes de IP Privada (RFC 1918)
 Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil conocer cuáles son estos rangos de direcciones privadas estándar:
 
@@ -283,7 +284,14 @@ Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil con
 
 ### 3. Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation)
 
-Para que tus *dispositivos (hosts)* con IPs privadas (en tu LAN) accedan a Internet, el router actúa como intermediario esencial. Utiliza **NAT (Network Address Translation)** para traducir la IP privada de tu dispositivo a su propia IP pública (de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* WAN) al enviar datos, y revierte esta traducción para las respuestas entrantes. La IP de la interfaz LAN del router funciona como la *Puerta de Enlace (Gateway)* para tu red local.
+Para que tus *dispositivos (hosts)* con IPs privadas (en tu LAN) accedan a Internet, el router actúa como intermediario esencial. Utiliza **NAT (Network Address Translation)** para traducir la IP privada de tu dispositivo a su propia IP pública (de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* WAN) al enviar datos, y revierte esta traducción para las respuestas entrantes. En tu red local, todos los dispositivos comparten la misma *Puerta de Enlace (Gateway)* e IP pública asignada por el router al comunicarse con el exterior, mientras NAT gestiona las conexiones y el tráfico de manera eficiente.
+
+Cada red privada tiene su propia IP pública asignada por su proveedor de servicios de internet (ISP), sin compartirla con redes vecinas, incluso si se comunican entre sí. Su asignación puede ser:
+
+*   Manual (IP fija): Permanece constante en el tiempo, asignada por el ISP.
+*   Automática (IP dinámica): Asignada por el ISP vía DHCP (Dynamic Host Configuration Protocol), pudiendo cambiar periódicamente. Esto es común en hogares y pequeñas empresas.
+
+Independientemente de su método de asignación, NAT dirige todo el tráfico de la red interna a través de la IP pública disponible, asegurando el enrutamiento y la seguridad de la comunicación.
 
 | Concepto                  | Tu PC (Host)                                  | Router (Interfaz LAN)                          | Router (Interfaz WAN)                             | Internet (Servidor Externo)        |
 |---------------------------|-----------------------------------------------|------------------------------------------------|---------------------------------------------------|------------------------------------|
