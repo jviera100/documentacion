@@ -231,8 +231,13 @@ La máscara de subred ➡️ IP = Porción de **RED** ➕ Porción de **HOST**.
      *   Máscara: `255.255.255.0(/24)`
      *   parte RED: `192.168.1`
      *   parte HOST: `.50`
-     *   Dirección de RED: `192.168.1.0`
+     *   Reemplazas `.50` por `.0` → Dirección de Red: `192.168.1.0(/24)`
+     *   Dirección de RED o Subred: `192.168.1.0(/24)`
+     *   Dirección de RED o Gateway: `192.168.1.1(/24)`Entrada/salida hacia Internet, por convencion se usa el primer IP disponible.
+     *   Dirección de RED o Hosts: `192.168.1.2(/24)`- `192.168.1.254(/24)`IP disponibles para posibles dispositivos.
+     *   Dirección de RED o Broadcast: `192.168.1.255`
 *   Dispositivos en la misma parte de RED pertenecen a la misma subred.
+*   Se reservan 3 IP subred, gateway y broadcast.
 
 | Componente       | Descripción                                                                 | Ejemplo (`192.168.1.45/24`)         |
 |------------------|------------------------------------------------------------------------------|-----------------------------------|
