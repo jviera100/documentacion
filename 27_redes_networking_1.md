@@ -220,6 +220,14 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
 Para entender cómo una dirección *IP (Internet Protocol)* individual se relaciona con su red, utilizamos la **máscara de subred**. Esta máscara divide la IP en una porción de **RED** (que identifica la subred) y una porción de **HOST** (que identifica los *dispositivos (hosts)* dentro de esa subred LAN).
 
+**Usando la mascara con un ejemplo:**
+
+*   La **máscara de subred** (`255.255.255.0` o `/24`) es crucial:
+    *   `255` indica que el octeto correspondiente de la IP es parte de la **porción de RED**.
+    *   `0` indica que el octeto correspondiente de la IP es parte de la **porción de HOST**.
+*   Los dispositivos con la misma **Porción de Red** (y por lo tanto, la misma **Dirección de Red**) pertenecen a la misma subred y pueden comunicarse directamente.
+*   En cualquier subred, la **Dirección de Red** y la **Dirección de Broadcast** son reservadas y no se pueden asignar a dispositivos individuales.
+
 *   **IP del Dispositivo:** `192.168.1.50`
 *   **Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
 
@@ -231,54 +239,7 @@ Para entender cómo una dirección *IP (Internet Protocol)* individual se relaci
 | **Puerta de Enlace (Gateway)**        | Convencionalmente, la primera dirección IP *usable* de la subred.    | `192.168.1.1`                  | La IP del router (en su interfaz LAN) que permite a los dispositivos de la subred comunicarse con otras redes (ej. Internet). Utiliza una IP de host. |
 | **Rango de IPs de Host Usables**    | Desde la primera IP después de la Dirección de Red hasta la IP anterior a la de Broadcast. | `192.168.1.1` a `192.168.1.254` | Direcciones IP que pueden ser asignadas a dispositivos finales (PCs, móviles, servidores, etc.) dentro de la subred.                                 |
 | **Dirección de Broadcast**          | La última dirección IP posible en la subred.                        | `192.168.1.255`                | Se utiliza para enviar un mensaje a *todos* los dispositivos dentro de la misma subred simultáneamente. No se asigna a dispositivos.                    |
-| **Número de Hosts Usables**         | 2<sup>(bits de host)</sup> - 2                                        | 2<sup>8</sup> - 2 = 256 - 2 = **254** | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan la Dirección de Red y la Dirección de Broadcast.                |
-
-**Puntos Clave:**
-
-*   La **máscara de subred** (`255.255.255.0` o `/24`) es crucial:
-    *   `255` indica que el octeto correspondiente de la IP es parte de la **porción de RED**.
-    *   `0` indica que el octeto correspondiente de la IP es parte de la **porción de HOST**.
-*   Los dispositivos con la misma **Porción de Red** (y por lo tanto, la misma **Dirección de Red**) pertenecen a la misma subred y pueden comunicarse directamente.
-*   En cualquier subred, la **Dirección de Red** y la **Dirección de Broadcast** son reservadas y no se pueden asignar a dispositivos individuales.
-  
-65832659832456324856328456hdfhsdkjfhsdkjhsfdkghdsfkghdsfkghdskfhgsfdhg--------------------
-
-
-*   **Identificación de subred usando la mascara para reemplazar la IP:**
-*   ejemplo mascara subred: `255.255.255.0(/24)`
-    *   `255` en un octeto de la máscara identifica porción RED en octeto IP.
-    *   `0` en un octeto de la máscara identifica porción HOST en octeto IP.
-*   **Cálculo Dirección de RED y sus Componentes Clave:** Tomar la porción de RED de la IP y reemplazar a cero la porción de HOST de la IP.
-     *   **Ejemplo Práctico:**
-     *   IP: `192.168.1.50`
-     *   Máscara Subred: `255.255.255.0 (que es lo mismo que /24)`
-     *   parte RED: `192.168.1 (definida por los 255 en la máscara)`
-     *   parte HOST: `.50 (definida por el 0 en la máscara)`
-     *   Reemplazas `.50` por `.0` → Dirección de Red: `192.168.1.0(/24)`
-     *   Dirección de RED o Subred: `192.168.1.0(/24) (identifica a toda la "calle" o subred)`
-     *   Dirección de RED o Gateway: `192.168.1.1(/24)` Es la primera dirección IP usable de la subred, convencionalmente asignada al router para salir/entrar a otras redes (como Internet).
-     *   Dirección de RED o Hosts: `192.168.1.2(/24)`- `192.168.1.254(/24)`IP disponibles para posibles dispositivos.
-     *   Dirección de RED o Broadcast: `192.168.1.255`Es la última dirección IP de la subred. Se usa para enviar un mensaje a todos los dispositivos dentro de esta subred simultáneamente.
-*   Dispositivos en la misma parte de RED pertenecen a la misma subred.
-*   Se reservan 3 IP subred, gateway y broadcast.
-
-| Componente       | Descripción                                                                 | Ejemplo (`192.168.1.45/24`)         |
-|------------------|------------------------------------------------------------------------------|-----------------------------------|
-| **Parte de Red** | Identifica la "calle" o subred a la que pertenece el dispositivo. Es común a todos los dispositivos en la misma subred. | `192.168.1` (primeros 24 bits)      |
-| **Parte de Host**| Identifica el "número de casa" o dispositivo específico dentro de esa subred. Varía para cada dispositivo.  | `.45` (últimos 8 bits)              |
-
-Dentro de tu subred local (ej: `192.168.1.0/24`), existen tres tipos de direcciones IP importantes:
-
-| Tipo de IP en la Subred     | ¿Qué es?                                                                | Ejemplo (`192.168.1.0/24`)         |
-|-----------------------------|-------------------------------------------------------------------------|----------------------------------|
-| **Dirección de Red**            | Identifica a toda la subred. No se asigna a dispositivos.              | `192.168.1.0`                      |
-| **Direcciones de Host Usables** | Rango de IPs que pueden tener tus dispositivos (PCs, móviles, etc.).                        | `192.168.1.1` a `192.168.1.254`      |
-| **Dirección de Broadcast**      | Envía un mensaje a *todos* los dispositivos de esa subred simultáneamente.               | `192.168.1.255`                    |
-
-**Bits y Dispositivos**:
-La "Parte de Host" de la IP determina cuántos dispositivos pueden conectarse.
-Con `/24`, hay 8 bits para *dispositivos (hosts)* (2⁸ = 256 combinaciones).
-Restando la Dirección de Red y la de Broadcast, quedan **254 IPs usables**.
+| **Número de Hosts Usables**         | 2<sup>(bits de host)</sup> - 2   Con `/24`, hay 8 bits para *dispositivos (hosts)* de los 32 bits de un ipv4 = 254 IPs usables                                     | 2<sup>8</sup> - 2 = 256 - 2 = **254** | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan la Dirección de Red y la Dirección de Broadcast.                |
 
 #### 🏡 Direcciones IPv4 Públicas vs. Privadas
 *   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs.
