@@ -117,12 +117,12 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
 Hardware que permite la conexión del dispositivo a la red.
 *   **Función en Capa 2:** Contiene la dirección MAC única, participa en la creación y procesamiento de tramas.
 *   **Tipos:** Ethernet (cable), Wi-Fi (inalámbrica), Virtual (para VMs, VPNs).
-*   **Analogía:** Como un carnet de identificación.
+*   **Analogía:** Como un *carnet de identificación*.
 
 ### 🧾 Dirección MAC (Media Access Control)
 Identificador *único y físico* de 48 bits (6 bytes hexadecimales, ej: `00:1A:2B:3C:4D:5E`) asignado a cada NIC por el fabricante.
 *   Es la dirección "local" utilizada para entregar tramas dentro de la misma LAN.
-*   **Analogía:** Como el número de serie de un dispositivo o el RUT/DNI impreso en un carnet. Es la dirección "local" para la entrega de tramas dentro de una LAN.
+*   **Analogía:** Como el número de serie de un dispositivo o el *RUT/DNI* impreso en un carnet. Es la dirección "local" para la entrega de tramas dentro de una LAN.
 
 ## Capa 2: Enlace de Datos – Comunicación en la Red Local
 
@@ -248,8 +248,11 @@ Ambas son identificadores, pero operan en capas diferentes y tienen propósitos 
 | **Propósito Principal**| Identificar un dispositivo de forma única en una red local para la entrega de tramas. | Ayudar a los dispositivos y routers a determinar si una IP de destino está en la misma red local o en una red remota. |
 
 🔎 **En resumen:**
-*   La **Dirección MAC** es como el "número de serie" físico e intransferible de tu *Tarjeta de Interfaz de Red (NIC - Network Interface Card)*, usado para la comunicación directa dentro de tu red local.
-*   La **Máscara de Subred** es una "regla lógica" que se aplica a una Dirección IP para entender su estructura de red y host, crucial para el enrutamiento.
+*   *Puerta de Enlace (Gateway)*: Es la dirección IP de un dispositivo que actúa como punto de salida para comunicarse con otras redes, generalmente asignada al router en una LAN. Todos los dispositivos dentro de la misma red usan esta dirección como referencia para enviar tráfico fuera de la subred.
+*   *Broadcast (Difusión)*: Es una dirección IP especial que permite enviar paquetes a todos los dispositivos dentro de una misma subred.
+*   *NIC (Network Interface Card)* Hardware **Analogía:** Como un *carnet de identificación*.
+*   *Dirección MAC (Media Access Control)* **Analogía:** Como el número de *RUT/DNI* impreso en tu *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* asignado por el fabricante.   
+*   *Máscara de Subred* es una "regla lógica" que se aplica a una Dirección IP para entender su estructura de red y host, crucial para el enrutamiento.
 *   **No tienen relación directa funcional:** La máscara de subred no interactúa con la MAC, ni viceversa. Ambas son necesarias, pero para funciones diferentes en capas distintas.
 
 **Ejemplo Práctico:**
