@@ -220,7 +220,7 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
 Para entender cómo una dirección *IP (Internet Protocol)* individual se relaciona con su red, utilizamos la **máscara de subred**. Esta máscara divide la IP en una porción de **RED** (que identifica la subred) y una porción de **HOST** (que identifica los *dispositivos (hosts)* dentro de esa subred LAN).
 
-**Usando la mascara con un ejemplo:**
+**Principios Clave de la Máscara de Subred:**
 
 *   La **máscara de subred** (`255.255.255.0` o `/24`) es crucial:
     *   `255` indica que el octeto correspondiente de la IP es parte de la **porción de RED**.
@@ -228,8 +228,23 @@ Para entender cómo una dirección *IP (Internet Protocol)* individual se relaci
 *   Los dispositivos con la misma **Porción de Red** (y por lo tanto, la misma **Dirección de Red**) pertenecen a la misma subred y pueden comunicarse directamente.
 *   En cualquier subred, la **Dirección de Red** y la **Dirección de Broadcast** son reservadas y no se pueden asignar a dispositivos individuales.
 
+**Ejemplo Práctico:**
+
 *   **IP del Dispositivo:** `192.168.1.50`
 *   **Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
+
+
+| Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
+| :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Porción de Red de la IP**           | Parte de la IP que corresponde a los `255` en la máscara.           | `192.168.1`                    | Identifica la "calle" o subred específica a la que pertenece el dispositivo. (Para /24, son los primeros 24 bits de la IP).                               |
+| **Porción de Host de la IP**          | Parte de la IP que corresponde a los `0` en la máscara.              | `.50`                          | Identifica el "número de casa" o dispositivo único dentro de esa subred. (Para /24, son los últimos 8 bits de la IP).                                 |
+| **Dirección de Red (o Subred)**     | Tomar la "Porción de Red" de la IP y poner a cero la "Porción de Host". | `192.168.1.0/24`               | Es la identidad de toda la subred. No se asigna a dispositivos. Todos los dispositivos en esta subred comparten esta Dirección de Red.                 |
+| **Puerta de Enlace (Gateway)**        | Convencionalmente, la primera dirección IP *usable* de la subred.    | `192.168.1.1`                  | La IP del router (en su interfaz LAN) que permite a los dispositivos de la subred comunicarse con otras redes (ej. Internet). Utiliza una IP de host. |
+| **Rango de IPs de Host Usables**    | Desde la IP siguiente a la Dirección de Red, hasta la IP anterior a la de Broadcast. | `192.168.1.1` a `192.168.1.254` | Direcciones IP que pueden ser asignadas a dispositivos finales (PCs, móviles, servidores, etc.) dentro de la subred.                                 |
+| **Dirección de Broadcast**          | La última dirección IP posible en la subred.                        | `192.168.1.255`                | Se utiliza para enviar un mensaje a *todos* los dispositivos dentro de la misma subred simultáneamente. No se asigna a dispositivos.                    |
+| **Número de Hosts Usables**         | Fórmula: 2<sup>(bits de host)</sup> - 2. <br/> Para /24 (con 8 bits de host): 2<sup>8</sup> - 2. | 256 - 2 = **254**              | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan 2 IPs (Dirección de Red y Dirección de Broadcast). (Una IPv4 tiene 32 bits; si 24 son de red, quedan 8 para hosts). |
+
+
 
 | Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
 | :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
