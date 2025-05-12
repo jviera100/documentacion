@@ -232,26 +232,9 @@ Una **Máscara de Subred** es un número de 32 bits, expresado comúnmente en no
 *   Los dispositivos con la misma **Porción de Red** (y por lo tanto, la misma **Dirección de Red**) pertenecen a la misma subred y pueden comunicarse directamente.
 *   En cualquier subred, la **Dirección de Red** y la **Dirección de Broadcast** son reservadas y no se pueden asignar a dispositivos individuales.
 
-**Ejemplo Práctico:**
 
-*   **IP del Dispositivo:** `192.168.1.50`
-*   **Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
-
--------------------------------------------------------------------------
-
-
-| Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
-| :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Porción de Red de la IP**           | Parte de la IP que corresponde a los `255` en la máscara.           | `192.168.1`                    | Identifica la "calle" o subred específica a la que pertenece el dispositivo. (Para /24, son los primeros 24 bits de la IP).                               |
-| **Porción de Host de la IP**          | Parte de la IP que corresponde a los `0` en la máscara.              | `.50`                          | Identifica el "número de casa" o dispositivo único dentro de esa subred. (Para /24, son los últimos 8 bits de la IP).                                 |
-| **Dirección de Red (o Subred)**     | Tomar la "Porción de Red" de la IP y poner a cero la "Porción de Host". | `192.168.1.0/24`               | Es la identidad de toda la subred. No se asigna a dispositivos. Todos los dispositivos en esta subred comparten esta Dirección de Red.                 |
-| **Puerta de Enlace (Gateway)**        | Convencionalmente, la primera dirección IP *usable* de la subred.    | `192.168.1.1`                  | La IP del router (en su interfaz LAN) que permite a los dispositivos de la subred comunicarse con otras redes (ej. Internet). Utiliza una IP de host. |
-| **Rango de IPs de Host Usables**    | Desde la IP siguiente a la Dirección de Red, hasta la IP anterior a la de Broadcast. | `192.168.1.1` a `192.168.1.254` | Direcciones IP que pueden ser asignadas a dispositivos finales (PCs, móviles, servidores, etc.) dentro de la subred.                                 |
-| **Dirección de Broadcast**          | La última dirección IP posible en la subred.                        | `192.168.1.255`                | Se utiliza para enviar un mensaje a *todos* los dispositivos dentro de la misma subred simultáneamente. No se asigna a dispositivos.                    |
-| **Número de Hosts Usables**         | Fórmula: 2<sup>(bits de host)</sup> - 2. <br/> Para /24 (con 8 bits de host): 2<sup>8</sup> - 2. | 256 - 2 = **254**              | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan 2 IPs (Dirección de Red y Dirección de Broadcast). (Una IPv4 tiene 32 bits; si 24 son de red, quedan 8 para hosts). |
-
-#### 🎭 Máscara de Subred vs. Dirección MAC: Aclarando la Diferencia
-Es común que surjan dudas entre la función de una Máscara de Subred y una Dirección MAC. Ambas son identificadores, pero operan en capas diferentes y tienen propósitos distintos:
+#### 🎭 Máscara de Subred vs. Dirección MAC:
+Ambas son identificadores, pero operan en capas diferentes y tienen propósitos distintos:
 
 | Elemento               | Dirección MAC (Media Access Control)        | Máscara de Subred                  |
 |------------------------|---------------------------------------------|------------------------------------|
@@ -265,11 +248,14 @@ Es común que surjan dudas entre la función de una Máscara de Subred y una Dir
 | **Propósito Principal**| Identificar un dispositivo de forma única en una red local para la entrega de tramas. | Ayudar a los dispositivos y routers a determinar si una IP de destino está en la misma red local o en una red remota. |
 
 🔎 **En resumen:**
-*   La **Dirección MAC** es como el "número de serie" físico e intransferible de tu tarjeta de red, usado para la comunicación directa dentro de tu red local.
+*   La **Dirección MAC** es como el "número de serie" físico e intransferible de tu *Tarjeta de Interfaz de Red (NIC - Network Interface Card)*, usado para la comunicación directa dentro de tu red local.
 *   La **Máscara de Subred** es una "regla lógica" que se aplica a una Dirección IP para entender su estructura de red y host, crucial para el enrutamiento.
 *   **No tienen relación directa funcional:** La máscara de subred no interactúa con la MAC, ni viceversa. Ambas son necesarias, pero para funciones diferentes en capas distintas.
 
-----------------------------------------------------------------------------------------
+**Ejemplo Práctico:**
+
+*   **IP del Dispositivo:** `192.168.1.50`
+*   **Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
 
 | Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
 | :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
