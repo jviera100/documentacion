@@ -232,6 +232,21 @@ Una **Máscara de Subred** es un número de 32 bits, expresado comúnmente en no
 *   Los dispositivos con la misma **Porción de Red** (y por lo tanto, la misma **Dirección de Red**) pertenecen a la misma subred y pueden comunicarse directamente.
 *   En cualquier subred, la **Dirección de Red** y la **Dirección de Broadcast** son reservadas y no se pueden asignar a dispositivos individuales.
 
+## 🔁 Conversión CIDR a Máscara de Subred (IPv4)
+
+La notación CIDR indica **cuántos bits están en "1"** desde la izquierda. Eso define la máscara.
+
+| CIDR | Máscara Decimal       | Bits para Hosts | Nº de Hosts (usables) |
+|------|-----------------------|------------------|------------------------|
+| /8   | 255.0.0.0             | 24               | 16.777.214             |
+| /16  | 255.255.0.0           | 16               | 65.534                 |
+| /24  | 255.255.255.0         | 8                | 254                    |
+| /25  | 255.255.255.128       | 7                | 126                    |
+| /26  | 255.255.255.192       | 6                | 62                     |
+| /27  | 255.255.255.224       | 5                | 30                     |
+| /28  | 255.255.255.240       | 4                | 14                     |
+| /29  | 255.255.255.248       | 3                | 6                      |
+| /30  | 255.255.255.252       | 2                | 2                      |
 
 #### 🎭 Máscara de Subred vs. Dirección MAC:
 Ambas son identificadores, pero operan en capas diferentes y tienen propósitos distintos:
