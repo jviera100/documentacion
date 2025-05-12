@@ -203,7 +203,7 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
 ## Capa 3: Red – Direccionamiento Lógico y Enrutamiento Global
 
-*   **Función Principal (OSI):** Proporcionar direccionamiento lógico único (principalmente **IP - Internet Protocol**) a los dispositivos en la internetwork y determinar la mejor ruta (**enrutamiento**) para los **paquetes** de datos a través de múltiples redes interconectadas.
+*   **Función Principal (OSI):** Proporcionar direccionamiento lógico único (principalmente *IP - Internet Protocol*) a los dispositivos en la internetwork y determinar la mejor ruta (**enrutamiento**) para los **paquetes** de datos a través de múltiples redes interconectadas.
 *   **Equivalente TCP/IP:** Capa de Internet.
 *   **PDU (Protocol Data Unit):** Paquetes.
 
@@ -216,26 +216,50 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 *   - Decimal con puntos: `209.165.200.1`
 *   Cada paquete IP contiene una dirección IP de origen y una de destino.
 
-#### 🧠 ¿Qué es una Dirección IP?
-Una dirección IP (Internet Protocol) identifica de forma única a un dispositivo en una red. En redes locales (LAN), estas IPs se estructuran en dos partes:
-#### 🔍 Máscara de Subred (IPv4)
-Toda dirección IP en tu red local (como la de tu PC o teléfono) tiene dos componentes principales, definidos por su **máscara de subred**. La máscara se expresa comúnmente en **Notación CIDR** (ej: `/24`).
-La máscara de subred ➡️ IP = Porción de **RED** ➕ Porción de **HOST**.
+### 🔍 Desglosando una Dirección IP con su Máscara de Subred: Ejemplo `192.168.1.50/24`
 
-*   **Identificación:**
-    *   `255` en un octeto de la máscara parte RED.
-    *   `0` en un octeto de la máscara parte HOST.
-*   **Cálculo Dirección de RED:** Tomar la porción de RED de la IP y reemplazar a cero la porción de HOST.
-     *   **Ejemplo Rápido:**
+Para entender cómo una dirección *IP (Internet Protocol)* individual se relaciona con su red, utilizamos la **máscara de subred**. Esta máscara divide la IP en una porción de **RED** (que identifica la subred) y una porción de **HOST** (que identifica los *dispositivos (hosts)* dentro de esa subred LAN).
+
+**IP del Dispositivo:** `192.168.1.50`
+**Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
+**Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
+
+| Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
+| :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Porción de Red de la IP**           | Parte de la IP que corresponde a los `255` en la máscara.           | `192.168.1`                    | Identifica la "calle" o subred específica a la que pertenece el dispositivo. Los primeros 24 bits en este caso.                                      |
+| **Porción de Host de la IP**          | Parte de la IP que corresponde a los `0` en la máscara.              | `.50`                          | Identifica el "número de casa" o dispositivo único dentro de esa subred. Los últimos 8 bits en este caso.                                            |
+| **Dirección de Red (o Subred)**     | Tomar la "Porción de Red" y poner a cero la "Porción de Host".       | `192.168.1.0/24`               | Es la identidad de toda la subred. No se asigna a dispositivos. Todos los dispositivos en esta subred comparten esta Dirección de Red.                 |
+| **Puerta de Enlace (Gateway)**        | Convencionalmente, la primera dirección IP *usable* de la subred.    | `192.168.1.1`                  | La IP del router (en su interfaz LAN) que permite a los dispositivos de la subred comunicarse con otras redes (ej. Internet). Utiliza una IP de host. |
+| **Rango de IPs de Host Usables**    | Desde la primera IP después de la Dirección de Red hasta la IP anterior a la de Broadcast. | `192.168.1.1` a `192.168.1.254` | Direcciones IP que pueden ser asignadas a dispositivos finales (PCs, móviles, servidores, etc.) dentro de la subred.                                 |
+| **Dirección de Broadcast**          | La última dirección IP posible en la subred.                        | `192.168.1.255`                | Se utiliza para enviar un mensaje a *todos* los dispositivos dentro de la misma subred simultáneamente. No se asigna a dispositivos.                    |
+| **Número de Hosts Usables**         | 2<sup>(bits de host)</sup> - 2                                        | 2<sup>8</sup> - 2 = 256 - 2 = **254** | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan la Dirección de Red y la Dirección de Broadcast.                |
+
+**Puntos Clave:**
+
+*   La **máscara de subred** (`255.255.255.0` o `/24`) es crucial:
+    *   `255` indica que el octeto correspondiente de la IP es parte de la **porción de RED**.
+    *   `0` indica que el octeto correspondiente de la IP es parte de la **porción de HOST**.
+*   Los dispositivos con la misma **Porción de Red** (y por lo tanto, la misma **Dirección de Red**) pertenecen a la misma subred y pueden comunicarse directamente.
+*   En cualquier subred, la **Dirección de Red** y la **Dirección de Broadcast** son reservadas y no se pueden asignar a dispositivos individuales.
+  
+65832659832456324856328456hdfhsdkjfhsdkjhsfdkghdsfkghdsfkghdskfhgsfdhg--------------------
+
+
+*   **Identificación de subred usando la mascara para reemplazar la IP:**
+*   ejemplo mascara subred: `255.255.255.0(/24)`
+    *   `255` en un octeto de la máscara identifica porción RED en octeto IP.
+    *   `0` en un octeto de la máscara identifica porción HOST en octeto IP.
+*   **Cálculo Dirección de RED y sus Componentes Clave:** Tomar la porción de RED de la IP y reemplazar a cero la porción de HOST de la IP.
+     *   **Ejemplo Práctico:**
      *   IP: `192.168.1.50`
-     *   Máscara: `255.255.255.0(/24)`
-     *   parte RED: `192.168.1`
-     *   parte HOST: `.50`
+     *   Máscara Subred: `255.255.255.0 (que es lo mismo que /24)`
+     *   parte RED: `192.168.1 (definida por los 255 en la máscara)`
+     *   parte HOST: `.50 (definida por el 0 en la máscara)`
      *   Reemplazas `.50` por `.0` → Dirección de Red: `192.168.1.0(/24)`
-     *   Dirección de RED o Subred: `192.168.1.0(/24)`
-     *   Dirección de RED o Gateway: `192.168.1.1(/24)`Entrada/salida hacia Internet, por convencion se usa el primer IP disponible.
+     *   Dirección de RED o Subred: `192.168.1.0(/24) (identifica a toda la "calle" o subred)`
+     *   Dirección de RED o Gateway: `192.168.1.1(/24)` Es la primera dirección IP usable de la subred, convencionalmente asignada al router para salir/entrar a otras redes (como Internet).
      *   Dirección de RED o Hosts: `192.168.1.2(/24)`- `192.168.1.254(/24)`IP disponibles para posibles dispositivos.
-     *   Dirección de RED o Broadcast: `192.168.1.255`
+     *   Dirección de RED o Broadcast: `192.168.1.255`Es la última dirección IP de la subred. Se usa para enviar un mensaje a todos los dispositivos dentro de esta subred simultáneamente.
 *   Dispositivos en la misma parte de RED pertenecen a la misma subred.
 *   Se reservan 3 IP subred, gateway y broadcast.
 
