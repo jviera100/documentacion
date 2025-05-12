@@ -209,16 +209,20 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
 ### 📍 Direccionamiento IP (capa 3)
 #### Dirección IPv4 (32 bits)
-*   Dirección lógica, agrupada en cuatro octetos (bloques de 8 bits), usualmente representada en notación decimal separada por puntos.
+Una **Dirección IP (Internet Protocol)** es una etiqueta numérica única asignada a cada *dispositivo (host)* conectado a una red informática que utiliza el Protocolo de Internet para la comunicación. En su versión 4 (IPv4), esta dirección:
+*   Es una dirección lógica de 32 bits, agrupada en cuatro octetos (bloques de 8 bits).
+*   Usualmente se representa en notación decimal separada por puntos.
 *   **Ejemplo:** 
 *   - Binario: `11010001101001011100100000000001`
 *   - Octetos: `11010001.10100101.11001000.00000001`
 *   - Decimal con puntos: `209.165.200.1`
-*   Cada paquete IP contiene una dirección IP de origen y una de destino.
+*   Cada paquete IP contiene una dirección IP de origen y una de destino para su correcto enrutamiento.
 
 ### 🔍 Desglosando una Dirección IP con su Máscara de Subred: Ejemplo `192.168.1.50/24`
 
-Para entender cómo una dirección *IP (Internet Protocol)* individual se relaciona con su red, utilizamos la **máscara de subred**. Esta máscara divide la IP en una porción de **RED** (que identifica la subred) y una porción de **HOST** (que identifica los *dispositivos (hosts)* dentro de esa subred LAN).
+Para entender cómo una dirección *IP (Internet Protocol)* individual se relaciona con su red local (LAN) y cómo se identifican los *dispositivos (hosts)* dentro de ella, utilizamos la **máscara de subred**.
+
+Una **Máscara de Subred** es un número de 32 bits, expresado comúnmente en notación decimal con puntos (igual que una IPv4) o en notación CIDR (ej: `/24`). Su función es dividir una dirección IP en dos partes fundamentales: la **porción de RED** (que identifica la subred) y la **porción de HOST** (que identifica a un *dispositivo (host)* específico dentro de esa subred).
 
 **Principios Clave de la Máscara de Subred:**
 
@@ -233,6 +237,39 @@ Para entender cómo una dirección *IP (Internet Protocol)* individual se relaci
 *   **IP del Dispositivo:** `192.168.1.50`
 *   **Máscara de Subred:** `255.255.255.0` (Notación CIDR: `/24`)
 
+-------------------------------------------------------------------------
+
+
+| Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
+| :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Porción de Red de la IP**           | Parte de la IP que corresponde a los `255` en la máscara.           | `192.168.1`                    | Identifica la "calle" o subred específica a la que pertenece el dispositivo. (Para /24, son los primeros 24 bits de la IP).                               |
+| **Porción de Host de la IP**          | Parte de la IP que corresponde a los `0` en la máscara.              | `.50`                          | Identifica el "número de casa" o dispositivo único dentro de esa subred. (Para /24, son los últimos 8 bits de la IP).                                 |
+| **Dirección de Red (o Subred)**     | Tomar la "Porción de Red" de la IP y poner a cero la "Porción de Host". | `192.168.1.0/24`               | Es la identidad de toda la subred. No se asigna a dispositivos. Todos los dispositivos en esta subred comparten esta Dirección de Red.                 |
+| **Puerta de Enlace (Gateway)**        | Convencionalmente, la primera dirección IP *usable* de la subred.    | `192.168.1.1`                  | La IP del router (en su interfaz LAN) que permite a los dispositivos de la subred comunicarse con otras redes (ej. Internet). Utiliza una IP de host. |
+| **Rango de IPs de Host Usables**    | Desde la IP siguiente a la Dirección de Red, hasta la IP anterior a la de Broadcast. | `192.168.1.1` a `192.168.1.254` | Direcciones IP que pueden ser asignadas a dispositivos finales (PCs, móviles, servidores, etc.) dentro de la subred.                                 |
+| **Dirección de Broadcast**          | La última dirección IP posible en la subred.                        | `192.168.1.255`                | Se utiliza para enviar un mensaje a *todos* los dispositivos dentro de la misma subred simultáneamente. No se asigna a dispositivos.                    |
+| **Número de Hosts Usables**         | Fórmula: 2<sup>(bits de host)</sup> - 2. <br/> Para /24 (con 8 bits de host): 2<sup>8</sup> - 2. | 256 - 2 = **254**              | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan 2 IPs (Dirección de Red y Dirección de Broadcast). (Una IPv4 tiene 32 bits; si 24 son de red, quedan 8 para hosts). |
+
+#### 🎭 Máscara de Subred vs. Dirección MAC: Aclarando la Diferencia
+Es común que surjan dudas entre la función de una Máscara de Subred y una Dirección MAC. Ambas son identificadores, pero operan en capas diferentes y tienen propósitos distintos:
+
+| Elemento               | Dirección MAC (Media Access Control)        | Máscara de Subred                  |
+|------------------------|---------------------------------------------|------------------------------------|
+| **Qué es**             | Identificador físico único de la *tarjeta de red (NIC)*. | Patrón de bits que diferencia la porción de Red de la porción de Host en una dirección IP. |
+| **Longitud**           | 48 bits (6 octetos, usualmente en hexadecimal). | 32 bits (4 octetos, usualmente en decimal para IPv4). |
+| **Ejemplo**            | `A4:5E:60:7B:9D:FA`                         | `255.255.255.0`                    |
+| **Nivel Modelo OSI**   | Capa 2 (Enlace de Datos).                   | Capa 3 (Red), intrínsecamente ligada a la IP. |
+| **Asignación**         | Quemada en fábrica por el manufacturador (basado en OUI asignado por IEEE). | Configurada manual o automáticamente (ej. por DHCP) como parte de la configuración IP de un host. |
+| **Cambia**             | Generalmente no (considerada permanente), aunque puede ser falseada (spoofing). | Sí, cambia según el diseño de la subred a la que pertenece el host. |
+| **Visibilidad**        | Local, solo relevante dentro de la misma subred física (segmento LAN). | Relevante para el enrutamiento IP entre diferentes subredes. |
+| **Propósito Principal**| Identificar un dispositivo de forma única en una red local para la entrega de tramas. | Ayudar a los dispositivos y routers a determinar si una IP de destino está en la misma red local o en una red remota. |
+
+🔎 **En resumen:**
+*   La **Dirección MAC** es como el "número de serie" físico e intransferible de tu tarjeta de red, usado para la comunicación directa dentro de tu red local.
+*   La **Máscara de Subred** es una "regla lógica" que se aplica a una Dirección IP para entender su estructura de red y host, crucial para el enrutamiento.
+*   **No tienen relación directa funcional:** La máscara de subred no interactúa con la MAC, ni viceversa. Ambas son necesarias, pero para funciones diferentes en capas distintas.
+
+----------------------------------------------------------------------------------------
 
 | Concepto Derivado de la IP y Máscara | Cómo se Determina / Identifica                                   | Ejemplo con `192.168.1.50/24` | Descripción y Propósito                                                                                                                              |
 | :------------------------------------ | :----------------------------------------------------------------- | :----------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -245,8 +282,8 @@ Para entender cómo una dirección *IP (Internet Protocol)* individual se relaci
 | **Número de Hosts Usables**         | Fórmula: 2<sup>(bits de host)</sup> - 2. <br/> Para /24 (con 8 bits de host): 2<sup>8</sup> - 2. | 256 - 2 = **254**              | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan 2 IPs (Dirección de Red y Dirección de Broadcast). (Una IPv4 tiene 32 bits; si 24 son de red, quedan 8 para hosts). |
 
 #### 🏡 Direcciones IPv4 Públicas vs. Privadas
-*   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs.
-*   **Privadas:** Para uso en redes internas (LANs). No son enrutables directamente en Internet.
+*   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs, LIRs o RIRs.
+*   **Privadas:** Para uso en redes internas (LANs). No son enrutables directamente en Internet y pueden repetirse en diferentes LANs. Se requiere NAT para que los dispositivos con IP privada accedan a Internet.
 #### Rangos Comunes de IP Privada (RFC 1918)
 Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil conocer cuáles son estos rangos de direcciones privadas estándar:
 
@@ -295,9 +332,11 @@ Jerarquía global:
     *   **ARIN:** Para Norteamérica.
     *   **LACNIC:** Para Latinoamérica y el Caribe.
     *   **RIPE NCC:** Para Europa, Oriente Medio y partes de Asia Central.
-
+  
+*   **ISPs (Internet Service Providers) y LIRs (Local Internet Registries):** Obtienen bloques de IPs de los RIRs y los asignan a organizaciones y usuarios finales.
+  
 #### 🚀 Dirección IPv6 (128 bits)
-Diseñada para suceder a IPv4 debido al agotamiento de direcciones.
+Diseñada para suceder a IPv4 debido al agotamiento de direcciones públicas IPv4.
 *   **Formato:** 8 grupos (hextetos) de 4 dígitos hexadecimales, separados por dos puntos (`:`).
     *   Ej: `2001:0db8:85a3:0000:0000:8a2e:0370:7334`
 *   **Reglas de Abreviación:**
