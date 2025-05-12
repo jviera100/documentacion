@@ -439,7 +439,7 @@ Cuando un dispositivo necesita enviar un paquete:
 **Importante: Diferenciar ARP/NDP de otros protocolos:**
 *   **ARP/NDP:** Descubren la dirección MAC asociada a una IP *dentro de la misma red local*.
 *   **NAT (Network Address Translation):** Traduce IPs privadas a públicas (y viceversa) en el router frontera, para comunicarse afuera red WAN.
-*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS).
+*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP privadas e IP publicas y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS).
 *   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa del modelo OSI y cada capa añade su propia cabecera al pasar la información hacia abajo: (Bits en L1, Tramas(frames) en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
 ## Capa 4: Transporte – Comunicación Confiable o Rápida Extremo a Extremo
