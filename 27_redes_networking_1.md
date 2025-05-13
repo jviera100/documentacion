@@ -456,6 +456,11 @@ Cuando un dispositivo necesita enviar un paquete:
 *   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP privadas e IP publicas y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS).
 *   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa del modelo OSI y cada capa añade su propia cabecera al pasar la información hacia abajo: (Bits en L1, Tramas(frames) en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
+| Protocolo/Mensaje        | Capa 3 Destino (IP) | Capa 2 Destino (MAC) | Propósito Principal                                                                 |
+|-------------------------|---------------------|----------------------|-------------------------------------------------------------------------------------|
+| **ARP Request** | IP de destino a resolver | `FF:FF:FF:FF:FF:FF`   | Preguntar a todos en la LAN por la MAC asociada a una IP específica.               |
+| **DHCP Discover (Inicial)** | `255.255.255.255`   | `FF:FF:FF:FF:FF:FF`   | Buscar servidores DHCP disponibles en la LAN para obtener una configuración IP. |
+
 ## Capa 4: Transporte – Comunicación Confiable o Rápida Extremo a Extremo
 
 *   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
