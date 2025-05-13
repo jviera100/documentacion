@@ -581,7 +581,7 @@ Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
 * "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
 
 #### Caso de Uso Aplicacion capa 7: Servicios en la Nube (Cloud Computing)
-Actualmente, muchas aplicaciones usan protocolos de esta capa para acceder a servicios de **Computación en la Nube** (recursos como servidores y software vía Internet). Los modelos comunes incluyen nubes **Públicas** (ej: AWS, Azure), **Privadas** (dedicadas a una organización) e **Híbridas** (combinación de ambas). La conectividad de red y los protocolos de aplicación son vitales para este acceso.
+Actualmente, muchas aplicaciones usan protocolos de esta capa para acceder a servicios de **Computación en la Nube** (recursos como servidores y software vía Internet). Los modelos comunes incluyen nubes **Públicas** (ej: AWS, Azure), **Privadas** (dedicadas a una organización) **comunitarias** servicios como consultas medicas e **Híbridas** (combinación de ambas). La conectividad de red y los protocolos de aplicación son vitales para este acceso.
 
 ## Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)*
 
@@ -747,11 +747,12 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 
 # convirtiendo desde tabla de conversion con calculos de decimal a hexadecimal y viceversa
 
-**1. Tabla de Conversión (Decimal <-> Hexadecimal) - Horizontal:**
+**1. Tabla de Conversión (Decimal <-> Hexadecimal <-> Binario) - Horizontal:**
 
-| Decimal: | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Hexadecimal: | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | A | B | C | D | E | F |
+| Decimal:     | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 14   | 15   |
+|---------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
+| Hexadecimal:  | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | A    | B    | C    | D    | E    | F    |
+| Binario:      | 0000 | 0001 | 0010 | 0011 | 0100 | 0101 | 0110 | 0111 | 1000 | 1001 | 1010 | 1011 | 1100 | 1101 | 1110 | 1111 |
 
 **2. Resumen del Cálculo:**
 
