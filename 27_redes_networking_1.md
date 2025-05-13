@@ -715,9 +715,19 @@ Herramienta para consultar servidores DNS (Domain Name System).
 *   Luego, escribir el nombre de dominio para consultar ese tipo de registro.
 *   exit: Para salir del modo interactivo.
 
-### Conversión de Decimal a Binario: Valor 192
+## Fundamentos de Sistemas Numéricos
 
-La tabla ilustra el proceso de conversión del número decimal 192 a su equivalente binario de 8 bits.
+*   **Números Decimales (Base 10):** Utilizan los dígitos del 0 al 9. Cada posición representa una potencia de 10. Es el sistema que usamos comúnmente.
+*   **Números Binarios (Base 2):** Utilizan solo los dígitos 0 y 1 (bits). Cada posición representa una potencia de 2. Fundamental para la computación.
+*   **Números Hexadecimales (Base 16):** Utilizan los dígitos del 0 al 9 y las letras de la A a la F (donde A=10, B=11, C=12, D=13, E=14, F=15). Cada posición representa una potencia de 16. Se usa a menudo como una representación más compacta del binario.
+
+## Métodos de Conversión entre Sistemas Numéricos
+
+### A. Conversión de Decimal a Binario (Usando Tabla Posicional)
+
+Este método se basa en encontrar qué potencias de 2 suman el número decimal.
+
+**Ejemplo: Convertir 192 (Decimal) a Binario**
 
 *   **Valor decimal:** El número a convertir (en este caso, 192).
 *   **Base:** La base del sistema numérico binario (2).
@@ -745,9 +755,9 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 
 128 + 64 = 192. Por lo tanto, los bits correspondientes a esas posiciones son 1, y los demás son 0. El resultado binario se lee de izquierda a derecha dentro de la tabla, correspondiente al orden de los exponentes y posiciones.
 
-# convirtiendo desde tabla de conversion con calculos de decimal a hexadecimal y viceversa
+### B. Decimal a Hexadecimal (Usando División Sucesiva y Tabla de Posición)
 
-**1. Tabla de Conversión (Decimal <-> Hexadecimal <-> Binario) - Horizontal:**
+**1. Tabla de Posición: Decimal ⇔ Hexadecimal ⇔ Binario**
 
 | Decimal:     | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 14   | 15   |
 |---------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
@@ -764,7 +774,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
     *   Cada dígito decimal se multiplica por 16 elevado a la potencia de su posición (de derecha a izquierda, comenzando con 0).
     *   Los resultados se suman. **Ejemplo:** 7D = (7 * 16^1) + (13 * 16^0) = 112 + 13 = 125
 
-# convirtiendo desde tabla de posicion y tabla conversion de decimal a binario a hexadecimal
+### C. Conversión de Decimal > Binario > Hexadecimal (usa tabla de posicion y tabla conversion)
 
 **Tabla de Conversión (decimal a Binario):**
 
@@ -787,7 +797,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 
 el primero suma 8 + 4 = 12 = c (tabla conversion) y la otra mitad suma 4 + 1 = 5
 
-# convirtiendo desde tabla de posicion y tabla conversion de hexadecimal a binario a decimal
+### D. Conversión de hexadecimal > binario > decimal (usa tabla de posicion y tabla conversion)
 
 **Tabla de Conversión (hexadecimal a Binario):**
 
