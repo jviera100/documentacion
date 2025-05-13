@@ -526,6 +526,9 @@ En el modelo TCP/IP, las funciones de las capas de Sesión, Presentación y Apli
 
 ### 🌐 Servicios y Protocolos de Aplicación Comunes
 
+*   **protocolo:** regla de traduccion del mensaje
+*   **puerto:** donde llega el mensaje
+
 | Protocolo                                | Puerto(s) Típicos | Transporte Usado | Descripción Breve                                                                |
 |------------------------------------------|-------------------|-------------------|----------------------------------------------------------------------------------|
 | **DNS (Domain Name System)**             | 53                | UDP (consultas), TCP (transferencias de zona) | Traduce nombres de dominio (ej: www.google.com) a direcciones IP.                    |
