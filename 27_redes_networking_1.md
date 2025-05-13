@@ -526,29 +526,43 @@ En el modelo TCP/IP, las funciones de las capas de Sesión, Presentación y Apli
 
 ### 🌐 Servicios y Protocolos de Aplicación Comunes
 
-*   **protocolo:** regla de traduccion del mensaje
-*   **puerto:** donde llega el mensaje
+Un **protocolo** es un conjunto de reglas y convenciones que definen cómo se formatea, transmite y recibe la información entre dispositivos en una red. Actúa como una "regla de traducción del mensaje" para que diferentes sistemas puedan entenderse. Cada servicio de aplicación utiliza uno o más protocolos y, típicamente, escucha o envía mensajes a través de un **puerto** específico, que es como una "dirección" dentro de un dispositivo donde llega un mensaje destinado a una aplicación particular.
 
-| Protocolo                                | Puerto(s) Típicos | Transporte Usado | Descripción Breve                                                                |
-|------------------------------------------|-------------------|-------------------|----------------------------------------------------------------------------------|
-| **DNS (Domain Name System)**             | 53                | UDP (consultas), TCP (transferencias de zona) | Traduce nombres de dominio (ej: www.google.com) a direcciones IP.                    |
-| **HTTP (Hypertext Transfer Protocol)**     | 80                | TCP               | Protocolo para la transferencia de páginas web y otros recursos en la World Wide Web. |
-| **HTTPS (HTTP Secure)**                  | 443               | TCP               | Versión segura de HTTP; cifra la comunicación usando TLS/SSL.                    |
-| **FTP (File Transfer Protocol)**         | 21 (control), 20 (datos) | TCP            | Protocolo para transferir archivos entre cliente y servidor.                        |
-| **TFTP (Trivial File Transfer Protocol)**| 69                | UDP               | Versión simplificada de FTP, sin autenticación, para transferencias rápidas.          |
-| **SMTP (Simple Mail Transfer Protocol)**   | 25                | TCP               | Para enviar correo electrónico entre servidores y de cliente a servidor.            |
-| **POP3 (Post Office Protocol v3)**       | 110               | TCP               | Para recuperar correo electrónico de un servidor (generalmente descarga y borra del servidor). |
-| **IMAP (Internet Message Access Protocol)**| 143               | TCP               | Para acceder a correo electrónico en un servidor (mantiene los mensajes en el servidor). |
-| **Telnet**                               | 23                | TCP               | Protocolo de emulación de terminal remoto (inseguro, transmite en texto plano).       |
-| **SSH (Secure Shell)**                   | 22                | TCP               | Protocolo seguro para acceso remoto a terminal, transferencia de archivos (SFTP), y túneles. |
-| **DHCP (Dynamic Host Configuration Protocol)**| 67 (servidor), 68 (cliente) | UDP    | Asigna automáticamente direcciones IP y otra configuración de red a los hosts.      |
-| **SNMP (Simple Network Management Protocol)**| 161, 162          | UDP               | Para monitorizar y gestionar dispositivos de red.                                 |
+| Protocolo                                | Puerto(s) Típicos | Transporte Usado | Descripción Detallada                                                                                                                               |
+|------------------------------------------|-------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **DNS (Domain Name System)**             | 53                | UDP (consultas), TCP (transferencias de zona) | **Traduce nombres de dominio** legibles por humanos (ej: www.google.com) a direcciones IP numéricas (ej: 172.217.160.142) y viceversa. Esencial para la navegación web y el acceso a servicios. Las consultas suelen usar UDP por su rapidez; las transferencias de zona (entre servidores DNS) usan TCP por su fiabilidad para grandes volúmenes de datos. |
+| **HTTP (Hypertext Transfer Protocol)**     | 80                | TCP               | Protocolo fundamental para la **World Wide Web**. Permite la solicitud y transferencia de recursos como documentos HTML, imágenes, y otros archivos entre un cliente (navegador) y un servidor web. Es un protocolo sin estado. |
+| **HTTPS (HTTP Secure)**                  | 443               | TCP               | Versión segura de HTTP. **Cifra la comunicación** entre el cliente y el servidor utilizando TLS (Transport Layer Security) o su predecesor SSL (Secure Sockets Layer), protegiendo la confidencialidad e integridad de los datos transferidos (ej: datos bancarios, contraseñas). |
+| **FTP (File Transfer Protocol)**         | 21 (control), 20 (datos) | TCP            | Diseñado para la **transferencia de archivos** entre un cliente y un servidor. Utiliza dos conexiones TCP: una para comandos y control (puerto 21) y otra para la transferencia de datos (puerto 20 en modo activo, o un puerto dinámico en modo pasivo). |
+| **TFTP (Trivial File Transfer Protocol)**| 69                | UDP               | Versión muy **simplificada de FTP**. No ofrece autenticación ni muchas de las funciones avanzadas de FTP. Usa UDP, lo que lo hace rápido pero menos fiable. Comúnmente usado para arrancar dispositivos de red o transferir archivos de configuración/firmware en redes locales. |
+| **SMTP (Simple Mail Transfer Protocol)**   | 25 (tradicional), 587 (con STARTTLS), 465 (SMTPS obsoleto) | TCP            | Protocolo estándar para el **envío de correo electrónico**. Se utiliza para transferir mensajes desde un cliente de correo a un servidor de correo, y también entre servidores de correo. Es un protocolo de "empuje" (push). **Ver "Interacción de Protocolos de Correo" abajo.** |
+| **POP3 (Post Office Protocol v3)**       | 110 (tradicional), 995 (POP3S) | TCP               | Utilizado para **recuperar correo electrónico** de un servidor. Generalmente, los mensajes se descargan al dispositivo del cliente y se eliminan del servidor (aunque puede configurarse para mantenerlos). Menos flexible para acceso desde múltiples dispositivos. **Ver "Interacción de Protocolos de Correo" abajo.** |
+| **IMAP (Internet Message Access Protocol)**| 143 (tradicional), 993 (IMAPS) | TCP               | Permite **acceder y gestionar correo electrónico** directamente en el servidor. Los mensajes se mantienen en el servidor, permitiendo la sincronización y el acceso desde múltiples clientes/dispositivos. Ofrece más funcionalidades que POP3 (ej: gestión de carpetas en el servidor). **Ver "Interacción de Protocolos de Correo" abajo.** |
+| **Telnet**                               | 23                | TCP               | Protocolo de **emulación de terminal remoto**. Permite acceder a la línea de comandos de un dispositivo remoto. Es **inseguro** porque toda la comunicación, incluidas las credenciales de acceso, se transmite en texto plano. Ha sido mayormente reemplazado por SSH. |
+| **SSH (Secure Shell)**                   | 22                | TCP               | Protocolo **seguro para acceso remoto** a terminales, transferencia de archivos (SFTP, SCP) y tunelización de otros protocolos. Cifra toda la sesión, protegiendo contra escuchas y manipulación. Es el reemplazo estándar de Telnet. |
+| **DHCP (Dynamic Host Configuration Protocol)**| 67 (servidor), 68 (cliente) | UDP    | **Asigna automáticamente direcciones IP** y otra información de configuración de red (máscara de subred, puerta de enlace, servidores DNS) a los dispositivos cliente en una red. Simplifica la administración de direcciones IP. |
+| **SNMP (Simple Network Management Protocol)**| 161 (agente), 162 (trap) | UDP               | Utilizado para la **monitorización y gestión de dispositivos de red** (routers, switches, servidores, impresoras). Permite a los administradores consultar el estado de los dispositivos, recibir alertas (traps) y, en algunos casos, modificar configuraciones. |
 
-**Más Detalles sobre Protocolos Seleccionados:**
-*   **HTML (Hypertext Markup Language):** No es un protocolo de comunicación, sino un lenguaje de marcado usado para estructurar y presentar contenido en páginas web (transferido usando HTTP/HTTPS).
-*   **VoIP (Voice over IP):** Familia de tecnologías y protocolos (como SIP, RTP) para transmitir voz sobre redes IP.
-*   **SMS (Short Message Service):** Aunque asociado a móviles, su infraestructura puede interactuar con redes IP.
-*   **PSTN (Public Switched Telephone Network):** La red telefónica tradicional. *Puerta de Enlace (Gateways)* VoIP-PSTN permiten llamadas entre ambas.
+**Interacción de Protocolos de Correo Electrónico:**
+*   Cuando envías un correo, tu cliente de correo (ej: Outlook, Thunderbird, Gmail web) usa **SMTP** para enviar el mensaje a tu servidor de correo saliente. Este servidor SMTP luego usa SMTP para reenviar el mensaje al servidor SMTP del destinatario.
+*   Para leer tus correos, tu cliente de correo usa **POP3** o **IMAP** para conectarse a tu servidor de correo entrante y descargar o visualizar los mensajes.
+    *   **POP3** es más simple y generalmente descarga los correos a tu dispositivo, eliminándolos del servidor. Es adecuado si accedes a tu correo desde un solo lugar.
+    *   **IMAP** mantiene los correos en el servidor y sincroniza los cambios en todos los dispositivos. Es ideal si revisas tu correo desde múltiples lugares (PC, teléfono, tablet).
+
+**Más Detalles sobre Tecnologías y Lenguajes Relacionados:**
+*   **HTML (Hypertext Markup Language):** No es un protocolo de comunicación, sino un **lenguaje de marcado** usado para estructurar y presentar contenido en páginas web (texto, imágenes, enlaces, etc.). Los archivos HTML son los que se transfieren comúnmente usando los protocolos HTTP o HTTPS.
+*   **VoIP (Voice over IP):** Es una familia de tecnologías y protocolos que permiten la transmisión de **voz sobre redes IP**. Protocolos clave incluyen:
+    *   **SIP (Session Initiation Protocol):** Para establecer, modificar y terminar sesiones de comunicación (ej: llamadas de voz o video). Puerto 5060/5061 (TCP/UDP).
+    *   **RTP (Real-time Transport Protocol):** Para transportar los datos de audio y video en tiempo real. Usa puertos UDP dinámicos.
+*   **SMS (Short Message Service):** Aunque fundamentalmente es un servicio de telefonía móvil, su infraestructura puede interactuar con redes IP a través de pasarelas SMS (SMS gateways) para enviar/recibir mensajes desde aplicaciones basadas en internet.
+*   **PSTN (Public Switched Telephone Network):** Es la red telefónica conmutada pública tradicional. Las *Puertas de Enlace (Gateways)* VoIP-PSTN son dispositivos que permiten la interconexión y las llamadas entre redes VoIP y la PSTN.
+
+**Herramientas para Pruebas y Análisis de Protocolos:**
+Aplicaciones como **"FileZilla"** (cliente FTP/SFTP) y **"Tera Term"** (cliente Telnet/SSH) son ejemplos de software que implementan estos protocolos de aplicación.
+*   Permiten a los usuarios **interactuar directamente con servidores** que ofrecen estos servicios (ej: subir/descargar archivos con FileZilla a un servidor FTP, o acceder remotamente a la consola de un servidor Linux con Tera Term usando SSH).
+*   Al utilizar estas herramientas, se puede **observar el comportamiento del protocolo en acción**. Por ejemplo, analizando el tráfico de red con herramientas como Wireshark mientras se usa FileZilla, se pueden ver los comandos FTP (puerto 21) y la transferencia de datos (puerto 20 o dinámico).
+*   En entornos de aprendizaje como **Packet Tracer**, se pueden simular estas interacciones, ayudando a comprender cómo se establece la comunicación, cómo se traducen los mensajes según las reglas del protocolo y cómo se transportan a través de los puertos específicos.
+*   Estas aplicaciones y simuladores son cruciales para **validar la correcta implementación y funcionamiento** de los servicios de red, diagnosticar problemas y profundizar en la comprensión del transporte de datos.
            
 ### ⚙️ Configuración de Direcciones IP: Estática vs. Dinámica (DHCP) (capa 7)
 Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servicio de aplicación para la configuración de *dispositivos (hosts)*(capa 7).
