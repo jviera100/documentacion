@@ -585,129 +585,126 @@ Actualmente, muchas aplicaciones usan protocolos de esta capa para acceder a ser
 
 ## Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)*
 
-Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas.
+Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas del modelo de red.
 
 ### `ipconfig` (Windows) / `ifconfig` o `ip addr` (Linux/macOS)
 Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (Gateway)*).
 *   `ipconfig /all` (Windows): Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease).
-*   `ipconfig /release` (libera la concesión DHCP actual).
-*   `ipconfig /renew` (solicita una nueva concesión DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS).
-*   si el técnico detecta que no se asignó una IP correcta, lo lógico es liberar y luego renovar la IP.
+*   `ipconfig /release` (Libera la concesión de dirección IP actual obtenida vía DHCP).
+*   `ipconfig /renew` (Solicita una nueva configuración al servidor DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS).
+*   si se detecta que no se asignó una IP correcta, lo lógico es liberar(release) y luego renovar la IP(renew).
+
+### `ifconfig` o `ip addr` (Linux/macOS)
+*   `ifconfig -a` (Muestra todas las interfaces de red configuradas en el 
+*   `ifconfig` (tradicional, puede estar obsoleto): Muestra y configura interfaces de red.
+*   `ip addr` (moderno): Muestra y gestiona direcciones IP e interfaces.
+
+| Propósito / Opción Común                     | Windows (`ipconfig`)   | Linux/macOS (Tradicional: `ifconfig`) | Linux/macOS (Moderno: `ip`)     |
+|----------------------------------------------|------------------------|---------------------------------------|---------------------------------|
+| Mostrar config. IP básica de todas las interfaces | `ipconfig`             | `ifconfig -a`                         | `ip addr show` o `ip a`         |
+| Mostrar config. IP detallada (incl. MAC, DNS) | `ipconfig /all`        | `ifconfig -a` (menos detalle que Win) | `ip addr show` (detalle similar)|
+| Liberar concesión IP DHCP (para una interfaz) | `ipconfig /release`    | `sudo dhclient -r [interfaz]`         | `sudo dhclient -r [interfaz]`   |
+| Renovar concesión IP DHCP (para una interfaz) | `ipconfig /renew`      | `sudo dhclient [interfaz]`            | `sudo dhclient [interfaz]`      |
+| Asignar IP estática (ejemplo)                | (Vía GUI o `netsh`)    | `sudo ifconfig [if] [ip] netmask [mask]` | `sudo ip addr add [ip]/[cidr] dev [if]` |
+| Habilitar/Deshabilitar interfaz              | `netsh interface set interface "Nombre" admin=enable/disable` | `sudo ifconfig [if] up/down` | `sudo ip link set [if] up/down` |
+
+*   **Nota Windows:** Si se detecta una IP incorrecta asignada por DHCP, es común usar `ipconfig /release` seguido de `ipconfig /renew`.
+*   **Nota Linux/macOS:** `ifconfig` está siendo reemplazado por el conjunto de herramientas `ip` (parte de `iproute2`) en muchas distribuciones modernas de Linux. `dhclient` es un cliente DHCP común en Linux.
 
 ### `ping` `[opciones]` `[destino_IP_o_nombre_de_host]` (Diagnóstico de Conectividad)
 
-El comando `ping` (Packet Internet Groper) se utiliza para probar la conectividad de red en la **Capa 3 (Red)** con un host destino. Funciona enviando mensajes **ICMP (Internet Control Message Protocol) Echo Request** y esperando recibir mensajes **ICMP Echo Reply**.
+El comando `ping` (Packet Internet Groper) se utiliza para probar la conectividad de red en la **Capa 3 (Red)** con un host destino. Funciona enviando mensajes **ICMP (Internet Control Message Protocol) Echo Request** y esperando recibir mensajes **ICMP Echo Reply**. Mide la latencia total de ida y vuelta (RTT) y verifica la alcanzabilidad.
 
-*   **Sintaxis Básica:** `ping [destino_IP_o_nombre_de_host]`
-*   **Salida Típica:** Muestra si el host destino respondió, el tiempo de ida y vuelta de los paquetes (latencia o RTT), el TTL (Time To Live) del paquete de respuesta y, a veces, la dirección IP resuelta si se usó un nombre de host.
+*   **Salida Típica:** Indica si el destino respondió, tiempo de ida y vuelta (latencia), y TTL.
     ```cmd
     C:\> ping www.google.com
     Haciendo ping a www.google.com [142.250.190.36] con 32 bytes de datos:
     Respuesta desde 142.250.190.36: bytes=32 tiempo=10ms TTL=118
-    Respuesta desde 142.250.190.36: bytes=32 tiempo=11ms TTL=118
     ```
 
-#### 🔹 Opciones Comunes de `ping` (Ejemplos para Windows):
+#### 🔹 Opciones Comunes de `ping`:
 
-| Opción     | Función                                                                                             |
-|------------|-----------------------------------------------------------------------------------------------------|
-| `-a`       | **Resuelve el nombre de host** a partir de la dirección IP destino. Útil para verificar DNS inverso.  |
-| `-t`       | **Envía pings indefinidamente** hasta que se detenga (Ctrl + C). Para monitoreo continuo.             |
-| `-n count` | Especifica el **número de solicitudes echo** a enviar (por defecto 4 en Windows).                   |
-| `-l size`  | Envía solicitudes echo con el **tamaño de datos especificado** en bytes (ej: `ping -l 1000 ...`).     |
-| `-4`       | Fuerza el uso de **IPv4**.                                                                          |
-| `-6`       | Fuerza el uso de **IPv6** (si está configurado en el sistema y la red).                             |
+| Función                                    | Opción Windows | Opción Linux/macOS (Conceptual/Común) |
+|--------------------------------------------|----------------|---------------------------------------|
+| Resolver nombre de host desde IP (en salida) | `-a`           | (Por defecto; `-n` para no resolver)  |
+| Enviar pings indefinidamente               | `-t`           | (Comportamiento por defecto)          |
+| Especificar número de solicitudes echo     | `-n count`     | `-c count`                            |
+| Especificar tamaño del payload de datos    | `-l size`      | `-s size` (payload, no incl. cabecera ICMP) |
+| Forzar uso de IPv4                         | `-4`           | `-4`                                  |
+| Forzar uso de IPv6                         | `-6`           | `-6`                                  |
+| Establecer intervalo entre pings (segundos)| (N/A directo)  | `-i interval`                         |
 
-#### ✅ Ejemplos de Uso:
+#### ✅ Ejemplos de Uso (`ping`):
 
 ```bash
-# Prueba básica a un nombre de host
-ping www.google.com
-
-# Prueba a una dirección IP específica
-ping 8.8.8.8
-
-# Intenta resolver el nombre de host de la IP 8.8.8.8
-ping -a 8.8.8.8
-
-# Envía pings continuamente a la puerta de enlace (hasta Ctrl+C)
-ping -t 192.168.1.1
-
-# Envía 5 pings usando solo IPv4
-ping -n 5 -4 www.ejemplo.com
-
-# Envía pings usando IPv6 a un host que lo soporte
-ping -6 ipv6.google.com
+# Windows & Linux/macOS (conceptual)
+ping www.google.com       # Prueba básica
+ping 8.8.8.8              # Prueba a IP
+ping -t 192.168.1.1       # (Win) Ping continuo
+ping 192.168.1.1          # (Linux) Ping continuo (Ctrl+C para parar)
+ping -n 10 www.ejemplo.com # (Win) 10 pings
+ping -c 10 www.ejemplo.com # (Linux) 10 pings
 ```
 
 ### `tracert` (Windows) / `traceroute` (Linux/macOS) `[opciones]` `[destino_IP_o_nombre_de_host]` (Trazado de Ruta)
 
-Este comando se utiliza para descubrir la ruta (la secuencia de routers o "saltos") que toman los paquetes para llegar a un host destino a través de una red IP. También mide el tiempo de tránsito (latencia) hacia cada uno de esos saltos.
+Descubre la ruta (secuencia de routers o "saltos") que los paquetes toman para llegar a un host destino. Mide la latencia a cada salto, ayudando a identificar dónde pueden estar ocurriendo retrasos o pérdidas.
 
-*   **Funcionamiento:** Envía paquetes (ICMP en `tracert` de Windows por defecto; UDP en `traceroute` de Unix/Linux por defecto, aunque puede usar ICMP con `-I`) con valores de TTL (Time To Live) que se incrementan progresivamente.
-    1.  El primer paquete se envía con TTL=1. El primer router en la ruta decrementa el TTL a 0, descarta el paquete y envía un mensaje ICMP "Time Exceeded" de vuelta al origen.
-    2.  El siguiente paquete se envía con TTL=2, llegando al segundo router, que responde de manera similar.
-    3.  Este proceso continúa hasta que los paquetes alcanzan el host destino (que responde de forma diferente, por ejemplo, con un ICMP "Port Unreachable" si se usa UDP, o "Echo Reply" si se usa ICMP para el trazado).
-*   **Salida Típica:** Muestra una lista numerada de los saltos (routers) intermedios, sus direcciones IP (y nombres de host si se pueden resolver), y generalmente tres mediciones de tiempo de ida y vuelta (latencia) para cada salto.
+*   **Funcionamiento:** Envía paquetes con TTL (Time To Live) incremental. Cada router en la ruta devuelve un mensaje ICMP "Time Exceeded", identificándose y permitiendo medir la latencia hasta él.   
+*   **Salida Típica:** Lista los saltos con sus IPs y tiempos de respuesta.
     ```cmd
     C:\> tracert www.google.com
 
-    Traza a la dirección www.google.com [142.250.190.36]
-    sobre un máximo de 30 saltos:
-
+    Traza a la dirección www.google.com [142.250.190.36] sobre un máximo de 30 saltos:
       1     1 ms     1 ms     1 ms  mi.router.local [192.168.1.1]
       2     8 ms     7 ms     8 ms  router.isp.com [10.0.0.1]
-      3     9 ms    10 ms     9 ms  otro.router.isp.com [10.0.1.5]
-      4    15 ms    14 ms    15 ms  core.network.net [203.0.113.45]
-      5     *        *        *     Tiempo de espera agotado para esta solicitud.
-      6    22 ms    21 ms    22 ms  edge.google.net [74.125.244.193]
-      7    20 ms    21 ms    20 ms  108.170.245.161
-      8    21 ms    20 ms    21 ms  142.251.52.27
+      3     *        *        *     Tiempo de espera agotado para esta solicitud.
+    ... (saltos intermedios pueden mostrar latencias variables o más tiempos de espera) ...
       9    20 ms    20 ms    20 ms  mad41s19-in-f4.1e100.net [142.250.190.36]
-
     Traza completa.
     ```
 
 #### 🔹 Opciones Comunes:
 
-*   **`tracert` (Windows):**
-    *   `-d`: No resuelve direcciones IP a nombres de host. Puede acelerar el proceso.
-    *   `-h max_saltos`: Número máximo de saltos a buscar (por defecto 30).
-    *   `-w timeout`: Tiempo de espera en milisegundos para cada respuesta (por defecto 4000ms o 4s).
-    *   `-4` / `-6`: Fuerza el uso de IPv4 o IPv6.
-
-*   **`traceroute` (Linux/macOS):**
-    *   `-n`: No resuelve direcciones IP a nombres de host (similar a `-d` en Windows).
-    *   `-m max_ttl`: Establece el máximo TTL (saltos) (similar a `-h` en Windows).
-    *   `-w waittime`: Tiempo de espera para una respuesta (en segundos).
-    *   `-I`: Usa paquetes ICMP Echo Request en lugar de UDP (hace que funcione más como el `tracert` de Windows).
-    *   `-p puerto`: Especifica el puerto UDP destino (si usa UDP).
-    *   `-4` / `-6`: Fuerza el uso de IPv4 o IPv6.
+| Función                                    | Windows (`tracert`) | Linux/macOS (`traceroute`)    |
+|--------------------------------------------|---------------------|-------------------------------|
+| No resolver IPs a nombres de host          | `-d`                | `-n`                          |
+| Número máximo de saltos (TTL máximo)       | `-h max_saltos`     | `-m max_ttl`                  |
+| Tiempo de espera por respuesta             | `-w timeout (ms)`   | `-w waittime (s, flotante)`   |
+| Forzar uso de IPv4                         | `-4`                | `-4`                          |
+| Forzar uso de IPv6                         | `-6`                | `-6`                          |
+| Usar paquetes ICMP Echo (en lugar de UDP)  | (Por defecto)       | `-I` (puede requerir `sudo`)  |
+| Especificar puerto destino (si usa UDP)    | (N/A, usa ICMP)     | `-p puerto`                   |
+| Número de paquetes de sondeo por salto     | (N/A directo, 3 por defecto) | `-q nqueries`              |
 
 #### ✅ Ejemplos de Uso:
 
 ```bash
-# Windows: Trazar ruta a google.com sin resolver nombres de host
-tracert -d www.google.com
-
-# Linux/macOS: Trazar ruta a google.com usando ICMP
-sudo traceroute -I www.google.com
-
-# Linux/macOS: Trazar ruta a google.com usando IPv6
-traceroute -6 ipv6.google.com
+# Windows & Linux/macOS (conceptual)
+tracert -d www.google.com # Windows: Trazar ruta a google.com sin resolver nombres de host
+sudo traceroute -I www.google.com # Linux/macOS: Trazar ruta a google.com usando ICMP
+traceroute -6 ipv6.google.com # Linux/macOS: Trazar ruta a google.com usando IPv6
 ```
 
 ### `netstat`(monitoreo de conecciones activas)
 Muestra información sobre conexiones de red activas, puertos en escucha, estadísticas de Ethernet, la tabla de enrutamiento IP, estadísticas de IPv4/IPv6, etc.
-*   **Windows:**
-    *   `netstat -a` (muestra todas las conexiones activas y puertos en escucha).
-    *   `netstat -n` (muestra direcciones y números de puerto en formato numérico).
-    *   `netstat -o` (muestra el ID del proceso propietario de cada conexión).
-    *   `netstat -r` (muestra la tabla de enrutamiento, similar a `route print`).
-    *   Combinado: `netstat -ano`
-*   **Linux:**
-    *   `netstat -tulnp` (muestra puertos TCP y UDP en escucha (`l`), sin resolver nombres (`n`), con el programa/PID (`p`)). (Nota: `netstat` puede estar obsoleto en algunas distros Linux, reemplazado por `ss`).
-    *   `ss -tulnp` (alternativa moderna a `netstat`).
+
+| Función                                                      | Opción Windows | Opción Linux/macOS (o `ss`)   |
+|--------------------------------------------------------------|----------------|-------------------------------|
+| Muestra todas las conexiones activas y puertos en escucha    | `-a`           | `-a`                          |
+| Muestra direcciones/puertos en formato numérico (no resolver)| `-n`           | `-n`                          |
+| Muestra el ID del proceso (PID) asociado a la conexión     | `-o`           | `-p` (puede requerir `sudo`)  |
+| Muestra la tabla de enrutamiento IP                          | `-r`           | `-r`                          |
+| Muestra estadísticas de interfaz Ethernet/red                | `-e`           | `-i`                          |
+| Muestra estadísticas por protocolo (TCP, UDP, ICMP, IP)      | `-s`           | `-s`                          |
+| Muestra solo sockets TCP                                     | (Filtrar salida) | `-t` (o `ss -t`)              |
+| Muestra solo sockets UDP                                     | (Filtrar salida) | `-u` (o `ss -u`)              |
+| Muestra solo sockets en estado de escucha                    | (Filtrar salida con `findstr LISTEN`) | `-l` (o `ss -l`)              |
+
+*   **Ejemplos de Combinaciones Populares:**
+    *   **Windows:** `netstat -ano`(muestra todo, numérico, con PIDs).
+    *   **Linux:** `netstat -tulnp` o, preferiblemente, `ss -tulnp` (muestra puertos TCP/UDP (tu) en escucha (l), numéricos (n), con programa/PID (p)).
+    *   Nota: En muchas distribuciones Linux modernas, `ss (socket statistics)` es el sucesor de `netstat` y ofrece un rendimiento superior y más opciones.
 
 ### `nslookup` `[nombre_de_dominio_o_IP]`(consulta a DNS nombre o IP de URI)
 Herramienta para consultar servidores DNS (Domain Name System).
@@ -722,7 +719,11 @@ Herramienta para consultar servidores DNS (Domain Name System).
     Addresses:  2607:f8b0:4004:c06::64
                 142.250.190.36
     ```
-*   Puede usarse en modo interactivo para especificar servidores DNS a consultar, tipos de registros a buscar (A, MX, NS, CNAME, etc.).
+*   **Modo Interactivo:** Escribiendo nslookup sin argumentos se entra en modo interactivo. Para especificar servidores DNS a consultar, tipos de registros a buscar (A, MX, NS, CNAME, etc.) Dentro de este modo, se pueden usar comandos como:
+*   server [IP_servidor_DNS]: Para cambiar el servidor DNS a consultar.
+*   set type=[TIPO_REGISTRO] (ej: set type=MX, set type=NS, set type=AAAA, set type=CNAME, set type=SOA): Para especificar el tipo de registro DNS a buscar.
+*   Luego, escribir el nombre de dominio para consultar ese tipo de registro.
+*   exit: Para salir del modo interactivo.
 
 ### Conversión de Decimal a Binario: Valor 192
 
