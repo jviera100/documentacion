@@ -587,28 +587,18 @@ Actualmente, muchas aplicaciones usan protocolos de esta capa para acceder a ser
 
 Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas del modelo de red.
 
-### `ipconfig` (Windows) / `ifconfig` o `ip addr` (Linux/macOS)
-Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (Gateway)*).
-*   `ipconfig /all` (Windows): Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease).
-*   `ipconfig /release` (Libera la concesión de dirección IP actual obtenida vía DHCP).
-*   `ipconfig /renew` (Solicita una nueva configuración al servidor DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS).
-*   si se detecta que no se asignó una IP correcta, lo lógico es liberar(release) y luego renovar la IP(renew).
-
-### `ifconfig` o `ip addr` (Linux/macOS)
-*   `ifconfig -a` (Muestra todas las interfaces de red configuradas en el 
-*   `ifconfig` (tradicional, puede estar obsoleto): Muestra y configura interfaces de red.
-*   `ip addr` (moderno): Muestra y gestiona direcciones IP e interfaces.
+### Comparativa de Comandos de Configuración IP
 
 | Propósito / Opción Común                     | Windows (`ipconfig`)   | Linux/macOS (Tradicional: `ifconfig`) | Linux/macOS (Moderno: `ip`)     |
 |----------------------------------------------|------------------------|---------------------------------------|---------------------------------|
-| Mostrar config. IP básica de todas las interfaces | `ipconfig`             | `ifconfig -a`                         | `ip addr show` o `ip a`         |
-| Mostrar config. IP detallada (incl. MAC, DNS) | `ipconfig /all`        | `ifconfig -a` (menos detalle que Win) | `ip addr show` (detalle similar)|
-| Liberar concesión IP DHCP (para una interfaz) | `ipconfig /release`    | `sudo dhclient -r [interfaz]`         | `sudo dhclient -r [interfaz]`   |
-| Renovar concesión IP DHCP (para una interfaz) | `ipconfig /renew`      | `sudo dhclient [interfaz]`            | `sudo dhclient [interfaz]`      |
+| Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (Gateway)*). | `ipconfig`             | `ifconfig -a`                         | `ip addr show` o `ip a`         |
+| Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease). | `ipconfig /all`        | `ifconfig -a` (menos detalle que Win) | `ip addr show` (detalle similar)|
+| Libera la concesión de dirección IP actual obtenida vía DHCP | `ipconfig /release`    | `sudo dhclient -r [interfaz]`         | `sudo dhclient -r [interfaz]`   |
+| Solicita una nueva configuración al servidor DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS | `ipconfig /renew`      | `sudo dhclient [interfaz]`            | `sudo dhclient [interfaz]`      |
 | Asignar IP estática (ejemplo)                | (Vía GUI o `netsh`)    | `sudo ifconfig [if] [ip] netmask [mask]` | `sudo ip addr add [ip]/[cidr] dev [if]` |
 | Habilitar/Deshabilitar interfaz              | `netsh interface set interface "Nombre" admin=enable/disable` | `sudo ifconfig [if] up/down` | `sudo ip link set [if] up/down` |
 
-*   **Nota Windows:** Si se detecta una IP incorrecta asignada por DHCP, es común usar `ipconfig /release` seguido de `ipconfig /renew`.
+*   **Nota Windows:** Si se detecta una IP incorrecta asignada por DHCP, es común usar `ipconfig /release` para liberar, seguido de `ipconfig /renew` para renovar configuracion DHCP.
 *   **Nota Linux/macOS:** `ifconfig` está siendo reemplazado por el conjunto de herramientas `ip` (parte de `iproute2`) en muchas distribuciones modernas de Linux. `dhclient` es un cliente DHCP común en Linux.
 
 ### `ping` `[opciones]` `[destino_IP_o_nombre_de_host]` (Diagnóstico de Conectividad)
