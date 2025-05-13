@@ -319,7 +319,7 @@ Para que tus *dispositivos (hosts)* con IPs privadas (en tu LAN) accedan a Inter
 Cada red privada tiene su propia IP pública asignada por su proveedor de servicios de internet (ISP), sin compartirla con redes vecinas, incluso si se comunican entre sí. Su asignación puede ser:
 
 *   Manual (IP fija): Permanece constante en el tiempo, asignada por el ISP.
-*   Automática (IP dinámica): Asignada por el ISP vía DHCP (Dynamic Host Configuration Protocol), pudiendo cambiar periódicamente. Esto es común en hogares y pequeñas empresas.
+*   Automática (IP dinámica): Asignada por el ISP vía DHCP (Dynamic Host Configuration Protocol es capa 7), pudiendo cambiar periódicamente. Esto es común en hogares y pequeñas empresas.
 
 Independientemente de su método de asignación, NAT dirige todo el tráfico de la red interna a través de la IP pública disponible, asegurando el enrutamiento y la seguridad de la comunicación.
 
@@ -331,7 +331,7 @@ Independientemente de su método de asignación, NAT dirige todo el tráfico de 
 
 #### ⚙️ Direcciones IPv4 Especiales
 *   **Loopback:** `127.0.0.0/8` (comúnmente `127.0.0.1`). Se usa para probar la pila TCP/IP del propio host.
-*   **Link-Local (APIPA - Automatic Private IP Addressing):** `169.254.0.0/16`. Autoasignada por sistemas operativos (como Windows) si no se puede obtener una dirección IP de un servidor DHCP. Permite comunicación limitada en la red local.
+*   **Link-Local (APIPA - Automatic Private IP Addressing):** `169.254.0.0/16`. Autoasignada por sistemas operativos (como Windows) si no se puede obtener una dirección IP de un servidor DHCP(capa 7). Permite comunicación limitada en la red local.
 *   **Experimental (TEST-NET):** `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24` (reservadas para documentación y ejemplos).
 *   **Direcciones Reservadas (IANA):** Incluye rangos para multidifusión (`224.0.0.0/4`), futuro uso (`240.0.0.0/4`).
 
@@ -437,7 +437,7 @@ Un modelo de diseño jerárquico ampliamente utilizado (ej: por Cisco) divide la
     *   **Dispositivos Típicos:** Switches de alta capacidad y velocidad (generalmente switches multicapa) o routers de gama alta.
     *   **Consideraciones:** Máxima velocidad, alta disponibilidad, redundancia. Se evita la implementación de políticas complejas que puedan introducir latencia.
 
-### 🤝 Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2)
+### 🤝 ARP Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2)
 Cuando un dispositivo necesita enviar un paquete:
 1.  **Destino en la misma red local:**
     *   El dispositivo conoce la IP de destino. Necesita la dirección MAC de destino para crear la trama de Capa 2.
@@ -453,7 +453,7 @@ Cuando un dispositivo necesita enviar un paquete:
 **Importante: Diferenciar ARP/NDP de otros protocolos:**
 *   **ARP/NDP:** Descubren la dirección MAC asociada a una IP *dentro de la misma red local*.
 *   **NAT (Network Address Translation):** Traduce IPs privadas a públicas (y viceversa) en el router frontera, para comunicarse afuera red WAN.
-*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP privadas e IP publicas y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS).
+*   **DHCP (Dynamic Host Configuration Protocol):** En capa 7. Asigna dinámicamente direcciones IP privadas e IP publicas y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS).
 *   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa del modelo OSI y cada capa añade su propia cabecera al pasar la información hacia abajo: (Bits en L1, Tramas(frames) en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
 | Protocolo/Mensaje        | Capa 3 Destino (IP) | Capa 2 Destino (MAC) | Propósito Principal                                                                 |
@@ -529,8 +529,8 @@ En el modelo TCP/IP, las funciones de las capas de Sesión, Presentación y Apli
 *   **SMS (Short Message Service):** Aunque asociado a móviles, su infraestructura puede interactuar con redes IP.
 *   **PSTN (Public Switched Telephone Network):** La red telefónica tradicional. *Puerta de Enlace (Gateways)* VoIP-PSTN permiten llamadas entre ambas.
            
-### ⚙️ Configuración de Direcciones IP: Estática vs. Dinámica (DHCP)
-Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servicio de aplicación para la configuración de *dispositivos (hosts)*.
+### ⚙️ Configuración de Direcciones IP: Estática vs. Dinámica (DHCP) (capa 7)
+Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servicio de aplicación para la configuración de *dispositivos (hosts)*(capa 7).
 *   **Estática:** La dirección IP, máscara de subred, puerta de enlace predeterminada y servidores DNS se configuran manualmente en cada host.
     *   **Ventajas:** Control predecible (bueno para servidores, impresoras).
     *   **Desventajas:** Consume tiempo, propenso a errores de configuración, difícil de gestionar en redes grandes.
@@ -549,7 +549,7 @@ Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
 
 ### 📡 Identificadores de Red Comunes (Configuración de Usuario)
 *   **SSID (Service Set Identifier):** El nombre público de una red Wi-Fi, configurado en el Punto de Acceso.
-*   **Servidor DNS:** La dirección IP del servidor que el host usará para resolver nombres de dominio. A menudo se obtiene vía DHCP.
+*   **Servidor DNS:** La dirección IP del servidor que el host usará para resolver nombres de dominio. A menudo se obtiene vía DHCP (capa 7).
 * "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
 
 #### Caso de Uso Aplicacion capa 7: Servicios en la Nube (Cloud Computing)
