@@ -591,7 +591,8 @@ Estos comandos son esenciales para diagnosticar problemas de conectividad y conf
 Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (Gateway)*).
 *   `ipconfig /all` (Windows): Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease).
 *   `ipconfig /release` (libera la concesión DHCP actual).
-*   `ipconfig /renew` (solicita una nueva concesión DHCP).
+*   `ipconfig /renew` (solicita una nueva concesión DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS).
+*   si el técnico detecta que no se asignó una IP correcta, lo lógico es liberar y luego renovar la IP.
 
 ### `ping` `[destino_IP_o_nombre_de_host]`(diagnostico de conección)
 Prueba la conectividad de Capa 3 (alcance IP) con un host destino enviando mensajes ICMP Echo Request y esperando ICMP Echo Reply.
