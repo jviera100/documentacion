@@ -594,32 +594,108 @@ Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (G
 *   `ipconfig /renew` (solicita una nueva concesión DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS).
 *   si el técnico detecta que no se asignó una IP correcta, lo lógico es liberar y luego renovar la IP.
 
-### `ping` `[destino_IP_o_nombre_de_host]`(diagnostico de conección)
-Prueba la conectividad de Capa 3 (alcance IP) con un host destino enviando mensajes ICMP Echo Request y esperando ICMP Echo Reply.
-*   **Salida Típica:** Indica si el destino respondió, tiempo de ida y vuelta (latencia), TTL.
+### `ping` `[opciones]` `[destino_IP_o_nombre_de_host]` (Diagnóstico de Conectividad)
+
+El comando `ping` (Packet Internet Groper) se utiliza para probar la conectividad de red en la **Capa 3 (Red)** con un host destino. Funciona enviando mensajes **ICMP (Internet Control Message Protocol) Echo Request** y esperando recibir mensajes **ICMP Echo Reply**.
+
+*   **Sintaxis Básica:** `ping [destino_IP_o_nombre_de_host]`
+*   **Salida Típica:** Muestra si el host destino respondió, el tiempo de ida y vuelta de los paquetes (latencia o RTT), el TTL (Time To Live) del paquete de respuesta y, a veces, la dirección IP resuelta si se usó un nombre de host.
     ```cmd
     C:\> ping www.google.com
     Haciendo ping a www.google.com [142.250.190.36] con 32 bytes de datos:
     Respuesta desde 142.250.190.36: bytes=32 tiempo=10ms TTL=118
+    Respuesta desde 142.250.190.36: bytes=32 tiempo=11ms TTL=118
     ```
-*   **Diagnóstico:**
-    *   Si `ping` a un nombre de host falla pero a su IP funciona -> Problema de resolución DNS.
-    *   Si `ping` a la IP falla -> Problema de enrutamiento, firewall bloqueando ICMP, o el host destino no está disponible.
-    *   Hacer `ping` a la puerta de enlace predeterminada puede ayudar a aislar si el problema es local o externo.
 
-### `tracert` (Windows) / `traceroute` (Linux/macOS) `[destino_IP_o_nombre_de_host]`(diagnostico de latencia)
-Muestra la ruta (la secuencia de routers o "saltos") que toman los paquetes para llegar al destino. Envía paquetes con TTL incremental.
-*   Útil para identificar dónde se está perdiendo la conectividad o dónde hay alta latencia en la ruta.
+#### 🔹 Opciones Comunes de `ping` (Ejemplos para Windows):
+
+| Opción     | Función                                                                                             |
+|------------|-----------------------------------------------------------------------------------------------------|
+| `-a`       | **Resuelve el nombre de host** a partir de la dirección IP destino. Útil para verificar DNS inverso.  |
+| `-t`       | **Envía pings indefinidamente** hasta que se detenga (Ctrl + C). Para monitoreo continuo.             |
+| `-n count` | Especifica el **número de solicitudes echo** a enviar (por defecto 4 en Windows).                   |
+| `-l size`  | Envía solicitudes echo con el **tamaño de datos especificado** en bytes (ej: `ping -l 1000 ...`).     |
+| `-4`       | Fuerza el uso de **IPv4**.                                                                          |
+| `-6`       | Fuerza el uso de **IPv6** (si está configurado en el sistema y la red).                             |
+
+#### ✅ Ejemplos de Uso:
+
+```bash
+# Prueba básica a un nombre de host
+ping www.google.com
+
+# Prueba a una dirección IP específica
+ping 8.8.8.8
+
+# Intenta resolver el nombre de host de la IP 8.8.8.8
+ping -a 8.8.8.8
+
+# Envía pings continuamente a la puerta de enlace (hasta Ctrl+C)
+ping -t 192.168.1.1
+
+# Envía 5 pings usando solo IPv4
+ping -n 5 -4 www.ejemplo.com
+
+# Envía pings usando IPv6 a un host que lo soporte
+ping -6 ipv6.google.com
+```
+
+### `tracert` (Windows) / `traceroute` (Linux/macOS) `[opciones]` `[destino_IP_o_nombre_de_host]` (Trazado de Ruta)
+
+Este comando se utiliza para descubrir la ruta (la secuencia de routers o "saltos") que toman los paquetes para llegar a un host destino a través de una red IP. También mide el tiempo de tránsito (latencia) hacia cada uno de esos saltos.
+
+*   **Funcionamiento:** Envía paquetes (ICMP en `tracert` de Windows por defecto; UDP en `traceroute` de Unix/Linux por defecto, aunque puede usar ICMP con `-I`) con valores de TTL (Time To Live) que se incrementan progresivamente.
+    1.  El primer paquete se envía con TTL=1. El primer router en la ruta decrementa el TTL a 0, descarta el paquete y envía un mensaje ICMP "Time Exceeded" de vuelta al origen.
+    2.  El siguiente paquete se envía con TTL=2, llegando al segundo router, que responde de manera similar.
+    3.  Este proceso continúa hasta que los paquetes alcanzan el host destino (que responde de forma diferente, por ejemplo, con un ICMP "Port Unreachable" si se usa UDP, o "Echo Reply" si se usa ICMP para el trazado).
+*   **Salida Típica:** Muestra una lista numerada de los saltos (routers) intermedios, sus direcciones IP (y nombres de host si se pueden resolver), y generalmente tres mediciones de tiempo de ida y vuelta (latencia) para cada salto.
     ```cmd
     C:\> tracert www.google.com
+
     Traza a la dirección www.google.com [142.250.190.36]
     sobre un máximo de 30 saltos:
-      1    <1 ms    <1 ms    <1 ms  192.168.1.1
-      2     8 ms     7 ms     8 ms  router.isp.example.com [ISP_ROUTER_IP]
-      ...
-     10    10 ms     9 ms    10 ms  dfw28s01-in-f4.1e100.net [142.250.190.36]
+
+      1     1 ms     1 ms     1 ms  mi.router.local [192.168.1.1]
+      2     8 ms     7 ms     8 ms  router.isp.com [10.0.0.1]
+      3     9 ms    10 ms     9 ms  otro.router.isp.com [10.0.1.5]
+      4    15 ms    14 ms    15 ms  core.network.net [203.0.113.45]
+      5     *        *        *     Tiempo de espera agotado para esta solicitud.
+      6    22 ms    21 ms    22 ms  edge.google.net [74.125.244.193]
+      7    20 ms    21 ms    20 ms  108.170.245.161
+      8    21 ms    20 ms    21 ms  142.251.52.27
+      9    20 ms    20 ms    20 ms  mad41s19-in-f4.1e100.net [142.250.190.36]
+
     Traza completa.
     ```
+
+#### 🔹 Opciones Comunes:
+
+*   **`tracert` (Windows):**
+    *   `-d`: No resuelve direcciones IP a nombres de host. Puede acelerar el proceso.
+    *   `-h max_saltos`: Número máximo de saltos a buscar (por defecto 30).
+    *   `-w timeout`: Tiempo de espera en milisegundos para cada respuesta (por defecto 4000ms o 4s).
+    *   `-4` / `-6`: Fuerza el uso de IPv4 o IPv6.
+
+*   **`traceroute` (Linux/macOS):**
+    *   `-n`: No resuelve direcciones IP a nombres de host (similar a `-d` en Windows).
+    *   `-m max_ttl`: Establece el máximo TTL (saltos) (similar a `-h` en Windows).
+    *   `-w waittime`: Tiempo de espera para una respuesta (en segundos).
+    *   `-I`: Usa paquetes ICMP Echo Request en lugar de UDP (hace que funcione más como el `tracert` de Windows).
+    *   `-p puerto`: Especifica el puerto UDP destino (si usa UDP).
+    *   `-4` / `-6`: Fuerza el uso de IPv4 o IPv6.
+
+#### ✅ Ejemplos de Uso:
+
+```bash
+# Windows: Trazar ruta a google.com sin resolver nombres de host
+tracert -d www.google.com
+
+# Linux/macOS: Trazar ruta a google.com usando ICMP
+sudo traceroute -I www.google.com
+
+# Linux/macOS: Trazar ruta a google.com usando IPv6
+traceroute -6 ipv6.google.com
+```
 
 ### `netstat`(monitoreo de conecciones activas)
 Muestra información sobre conexiones de red activas, puertos en escucha, estadísticas de Ethernet, la tabla de enrutamiento IP, estadísticas de IPv4/IPv6, etc.
@@ -648,7 +724,6 @@ Herramienta para consultar servidores DNS (Domain Name System).
     ```
 *   Puede usarse en modo interactivo para especificar servidores DNS a consultar, tipos de registros a buscar (A, MX, NS, CNAME, etc.).
 
----
 ### Conversión de Decimal a Binario: Valor 192
 
 La tabla ilustra el proceso de conversión del número decimal 192 a su equivalente binario de 8 bits.
