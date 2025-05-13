@@ -312,7 +312,7 @@ Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil con
 
 *Nota: En cada subred creada, 2 IPs no son usables por dispositivos (hosts): la Dirección de Red y la Dirección de Broadcast.*
 
-### 3. Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation)
+### 3. Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation). Entre Capa 3 y Capa 4 (principalmente Capa 3 Red (Network))
 
 Para que tus *dispositivos (hosts)* con IPs privadas (en tu LAN) accedan a Internet, el router actúa como intermediario esencial. Utiliza **NAT (Network Address Translation)** para traducir la IP privada de tu dispositivo a su propia IP pública (de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* WAN) al enviar datos, y revierte esta traducción para las respuestas entrantes. En tu red local, todos los dispositivos comparten la misma *Puerta de Enlace (Gateway)* e IP pública asignada por el router al comunicarse con el exterior, mientras NAT gestiona las conexiones y el tráfico de manera eficiente.
 
@@ -437,7 +437,7 @@ Un modelo de diseño jerárquico ampliamente utilizado (ej: por Cisco) divide la
     *   **Dispositivos Típicos:** Switches de alta capacidad y velocidad (generalmente switches multicapa) o routers de gama alta.
     *   **Consideraciones:** Máxima velocidad, alta disponibilidad, redundancia. Se evita la implementación de políticas complejas que puedan introducir latencia.
 
-### 🤝 ARP Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2)
+### 🤝 ARP Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2 Enlace de datos (Data Link))
 Cuando un dispositivo necesita enviar un paquete:
 1.  **Destino en la misma red local:**
     *   El dispositivo conoce la IP de destino. Necesita la dirección MAC de destino para crear la trama de Capa 2.
@@ -451,9 +451,9 @@ Cuando un dispositivo necesita enviar un paquete:
     *   El router, al recibir el paquete, consultará su tabla de enrutamiento y repetirá un proceso similar para encontrar la MAC del siguiente salto o del destino final si está directamente conectado.
 
 **Importante: Diferenciar ARP/NDP de otros protocolos:**
-*   **ARP/NDP:** Descubren la dirección MAC asociada a una IP *dentro de la misma red local*.
-*   **NAT (Network Address Translation):** Traduce IPs privadas a públicas (y viceversa) en el router frontera, para comunicarse afuera red WAN.
-*   **DHCP (Dynamic Host Configuration Protocol):** En capa 7. Asigna dinámicamente direcciones IP privadas e IP publicas y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS).
+*   **ARP/NDP:** Descubren la dirección MAC asociada a una IP *dentro de la misma red local*. (Interacción Capa 3 - Capa 2 Enlace de datos (Data Link))
+*   **NAT (Network Address Translation):** Traduce IPs privadas a públicas (y viceversa) en el router frontera, para comunicarse afuera red WAN. Entre Capa 3 y Capa 4 (principalmente Capa 3 Red (Network))
+*   **DHCP (Dynamic Host Configuration Protocol):** Asigna dinámicamente direcciones IP privadas e IP publicas y otra configuración de red a los *dispositivos (hosts)* para comunicarse en red interna LAN (Dirección IP, Máscara de subred, Gateway predeterminado y Servidor DNS). En capa 7.
 *   **PDU (Protocol Data Units):** Nombre genérico para la unidad de datos en cada capa del modelo OSI y cada capa añade su propia cabecera al pasar la información hacia abajo: (Bits en L1, Tramas(frames) en L2, Paquetes en L3, Segmentos/Datagramas en L4, Datos en L5-L7).
 
 | Protocolo/Mensaje        | Capa 3 Destino (IP) | Capa 2 Destino (MAC) | Propósito Principal                                                                 |
@@ -467,7 +467,7 @@ Cuando un dispositivo necesita enviar un paquete:
 *   **Equivalente TCP/IP:** Capa de Transporte.
 *   **PDU (Protocol Data Unit):** Segmentos (TCP), Datagramas (UDP).
 
-### 🚚 TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol)
+### 🚚 TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4.
 
 | Característica   | TCP                                     | UDP                                     |
 | :--------------- | :-------------------------------------- | :-------------------------------------- |
