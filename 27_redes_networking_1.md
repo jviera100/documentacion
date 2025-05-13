@@ -486,10 +486,28 @@ Identificadores de 16 bits (0-65535) usados por TCP y UDP para diferenciar entre
     *   **Puertos Registrados (Registered Ports: 1024-49151):** Pueden ser registrados por desarrolladores de software para aplicaciones específicas.
     *   **Puertos Dinámicos/Privados/Efímeros (Dynamic/Private/Ephemeral Ports: 49152-65535):** Usados típicamente como puertos de origen temporales por los clientes.
 
-### 🔌 Sockets
-Una combinación única de una **dirección IP y un número de puerto**. Identifica un extremo de una conexión de red.
-*   Ejemplo: `192.168.1.100:49152` (IP del cliente y su puerto de origen efímero) conectándose a `203.0.113.10:80` (IP del servidor web y su puerto de destino HTTP).
-*   Permiten que un servidor maneje múltiples conexiones de clientes simultáneamente, incluso al mismo servicio, porque cada socket (combinación IP_origen:Puerto_origen + IP_destino:Puerto_destino) es único.
+## 🔌 Sockets y Pares de Sockets: Claves de la Comunicación en Red
+
+**La Idea Esencial:** Para que tu computadora maneje múltiples conexiones de red (navegar, chatear) sin mezclar datos, usa "sockets".
+
+### 1. ¿Qué es un Socket? (Un Punto Final de Comunicación)
+
+Un **Socket** es la combinación de:
+*   **`Dirección_IP`** (del dispositivo)
+*   **`:`** (separador)
+*   **`Número_de_Puerto`** (de la aplicación en ese dispositivo)
+
+### 2. El Par de Sockets: La Conexión Única
+
+Esto permite identificar de forma única cada conversación entre dos aplicaciones.
+
+**Tu PC (Solicitante) pidiendo una Página Web al Servidor (Proveedor)**
+
+| Rol en la Conexión     | Socket (`IP:Puerto`)        |
+| :--------------------- | :-------------------------- |
+| **Socket Solicitante** (Tu PC, navegador) | `192.168.1.5:1099`          |
+| **Socket Proveedor**   (Servidor Web, HTTP) | `203.0.113.7:80`            |
+| **Par de Sockets (Conexión Única)** | **(`192.168.1.5:1099` , `203.0.113.7:80`)** |
 
 ## Capas 5, 6 y 7: Sesión, Presentación y Aplicación – La interfaz *(API - Application Programming Interface)* con el Usuario y los Servicios de Red
 
