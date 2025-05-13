@@ -192,6 +192,20 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
     *   El tráfico entre VLANs diferentes requiere un dispositivo de Capa 3 (router o switch multicapa) para ser enrutado.
     *   Mejoran la seguridad, organización y gestión del tráfico.
 
+### 🔹 VLAN vs SSID adicional: la diferencia importante es que VLAN puede dividir el trafico.
+
+| Característica             | SSID Adicional                                       | VLAN (Virtual LAN)                                                  |
+|---------------------------|------------------------------------------------------|----------------------------------------------------------------------|
+| **Nivel técnico**         | Solo cambia el nombre/red Wi-Fi visible              | Crea una red lógica separada a nivel de capa 2 (switch)             |
+| **Aislamiento real**      | Depende del router: algunos no aíslan                | Aislamiento fuerte si el switch/router lo impone                    |
+| **Tráfico separado**      | Comparten red IP, gateway y **ancho de banda**       | Pueden tener **IP, reglas, gateways y ancho de banda separados**    |
+| **Visibilidad de equipos**| Pueden verse si están en misma subred IP             | No se ven salvo que tú crees una ruta entre VLANs                   |
+| **Control de tráfico (QoS)**| No (todos comparten el canal)                     | Sí (puedes priorizar o limitar por VLAN)                            |
+| **Propósito típico**      | Organizar redes Wi-Fi por nombre o perfil            | Separar tráfico por seguridad, prioridad, rendimiento o control     |
+| **Hardware especial**     | No                                                   | Sí (router/switch que soporte VLANs y 802.1Q)                        |
+
+✅ **Conclusión:** Un SSID adicional es solo otra entrada a la misma red. Una VLAN es una red realmente separada y controlable dentro del mismo equipo o infraestructura.
+
 ### 🗣️ Tipos de Comunicación (Direccionamiento) en Capa 2
 | Tipo       | Dirigido a...                              | MAC Destino Ejemplo            |
 |------------|--------------------------------------------|--------------------------------|

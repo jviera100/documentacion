@@ -133,3 +133,40 @@ Existen dos tipos principales de hipervisores:
 ---
 
 **(B 23, B 24, B 25) ¡Listo!** Tienes tus VMs Linux funcionales.
+
+### 📊 Tabla: Modos de red en VirtualBox
+
+| Modo de Red VirtualBox | ¿Accede a Internet? | ¿Se ve como otro equipo en tu red LAN? | ¿Tiene su propia IP del router? |
+|------------------------|----------------------|----------------------------------------|---------------------------------|
+| NAT                    | ✅ Sí                | ❌ No                                   | 🚫 No (usa la IP del host)       |
+| Bridged (Puente)       | ✅ Sí                | ✅ **Sí**                               | ✅ Sí                            |
+| Host-only              | ❌ No                | ✅ Solo se comunica con el host         | ✅ Sí                            |
+| Internal Network       | ❌ No                | ✅ Solo entre VMs en red interna        | ✅ Sí                            |
+
+---
+
+### 🔧 Ventajas del modo **Bridge (Adaptador en Puente)** en VirtualBox (simula conexion por cable alrouter ethernet como si fuera otro PC)
+
+1. ✅ **Aparece como un dispositivo más en tu red local (LAN)**.  
+   - Es detectado por tu router como si fuera otro PC real.
+
+2. ✅ **Recibe una IP real del router mediante DHCP**.  
+   - No usa NAT ni una IP interna invisible.
+
+3. ✅ **Puede comunicarse con otros dispositivos reales (PCs, impresoras, celulares, etc.)**.  
+   - Ideal para hacer pruebas de red, compartir carpetas, hacer ping, etc.
+
+4. ✅ **Accede a internet sin restricciones, como un PC físico**.  
+   - No depende del host para salir a internet.
+
+5. ✅ **Puedes hacer pruebas de firewall, sniffing o escaneo como si fuera una red real**.  
+   - Kali Linux, por ejemplo, puede hacer escaneos en tu red.
+
+6. ✅ **Facilita compartir carpetas y archivos entre la VM y otros equipos en la red**.  
+   - Usando Samba (Linux) o Compartir de Windows.
+
+7. ✅ **Permite simular entornos corporativos reales**.  
+   - Ideal para labs de ciberseguridad, administración de red o configuración de servidores.
+
+8. ✅ **Puedes ser alcanzado desde otros dispositivos de la red** (servidor web, SSH, FTP, etc.).  
+   - Muy útil si estás practicando servicios o servidores locales.
