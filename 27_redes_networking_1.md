@@ -575,45 +575,47 @@ Cuando un dispositivo necesita enviar un paquete:
 ## 6. Capa 4 OSI: Transporte – Comunicación Extremo a Extremo <a name="capa4-transporte"></a>
 <details>
   <summary>Ver/Ocultar Detalles de Capa 4: Transporte</summary>
+  
+  *   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
+ *   **Equivalente TCP/IP:** Capa de Transporte.
+ *   **PDU (Protocol Data Unit):** Segmentos (TCP), Datagramas (UDP).
+ 
+ ### TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4.
+ 
+ | Característica   | TCP                                     | UDP                                     |
+ | :--------------- | :-------------------------------------- | :-------------------------------------- |
+ | **Confiabilidad**| Alta (ACKs, NACKs, retransmisiones, secuenciación) | Baja ("mejor esfuerzo", sin confirmación) |
+ | **Conexión**     | Orientado a conexión (Three-way handshake) | Sin conexión                            |
+ | **Velocidad**    | Más lento (por sobrecarga de control)   | Más rápido (menor sobrecarga)           |
+ | **Control Flujo**| Sí (evita saturación del receptor)      | No                                      |
+ | **Uso Típico**   | Web (HTTP/S), Email (SMTP), FTP, SSH    | Streaming (video/voz), DNS, DHCP, TFTP  |
+ 
+ ## Sockets y Pares de Sockets: Claves de la Comunicación en Red
+ 
+ **La Idea Esencial:** Para que tu computadora maneje múltiples conexiones de red (navegar, chatear) sin mezclar datos, usa "sockets".
+ 
+ ### 1. ¿Qué es un Socket? (Un Punto Final de Comunicación)
+ 
+ Un **Socket** es la combinación de:
+ *   **`Dirección_IP`** (del dispositivo)
+ *   **`:`** (separador)
+ *   **`Número_de_Puerto`** (de la aplicación en ese dispositivo)
+ 
+ ### 2. El Par de Sockets: La Conexión Única
+ 
+ Esto permite identificar de forma única cada conversación entre dos aplicaciones.
+ 
+ **Tu PC (Solicitante) pidiendo una Página Web al Servidor (Proveedor)**
+ 
+ | Rol en la Conexión     | Socket (`IP:Puerto`)        |
+ | :--------------------- | :-------------------------- |
+ | **Socket Solicitante** (Tu PC, navegador) | `192.168.1.5:1099`          |
+ | **Socket Proveedor**   (Servidor Web, HTTP) | `203.0.113.7:80`            |
+ | **Par de Sockets (Conexión Única)** | **(`192.168.1.5:1099` , `203.0.113.7:80`)** |
 
-*   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
-*   **Equivalente TCP/IP:** Capa de Transporte.
-*   **PDU (Protocol Data Unit):** Segmentos (TCP), Datagramas (UDP).
-
-### TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4.
-
-| Característica   | TCP                                     | UDP                                     |
-| :--------------- | :-------------------------------------- | :-------------------------------------- |
-| **Confiabilidad**| Alta (ACKs, NACKs, retransmisiones, secuenciación) | Baja ("mejor esfuerzo", sin confirmación) |
-| **Conexión**     | Orientado a conexión (Three-way handshake) | Sin conexión                            |
-| **Velocidad**    | Más lento (por sobrecarga de control)   | Más rápido (menor sobrecarga)           |
-| **Control Flujo**| Sí (evita saturación del receptor)      | No                                      |
-| **Uso Típico**   | Web (HTTP/S), Email (SMTP), FTP, SSH    | Streaming (video/voz), DNS, DHCP, TFTP  |
-
-## Sockets y Pares de Sockets: Claves de la Comunicación en Red
-
-**La Idea Esencial:** Para que tu computadora maneje múltiples conexiones de red (navegar, chatear) sin mezclar datos, usa "sockets".
-
-### 1. ¿Qué es un Socket? (Un Punto Final de Comunicación)
-
-Un **Socket** es la combinación de:
-*   **`Dirección_IP`** (del dispositivo)
-*   **`:`** (separador)
-*   **`Número_de_Puerto`** (de la aplicación en ese dispositivo)
-
-### 2. El Par de Sockets: La Conexión Única
-
-Esto permite identificar de forma única cada conversación entre dos aplicaciones.
-
-**Tu PC (Solicitante) pidiendo una Página Web al Servidor (Proveedor)**
-
-| Rol en la Conexión     | Socket (`IP:Puerto`)        |
-| :--------------------- | :-------------------------- |
-| **Socket Solicitante** (Tu PC, navegador) | `192.168.1.5:1099`          |
-| **Socket Proveedor**   (Servidor Web, HTTP) | `203.0.113.7:80`            |
-| **Par de Sockets (Conexión Única)** | **(`192.168.1.5:1099` , `203.0.113.7:80`)** |
 
 </details>
+
 
 ## 7. Capas 5, 6 y 7 OSI: Sesión, Presentación y Aplicación – La interfaz *(API - Application Programming Interface)* con el Usuario y los Servicios de Red <a name="capas567-aplicacion"></a>
 
