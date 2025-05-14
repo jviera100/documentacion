@@ -155,17 +155,18 @@ La Capa de Enlace de Datos en Ethernet se divide en:
 
 **Secuencia de Pasos:**
 
-1.  **En CMD (Símbolo del sistema):**
+1.  **En CMD (Símbolo del sistema) *COMO ADMINISTRADOR*:**
+    *   Abre el **Símbolo del sistema COMO ADMINISTRADOR** (Clic derecho en CMD en el menú inicio -> Ejecutar como administrador).
     *   Escribe: `arp -d 192.168.100.1`
     *   Presiona Enter.
-    *(Esto hace que tu PC "olvide" la MAC del router para forzar una nueva solicitud ARP).*
+    *(Esto hace que tu PC "olvide" la MAC del router para forzar una nueva solicitud ARP. No deberías ver un error ahora).*
 
 2.  **En Wireshark:**
     *   Abre Wireshark.
     *   En la pantalla de inicio, **haz doble clic en tu interfaz "Wi-Fi"** (la que tiene la IP `192.168.100.170` y muestra actividad en el "electrocardiograma"). *La captura comenzará.*
     *   RÁPIDAMENTE, en la barra de filtro de visualización (arriba), escribe `arp` y presiona Enter.
 
-3.  **En CMD (mientras Wireshark está capturando con el filtro `arp`):**
+3.  **En CMD (la misma ventana de administrador, o una nueva normal, MIENTRAS Wireshark está capturando con el filtro `arp`):**
     *   Escribe: `ping 192.168.100.1`
     *   Presiona Enter.
     *(Este ping provocará la solicitud ARP).*
@@ -188,7 +189,7 @@ La Capa de Enlace de Datos en Ethernet se divide en:
     *   Haz doble clic en tu interfaz **"Wi-Fi"** para iniciar una nueva captura.
     *   En la barra de filtro de visualización, escribe `icmp` y presiona Enter.
 
-2.  **En CMD (mientras Wireshark está capturando con el filtro `icmp`):**
+2.  **En CMD (puede ser una ventana normal, no necesita ser administrador para `ping`):**
     *   Escribe: `ping 192.168.100.1`
     *   Presiona Enter.
 
@@ -202,7 +203,7 @@ La Capa de Enlace de Datos en Ethernet se divide en:
     *   Haz clic en el icono de la **aleta de tiburón azul (Iniciar nueva captura)**. Si pregunta, elige "Continuar sin guardar".
     *   Asegúrate de que el filtro `icmp` siga aplicado en la barra de filtro.
 
-2.  **En CMD (mientras Wireshark está capturando con el filtro `icmp`):**
+2.  **En CMD (ventana normal):**
     *   Escribe: `ping www.google.com` (o cualquier sitio web externo)
     *   Presiona Enter.
 
