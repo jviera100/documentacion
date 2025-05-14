@@ -1,5 +1,3 @@
-¡Claro! Vamos a mejorar el manual para la instalación y configuración de aplicaciones con Composer y Laravel, añadiendo más detalles y correlativos en cada título para una mejor organización.
-
 ### 1. Instalación de Aplicaciones con Composer y Laravel
 
 #### 1.1 Instalación de Composer

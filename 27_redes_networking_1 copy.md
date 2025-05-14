@@ -135,28 +135,79 @@ La Capa de Enlace de Datos en Ethernet se divide en:
 
 ## 6. Laboratorios de Wireshark: Observando la Teoría en Acción
 
-Ambos laboratorios usan **Wireshark** (analizador de protocolos) para capturar y examinar tráfico de red.
+## Información de Red Identificada y Preparación
 
-*   **Laboratorio: Ver tráfico capturado en Wireshark (Enfocado en ARP)**
-    *   **Objetivo:** Entender **ARP (Address Resolution Protocol)**, que mapea IPs (Capa 3) a MACs (Capa 2) en una LAN.
-    *   **Proceso Clave:**
-        1.  **Instalar Wireshark.**
-        2.  **Capturar Tráfico ARP:** Filtrar por `arp` en Wireshark mientras se hace `ping` a un host local.
-            *   **Observar Solicitud ARP (ARP Request):** MAC Destino `ff:ff:ff:ff:ff:ff` (broadcast), preguntando por la MAC de una IP. EtherType `0x0806`.
-            *   **Observar Respuesta ARP (ARP Reply):** Respuesta unicast con la MAC solicitada.
-        3.  **Ver Caché ARP:** Usar `arp -a` (Windows) para ver los mapeos IP-MAC aprendidos.
+**Datos de tu Red (según tu `ipconfig /all`):**
+*   **Tu Adaptador Activo:** "Adaptador de LAN inalámbrica Wi-Fi"
+*   **Tu Dirección IPv4:** `192.168.100.170`
+*   **Tu Dirección MAC (Física):** `CC-47-40-5F-BE-BE`
+*   **IP de tu Puerta de Enlace Predeterminada (Router):** `192.168.100.1`
 
-*   **Laboratorio: Uso de Wireshark para Examinar Tramas Ethernet**
-    *   **Objetivo:** Analizar campos de la trama Ethernet II y cómo cambian las direcciones MAC/IP con destinos locales/remotos.
-    *   **Proceso Clave:**
-        1.  **Revisión Teórica de Campos de Trama.**
-        2.  **Captura y Análisis de Tráfico `icmp` (Ping):**
-            *   **Ping a Host Local (Gateway):**
-                *   **Trama Saliente:** MAC Origen (Tu PC), MAC Destino (Gateway), EtherType `0x0800` (IPv4).
-                *   **Paquete IP Interno:** IP Origen (Tu PC), IP Destino (Gateway).
-            *   **Ping a Host Remoto (ej: www.cisco.com):**
-                *   **Trama Saliente:** MAC Origen (Tu PC), **MAC Destino (Gateway)**.
-                *   **Paquete IP Interno:** IP Origen (Tu PC), **IP Destino (www.cisco.com)**.
-        *   **Conclusión Clave:** Direcciones MAC son para el **salto local**. Direcciones IP son para el **destino final**.
+**Wireshark - Puntos Clave:**
+*   **Selección de Interfaz:** Al abrir Wireshark, identifica tu interfaz "Adaptador de LAN inalámbrica Wi-Fi". Verás una gráfica de actividad tipo "electrocardiograma" al lado de las interfaces activas. Selecciona la tuya.
+*   **Filtros:** Se escriben en **minúsculas** (ej: `arp`, `icmp`) en la barra de filtro de visualización.
 
-Esta síntesis cubre la encapsulación Ethernet, la estructura de la trama, la representación física de bits y cómo los laboratorios con Wireshark permiten visualizar estos procesos.
+---
+
+## Laboratorio 1: Viendo el Diálogo ARP (El "Quién es Quién" de tu Red Local)
+
+**Objetivo:** Ver cómo tu PC (`192.168.100.170`) pregunta por la MAC de tu router (`192.168.100.1`).
+
+**Secuencia de Pasos:**
+
+1.  **En CMD (Símbolo del sistema):**
+    *   Escribe: `arp -d 192.168.100.1`
+    *   Presiona Enter.
+    *(Esto hace que tu PC "olvide" la MAC del router para forzar una nueva solicitud ARP).*
+
+2.  **En Wireshark:**
+    *   Abre Wireshark.
+    *   En la pantalla de inicio, **haz doble clic en tu interfaz "Wi-Fi"** (la que tiene la IP `192.168.100.170` y muestra actividad en el "electrocardiograma"). *La captura comenzará.*
+    *   RÁPIDAMENTE, en la barra de filtro de visualización (arriba), escribe `arp` y presiona Enter.
+
+3.  **En CMD (mientras Wireshark está capturando con el filtro `arp`):**
+    *   Escribe: `ping 192.168.100.1`
+    *   Presiona Enter.
+    *(Este ping provocará la solicitud ARP).*
+
+4.  **En Wireshark:**
+    *   Observa los paquetes ARP que aparecen.
+    *   Cuando el ping en CMD haya terminado (o enviado un par de respuestas), haz clic en el **botón rojo cuadrado (Stop)** en Wireshark para detener la captura.
+    *   Analiza los paquetes (busca la "Solicitud ARP" de tu PC y la "Respuesta ARP" del router).
+
+---
+
+## Laboratorio 2: Viendo la Trama del Ping (MACs vs IPs)
+
+**Objetivo:** Observar las direcciones MAC e IP en las tramas de ping a tu router y a un sitio de Internet.
+
+**Secuencia de Pasos (Ping Local):**
+
+1.  **En Wireshark:**
+    *   Abre Wireshark (o si ya está abierto, detén cualquier captura anterior con el botón rojo).
+    *   Haz doble clic en tu interfaz **"Wi-Fi"** para iniciar una nueva captura.
+    *   En la barra de filtro de visualización, escribe `icmp` y presiona Enter.
+
+2.  **En CMD (mientras Wireshark está capturando con el filtro `icmp`):**
+    *   Escribe: `ping 192.168.100.1`
+    *   Presiona Enter.
+
+3.  **En Wireshark:**
+    *   Cuando el ping en CMD termine, haz clic en el **botón rojo cuadrado (Stop)**.
+    *   Analiza los paquetes "Echo (ping) request" y "Echo (ping) reply", fijándote en las MAC de origen/destino y las IP de origen/destino.
+
+**Secuencia de Pasos (Ping Remoto):**
+
+1.  **En Wireshark:**
+    *   Haz clic en el icono de la **aleta de tiburón azul (Iniciar nueva captura)**. Si pregunta, elige "Continuar sin guardar".
+    *   Asegúrate de que el filtro `icmp` siga aplicado en la barra de filtro.
+
+2.  **En CMD (mientras Wireshark está capturando con el filtro `icmp`):**
+    *   Escribe: `ping www.google.com` (o cualquier sitio web externo)
+    *   Presiona Enter.
+
+3.  **En Wireshark:**
+    *   Cuando el ping en CMD termine, haz clic en el **botón rojo cuadrado (Stop)**.
+    *   Analiza los paquetes "Echo (ping) request" y "Echo (ping) reply", comparando las MACs y las IPs con el ping local. Fíjate que la MAC de destino en la trama Ethernet sigue siendo la de tu router, pero la IP de destino es la de Google.
+
+---

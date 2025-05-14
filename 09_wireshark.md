@@ -1,5 +1,3 @@
-Gracias por compartir esta tarea tan detallada sobre cómo explorar datos con Wireshark. Aquí está la continuación de la guía:
-
 ### Tarea 1: Explora datos con Wireshark
 
 En esta tarea, abrirás un archivo de captura de paquetes de red que contiene datos capturados de un sistema que realizó solicitudes web a un sitio. Abrirás estos datos con Wireshark para obtener un panorama de cómo se muestran los datos en la aplicación.
