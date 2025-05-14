@@ -51,22 +51,7 @@ Al abrir Wireshark (y después de abrir un archivo de captura o iniciar una capt
     | **Length**    | Longitud total del paquete en bytes, tal como se transmitió por el medio.                 |
     | **Info**      | Información resumida y específica del protocolo sobre el contenido o propósito del paquete. |
 
-## 4. Colores de los Paquetes (Coloring Rules)
-
-Wireshark utiliza colores para ayudarte a identificar rápidamente diferentes tipos de tráfico. Estas reglas de colores son personalizables (View > Coloring Rules).
-
-| Color Predeterminado     | Tráfico Típico Asociado         | Definición/Propósito del Protocolo Común                                                                                                                               |
-| :----------------------- | :------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Azul claro               | UDP (a menudo DNS)              | **UDP (User Datagram Protocol):** Protocolo de transporte no orientado a conexión, rápido pero sin garantías de entrega. <br> **DNS (Domain Name System):** Traduce nombres de dominio (ej: www.google.com) a direcciones IP. |
-| Verde claro              | TCP                             | **TCP (Transmission Control Protocol):** Protocolo de transporte orientado a conexión, fiable, que garantiza la entrega ordenada de los datos.                             |
-| Verde más oscuro/Azul verdoso | HTTP/HTTPS sobre TCP         | **HTTP (Hypertext Transfer Protocol):** Protocolo para la transmisión de documentos hipermedia, como HTML. <br> **HTTPS (HTTP Secure):** Versión segura de HTTP, cifrada con SSL/TLS. |
-| Negro sobre fondo rojo/rosa | Errores TCP (retransmisiones) | Indica problemas en la comunicación TCP, como paquetes perdidos que necesitan ser reenviados.                                                                           |
-| Gris claro               | Paquetes SYN/FIN/RST de TCP     | **SYN:** Inicia una conexión TCP. <br> **FIN:** Termina una conexión TCP. <br> **RST:** Reinicia una conexión TCP abruptamente.                                                   |
-| Rosa/Violeta             | ICMP (a menudo "ping")          | **ICMP (Internet Control Message Protocol):** Usado para enviar mensajes de error y operativos, como solicitudes de eco (ping) y respuestas.                                |
-
-*Nota: Los colores exactos pueden variar ligeramente entre versiones o si se han personalizado.*
-
-## 5. Capturando y Explorando Paquetes
+## 4. Capturando y Explorando Paquetes
 
 Puedes analizar tráfico de dos maneras principales:
 
@@ -99,7 +84,7 @@ Cuando seleccionas un paquete en la "Lista de Paquetes", el panel "Detalles del 
 
 *Hacer doble clic en un paquete en la "Lista de Paquetes" abrirá sus detalles en una nueva ventana para un análisis más focalizado.*
 
-## 6. Aplicando Filtros de Visualización
+## 5. Aplicando Filtros de Visualización
 
 Los archivos de captura pueden contener miles de paquetes. Los filtros de visualización son esenciales. Escribe la expresión del filtro en la barra "Apply a display filter..." y presiona Enter o haz clic en la flecha `->`.
 
@@ -131,6 +116,21 @@ Los archivos de captura pueden contener miles de paquetes. Los filtros de visual
 
 **Limpiar Filtro:**
 Haz clic en el icono `X` al final de la barra de filtros para eliminar el filtro actual y mostrar todos los paquetes nuevamente.
+
+## 6. Colores de los Paquetes (Coloring Rules)
+
+Wireshark utiliza colores para ayudarte a identificar rápidamente diferentes tipos de tráfico. Estas reglas de colores son personalizables (View > Coloring Rules).
+
+| Color Predeterminado     | Tráfico Típico Asociado         | Definición/Propósito del Protocolo Común                                                                                                                               |
+| :----------------------- | :------------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Azul claro               | UDP (a menudo DNS)              | **UDP (User Datagram Protocol):** Protocolo de transporte no orientado a conexión, rápido pero sin garantías de entrega. <br> **DNS (Domain Name System):** Traduce nombres de dominio (ej: www.google.com) a direcciones IP. |
+| Verde claro              | TCP                             | **TCP (Transmission Control Protocol):** Protocolo de transporte orientado a conexión, fiable, que garantiza la entrega ordenada de los datos.                             |
+| Verde más oscuro/Azul verdoso | HTTP/HTTPS sobre TCP         | **HTTP (Hypertext Transfer Protocol):** Protocolo para la transmisión de documentos hipermedia, como HTML. <br> **HTTPS (HTTP Secure):** Versión segura de HTTP, cifrada con SSL/TLS. |
+| Negro sobre fondo rojo/rosa | Errores TCP (retransmisiones) | Indica problemas en la comunicación TCP, como paquetes perdidos que necesitan ser reenviados.                                                                           |
+| Gris claro               | Paquetes SYN/FIN/RST de TCP     | **SYN:** Inicia una conexión TCP. <br> **FIN:** Termina una conexión TCP. <br> **RST:** Reinicia una conexión TCP abruptamente.                                                   |
+| Rosa/Violeta             | ICMP (a menudo "ping")          | **ICMP (Internet Control Message Protocol):** Usado para enviar mensajes de error y operativos, como solicitudes de eco (ping) y respuestas.                                |
+
+*Nota: Los colores exactos pueden variar ligeramente entre versiones o si se han personalizado.*
 
 ## 7. Conclusión
 
