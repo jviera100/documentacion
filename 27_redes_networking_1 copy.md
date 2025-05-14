@@ -144,15 +144,9 @@ La Capa de Enlace de Datos en Ethernet se divide en:
 *   **IP de tu Puerta de Enlace Predeterminada (Router):** `192.168.100.1`
 *   **MAC de tu Router (descubierta en tu captura):** `4c:f5:5b:a6:ed:4f` (Identificada por Wireshark como `HuaweiTechno_a6:ed:4f`)
 
-**Wireshark - Puntos Clave:**
-*   **Selección de Interfaz:** Al abrir Wireshark, identifica tu interfaz "Adaptador de LAN inalámbrica Wi-Fi". Verás una gráfica de actividad tipo "electrocardiograma" al lado de las interfaces activas.
-*   **Filtros:** Se escriben en **minúsculas** (ej: `arp`, `icmp`) en la barra de filtro de visualización. La barra se pondrá **verde** si el filtro es válido, o **roja** si es inválido. Aplica con Enter.
-
----
-
 ## Laboratorio 1: Viendo el Diálogo ARP (El "Quién es Quién" de tu Red Local)
 
-**Objetivo:** Observar el proceso por el cual tu PC (`192.168.100.170`) obtiene la dirección MAC de tu router (`192.168.100.1`) usando ARP, si aún no la conoce.
+**Objetivo:** Observar el proceso por el cual tu PC (`192.168.100.170`) obtiene la dirección MAC de tu router (`192.168.100.1`) usando `arp`, si aún no la conoce.
 
 **Secuencia de Pasos REFINADA:**
 
@@ -162,17 +156,8 @@ La Capa de Enlace de Datos en Ethernet se divide en:
     *   Luego, escribe: `arp -a` y presiona Enter (para verificar que la entrada para `192.168.100.1` ya no esté o diga "incompleta").
     *   Puedes cerrar esta ventana de CMD de administrador.
 
-2.  **En Wireshark: Preparar Filtro, Seleccionar Interfaz e Iniciar Captura.**
-    *   Abre Wireshark.
-    *   **Opción A (Seleccionar interfaz, LUEGO escribir filtro para iniciar captura):**
-        1.  Haz un **solo clic** en tu interfaz **"Wi-Fi"** (la que muestra actividad) para seleccionarla/resaltarla.
-        2.  En la barra de filtro de visualización (arriba), escribe `arp` y presiona Enter. *Esto debería iniciar la captura en la interfaz seleccionada y aplicar el filtro.*
-    *   **Opción B (Escribir filtro, LUEGO seleccionar interfaz para iniciar captura):**
-        1.  En la barra de filtro de visualización (arriba), escribe `arp`.
-        2.  Haz un **doble clic** en tu interfaz **"Wi-Fi"** (la que muestra actividad). *Esto debería iniciar la captura en esa interfaz y aplicar el filtro escrito previamente.*
-    *   *(Ambas opciones buscan que Wireshark comience a capturar y te muestre solo paquetes ARP).
-    *   **Opción C (Seleccionar interfaz, iniciar captura, LUEGO escribir filtro en la parte superior):***
-    *   **NOTA IMPORTANTE:** *Aquí ya podrías ver el paquete ARP (Solicitud y Respuesta) si tu sistema necesitó resolver la MAC del router inmediatamente. Si es así, y ves el par de paquetes ARP que se describen en el paso 4, la misión principal de este laboratorio ya se cumplió. Los pasos 3 y 4 son para forzarlo si no apareció naturalmente.*
+2.  **En Wireshark: Seleccionar Interfaz, preparar Filtro `arp` e Iniciar Captura.**
+    *   **NOTA IMPORTANTE:** *Aquí ya podrías ver el paquete `arp` (Solicitud y Respuesta) si tu sistema necesitó resolver la MAC del router inmediatamente. Si es así, y ves el par de paquetes `arp` que se describen en el paso 4, la misión principal de este laboratorio ya se cumplió. Los pasos 3 y 4 son para forzarlo si no apareció naturalmente.*
 
 3.  **Si NO viste los paquetes ARP en el paso anterior, continúa (En CMD - ventana normal): Generar Tráfico que *necesitará* ARP.**
     *   Abre una nueva ventana de **Símbolo del sistema (normal)**.
@@ -203,10 +188,7 @@ La misión es ver **ese par de paquetes ARP: la pregunta y la respuesta**. Si lo
 
 **Secuencia de Pasos (Ping Local):**
 
-1.  **En Wireshark:**
-    *   Abre Wireshark (o detén la captura anterior).
-    *   **Prepara el filtro:** En la barra de filtro de visualización, escribe `icmp` y presiona Enter.
-    *   **Inicia la captura:** Haz doble clic en tu interfaz **"Wi-Fi"** (o selecciona y presiona la aleta de tiburón).
+1.  **En Wireshark: Seleccionar Interfaz, preparar Filtro `icmp` e Iniciar Captura.**
 
 2.  **En CMD (ventana normal):**
     *   Escribe: `ping 192.168.100.1`
@@ -228,11 +210,7 @@ La misión es ver **ese par de paquetes ARP: la pregunta y la respuesta**. Si lo
 
 **Secuencia de Pasos (Ping Remoto):**
 
-1.  **En Wireshark:**
-    *   Haz clic en el icono de la **aleta de tiburón azul (Iniciar nueva captura)**. Elige "Continuar sin guardar".
-    *   Asegúrate de que el filtro `icmp` siga aplicado en la barra de filtro.
-    *   *(Si el filtro se borró, vuelve a escribir `icmp` y presiona Enter ANTES de iniciar la captura efectiva para la nueva sesión).*
-    *   Si no has iniciado la captura aún para esta nueva sesión, haz doble clic en tu interfaz **"Wi-Fi"**.
+1.  **En Wireshark: Seleccionar Interfaz, preparar Filtro `icmp` e Iniciar Captura.**
 
 2.  **En CMD (ventana normal):**
     *   Escribe: `ping www.google.com`
