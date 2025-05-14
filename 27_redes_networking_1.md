@@ -29,15 +29,24 @@
     - [4.4. Ethernet: La Tecnología LAN Predominante ](#44-ethernet-la-tecnología-lan-predominante-)
       - [4.4.1. Historia y Evolución de Ethernet ](#441-historia-y-evolución-de-ethernet-)
       - [4.4.2. Subcapas de Enlace de Datos en Ethernet (LLC y MAC) ](#442-subcapas-de-enlace-de-datos-en-ethernet-llc-y-mac-)
-    - [🧾 Dirección MAC (Media Access Control)](#-dirección-mac-media-access-control)
-  - [Capa 2: Enlace de Datos – Comunicación en la Red Local](#capa-2-enlace-de-datos--comunicación-en-la-red-local)
+    - [4.5. Direcciones MAC: Identidad Física en la Red Local ](#45-direcciones-mac-identidad-física-en-la-red-local-)
+      - [4.5.1. ¿Qué es una Dirección MAC? ](#451-qué-es-una-dirección-mac-)
+      - [4.5.2. Estructura de una Dirección MAC (OUI e Identificador) ](#452-estructura-de-una-dirección-mac-oui-e-identificador-)
+      - [4.5.3. Un Dispositivo, Múltiples Direcciones MAC ](#453-un-dispositivo-múltiples-direcciones-mac-)
+      - [4.5.4. Uso Práctico del OUI ](#454-uso-práctico-del-oui-)
+      - [4.5.5. Tipos de Direcciones MAC y su Uso en Ethernet ](#455-tipos-de-direcciones-mac-y-su-uso-en-ethernet-)
+    - [4.6. La Trama Ethernet: Estructura y Encapsulación ](#46-la-trama-ethernet-estructura-y-encapsulación-)
       - [4.6.1. Proceso de Comunicación y Encapsulación en Capa 2 ](#461-proceso-de-comunicación-y-encapsulación-en-capa-2-)
+      - [4.6.2. Anatomía de una Trama Ethernet II ](#462-anatomía-de-una-trama-ethernet-ii-)
+    - [4.7. Funcionamiento de los Switches Ethernet ](#47-funcionamiento-de-los-switches-ethernet-)
+      - [4.7.1. Fundamentos del Switch de Capa 2 ](#471-fundamentos-del-switch-de-capa-2-)
+      - [4.7.2. Proceso de Aprendizaje y Reenvío del Switch ](#472-proceso-de-aprendizaje-y-reenvío-del-switch-)
+      - [4.7.3. Consideraciones Adicionales sobre Switches ](#473-consideraciones-adicionales-sobre-switches-)
     - [4.8. Conceptos Adicionales de Capa 2 ](#48-conceptos-adicionales-de-capa-2-)
       - [4.8.1. Dispositivos Primarios de Capa 2 ](#481-dispositivos-primarios-de-capa-2-)
-      - [4.8.2. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2) ](#482-tipos-de-redes-por-alcance-predominantemente-capa-1-y-2-)
+      - [4.8.2. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2 para el acceso) ](#482-tipos-de-redes-por-alcance-predominantemente-capa-1-y-2-para-el-acceso-)
       - [4.8.3. Segmentación en Capa 2: VLANs y Dominios de Difusión ](#483-segmentación-en-capa-2-vlans-y-dominios-de-difusión-)
-    - [VLAN vs SSID adicional: la diferencia importante es que VLAN puede dividir el trafico.](#vlan-vs-ssid-adicional-la-diferencia-importante-es-que-vlan-puede-dividir-el-trafico)
-    - [Tipos de Comunicación (Direccionamiento) en Capa 2](#tipos-de-comunicación-direccionamiento-en-capa-2)
+    - [4.9. De la Trama a los Bits: Interacción con la Capa Física ](#49-de-la-trama-a-los-bits-interacción-con-la-capa-física-)
   - [5. Capa 3 OSI: Red – Direccionamiento Lógico y Enrutamiento Global ](#5-capa-3-osi-red--direccionamiento-lógico-y-enrutamiento-global-)
     - [Direccionamiento IP (capa 3)](#direccionamiento-ip-capa-3)
     - [Dirección IPv4 (32 bits)](#dirección-ipv4-32-bits)
@@ -89,6 +98,8 @@
 </details>
 
 ## 1. Introducción a las Redes <a name="introduccion-redes"></a>
+<details>
+  <summary>Ver/Ocultar capa 1</summary>
 ### 1.1. ¿Qué es Internet y Cómo se Organiza la Comunicación? <a name="que-es-internet"></a>
 
 **Internet** es una "red de redes" (internetwork) global que interconecta millones de dispositivos (computadoras, servidores, móviles) mediante tecnologías cableadas e inalámbricas, permitiendo el intercambio de información a escala mundial.
@@ -196,6 +207,7 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
     *   **Cables y Conectores:** (RJ45, Fibra LC/SC, etc.).
     *   **Componente Físico de la NIC:** La parte de la tarjeta de red que se conecta al medio.
 *   **Dispositivos Finales:** (PCs, servidores, impresoras, teléfonos IP, etc.) se conectan físicamente en esta capa, aunque su operación completa abarca capas superiores.
+</details>
 
 ## 4. Capa 2 OSI: Enlace de Datos – Comunicación en la Red Local <a name="capa2-enlace"></a>
 
@@ -204,123 +216,294 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
 
 ### 4.1. Función Principal y PDU <a name="capa2-funcion"></a>  
 
-*   **Función Principal (OSI):** Transferencia confiable de datos (en forma de **tramas**) entre dos nodos directamente conectados en la *misma red local (segmento de red)*. Se encarga del direccionamiento físico (MAC), control de acceso al medio, y detección de errores básicos.
-*   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
-*   **PDU (Protocol Data Unit):** Tramas.
+*   **Función Principal (OSI):** La Capa de Enlace de Datos es responsable de la **transferencia fiable de datos (en forma de tramas)** entre dos nodos (dispositivos) directamente conectados en la *misma red local física (segmento de red)*. Se encarga del direccionamiento físico (usando direcciones MAC), de controlar el acceso al medio de transmisión compartido, y de la detección básica de errores ocurridos durante la transmisión física.
+*   **Equivalente TCP/IP:** Las funciones de la Capa de Enlace de Datos (y también de la Capa Física) se agrupan en la capa de **Acceso a la Red** del modelo TCP/IP.
+*   **PDU (Protocol Data Unit):** En esta capa, la unidad de datos se denomina **Trama (Frame)**.
 
 ### 4.2. Organizaciones y Estándares Clave <a name="capa2-estandares"></a>
-*   **IEEE (Institute of Electrical and Electronics Engineers):** Define estándares como IEEE 802.3 (Ethernet) y IEEE 802.11 (Wi-Fi).
-*   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
-*   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
-*   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
+Varias organizaciones juegan un papel crucial en la definición de los estándares que permiten la interoperabilidad en la Capa de Enlace de Datos y otras capas:
+*   **IEEE (Institute of Electrical and Electronics Engineers):** Una organización profesional clave que desarrolla y mantiene muchos estándares de red, especialmente conocidos son los estándares del grupo **IEEE 802**, que incluyen:
+    *   **IEEE 802.3:** Define el estándar para **Ethernet**, la tecnología predominante para redes LAN cableadas.
+    *   **IEEE 802.11:** Define los estándares para **Redes de Área Local Inalámbricas (WLAN)**, comúnmente conocidas como Wi-Fi.
+    *   **IEEE 802.2:** Definía la subcapa LLC (Logical Link Control), que proporcionaba una interfaz a las capas superiores.
+*   **IANA (Internet Assigned Numbers Authority):** Responsable de la coordinación global de la raíz DNS, el direccionamiento IP y otros recursos numéricos de protocolos de Internet. Aunque su rol principal es en capas superiores (IP, puertos), su gestión de identificadores es fundamental.
+*   **IETF (Internet Engineering Task Force):** Desarrolla y promueve estándares de Internet voluntarios, especialmente los estándares que componen la suite de protocolos TCP/IP, a través de documentos **RFC (Request for Comments)**.
+*   **ISO (International Organization for Standardization):** Desarrolló el modelo de referencia OSI.
 
 ### 4.3. Tarjeta de Interfaz de Red (NIC) <a name="capa2-nic"></a>
-Hardware que permite la conexión del dispositivo a la red.
-*   **Función en Capa 2:** Contiene la dirección MAC única, participa en la creación y procesamiento de tramas.
-*   **Tipos:** Ethernet (cable), Wi-Fi (inalámbrica), Virtual (para VMs, VPNs).
-*   **Analogía:** Como un *carnet de identificación*.
+La **Tarjeta de Interfaz de Red (NIC)**, también conocida como adaptador de red o tarjeta de red, es el componente de hardware que permite a un dispositivo (como una computadora, servidor o impresora) conectarse físicamente a una red.
+*   **Función en Capa 2 (y Capa 1):**
+    *   Implementa los protocolos de la Capa de Enlace de Datos y la Capa Física.
+    *   **Contiene la dirección MAC única** asignada por el fabricante, que se utiliza para el direccionamiento en la Capa 2.
+    *   Participa activamente en la **creación de tramas** (encapsulación) antes de la transmisión y en el **procesamiento de tramas** recibidas (desencapsulación).
+    *   Maneja la interfaz con el medio físico de la red.
+*   **Tipos Comunes:**
+    *   **NIC Ethernet:** Para conexiones cableadas usando cables de par trenzado (con conectores RJ45) o fibra óptica.
+    *   **NIC Wi-Fi (Inalámbrica):** Para conexiones a redes inalámbricas.
+    *   **NIC Virtual (vNIC):** Creadas por software para máquinas virtuales (VMs) o contenedores, permitiéndoles tener su propia identidad de red (incluyendo una MAC virtual).
+*   **Analogía:** La NIC es como el **carnet de identificación físico** del dispositivo para la red local, conteniendo su "número de serie" (la dirección MAC).
+
 ### 4.4. Ethernet: La Tecnología LAN Predominante <a name="capa2-ethernet"></a>
+Ethernet es, con diferencia, la tecnología más extendida para las redes de área local (LAN) cableadas.
 
 #### 4.4.1. Historia y Evolución de Ethernet <a name="capa2-ethernet-historia"></a>
+*   **El Problema Original (Años 70):** En los inicios de las redes, la comunicación entre equipos de diferentes fabricantes era un gran desafío debido a la multitud de protocolos propietarios incompatibles (desarrollados por IBM, Xerox, HP, etc.). Esta falta de interoperabilidad limitaba enormemente la expansión y la flexibilidad de las redes.
+*   **La Solución: Estándares y el Triunfo de Ethernet:** Surgió una clara necesidad de estándares abiertos. Ethernet, inventado originalmente por Xerox en el Palo Alto Research Center (PARC) en 1973, fue posteriormente desarrollado y estandarizado, principalmente bajo la especificación **IEEE 802.3**. Su éxito masivo se debe a una combinación de factores:
+    *   **Robustez y Fiabilidad.**
+    *   **Costo relativamente bajo** de implementación.
+    *   **Simplicidad** en comparación con otras tecnologías LAN de la época.
+    *   Crucialmente, su **capacidad de evolucionar** para soportar velocidades cada vez mayores.
+
+    **Escala de Tiempo Simplificada de la Evolución de Ethernet:**
+
+    | Año/Periodo      | Estándar/Hito Clave                               | Descripción Breve / Velocidad / Medio Principal          |
+    | :--------------- | :------------------------------------------------ | :------------------------------------------------------- |
+    | Años 70          | Protocolos Propietarios                           | Incompatibilidad entre fabricantes.                      |
+    | 1973             | Invención de Ethernet (Xerox)                     | Concepto inicial, red experimental a ~3 Mbps.            |
+    | 1980             | DIX Standard (Ethernet II - DEC, Intel, Xerox)    | 10 Mbps sobre cable coaxial grueso. Precursor del estándar IEEE. |
+    | 1983             | **IEEE 802.3 (10BASE5 "Thick Ethernet")**         | Estandarización formal. 10 Mbps sobre cable coaxial grueso. |
+    | 1985             | IEEE 802.3a (10BASE2 "Thin Ethernet" o "Cheapernet")| 10 Mbps sobre cable coaxial delgado, más económico y flexible. |
+    | 1990             | **IEEE 802.3i (10BASE-T)**                        | **10 Mbps sobre par trenzado no blindado (UTP)**. ¡Este fue un punto de inflexión para la adopción masiva de Ethernet en oficinas debido a su costo y facilidad de cableado estructurado! |
+    | 1995             | IEEE 802.3u (Fast Ethernet: 100BASE-TX, 100BASE-FX) | **100 Mbps** sobre par trenzado (Cat5) y fibra óptica.   |
+    | 1998-1999        | IEEE 802.3z/ab (Gigabit Ethernet: 1000BASE-X/T)   | **1 Gbps (1000 Mbps)** sobre fibra óptica y par trenzado (Cat5e/Cat6). |
+    | 2002 en adelante | IEEE 802.3ae/an/etc.                              | **10 Gbps (10GBASE-T/SR/LR...), 40 Gbps, 100 Gbps y más** sobre fibra y par trenzado mejorado (Cat6a/Cat7). También se introdujo **PoE (Power over Ethernet)** en estándares como IEEE 802.3af y 802.3at. |
+    | 2016 - Presente  | IEEE 802.3bz (NBASE-T: 2.5GBASE-T, 5GBASE-T)      | Velocidades intermedias de 2.5 Gbps y 5 Gbps diseñadas para operar sobre cableado de par trenzado Cat5e/Cat6 existente, facilitando actualizaciones. |
 
 #### 4.4.2. Subcapas de Enlace de Datos en Ethernet (LLC y MAC) <a name="capa2-ethernet-subcapas"></a>
+Como se mencionó, la Capa de Enlace de Datos, según el modelo IEEE 802, se divide en dos subcapas para organizar sus funciones:
 
-### 🧾 Dirección MAC (Media Access Control)
-Identificador *único y físico* de 48 bits (6 bytes hexadecimales, ej: `00:1A:2B:3C:4D:5E`) asignado a cada NIC por el fabricante.
-*   Es la dirección "local" utilizada para entregar tramas dentro de la misma LAN.
-*   **Analogía:** Como el número de serie de un dispositivo o el *RUT/DNI* impreso en un carnet. Es la dirección "local" para la entrega de tramas dentro de una LAN.
+*   **Subcapa LLC (Logical Link Control - Control de Enlace Lógico - IEEE 802.2):**
+    *   **Función Principal:** Actúa como una interfaz entre los protocolos de la capa de red (Capa 3, ej: IP, IPX) y la subcapa MAC. Es responsable de identificar el protocolo de capa de red que se está utilizando para una trama y puede proporcionar servicios de control de flujo y errores opcionales (aunque en Ethernet moderno, la fiabilidad se delega principalmente a TCP en Capa 4).
+    *   **Identificación del Protocolo de Capa Superior:** La LLC utiliza un campo en la trama (en las tramas Ethernet II, este es el campo **EtherType**) para indicar qué protocolo de Capa 3 está encapsulado dentro de la trama. Esto es crucial porque permite que múltiples protocolos de Capa 3 (como IPv4, ARP, IPv6) compartan la misma interfaz de red y el mismo medio físico.
+    *   **Implementación:** Generalmente se implementa en **software**, a menudo como parte del controlador (driver) de la tarjeta de red.
 
-## Capa 2: Enlace de Datos – Comunicación en la Red Local
+*   **Subcapa MAC (Media Access Control - Control de Acceso al Medio - IEEE 802.3 para Ethernet):**
+    *   **Funciones Principales:**
+        1.  **Encapsulación de Datos:** Es responsable de construir la **trama Ethernet**. Esto incluye añadir el encabezado MAC (que contiene las **direcciones MAC de destino y origen**) y el tráiler (que incluye la **Secuencia de Verificación de Trama - FCS** para la detección de errores).
+        2.  **Control de Acceso al Medio:** Define el método por el cual múltiples dispositivos comparten el acceso al medio físico de transmisión.
+            *   **Ethernet Heredado (Half-Duplex, usando hubs o topología de bus):** Utilizaba **CSMA/CD (Carrier Sense Multiple Access with Collision Detection)**. Los dispositivos "escuchaban" el medio antes de transmitir; si dos transmitían a la vez, ocurría una colisión, y ambos esperaban un tiempo aleatorio antes de reintentar.
+            *   **Ethernet Moderno (Full-Duplex, usando switches):** En conexiones punto a punto entre un dispositivo y un puerto de switch, o entre switches, se opera en modo full-duplex, donde la transmisión y recepción pueden ocurrir simultáneamente. En este modo, CSMA/CD no es necesario y se deshabilita.
+    *   **Direccionamiento Físico:** Gestiona el uso de las direcciones MAC de 48 bits.
+    *   **Implementación:** Se implementa principalmente en **hardware**, directamente en la circuitería de la Tarjeta de Interfaz de Red (NIC).
+    *   *Nota: Aunque aquí nos centramos en IEEE 802.3 (Ethernet), existen otros estándares MAC para diferentes tecnologías, como IEEE 802.11 (WLAN/Wi-Fi) y IEEE 802.15 (WPAN/Bluetooth, Zigbee), cada uno con sus propios mecanismos de acceso al medio y formatos de trama.*
 
-*   **Función Principal (OSI):** Transferencia confiable de datos (en forma de **tramas**) entre dos nodos directamente conectados en la *misma red local (segmento de red)*. Se encarga del direccionamiento físico (MAC), control de acceso al medio, y detección de errores básicos.
-*   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
-*   **PDU (Protocol Data Unit):** Tramas.
+### 4.5. Direcciones MAC: Identidad Física en la Red Local <a name="capa2-mac"></a>
+Para comprender las direcciones MAC, es fundamental recordar los sistemas numéricos:
+*   **Binario (Base 2):** El lenguaje fundamental de las computadoras, usando solo 0 y 1. Las direcciones MAC son, en su núcleo, secuencias binarias.
+*   **Hexadecimal (Base 16):** Usa dígitos 0-9 y letras A-F. Proporciona una representación compacta y legible por humanos de largas cadenas binarias. Un dígito hexadecimal representa 4 bits binarios.
+
+#### 4.5.1. ¿Qué es una Dirección MAC? <a name="capa2-mac-que-es"></a>
+*   **Identificador Único:** Una dirección MAC (Media Access Control) es un identificador único asignado a la mayoría de las interfaces de red (NIC - Network Interface Card) para comunicaciones dentro de un segmento de red local.
+*   **Formato Fundamental:** Es un valor **binario de 48 bits**.
+*   **Representación Común (Hexadecimal):** Para facilitar su lectura y manejo, estos 48 bits se expresan comúnmente como **12 dígitos hexadecimales**.
+    *   **Ejemplos de formato:** `00:07:E9:63:CE:53`, `00-07-E9-63-CE:53`, o `0007.E963.CE53`.
+    *   Cada par de dígitos hexadecimales representa 8 bits (1 byte). Por ejemplo, `E9` (Hex) corresponde a `11101001` (Binario).
+*   **Otros Nombres:** También se conoce como dirección física, dirección Ethernet, o BIA (Burned-In Address).
+*   **Analogía:** Como el número de serie de un dispositivo o el *RUT/DNI* impreso en un carnet, utilizado para la entrega "local".
+
+#### 4.5.2. Estructura de una Dirección MAC (OUI e Identificador) <a name="capa2-mac-estructura"></a>
+Una dirección MAC de 48 bits se divide lógicamente en dos partes principales, como se ilustra en la siguiente tabla. Los primeros 24 bits (3 bytes) constituyen el **OUI (Organizationally Unique Identifier - Identificador Único Organizacional)**, un código que el IEEE (Institute of Electrical and Electronics Engineers) asigna de forma única a cada fabricante de hardware de red. Este OUI funciona como un prefijo que identifica a la compañía que manufacturó la tarjeta de red (NIC). Los últimos 24 bits (3 bytes) son el **Identificador Único de Interfaz**, asignado por el propio fabricante a esa tarjeta específica dentro de su OUI.
+
+**Descomposición de una Dirección MAC (Ej: `D4-BE-D9-13-63-00`):**
+
+| Parte de la MAC                                       | Bytes Hexadecimales | Longitud | Descripción                                                                     | Responsable de Asignación |
+| :---------------------------------------------------- | :------------------ | :------- | :------------------------------------------------------------------------------ | :------------------------ |
+| **OUI** (Identificador Único Organizacional)          | `D4-BE-D9`          | 24 bits (3 bytes) | Identifican al **fabricante** de la tarjeta de red (NIC).                     | IEEE                      |
+| **Identificador Único de Interfaz** (ID de Dispositivo) | `13-63-00`          | 24 bits (3 bytes) | Asignados por el **fabricante** a esa tarjeta específica, asegurando unicidad bajo su OUI. | Fabricante                |
+
+La combinación del OUI (asignado centralmente por el IEEE al fabricante) y el identificador único de interfaz (asignado por el fabricante a cada una de sus tarjetas bajo ese OUI) asegura que cada dirección MAC sea, en teoría, globalmente única en el mundo.
+
+#### 4.5.3. Un Dispositivo, Múltiples Direcciones MAC <a name="capa2-mac-multiples"></a>
+Un dispositivo (como una PC, laptop, smartphone) no tiene "una" dirección MAC. **Cada interfaz de red física o virtual** en ese dispositivo tiene su propia dirección MAC.
+*   **Ejemplos comunes:**
+    *   Tu **tarjeta Ethernet cableada** (para el conector RJ45) tiene una MAC.
+    *   Tu **tarjeta Wi-Fi** (inalámbrica) tiene *otra* MAC diferente.
+    *   Si usas un **adaptador Bluetooth**, este también tiene su propia MAC.
+    *   Interfaces de red virtual creadas por software de virtualización (como VMware o VirtualBox) o por VPNs también tendrán sus propias MACs.
+*   Por esto, al ejecutar `ipconfig /all` (en Windows) o `ifconfig` / `ip a` (en Linux/macOS), puedes ver varias "Direcciones físicas" listadas, cada una correspondiente a una interfaz de red distinta.
+
+#### 4.5.4. Uso Práctico del OUI <a name="capa2-mac-oui-uso"></a>
+Conociendo los primeros 3 bytes (el OUI) de una dirección MAC, puedes identificar al fabricante del dispositivo de red.
+*   Herramientas online como la de Wireshark (`https://www.wireshark.org/tools/oui-lookup.html`) permiten ingresar el OUI y obtener el nombre del fabricante registrado.
+*   Esto es útil para: Identificar el hardware, diagnósticos de red e inventario.
+
+#### 4.5.5. Tipos de Direcciones MAC y su Uso en Ethernet <a name="capa2-mac-tipos"></a>
+En las redes Ethernet, las direcciones MAC de destino en una trama pueden ser de tres tipos principales, cada uno con un propósito específico para la comunicación en la Capa 2. La dirección MAC de origen, sin embargo, siempre será una dirección de unidifusión.
+
+| Tipo de Dirección MAC | MAC Destino Ejemplo                  | Dirigido a...                                     | Propósito Principal y Características                                                                                                                                                                                             | Comportamiento del Switch (Por Defecto)                                                                | Límite del Router (Por Defecto)     |
+| :-------------------- | :----------------------------------- | :------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------- | :---------------------------------- |
+| **Unidifusión (Unicast)** | `00:1A:2B:3C:4D:5E` (única)        | Una única NIC específica en la LAN.               | Enviar una trama desde un origen a un único destino específico. Es la dirección "grabada" en la NIC. Para comunicaciones IP, se usa ARP (IPv4) o ND (IPv6) para resolver la IP destino a su MAC correspondiente en la red local. | Reenvía la trama solo al puerto asociado con la MAC destino (si está en la tabla MAC), o la inunda si es desconocida. | No aplica directamente (opera con IPs). |
+| **Difusión (Broadcast)**| `FF:FF:FF:FF:FF:FF` (todos unos)   | **Todas** las NICs en el mismo dominio de difusión. | Enviar una trama a todos los dispositivos en el segmento de red local. Usado por protocolos como DHCP (Discover) y ARP (Request).                                                                                             | **Inunda** la trama por todos los puertos, excepto el puerto de origen.                                  | **No reenvía** broadcasts.          |
+| **Multidifusión (Multicast)**| `01:00:5E:xx:xx:xx` (para IPv4)<br>`33:33:xx:xx:xx:xx` (para IPv6) | Un **grupo específico** de NICs en la LAN que se han unido a un grupo de multidifusión. | Enviar una trama a múltiples destinos interesados simultáneamente, sin inundar a todos. Usado para streaming de video, juegos en red, protocolos de enrutamiento. Las MACs de multidifusión IP se derivan de la dirección IP de multidifusión. Existen otras MACs de multidifusión para protocolos no IP (STP, LLDP). | **Inunda** la trama por todos los puertos (excepto el origen), a menos que tenga "snooping de multidifusión" configurado para ser más selectivo. | **No reenvía** multicast, a menos que esté configurado para enrutamiento multicast. |
+
+*   **Puntos Importantes sobre los Tipos de Direcciones MAC:**
+    *   La **dirección MAC de origen** en cualquier trama Ethernet siempre es una dirección de **unidifusión**, identificando al remitente individual.
+    *   Los **routers no reenvían tramas de difusión (broadcast)** por defecto, lo que ayuda a contener el tráfico de difusión dentro de una LAN y define los límites de un dominio de difusión.
+    *   El manejo eficiente del tráfico de **multidifusión** a menudo requiere switches con capacidades avanzadas como IGMP Snooping.
+
+### 4.6. La Trama Ethernet: Estructura y Encapsulación <a name="capa2-trama"></a>
 
 #### 4.6.1. Proceso de Comunicación y Encapsulación en Capa 2 <a name="capa2-trama-proceso"></a>
 
 Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llamadas **protocolos de red**. Un concepto fundamental en estos protocolos es la **encapsulación**:
 
-1.  **Protocolos de Red (Fundamentos, para iniciar capa 2):**
-    *   **Definición:** Un conjunto de reglas y convenciones que los dispositivos deben seguir para intercambiar información de manera correcta y comprensible. Definen el formato, tamaño, temporización(sincronizacion o velocidad), codificación(conversion a bits), encapsulación y patrones o secuencia de los mensajes(Request/Response).
-    *   **Objetivo:** Facilitar la comunicación estructurada y ordenada entre dispositivos.
+1.  **Protocolos de Red (Fundamentos para Capa 2):**
+    *   **Definición:** Un conjunto de reglas y convenciones que los dispositivos deben seguir para intercambiar información de manera correcta y comprensible. Definen el formato, tamaño, temporización (sincronización), codificación (conversión a bits), encapsulación y secuencia de los mensajes.
+    *   **Objetivo:** Facilitar la comunicación estructurada y ordenada.
 
-2.  **Encapsulación: Envolviendo los Datos para el Viaje (proceso capa 2)**
-    *   **Proceso:** A medida que los datos pasan de una capa superior (ej: Capa 3 - Red, con un paquete IP) a una capa inferior (ej: Capa 2 - Enlace de Datos), la capa inferior "envuelve" los datos de la capa superior. Esto implica añadir información de control propia de la capa, como encabezados (y a veces tráileres).
-    *   **Analogía:** Piensa en poner una carta (los datos del paquete IP) dentro de un sobre. El sobre (la trama de Capa 2) tiene su propia información (direcciones del remitente y destinatario local, sello).
+2.  **Encapsulación en Capa 2:**
+    *   **Proceso:** Cuando los datos de una capa superior (Capa 3 - Red, típicamente un paquete IP) deben transmitirse a través de la red local, la Capa 2 (Enlace de Datos) "envuelve" estos datos. Esto implica añadir información de control específica de la Capa 2, formando una unidad de datos llamada **trama**.
+    *   **Analogía:** Poner una carta (el paquete IP) dentro de un sobre (la trama Ethernet). El sobre tiene sus propias direcciones (MAC de origen y destino) y un sello (FCS).
 
-3.  **La Trama Ethernet: El "Sobre" de la Capa 2 (fin proceso capa 2)**
-    *   Cuando un paquete IP (de Capa 3) necesita ser enviado a través de una red local Ethernet, la Capa 2 lo encapsula dentro de una **Trama Ethernet**.
-    *   Esta trama es la unidad de datos que realmente viaja por el cable o el aire en la red local.
-    *   **Función Clave:** La trama Ethernet asegura que el paquete IP llegue al dispositivo correcto *dentro de la misma red local*.
+3.  **La Trama Ethernet: El "Sobre" de la Capa 2**
+    *   Cuando un paquete IP necesita ser enviado a través de una red local Ethernet, la subcapa MAC de la Capa 2 lo encapsula dentro de una **Trama Ethernet**.
+    *   Esta trama es la PDU que realmente viaja por el cable o el aire en la red local.
+    *   **Función Clave:** La trama Ethernet asegura que el paquete IP llegue al dispositivo correcto *dentro de la misma red local*, utilizando las direcciones MAC.
 
-    **Componentes Esenciales de una Trama Ethernet (IEEE 802.3 / Ethernet II):**
+#### 4.6.2. Anatomía de una Trama Ethernet II <a name="capa2-trama-anatomia"></a>
+La estructura de una trama Ethernet II (el formato más común hoy en día) es la siguiente:
 
-    | Componente                      | Tamaño (Bytes) | Descripción                                                                                                                              |
-    |---------------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------|
-    | **Preámbulo**                   | 7              | Secuencia de bits alternantes (101010...) para sincronización del reloj del receptor.                                                      |
-    | **SFD (Start Frame Delimiter)** | 1              | Secuencia `10101011`. Indica que el siguiente byte es la Dirección MAC Destino y marca el inicio formal de la trama.                            |
-    | **Dirección MAC Destino**       | 6              | La dirección física (MAC) del dispositivo receptor en el segmento de red local. Si es `FF:FF:FF:FF:FF:FF`, es una trama de broadcast.       |
-    | **Dirección MAC Origen**        | 6              | La dirección física (MAC) del dispositivo emisor en el segmento de red local.                                                              |
-    | **EtherType / Longitud**        | 2              | Si valor ≥ 1536 (0x0600): Indica el protocolo de Capa 3 encapsulado (ej: `0x0800` para IPv4, `0x86DD` para IPv6). (Formato Ethernet II). Si valor ≤ 1500: Indica la longitud del campo de datos (Formato IEEE 802.3 original). |
-    | **Datos (Payload)**             | 46 - 1500      | Contiene el paquete de la capa superior (generalmente un paquete IP). Si es menor de 46 bytes, se añade relleno (padding).                 |
-    | **FCS (Frame Check Sequence)**  | 4              | Suma de verificación (CRC) calculada sobre la trama (desde MAC Destino hasta Datos). Permite al receptor detectar errores de transmisión.      |
+*   **Tamaño Estándar:**
+    *   **Mínimo:** 64 bytes (desde Dirección MAC de Destino hasta FCS).
+    *   **Máximo:** 1518 bytes (desde Dirección MAC de Destino hasta FCS).
+    *   *Tramas con menos de 64 bytes ("runt frames") suelen ser descartadas.*
+    *   *Tramas con más de 1500 bytes de datos (excluyendo encabezados/tráiler) se denominan "Jumbo frames" y requieren soporte en todos los dispositivos de la ruta.*
 
-    *   **El Rol del Protocolo IP dentro de la Trama:** Mientras la Trama Ethernet (con direcciones MAC) se encarga de la entrega local, el paquete IP (contenido en el campo "Datos" de la trama) lleva las direcciones IP de origen y destino finales, que son usadas por los routers para el envío a través de múltiples redes (internetworking) hasta el destino final.
+*   **Componentes de una Trama Ethernet II:**
+
+    | Campo                     | Longitud (Bytes) | Descripción y Función Clave                                                                                                                             |
+    | :------------------------ | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+    | **Preámbulo**             | 7                | Patrón alternante de 1s y 0s (`10101010...`) usado por la NIC receptora para **sincronizar su reloj** con la señal entrante. No se incluye en el cálculo del FCS. |
+    | **SFD (Start Frame Delimiter - Delimitador de Inicio de Trama)** | 1                | Patrón `10101011`. Los dos últimos bits `11` indican al receptor que la sincronización ha terminado y que el siguiente campo es la Dirección MAC de Destino. No se incluye en el cálculo del FCS. |
+    | **Dirección MAC de Destino** | 6                | Dirección MAC de 48 bits de la NIC del dispositivo receptor en la LAN.                                                                                   |
+    | **Dirección MAC de Origen**  | 6                | Dirección MAC de 48 bits de la NIC del dispositivo emisor en la LAN.                                                                                     |
+    | **Tipo/Longitud (EtherType)** | 2                | Para tramas Ethernet II (DIX Ethernet), este campo es el **EtherType**. Si su valor es ≥ 1536 (0x0600), indica el protocolo de Capa 3 encapsulado (ej: `0x0800`=IPv4, `0x0806`=ARP, `0x86DD`=IPv6). Este campo es utilizado por la subcapa LLC (o su funcionalidad) para pasar los datos al protocolo correcto de capa superior. En el estándar IEEE 802.3 original, si el valor era ≤ 1500, indicaba la longitud del campo de datos. |
+    | **Datos (y Relleno/Pad)**   | 46 - 1500        | Contiene la PDU de la capa superior (ej., un paquete IP). Si el paquete de Capa 3 es menor de 46 bytes, se añade **relleno (padding)** con ceros para asegurar que la trama (desde MAC Destino hasta FCS) alcance el tamaño mínimo de 64 bytes. Este tamaño mínimo fue históricamente importante para el correcto funcionamiento de CSMA/CD. |
+    | **FCS (Frame Check Sequence - Secuencia de Verificación de Trama)** | 4                | Es el **tráiler** de la trama. Contiene un valor de **CRC (Cyclic Redundancy Check)** de 32 bits calculado por el emisor sobre los campos desde la MAC de Destino hasta el final del campo de Datos (sin incluir el relleno si este no forma parte de los datos originales que el FCS debe cubrir). El receptor realiza el mismo cálculo sobre la trama recibida; si los valores del FCS no coinciden, la trama se considera corrupta y se descarta. **El FCS solo detecta errores, no los corrige.** |
+
+    *   **Rol del Paquete IP dentro de la Trama:** Mientras la Trama Ethernet (con sus direcciones MAC) se encarga de la entrega local en el segmento de red, el paquete IP (contenido en el campo "Datos" de la trama) lleva las direcciones IP de origen y destino finales. Estas direcciones IP son utilizadas por los routers para el enrutamiento del paquete a través de múltiples redes (internetworking) hasta su destino final.
+
+### 4.7. Funcionamiento de los Switches Ethernet <a name="capa2-switches"></a>
+Los switches Ethernet de Capa 2 son dispositivos centrales en las LAN modernas, reemplazando en gran medida a los antiguos hubs. Utilizan las direcciones MAC para reenviar tramas de manera inteligente y eficiente.
+
+#### 4.7.1. Fundamentos del Switch de Capa 2 <a name="capa2-switches-fundamentos"></a>
+*   **Toma de Decisiones en Capa 2:** Un switch opera en la Capa de Enlace de Datos. Sus decisiones de reenvío se basan **exclusivamente en las direcciones MAC Ethernet** de las tramas.
+*   **Indiferencia al Protocolo de Capa Superior:** El switch es "agnóstico" a los datos (protocolo) que se transportan en la porción de datos de la trama, como un paquete IPv4, un mensaje ARP o un paquete IPv6 ND.
+*   **La Tabla de Direcciones MAC (Tabla MAC o Tabla CAM):**
+    *   Es la base de la inteligencia del switch. También se conoce como tabla CAM (Content Addressable Memory).
+    *   Se construye y mantiene **dinámicamente**.
+    *   Almacena asociaciones entre:
+        *   Direcciones MAC de los dispositivos.
+        *   Los puertos del switch a través de los cuales se puede alcanzar cada dirección MAC.
+        *   (Opcionalmente) El VLAN ID al que pertenece la entrada.
+    *   Cuando un switch se enciende por primera vez, su tabla de direcciones MAC está vacía.
+
+#### 4.7.2. Proceso de Aprendizaje y Reenvío del Switch <a name="capa2-switches-aprendizaje-reenvio"></a>
+Un switch realiza dos operaciones principales con cada trama que recibe:
+
+*   **A. Aprendizaje (Construcción de la Tabla de Direcciones MAC):**
+    *   **Examinar la Dirección MAC de Origen:** Cuando una trama ingresa a un puerto del switch, este examina la **dirección MAC de origen** de la trama y el **número de puerto** por el que ingresó.
+    *   **Poblar/Actualizar la Tabla:**
+        1.  Si la dirección MAC de origen **no existe** en la tabla MAC, el switch la **agrega**, asociándola con el número del puerto de entrada.
+        2.  Si la dirección MAC de origen **ya existe** en la tabla y está asociada al mismo puerto, el switch **actualiza el temporizador de envejecimiento** de esa entrada (por defecto, la mayoría de los switches Ethernet guardan una entrada en la tabla durante 5 minutos de inactividad antes de eliminarla, para asegurar que la tabla refleje la topología actual de la red).
+        3.  Si la dirección MAC de origen ya existe en la tabla, pero está registrada en un **puerto diferente**, el switch actualiza la entrada, reemplazando el puerto antiguo con el nuevo puerto de entrada. Esto maneja el caso en que un dispositivo se mueve de un puerto a otro del switch.
+
+*   **B. Reenvío/Filtrado (Toma de Decisiones Basada en la Dirección MAC de Destino):**
+    Después de procesar la MAC de origen, el switch examina la **dirección MAC de destino** de la trama para decidir cómo reenviarla:
+
+    1.  **Destino Unicast Conocido (Filtrado de Tramas):**
+        *   Si la dirección MAC de destino es una dirección de **unidifusión** y el switch **encuentra una entrada coincidente** para esa MAC en su tabla, **reenvía la trama únicamente por el puerto especificado** en la tabla MAC. Esto se conoce como **filtrado de tramas**, ya que la trama no se envía a puertos innecesarios, reduciendo la congestión y mejorando la eficiencia.
+
+    2.  **Destino Unicast Desconocido (Inundación o "Flooding"):**
+        *   Si la dirección MAC de destino es una dirección de **unidifusión** pero **NO existe una entrada** para esa MAC en la tabla (se denomina "unidifusión desconocida"), el switch no sabe por qué puerto específico enviar la trama.
+        *   En este caso, el switch **inunda ("floods") la trama, reenviándola por todos los puertos activos, excepto por el puerto por el cual ingresó la trama original.** Se espera que el dispositivo destino reciba la trama y, cuando responda, el switch aprenderá su ubicación (MAC y puerto) a través de la MAC de origen de esa trama de respuesta.
+
+    3.  **Destino Broadcast o Multicast:**
+        *   Si la dirección MAC de destino es una dirección de **difusión (Broadcast)** (`FF:FF:FF:FF:FF:FF`) o una dirección de **multidifusión (Multicast)** (ej: `01:00:5E:...` o `33:33:...`), el switch, por defecto, **inunda la trama por todos los puertos activos, excepto por el puerto de entrada.**
+            *   *Nota sobre Multicast:* Switches más avanzados pueden utilizar técnicas como "IGMP Snooping" para aprender qué puertos tienen dispositivos interesados en recibir tráfico de un grupo multicast particular. En tales casos, el switch solo reenviará el tráfico multicast a esos puertos específicos, en lugar de inundarlo innecesariamente.
+
+    4.  **Destino en el Mismo Puerto de Origen (Descarte Silencioso):**
+        *   Si el switch, basándose en su tabla MAC, determina que la dirección MAC de destino está accesible a través del **mismo puerto por el cual ingresó la trama**, el switch **descarta la trama silenciosamente**. Esto evita que la trama se reenvíe innecesariamente de vuelta al segmento de red del que provino. Esto es común si hay un hub conectado a un puerto del switch y dos dispositivos en ese hub se comunican; el hub ya habrá propagado la trama.
+
+#### 4.7.3. Consideraciones Adicionales sobre Switches <a name="capa2-switches-consideraciones"></a>
+*   **Switches Conectados:** Un solo puerto de un switch puede tener muchas direcciones MAC asociadas si ese puerto está conectado a otro switch (o a un hub con múltiples dispositivos). El primer switch aprenderá las MACs de los dispositivos conectados al segundo switch (o hub) a través de las tramas que pasen por el enlace entre ellos. Cada switch mantiene su propia tabla MAC de forma independiente.
+
+*   **Envío a la Puerta de Enlace Predeterminada (Gateway):**
+    *   Cuando un dispositivo necesita enviar datos a una dirección IP ubicada en una **red remota** (es decir, una red diferente a la suya, fuera de su subred local), la trama Ethernet no se puede enviar directamente al dispositivo de destino final usando su MAC.
+    *   En su lugar, el dispositivo de origen encapsulará el paquete IP (que tiene la IP de origen del dispositivo y la IP de destino del host remoto) dentro de una trama Ethernet.
+    *   La **dirección MAC de destino de esta trama Ethernet será la dirección MAC de su puerta de enlace predeterminada** (generalmente la interfaz del router en su red local).
+    *   El switch local, al recibir esta trama, buscará la MAC del router en su tabla MAC y reenviará la trama al puerto donde está conectado el router. El router luego se encargará de desencapsular el paquete IP, consultar su propia tabla de enrutamiento y reenrutar el paquete IP hacia la red de destino, creando una nueva trama de Capa 2 para el siguiente salto si es necesario.
 
 ### 4.8. Conceptos Adicionales de Capa 2 <a name="capa2-conceptos-adicionales"></a>
+
 #### 4.8.1. Dispositivos Primarios de Capa 2 <a name="capa2-dispositivos"></a>
-*   ***Switches (Conmutadores)*:**
-    *   Toman decisiones de reenvío inteligentes basadas en direcciones MAC destino de las tramas.
-    *   Crean una **tabla MAC** (o tabla CAM) que mapea direcciones MAC a puertos del switch.
-    *   Cada puerto del switch es un **dominio de colisión** separado, reduciendo colisiones.
-    *   Por defecto, un switch forma un único **dominio de difusión** (los broadcasts se inundan a todos los puertos excepto el de origen).
-*   **Puntos de Acceso Inalámbricos (WAP o AP - Wireless Access Point):** Permiten a dispositivos Wi-Fi conectarse a una red cableada. Actúan como un bridge entre el medio inalámbrico y el cableado.
-*   **Bridges (Puentes):** Predecesores de los switches, conectaban segmentos de red. Menos eficientes.
-*   **Routers:** Conectan la LAN con otras redes (como Internet) y enrutan el tráfico entre ellas. Un tipo avanzado es el ISR (Integrated Services Router), que incorpora funciones adicionales como seguridad (firewall, VPN) y voz (VoIP). *No* propagan difusiones, limitando el dominio.
-*   **Cables y Tarjetas de Red (NIC):** Permiten la conexión física de los dispositivos a la LAN mediante Ethernet o fibra óptica.
+*   ***Switches (Conmutadores)***: Como se describió anteriormente, son el pilar de las LAN modernas. Toman decisiones de reenvío inteligentes basadas en direcciones MAC, crean una tabla MAC, y cada puerto es un dominio de colisión separado. Por defecto, un switch forma un único dominio de difusión.
+*   **Puntos de Acceso Inalámbricos (WAP o AP - Wireless Access Point):** Permiten a los dispositivos Wi-Fi (IEEE 802.11) conectarse a una red cableada Ethernet. Actúan funcionalmente como un "bridge" (puente) entre el medio inalámbrico y el medio cableado, traduciendo entre los formatos de trama 802.11 y 802.3.
+*   **Bridges (Puentes):** Dispositivos más antiguos, predecesores de los switches. Conectaban dos o más segmentos de red LAN y tomaban decisiones de reenvío basadas en direcciones MAC. Tenían menos puertos y eran menos eficientes que los switches modernos.
+*   **Tarjetas de Red (NIC):** Esenciales para cada dispositivo que se conecta a la red, implementando la Capa 2 y Capa 1.
+*   *Nota sobre Routers:* Aunque los routers son dispositivos de Capa 3, sus interfaces (puertos) tienen componentes de Capa 2 (como una dirección MAC si es una interfaz Ethernet) para conectarse a los segmentos LAN. Los routers son cruciales para conectar diferentes dominios de difusión de Capa 2.
 
-#### 4.8.2. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2) <a name="capa2-tipos-redes"></a>
+#### 4.8.2. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2 para el acceso) <a name="capa2-tipos-redes"></a>
 
-| Tipo de Red (General)        | Descripción                                                                    | Cobertura Típica      | Ejemplo                                               | Tecnologías Comunes        |
-| :--------------------------- | :----------------------------------------------------------------------------- | :-------------------- | :---------------------------------------------------- | :------------------------- |
-| **PAN (Personal Area Network)** | Conexión de dispositivos personales muy cercanos.                              | Pocos metros          | Auriculares Bluetooth con teléfono (WPAN)             | Bluetooth, Zigbee (WPAN)   |
-| **LAN (Local Area Network)**   | Red en un área limitada (casa, oficina, edificio).                             | Edificio              | Red de oficina con cables Ethernet (LAN) o Wi-Fi (WLAN) | Ethernet, Wi-Fi (WLAN)     |
-| **MAN (Metropolitan Area Network)** | Interconecta LANs en una ciudad o área metropolitana.                        | Ciudad                | Red municipal conectando edificios                    | Fibra óptica, WiMAX (WMAN) |
-| **WAN (Wide Area Network)**    | Cubre áreas extensas (países, continentes). Internet es una WAN.             | País, Mundo           | Red corporativa global, Internet                      | MPLS, Satélite, 4G/5G (WWAN)|
+| Tipo de Red (General)        | Descripción                                                                    | Cobertura Típica      | Ejemplo                                               | Tecnologías Comunes de Acceso (L1/L2) |
+| :--------------------------- | :----------------------------------------------------------------------------- | :-------------------- | :---------------------------------------------------- | :------------------------------------ |
+| **PAN (Personal Area Network)** | Conexión de dispositivos personales muy cercanos.                              | Pocos metros          | Auriculares Bluetooth con teléfono (WPAN)             | Bluetooth, Zigbee (WPAN)              |
+| **LAN (Local Area Network)**   | Red en un área geográfica limitada (casa, oficina, edificio único o campus pequeño). | Edificio/Campus       | Red de oficina con cables Ethernet (LAN) o Wi-Fi (WLAN) | Ethernet, Wi-Fi (WLAN)                |
+| **MAN (Metropolitan Area Network)** | Interconecta LANs dentro de una ciudad o área metropolitana.                 | Ciudad                | Red municipal conectando edificios universitarios     | Fibra óptica, Metro Ethernet, WiMAX (WMAN) |
+| **WAN (Wide Area Network)**    | Cubre áreas geográficas extensas (países, continentes). Internet es el ejemplo más grande de una WAN. | País, Mundo           | Red corporativa global, Internet                      | MPLS, Frame Relay (legado), Satélite, Líneas dedicadas (T1/E1), 4G/5G (WWAN) |
 
-*   **W** delante de PAN, LAN, MAN, WAN (ej. **WLAN**) indica que la tecnología principal es inalámbrica (Wireless).
-*   *(WMAN, WWAN son las versiones inalámbricas, usan tecnologías como WiMAX, 4G/5G).*
-*   *(MAN y WAN implican principalmente enrutamiento de Capa 3, aunque usan tecnologías de Capa 1 y 2 para los enlaces).*
+*   La letra **W** delante de PAN, LAN, MAN, WAN (ej: **WLAN**) generalmente indica que la tecnología de acceso principal es inalámbrica (Wireless).
+*   Las MAN y WAN, aunque utilizan tecnologías de Capa 1 y 2 para los enlaces físicos entre sitios, dependen fundamentalmente del enrutamiento de Capa 3 para interconectar las diferentes redes que las componen.
 
 #### 4.8.3. Segmentación en Capa 2: VLANs y Dominios de Difusión <a name="capa2-segmentacion"></a>
-*   **Dominio de Difusión:** Área de una red donde un broadcast enviado por un dispositivo es recibido por todos los demás. Los *switches (commutadores)*, por defecto, crean un solo dominio de difusión.
-*   **Problemas con Dominios de Difusión Grandes:** Excesivo tráfico de broadcast puede ralentizar la red.
-*   **VLANs (Virtual LANs):** Permiten segmentar lógicamente una red física (un switch) en múltiples dominios de difusión independientes.
-    *   El tráfico entre VLANs diferentes requiere un dispositivo de Capa 3 (router o switch multicapa) para ser enrutado.
-    *   Mejoran la seguridad, organización y gestión del tráfico.
+*   **Dominio de Difusión (Broadcast Domain):** Es el área lógica de una red donde cualquier trama de difusión (broadcast) enviada por un dispositivo es recibida por todos los demás dispositivos en ese mismo dominio.
+    *   Por defecto, un **switch (conmutador)** forma un único dominio de difusión grande; es decir, si un dispositivo conectado a un puerto envía una trama de broadcast, el switch la reenviará a todos los demás puertos.
+    *   Los **routers**, en cambio, no reenvían tramas de broadcast de un interfaz a otro por defecto, por lo que cada interfaz de un router típicamente define el límite de un dominio de difusión.
+*   **Problemas con Dominios de Difusión Grandes:** En redes grandes, un volumen excesivo de tráfico de broadcast (generado por ARP, DHCP, y otros protocolos) puede consumir un ancho de banda significativo y la capacidad de procesamiento de todos los dispositivos, degradando el rendimiento general de la red.
+*   **VLANs (Virtual LANs - LANs Virtuales):**
+    *   Son un método para **segmentar lógicamente una red física (como un único switch o un grupo de switches interconectados) en múltiples dominios de difusión independientes**.
+    *   Los dispositivos en una VLAN solo pueden comunicarse directamente (a nivel de Capa 2) con otros dispositivos en la misma VLAN.
+    *   **Para que el tráfico pase entre VLANs diferentes, se requiere un dispositivo de Capa 3 (un router o un switch multicapa configurado para enrutamiento inter-VLAN).**
+    *   **Beneficios:**
+        *   **Seguridad Mejorada:** Aísla grupos de usuarios o tipos de tráfico.
+        *   **Organización:** Agrupa dispositivos por función o departamento, independientemente de su ubicación física.
+        *   **Gestión del Tráfico:** Reduce el tamaño de los dominios de difusión, mejorando el rendimiento.
+        *   **Flexibilidad:** Facilita movimientos, adiciones y cambios de dispositivos.
+    *   **Etiquetado de Tramas (IEEE 802.1Q):** Para que los switches puedan identificar a qué VLAN pertenece una trama cuando esta atraviesa enlaces troncales (trunks) entre switches, se utiliza el estándar IEEE 802.1Q. Este estándar añade una "etiqueta" de 4 bytes a la trama Ethernet original, que contiene el VLAN ID.
 
-### VLAN vs SSID adicional: la diferencia importante es que VLAN puede dividir el trafico.
+*   **VLAN vs. SSID Adicional (en un Punto de Acceso Wi-Fi):**
+    Es común confundir la creación de múltiples SSIDs (nombres de red Wi-Fi) en un punto de acceso con la creación de VLANs. Si bien ambos pueden dar la apariencia de redes separadas, son fundamentalmente diferentes:
 
-| Característica             | SSID Adicional                                       | VLAN (Virtual LAN)                                                  |
-|---------------------------|------------------------------------------------------|----------------------------------------------------------------------|
-| **Nivel técnico**         | Solo cambia el nombre/red Wi-Fi visible              | Crea una red lógica separada a nivel de capa 2 (switch)             |
-| **Aislamiento real**      | Depende del router: algunos no aíslan                | Aislamiento fuerte si el switch/router lo impone                    |
-| **Tráfico separado**      | Comparten red IP, gateway y **ancho de banda**       | Pueden tener **IP, reglas, gateways y ancho de banda separados**    |
-| **Visibilidad de equipos**| Pueden verse si están en misma subred IP             | No se ven salvo que tú crees una ruta entre VLANs                   |
-| **Control de tráfico (QoS)**| No (todos comparten el canal)                     | Sí (puedes priorizar o limitar por VLAN)                            |
-| **Propósito típico**      | Organizar redes Wi-Fi por nombre o perfil            | Separar tráfico por seguridad, prioridad, rendimiento o control     |
-| **Hardware especial**     | No                                                   | Sí (router/switch que soporte VLANs y 802.1Q)                        |
+    | Característica             | SSID Adicional (sin VLAN asociada)                      | VLAN (Virtual LAN)                                                              |
+    |---------------------------|-----------------------------------------------------------|---------------------------------------------------------------------------------|
+    | **Nivel Técnico**         | Simplemente un nombre diferente para la red Wi-Fi visible. Los dispositivos se conectan al mismo segmento de red subyacente. | Crea una red lógica separada a nivel de Capa 2, con su propio dominio de difusión. |
+    | **Aislamiento Real**      | Mínimo o nulo por defecto. Todos los dispositivos (independientemente del SSID) suelen estar en la misma subred IP y pueden verse entre sí. (Algunos routers/APs domésticos pueden ofrecer "aislamiento de cliente" básico). | Aislamiento fuerte a nivel de Capa 2. Los dispositivos en diferentes VLANs no pueden comunicarse directamente sin enrutamiento de Capa 3. |
+    | **Tráfico Separado**      | Comparten la misma red IP, la misma puerta de enlace y, crucialmente, el mismo **dominio de difusión y ancho de banda del switch/router**. | Pueden (y suelen) tener **subredes IP diferentes, puertas de enlace distintas, políticas de seguridad y QoS separadas, y dominios de difusión aislados**. |
+    | **Visibilidad de Equipos**| Generalmente, los dispositivos conectados a diferentes SSIDs (pero en la misma LAN/VLAN subyacente) pueden verse entre sí. | Los dispositivos en diferentes VLANs no se ven entre sí a nivel de Capa 2. La comunicación requiere un router. |
+    | **Control de Tráfico (QoS)**| Limitado o nulo a nivel de SSID individual.                | Permite aplicar políticas de QoS por VLAN (ej: priorizar tráfico de voz en una VLAN específica). |
+    | **Propósito Típico**      | Ofrecer redes Wi-Fi con diferentes nombres (ej: "Hogar", "Invitados") por conveniencia o con diferentes configuraciones de seguridad Wi-Fi (WPA2/3). | Separar tráfico por razones de seguridad (ej: invitados vs. corporativo), departamentales (ej: ventas vs. ingeniería), por tipo de dispositivo (ej: PCs vs. teléfonos VoIP vs. cámaras IoT), o para controlar el tráfico de difusión. |
+    | **Hardware Especial**     | No (cualquier AP moderno soporta múltiples SSIDs).         | Sí, se requieren **switches y routers (o APs empresariales) que soporten el estándar IEEE 802.1Q (etiquetado VLAN)**. |
 
-✅ **Conclusión:** Un SSID adicional es solo otra entrada a la misma red. Una VLAN es una red realmente separada y controlable dentro del mismo equipo o infraestructura.
+    ✅ **Conclusión:** Un SSID adicional sin una VLAN subyacente es principalmente una conveniencia de nombres. Una **VLAN** proporciona una segmentación de red lógica real y robusta con aislamiento y control de tráfico significativamente mayores. Muchos APs empresariales permiten mapear diferentes SSIDs a diferentes VLANs.
 
-### Tipos de Comunicación (Direccionamiento) en Capa 2
-| Tipo       | Dirigido a...                              | MAC Destino Ejemplo            |
-|------------|--------------------------------------------|--------------------------------|
-| **Unicast**  | Una única NIC específica en la LAN.        | `00:1A:2B:3C:4D:5E`            |
-| **Multicast**| Un grupo de NICs en la LAN.                | `01:00:5E:xx:xx:xx` (para IPv4 multicast) |
-| **Broadcast**| Todas las NICs en el dominio de difusión.  | `FF:FF:FF:FF:FF:FF`            |
+### 4.9. De la Trama a los Bits: Interacción con la Capa Física <a name="capa2-interaccion-capa1"></a>
+Una vez que la Capa de Enlace de Datos (específicamente la subcapa MAC) ha ensamblado completamente la trama Ethernet (con su preámbulo, SFD, direcciones MAC, EtherType, datos y FCS), esta secuencia de bits lógicos debe ser convertida en señales físicas para su transmisión a través del medio de red (cable de cobre, fibra óptica, aire). Esta es la función principal de la **Capa 1 (Física)**.
 
-*(Los routers NO reenvían broadcasts por defecto).*
+*   **Bits:** La trama completa se considera una secuencia de unidades de datos binarias, los bits (0s y 1s).
+*   **Codificación de Línea (Line Coding):** Para que el dispositivo receptor pueda:
+    1.  Distinguir correctamente entre un bit '0' y un bit '1' representado por la señal física.
+    2.  Mantener la sincronización del reloj entre el transmisor y el receptor (saber cuándo comienza y termina cada bit).
+    Se utilizan diversos **esquemas de codificación de línea**. Estos esquemas son especificados por los estándares IEEE 802.3 para cada tipo y velocidad de Ethernet.
+    *   **Propósito:** Convertir los bits lógicos en señales físicas (eléctricas, ópticas) que sean robustas, interpretables por el receptor y que faciliten la sincronización.
+    *   **Ejemplos de Esquemas de Codificación:**
+        *   **En Cobre (Par Trenzado):**
+            *   **Manchester Coding (utilizado en 10BASE-T Ethernet):** Cada bit tiene una transición de voltaje en el medio de su período. Por ejemplo, un '0' podría ser una transición de bajo a alto voltaje, y un '1' una transición de alto a bajo (o viceversa). Esta transición constante ayuda enormemente a la recuperación del reloj y la sincronización en el receptor.
+            *   **MLT-3 (Multi-Level Transmit, 3 niveles - usado en 100BASE-TX "Fast Ethernet"):** Utiliza tres niveles de voltaje para representar los datos, lo que permite reducir la frecuencia de la señal necesaria en el cable en comparación con esquemas más simples para la misma tasa de bits.
+            *   **PAM (Pulse Amplitude Modulation - ej: PAM-5 para Gigabit Ethernet 1000BASE-T, PAM-16 para 10GBASE-T y superiores):** Utiliza múltiples niveles de amplitud de pulso para codificar varios bits en cada cambio de señal (símbolo). Por ejemplo, PAM-5 usa cinco niveles de voltaje para codificar datos, permitiendo transmitir más bits por símbolo y alcanzar mayores velocidades sobre el mismo tipo de cableado de par trenzado.
+        *   **En Fibra Óptica:** Los esquemas implican modular la luz. A menudo se usan esquemas de codificación como **NRZ (Non-Return to Zero)** donde la presencia o ausencia de luz (o diferentes niveles de intensidad/fase) representan los bits, o esquemas más complejos como **8B/10B** (donde 8 bits de datos se codifican en un símbolo de 10 bits para asegurar suficientes transiciones para la sincronización y balance DC) o **64B/66B** para velocidades más altas.
+*   **Sincronización del Reloj:**
+    *   El **Preámbulo** (7 bytes de `10101010...`) al inicio de la trama Ethernet es crucial. Esta secuencia predecible de bits alternantes permite al circuito receptor "enganchar" su reloj (PLL - Phase-Locked Loop) al ritmo de la señal entrante.
+    *   El **SFD (Start Frame Delimiter)** (`10101011`) inmediatamente después del preámbulo, con su patrón final `11`, le indica al receptor que la fase de sincronización ha concluido y que los siguientes bits corresponden al inicio de la dirección MAC de destino, marcando el comienzo de la trama útil.
 
 </details>
 
