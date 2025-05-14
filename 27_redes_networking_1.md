@@ -1,6 +1,95 @@
-# Guía de Estudio de Networking: Del Modelo OSI a la Práctica
+# 🌐 Guía de Estudio de Networking: Del Modelo OSI a la Práctica
 
-## Introducción: ¿Qué es Internet y Cómo se Organiza la Comunicación?
+<p align="center">
+  Una guía completa para entender los fundamentos de las redes de computadoras, desde los modelos teóricos hasta los protocolos y herramientas prácticas.
+</p>  
+
+---
+## 📌 Índice de Contenidos
+
+<details>
+  <summary>Ver/Ocultar Índice</summary>
+
+- [🌐 Guía de Estudio de Networking: Del Modelo OSI a la Práctica](#-guía-de-estudio-de-networking-del-modelo-osi-a-la-práctica)
+  - [📌 Índice de Contenidos](#-índice-de-contenidos)
+  - [1. Introducción a las Redes ](#1-introducción-a-las-redes-)
+    - [1.1. ¿Qué es Internet y Cómo se Organiza la Comunicación? ](#11-qué-es-internet-y-cómo-se-organiza-la-comunicación-)
+    - [1.2. Modelos de Referencia: TCP/IP y OSI ](#12-modelos-de-referencia-tcpip-y-osi-)
+  - [2. Principios Fundamentales del Diseño de Redes ](#2-principios-fundamentales-del-diseño-de-redes-)
+    - [2.1. Pilares de una Red Confiable ](#21-pilares-de-una-red-confiable-)
+  - [3. Capa 1 OSI: Física – La Transmisión de Bits ](#3-capa-1-osi-física--la-transmisión-de-bits-)
+    - [3.1. Función Principal y PDU ](#31-función-principal-y-pdu-)
+    - [3.2. Medios de Red ](#32-medios-de-red-)
+    - [3.3. Multiplexación ](#33-multiplexación-)
+    - [3.4. Otros Conceptos y Dispositivos de Capa 1 ](#34-otros-conceptos-y-dispositivos-de-capa-1-)
+  - [4. Capa 2 OSI: Enlace de Datos – Comunicación en la Red Local ](#4-capa-2-osi-enlace-de-datos--comunicación-en-la-red-local-)
+    - [4.1. Función Principal y PDU ](#41-función-principal-y-pdu-)
+    - [4.2. Organizaciones y Estándares Clave ](#42-organizaciones-y-estándares-clave-)
+    - [4.3. Tarjeta de Interfaz de Red (NIC) ](#43-tarjeta-de-interfaz-de-red-nic-)
+    - [4.4. Ethernet: La Tecnología LAN Predominante ](#44-ethernet-la-tecnología-lan-predominante-)
+      - [4.4.1. Historia y Evolución de Ethernet ](#441-historia-y-evolución-de-ethernet-)
+      - [4.4.2. Subcapas de Enlace de Datos en Ethernet (LLC y MAC) ](#442-subcapas-de-enlace-de-datos-en-ethernet-llc-y-mac-)
+    - [🧾 Dirección MAC (Media Access Control)](#-dirección-mac-media-access-control)
+  - [Capa 2: Enlace de Datos – Comunicación en la Red Local](#capa-2-enlace-de-datos--comunicación-en-la-red-local)
+      - [4.6.1. Proceso de Comunicación y Encapsulación en Capa 2 ](#461-proceso-de-comunicación-y-encapsulación-en-capa-2-)
+    - [4.8. Conceptos Adicionales de Capa 2 ](#48-conceptos-adicionales-de-capa-2-)
+      - [4.8.1. Dispositivos Primarios de Capa 2 ](#481-dispositivos-primarios-de-capa-2-)
+      - [4.8.2. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2) ](#482-tipos-de-redes-por-alcance-predominantemente-capa-1-y-2-)
+      - [4.8.3. Segmentación en Capa 2: VLANs y Dominios de Difusión ](#483-segmentación-en-capa-2-vlans-y-dominios-de-difusión-)
+    - [VLAN vs SSID adicional: la diferencia importante es que VLAN puede dividir el trafico.](#vlan-vs-ssid-adicional-la-diferencia-importante-es-que-vlan-puede-dividir-el-trafico)
+    - [Tipos de Comunicación (Direccionamiento) en Capa 2](#tipos-de-comunicación-direccionamiento-en-capa-2)
+  - [5. Capa 3 OSI: Red – Direccionamiento Lógico y Enrutamiento Global ](#5-capa-3-osi-red--direccionamiento-lógico-y-enrutamiento-global-)
+    - [Direccionamiento IP (capa 3)](#direccionamiento-ip-capa-3)
+    - [Dirección IPv4 (32 bits)](#dirección-ipv4-32-bits)
+    - [Desglosando una Dirección IP con su Máscara de Subred: Ejemplo `192.168.1.50/24`](#desglosando-una-dirección-ip-con-su-máscara-de-subred-ejemplo-19216815024)
+    - [Conversión CIDR a Máscara de Subred (IPv4)](#conversión-cidr-a-máscara-de-subred-ipv4)
+    - [Máscara de Subred vs. Dirección MAC:](#máscara-de-subred-vs-dirección-mac)
+    - [Direcciones IPv4 Públicas vs. Privadas](#direcciones-ipv4-públicas-vs-privadas)
+    - [Rangos Comunes de IP Privada (RFC 1918)](#rangos-comunes-de-ip-privada-rfc-1918)
+    - [Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation). Entre Capa 3 y Capa 4 (principalmente Capa 3 Red (Network))](#conexión-al-mundo-exterior-el-router-enrutador-y-nat-network-address-translation-entre-capa-3-y-capa-4-principalmente-capa-3-red-network)
+    - [Direcciones IPv4 Especiales](#direcciones-ipv4-especiales)
+    - [Clases de Direcciones IPv4 (Histórico)](#clases-de-direcciones-ipv4-histórico)
+    - [Asignación de Direcciones IP](#asignación-de-direcciones-ip)
+    - [Dirección IPv6 (128 bits)](#dirección-ipv6-128-bits)
+    - [Dispositivos de Capa 3: Routers (Enrutadores)](#dispositivos-de-capa-3-routers-enrutadores)
+    - [Tabla de Enrutamiento (memoria)](#tabla-de-enrutamiento-memoria)
+    - [Ejemplo de Tabla de Enrutamiento](#ejemplo-de-tabla-de-enrutamiento)
+    - [Diseño de Red Jerárquico](#diseño-de-red-jerárquico)
+    - [ARP Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2 Enlace de datos (Data Link))](#arp-resolución-de-direcciones-ip-a-mac-interacción-capa-3---capa-2-enlace-de-datos-data-link)
+  - [6. Capa 4 OSI: Transporte – Comunicación Extremo a Extremo ](#6-capa-4-osi-transporte--comunicación-extremo-a-extremo-)
+    - [TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4.](#tcp-transmission-control-protocol-vs-udp-user-datagram-protocol-capa-4)
+  - [Sockets y Pares de Sockets: Claves de la Comunicación en Red](#sockets-y-pares-de-sockets-claves-de-la-comunicación-en-red)
+    - [1. ¿Qué es un Socket? (Un Punto Final de Comunicación)](#1-qué-es-un-socket-un-punto-final-de-comunicación)
+    - [2. El Par de Sockets: La Conexión Única](#2-el-par-de-sockets-la-conexión-única)
+  - [7. Capas 5, 6 y 7 OSI: Sesión, Presentación y Aplicación – La interfaz *(API - Application Programming Interface)* con el Usuario y los Servicios de Red ](#7-capas-5-6-y-7-osi-sesión-presentación-y-aplicación--la-interfaz-api---application-programming-interface-con-el-usuario-y-los-servicios-de-red-)
+    - [**Capa 5 (Sesión OSI):**](#capa-5-sesión-osi)
+    - [**Capa 6 (Presentación OSI):**](#capa-6-presentación-osi)
+    - [**Capa 7 (Aplicación OSI) / Capa de Aplicación (TCP/IP):**](#capa-7-aplicación-osi--capa-de-aplicación-tcpip)
+    - [Capa de Aplicación: Protocolos, Puertos y Servicios Esenciales](#capa-de-aplicación-protocolos-puertos-y-servicios-esenciales)
+    - [Configuración de Direcciones IP: Estática vs. Dinámica (DHCP) (capa 7)](#configuración-de-direcciones-ip-estática-vs-dinámica-dhcp-capa-7)
+    - [Tipos de Conexión a Internet (Servicios)](#tipos-de-conexión-a-internet-servicios)
+    - [Identificadores de Red Comunes (Configuración de Usuario)](#identificadores-de-red-comunes-configuración-de-usuario)
+      - [Caso de Uso Aplicacion capa 7: Servicios en la Nube (Cloud Computing)](#caso-de-uso-aplicacion-capa-7-servicios-en-la-nube-cloud-computing)
+  - [8. Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)* ](#8-herramientas-de-solución-de-problemas-de-red-cli---interfaz-de-línea-de-comandos-)
+    - [Comparativa de Comandos de Configuración IP](#comparativa-de-comandos-de-configuración-ip)
+    - [`ping` `[opciones]` `[destino_IP_o_nombre_de_host]` (Diagnóstico de Conectividad)](#ping-opciones-destino_ip_o_nombre_de_host-diagnóstico-de-conectividad)
+      - [🔹 Opciones Comunes de `ping`:](#-opciones-comunes-de-ping)
+      - [✅ Ejemplos de Uso (`ping`):](#-ejemplos-de-uso-ping)
+    - [`tracert` (Windows) / `traceroute` (Linux/macOS) `[opciones]` `[destino_IP_o_nombre_de_host]` (Trazado de Ruta)](#tracert-windows--traceroute-linuxmacos-opciones-destino_ip_o_nombre_de_host-trazado-de-ruta)
+      - [🔹 Opciones Comunes tracer:](#-opciones-comunes-tracer)
+      - [✅ Ejemplos de Uso:](#-ejemplos-de-uso)
+    - [`netstat`(monitoreo de conecciones activas)](#netstatmonitoreo-de-conecciones-activas)
+    - [`nslookup` `[nombre_de_dominio_o_IP]`(consulta a DNS nombre o IP de URI)](#nslookup-nombre_de_dominio_o_ipconsulta-a-dns-nombre-o-ip-de-uri)
+  - [9. Fundamentos de Sistemas Numéricos ](#9-fundamentos-de-sistemas-numéricos-)
+    - [Métodos de Conversión entre Sistemas Numéricos](#métodos-de-conversión-entre-sistemas-numéricos)
+      - [A. Conversión de Decimal a Binario (Usando Tabla Posicional)](#a-conversión-de-decimal-a-binario-usando-tabla-posicional)
+      - [B. Decimal a Hexadecimal (Usando División Sucesiva y Tabla de Posición)](#b-decimal-a-hexadecimal-usando-división-sucesiva-y-tabla-de-posición)
+      - [C. Conversión de Decimal \> Binario \> Hexadecimal (usa tabla de posicion y tabla conversion)](#c-conversión-de-decimal--binario--hexadecimal-usa-tabla-de-posicion-y-tabla-conversion)
+      - [D. Conversión de hexadecimal \> binario \> decimal (usa tabla de posicion y tabla conversion)](#d-conversión-de-hexadecimal--binario--decimal-usa-tabla-de-posicion-y-tabla-conversion)
+</details>
+
+## 1. Introducción a las Redes <a name="introduccion-redes"></a>
+### 1.1. ¿Qué es Internet y Cómo se Organiza la Comunicación? <a name="que-es-internet"></a>
 
 **Internet** es una "red de redes" (internetwork) global que interconecta millones de dispositivos (computadoras, servidores, móviles) mediante tecnologías cableadas e inalámbricas, permitiendo el intercambio de información a escala mundial.
 
@@ -9,6 +98,8 @@ Cuando los datos viajan por la red, es como una persona en un viaje internaciona
 *   **Identificación:** Necesita identificadores (direcciones MAC y IP).
 *   **Origen y Destino:** Requiere una dirección de partida y una de llegada.
 *   **Permanencia:** Las conexiones tienen una duración.
+   
+### 1.2. Modelos de Referencia: TCP/IP y OSI <a name="modelos-referencia"></a>
 
 Para entender este complejo proceso, se utilizan modelos de referencia:
 
@@ -36,11 +127,11 @@ Para entender este complejo proceso, se utilizan modelos de referencia:
 
 *Antes de explorar cada capa del modelo OSI en detalle, es importante entender algunos principios fundamentales que guían el diseño de redes robustas, escalables y eficientes.*
 
-## Principios Fundamentales del Diseño de Redes
+## 2. Principios Fundamentales del Diseño de Redes <a name="principios-diseno"></a>
 
 Antes de explorar cada capa del modelo OSI en detalle, es importante entender algunos principios fundamentales que guían el diseño de redes robustas, escalables y eficientes.
 
-### Pilares de una Red Confiable
+### 2.1. Pilares de una Red Confiable <a name="pilares-red"></a>
 Una arquitectura de red bien diseñada se esfuerza por cumplir con cuatro pilares esenciales:
 
 1.  **Tolerancia a Fallas (Fault Tolerance):**
@@ -62,13 +153,16 @@ Una arquitectura de red bien diseñada se esfuerza por cumplir con cuatro pilare
 
 *A continuación, exploraremos los conceptos de red siguiendo la estructura del Modelo OSI.*
 
-## Capa 1: Física – La Transmisión de Bits
+## 3. Capa 1 OSI: Física – La Transmisión de Bits <a name="capa1-fisica"></a>
+
+### 3.1. Función Principal y PDU <a name="capa1-funcion"></a>
 
 *   **Función Principal (OSI):** Transmitir el flujo de bits (0s y 1s) a través del medio físico. Define características eléctricas, mecánicas y funcionales (voltajes, tasas de bits, conectores, tipos de cable, radiofrecuencias).
 *   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
 *   **PDU (Protocol Data Unit):** Bits.
 
-### Medios de Red
+### 3.2. Medios de Red <a name="capa1-medios"></a>
+
 El "camino" físico por el que viajan los datos.
 
 | Medio                               | Tipo de Datos         | Distancia Máxima                          | Ancho de Banda/Velocidad | Funcionalidad                                                                            | Ejemplo de Uso                                                                     |
@@ -80,7 +174,8 @@ El "camino" físico por el que viajan los datos.
 
 *(EMI: Interferencia Electromagnética, RFI: Interferencia de Radiofrecuencia)*
 
-### 🔧 Multiplexación
+### 3.3. Multiplexación <a name="capa1-multiplexacion"></a>
+
 Técnica para combinar múltiples flujos de datos en un único canal de comunicación compartido.
 
 | Tipo          | Explicación Simple                                                    | Ejemplo Práctico                                     |
@@ -91,7 +186,8 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
 | **CDM** (Código)    | Cada señal se mezcla con un código único que permite separarlas en el receptor aunque usen la misma frecuencia/tiempo. | Redes celulares (CDMA, WCDMA), GPS                |
 | **SDM** (Espacial)  | Utiliza diferentes rutas físicas o antenas para transmitir señales separadas simultáneamente. | Antenas MIMO en Wi-Fi y 4G/5G, sistemas de fibra óptica paralela |
 
-### Otros Conceptos y Dispositivos de Capa 1:
+### 3.4. Otros Conceptos y Dispositivos de Capa 1 <a name="capa1-otros"></a>
+
 *   **Codificación y Sincronización de Bits.**
 *   **Dispositivos de Capa 1:**
     *   **Hubs (Concentradores):** Obsoletos. Repiten la señal a todos los puertos.
@@ -101,23 +197,33 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
     *   **Componente Físico de la NIC:** La parte de la tarjeta de red que se conecta al medio.
 *   **Dispositivos Finales:** (PCs, servidores, impresoras, teléfonos IP, etc.) se conectan físicamente en esta capa, aunque su operación completa abarca capas superiores.
 
-## Capa 2: Enlace de Datos – Comunicación en la Red Local
+## 4. Capa 2 OSI: Enlace de Datos – Comunicación en la Red Local <a name="capa2-enlace"></a>
+
+<details>
+  <summary>Ver/Ocultar Detalles de Capa 2: Enlace de Datos</summary>
+
+### 4.1. Función Principal y PDU <a name="capa2-funcion"></a>  
 
 *   **Función Principal (OSI):** Transferencia confiable de datos (en forma de **tramas**) entre dos nodos directamente conectados en la *misma red local (segmento de red)*. Se encarga del direccionamiento físico (MAC), control de acceso al medio, y detección de errores básicos.
 *   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
 *   **PDU (Protocol Data Unit):** Tramas.
 
-### Organizaciones y Estándares Clave:
+### 4.2. Organizaciones y Estándares Clave <a name="capa2-estandares"></a>
 *   **IEEE (Institute of Electrical and Electronics Engineers):** Define estándares como IEEE 802.3 (Ethernet) y IEEE 802.11 (Wi-Fi).
 *   **IANA (Internet Assigned Numbers Authority):** Asigna direcciones IP, números de sistema autónomo, etc.
 *   **IETF (Internet Engineering Task Force):** Fuerza de Tarea de Ingeniería de Internet.
 *   **RFC (Request for Comments):** Petición de Comentarios (documentos técnicos de la IETF).
 
-### 💳 Tarjeta de Interfaz de Red (NIC - Network Interface Card)
+### 4.3. Tarjeta de Interfaz de Red (NIC) <a name="capa2-nic"></a>
 Hardware que permite la conexión del dispositivo a la red.
 *   **Función en Capa 2:** Contiene la dirección MAC única, participa en la creación y procesamiento de tramas.
 *   **Tipos:** Ethernet (cable), Wi-Fi (inalámbrica), Virtual (para VMs, VPNs).
 *   **Analogía:** Como un *carnet de identificación*.
+### 4.4. Ethernet: La Tecnología LAN Predominante <a name="capa2-ethernet"></a>
+
+#### 4.4.1. Historia y Evolución de Ethernet <a name="capa2-ethernet-historia"></a>
+
+#### 4.4.2. Subcapas de Enlace de Datos en Ethernet (LLC y MAC) <a name="capa2-ethernet-subcapas"></a>
 
 ### 🧾 Dirección MAC (Media Access Control)
 Identificador *único y físico* de 48 bits (6 bytes hexadecimales, ej: `00:1A:2B:3C:4D:5E`) asignado a cada NIC por el fabricante.
@@ -130,7 +236,7 @@ Identificador *único y físico* de 48 bits (6 bytes hexadecimales, ej: `00:1A:2
 *   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
 *   **PDU (Protocol Data Unit):** Tramas.
 
-### 🔄 El Proceso de Comunicación en Capa 2: Protocolos, Encapsulación y la Trama Ethernet
+#### 4.6.1. Proceso de Comunicación y Encapsulación en Capa 2 <a name="capa2-trama-proceso"></a>
 
 Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llamadas **protocolos de red**. Un concepto fundamental en estos protocolos es la **encapsulación**:
 
@@ -161,7 +267,8 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
     *   **El Rol del Protocolo IP dentro de la Trama:** Mientras la Trama Ethernet (con direcciones MAC) se encarga de la entrega local, el paquete IP (contenido en el campo "Datos" de la trama) lleva las direcciones IP de origen y destino finales, que son usadas por los routers para el envío a través de múltiples redes (internetworking) hasta el destino final.
 
-### 📡 Dispositivos Primarios de Capa 2
+### 4.8. Conceptos Adicionales de Capa 2 <a name="capa2-conceptos-adicionales"></a>
+#### 4.8.1. Dispositivos Primarios de Capa 2 <a name="capa2-dispositivos"></a>
 *   ***Switches (Conmutadores)*:**
     *   Toman decisiones de reenvío inteligentes basadas en direcciones MAC destino de las tramas.
     *   Crean una **tabla MAC** (o tabla CAM) que mapea direcciones MAC a puertos del switch.
@@ -172,7 +279,7 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 *   **Routers:** Conectan la LAN con otras redes (como Internet) y enrutan el tráfico entre ellas. Un tipo avanzado es el ISR (Integrated Services Router), que incorpora funciones adicionales como seguridad (firewall, VPN) y voz (VoIP). *No* propagan difusiones, limitando el dominio.
 *   **Cables y Tarjetas de Red (NIC):** Permiten la conexión física de los dispositivos a la LAN mediante Ethernet o fibra óptica.
 
-### 🌐 Tipos de Redes por Alcance (Predominantemente Capa 1 y 2)
+#### 4.8.2. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2) <a name="capa2-tipos-redes"></a>
 
 | Tipo de Red (General)        | Descripción                                                                    | Cobertura Típica      | Ejemplo                                               | Tecnologías Comunes        |
 | :--------------------------- | :----------------------------------------------------------------------------- | :-------------------- | :---------------------------------------------------- | :------------------------- |
@@ -185,14 +292,14 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 *   *(WMAN, WWAN son las versiones inalámbricas, usan tecnologías como WiMAX, 4G/5G).*
 *   *(MAN y WAN implican principalmente enrutamiento de Capa 3, aunque usan tecnologías de Capa 1 y 2 para los enlaces).*
 
-### 🔪 Segmentación en Capa 2: VLANs y Dominios de Difusión
+#### 4.8.3. Segmentación en Capa 2: VLANs y Dominios de Difusión <a name="capa2-segmentacion"></a>
 *   **Dominio de Difusión:** Área de una red donde un broadcast enviado por un dispositivo es recibido por todos los demás. Los *switches (commutadores)*, por defecto, crean un solo dominio de difusión.
 *   **Problemas con Dominios de Difusión Grandes:** Excesivo tráfico de broadcast puede ralentizar la red.
 *   **VLANs (Virtual LANs):** Permiten segmentar lógicamente una red física (un switch) en múltiples dominios de difusión independientes.
     *   El tráfico entre VLANs diferentes requiere un dispositivo de Capa 3 (router o switch multicapa) para ser enrutado.
     *   Mejoran la seguridad, organización y gestión del tráfico.
 
-### 🔹 VLAN vs SSID adicional: la diferencia importante es que VLAN puede dividir el trafico.
+### VLAN vs SSID adicional: la diferencia importante es que VLAN puede dividir el trafico.
 
 | Característica             | SSID Adicional                                       | VLAN (Virtual LAN)                                                  |
 |---------------------------|------------------------------------------------------|----------------------------------------------------------------------|
@@ -206,7 +313,7 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
 ✅ **Conclusión:** Un SSID adicional es solo otra entrada a la misma red. Una VLAN es una red realmente separada y controlable dentro del mismo equipo o infraestructura.
 
-### 🗣️ Tipos de Comunicación (Direccionamiento) en Capa 2
+### Tipos de Comunicación (Direccionamiento) en Capa 2
 | Tipo       | Dirigido a...                              | MAC Destino Ejemplo            |
 |------------|--------------------------------------------|--------------------------------|
 | **Unicast**  | Una única NIC específica en la LAN.        | `00:1A:2B:3C:4D:5E`            |
@@ -215,14 +322,18 @@ Para que los dispositivos se comuniquen en una red, siguen reglas estrictas llam
 
 *(Los routers NO reenvían broadcasts por defecto).*
 
-## Capa 3: Red – Direccionamiento Lógico y Enrutamiento Global
+</details>
+
+## 5. Capa 3 OSI: Red – Direccionamiento Lógico y Enrutamiento Global <a name="capa3-red"></a>
+<details>
+  <summary>Ver/Ocultar Detalles de Capa 3: Red</summary>
 
 *   **Función Principal (OSI):** Proporcionar direccionamiento lógico único (principalmente *IP - Internet Protocol*) a los dispositivos en la internetwork y determinar la mejor ruta (**enrutamiento**) para los **paquetes** de datos a través de múltiples redes interconectadas.
 *   **Equivalente TCP/IP:** Capa de Internet.
 *   **PDU (Protocol Data Unit):** Paquetes.
 
-### 📍 Direccionamiento IP (capa 3)
-#### Dirección IPv4 (32 bits)
+### Direccionamiento IP (capa 3)
+### Dirección IPv4 (32 bits)
 Una **Dirección IP (Internet Protocol)** es una etiqueta numérica única asignada a cada *dispositivo (host)* conectado a una red informática que utiliza el Protocolo de Internet para la comunicación. En su versión 4 (IPv4), esta dirección:
 *   Es una dirección lógica de 32 bits, agrupada en cuatro octetos (bloques de 8 bits).
 *   Usualmente se representa en notación decimal separada por puntos.
@@ -232,7 +343,7 @@ Una **Dirección IP (Internet Protocol)** es una etiqueta numérica única asign
 *   - Decimal con puntos: `209.165.200.1`
 *   Cada paquete IP contiene una dirección IP de origen y una de destino para su correcto enrutamiento.
 
-### 🔍 Desglosando una Dirección IP con su Máscara de Subred: Ejemplo `192.168.1.50/24`
+### Desglosando una Dirección IP con su Máscara de Subred: Ejemplo `192.168.1.50/24`
 
 Para entender cómo una dirección *IP (Internet Protocol)* individual se relaciona con su red local (LAN) y cómo se identifican los *dispositivos (hosts)* dentro de ella, utilizamos la **máscara de subred**.
 
@@ -246,7 +357,7 @@ Una **Máscara de Subred** es un número de 32 bits, expresado comúnmente en no
 *   Los dispositivos con la misma **Porción de Red** (y por lo tanto, la misma **Dirección de Red**) pertenecen a la misma subred y pueden comunicarse directamente.
 *   En cualquier subred, la **Dirección de Red** y la **Dirección de Broadcast** son reservadas y no se pueden asignar a dispositivos individuales.
 
-## 🔁 Conversión CIDR a Máscara de Subred (IPv4)
+### Conversión CIDR a Máscara de Subred (IPv4)
 
 La notación CIDR indica **cuántos bits están en "1"** desde la izquierda. Eso define la máscara.
 
@@ -262,7 +373,7 @@ La notación CIDR indica **cuántos bits están en "1"** desde la izquierda. Eso
 | /29  | 255.255.255.248       | 3                | 6                      |
 | /30  | 255.255.255.252       | 2                | 2                      |
 
-#### 🎭 Máscara de Subred vs. Dirección MAC:
+### Máscara de Subred vs. Dirección MAC:
 Ambas son identificadores, pero operan en capas diferentes y tienen propósitos distintos:
 
 | Elemento               | Dirección MAC (Media Access Control)        | Máscara de Subred                  |
@@ -297,11 +408,11 @@ Ambas son identificadores, pero operan en capas diferentes y tienen propósitos 
 | **Dirección de Broadcast**          | La última dirección IP posible en la subred.                        | `192.168.1.255`                | Se utiliza para enviar un mensaje a *todos* los dispositivos dentro de la misma subred simultáneamente. No se asigna a dispositivos.                    |
 | **Número de Hosts Usables**         | Fórmula: 2<sup>(bits de host)</sup> - 2. <br/> Para /24 (con 8 bits de host): 2<sup>8</sup> - 2. | 256 - 2 = **254**              | La cantidad de dispositivos que pueden tener una IP única en esta subred. Se restan 2 IPs (Dirección de Red y Dirección de Broadcast). (Una IPv4 tiene 32 bits; si 24 son de red, quedan 8 para hosts). |
 
-#### 🏡 Direcciones IPv4 Públicas vs. Privadas
+### Direcciones IPv4 Públicas vs. Privadas
 *   **Públicas:** Únicas globalmente, enrutables en Internet. Asignadas por ISPs, LIRs o RIRs.
 *   **Privadas:** Para uso en redes internas, son unicas solo en tu red (LANs). No son enrutables directamente en Internet y pueden repetirse en diferentes LANs. Se requiere NAT para que los dispositivos con IP privada accedan a Internet.
   
-#### Rangos Comunes de IP Privada (RFC 1918)
+### Rangos Comunes de IP Privada (RFC 1918)
 Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil conocer cuáles son estos rangos de direcciones privadas estándar:
 
 | Rango de IP Privada             | Máscara de Subred (Bloque Completo) | Uso Típico / Implementación Común                                                                                                |
@@ -312,7 +423,7 @@ Una vez que entendemos que existen IPs "Privadas" para uso interno, es útil con
 
 *Nota: En cada subred creada, 2 IPs no son usables por dispositivos (hosts): la Dirección de Red y la Dirección de Broadcast.*
 
-### 3. Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation). Entre Capa 3 y Capa 4 (principalmente Capa 3 Red (Network))
+### Conexión al Mundo Exterior: El Router (enrutador) y NAT (Network Address Translation). Entre Capa 3 y Capa 4 (principalmente Capa 3 Red (Network))
 
 Para que tus *dispositivos (hosts)* con IPs privadas (en tu LAN) accedan a Internet, el router actúa como intermediario esencial. Utiliza **NAT (Network Address Translation)** para traducir la IP privada de tu dispositivo a su propia IP pública (de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* WAN) al enviar datos, y revierte esta traducción para las respuestas entrantes. En tu red local, todos los dispositivos comparten la misma *Puerta de Enlace (Gateway)* e IP pública asignada por el router al comunicarse con el exterior, mientras NAT gestiona las conexiones y el tráfico de manera eficiente.
 
@@ -329,13 +440,13 @@ Independientemente de su método de asignación, NAT dirige todo el tráfico de 
 | **Ejemplo IP / Interfaz** | `192.168.1.45/24`                             | `192.168.1.1/24` (Interfaz LAN)                | `181.160.25.12` (Interfaz WAN)                    | `142.250.184.174` (Google)         |
 | **Función / Rol Principal** | Usar servicios de red; identificado por su IP privada. | *Puerta de Enlace (Gateway)* para la LAN; puede actuar como Servidor DHCP; **Realiza NAT**. | Conexión a Internet; posee la IP pública que representa a la LAN en Internet. | Proveer servicios/contenido.       |
 
-#### ⚙️ Direcciones IPv4 Especiales
+### Direcciones IPv4 Especiales
 *   **Loopback:** `127.0.0.0/8` (comúnmente `127.0.0.1`). Se usa para probar la pila TCP/IP del propio host.
 *   **Link-Local (APIPA - Automatic Private IP Addressing):** `169.254.0.0/16`. Autoasignada por sistemas operativos (como Windows) si no se puede obtener una dirección IP de un servidor DHCP(capa 7). Permite comunicación limitada en la red local.
 *   **Experimental (TEST-NET):** `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24` (reservadas para documentación y ejemplos).
 *   **Direcciones Reservadas (IANA):** Incluye rangos para multidifusión (`224.0.0.0/4`), futuro uso (`240.0.0.0/4`).
 
-#### 📜 Clases de Direcciones IPv4 (Histórico)
+### Clases de Direcciones IPv4 (Histórico)
 Sistema original de asignación, obsoleto y reemplazado por **CIDR (Classless Inter-Domain Routing)** que permite máscaras de subred de longitud variable (VLSM) para un uso más eficiente del espacio de direcciones.
 
 | Clase | Rango de IP                         | Prefijo CIDR | Nº *dispositivos (hosts)* aprox. | Uso Principal                             |
@@ -346,7 +457,7 @@ Sistema original de asignación, obsoleto y reemplazado por **CIDR (Classless In
 | D     | 224.0.0.0 – 239.255.255.255         | —            | —                | 🟢 Multidifusión (Multicast)              |
 | E     | 240.0.0.0 – 255.255.255.255         | —            | —                | Reservado para pruebas/experimentos       |
 
-#### 🌐 Asignación de Direcciones IP
+### Asignación de Direcciones IP
 Jerarquía global:
 *   **IANA (Internet Assigned Numbers Authority)** -> da bloques de IPs a los **RIRs (Regional Internet Registries)** (LACNIC, ARIN, etc.) -> quienes las asignan a los **ISPs (Internet Service Providers)** y grandes organizaciones → Usuarios finales.
     
@@ -359,7 +470,7 @@ Jerarquía global:
   
 *   **ISPs (Internet Service Providers) y LIRs (Local Internet Registries):** Obtienen bloques de IPs de los RIRs y los asignan a organizaciones y usuarios finales.
   
-#### 🚀 Dirección IPv6 (128 bits)
+### Dirección IPv6 (128 bits)
 Diseñada para suceder a IPv4 debido al agotamiento de direcciones públicas IPv4.
 *   **Formato:** 8 grupos (hextetos) de 4 dígitos hexadecimales, separados por dos puntos (`:`).
     *   Ej: `2001:0db8:85a3:0000:0000:8a2e:0370:7334`
@@ -368,7 +479,7 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones públicas IPv
     2.  **Comprimir Secuencia de Ceros:** Una *única* secuencia contigua de hextetos que sean todos cero puede reemplazarse por dos puntos dobles (`::`). *Esta regla solo puede aplicarse una vez por dirección*.
         *   Ej: `2001:0db8:0000:0000:0000:ff00:0042:8329` → `2001:db8::ff00:42:8329`
 
-### ⚙️ Dispositivos de Capa 3: Routers (Enrutadores)
+### Dispositivos de Capa 3: Routers (Enrutadores)
 *   Función principal: Conectar diferentes redes (subredes) y tomar decisiones de **enrutamiento** para reenviar paquetes entre ellas basándose en la dirección IP de destino.
 *   Cada *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* de un router pertenece a una red IP diferente y, por lo tanto, a un dominio de difusión diferente. **Los routers no propagan broadcasts por defecto.**
 *   **Componentes Internos Clave:**
@@ -380,7 +491,7 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones públicas IPv
     *   **Fuente de Alimentación.**
 *   **ISR (Integrated Services Router):** Router que combina funciones de enrutamiento con otros servicios como firewall, VPN, telefonía IP.
 
-### 🗺️ Tabla de Enrutamiento (memoria)
+### Tabla de Enrutamiento (memoria)
 Es una base de datos que un router (o incluso un host) utiliza para decidir cómo reenviar un paquete IP hacia su destino.
 *   🧩 Cada entrada contiene:
     *   Red de destino y máscara de subred: Identifican a qué red pertenece un paquete.
@@ -394,7 +505,7 @@ Es una base de datos que un router (o incluso un host) utiliza para decidir cóm
 *   Conocida como (Gateway of Last Resort):** Una ruta especial (a menudo `0.0.0.0/0`) que se usa si no existe una coincidencia más específica en la tabla para la red de destino. Dirige el tráfico hacia un router que tiene más conocimiento de la red (ej: el router del ISP).
 *   *Puerta de Enlace Predeterminada (Default Gateway):* En un host, es la dirección IP de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* del router en su LAN a la que el host enviará todo el tráfico destinado a redes externas.
 
-### 📋 Ejemplo de Tabla de Enrutamiento
+### Ejemplo de Tabla de Enrutamiento
 
 | Red de destino | Máscara de subred | Puerta de enlace (Gateway) | Interfaz de salida | Métrica |
 |----------------|-------------------|-----------------------------|--------------------|---------|
@@ -408,7 +519,7 @@ Es una base de datos que un router (o incluso un host) utiliza para decidir cóm
 > - La ruta `0.0.0.0/0` es la **ruta por defecto** que se usa cuando ninguna otra coincide.
 > - La **métrica** más baja tiene prioridad si hay rutas múltiples hacia el mismo destino.
 
-### 🏢 Diseño de Red Jerárquico
+### Diseño de Red Jerárquico
 
 Para lograr eficiencia, escalabilidad y una gestión simplificada, especialmente en redes de medianas a grandes, se adopta un **diseño jerárquico**. Este enfoque estructura la red en niveles o capas distintas, cada una con funciones específicas.
 
@@ -437,7 +548,7 @@ Un modelo de diseño jerárquico ampliamente utilizado (ej: por Cisco) divide la
     *   **Dispositivos Típicos:** Switches de alta capacidad y velocidad (generalmente switches multicapa) o routers de gama alta.
     *   **Consideraciones:** Máxima velocidad, alta disponibilidad, redundancia. Se evita la implementación de políticas complejas que puedan introducir latencia.
 
-### 🤝 ARP Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2 Enlace de datos (Data Link))
+### ARP Resolución de Direcciones IP a MAC (Interacción Capa 3 - Capa 2 Enlace de datos (Data Link))
 Cuando un dispositivo necesita enviar un paquete:
 1.  **Destino en la misma red local:**
     *   El dispositivo conoce la IP de destino. Necesita la dirección MAC de destino para crear la trama de Capa 2.
@@ -461,13 +572,15 @@ Cuando un dispositivo necesita enviar un paquete:
 | **ARP Request** | IP de destino a resolver | `FF:FF:FF:FF:FF:FF`   | Preguntar a todos en la LAN por la MAC asociada a una IP específica.               |
 | **DHCP Discover (Inicial)** | `255.255.255.255`   | `FF:FF:FF:FF:FF:FF`   | Buscar servidores DHCP disponibles en la LAN para obtener una configuración IP. |
 
-## Capa 4: Transporte – Comunicación Confiable o Rápida Extremo a Extremo
+## 6. Capa 4 OSI: Transporte – Comunicación Extremo a Extremo <a name="capa4-transporte"></a>
+<details>
+  <summary>Ver/Ocultar Detalles de Capa 4: Transporte</summary>
 
 *   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
 *   **Equivalente TCP/IP:** Capa de Transporte.
 *   **PDU (Protocol Data Unit):** Segmentos (TCP), Datagramas (UDP).
 
-### 🚚 TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4.
+### TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4.
 
 | Característica   | TCP                                     | UDP                                     |
 | :--------------- | :-------------------------------------- | :-------------------------------------- |
@@ -477,16 +590,7 @@ Cuando un dispositivo necesita enviar un paquete:
 | **Control Flujo**| Sí (evita saturación del receptor)      | No                                      |
 | **Uso Típico**   | Web (HTTP/S), Email (SMTP), FTP, SSH    | Streaming (video/voz), DNS, DHCP, TFTP  |
 
-### 🔢 Números de Puerto
-Identificadores de 16 bits (0-65535) usados por TCP y UDP para diferenciar entre múltiples aplicaciones o procesos que se ejecutan en un host.
-*   **Puerto de Origen:** Elegido dinámicamente por el host cliente (generalmente un número alto, >1023) para identificar de forma única su lado de la conversación.
-*   **Puerto de Destino:** Usado por el cliente para indicar el servicio específico solicitado en el servidor (ej: puerto 80 para HTTP).
-*   **Rangos de Puertos (administrados por IANA):**
-    *   **Puertos Bien Conocidos (Well-Known Ports: 0-1023):** Reservados para servicios y aplicaciones estándar (HTTP: 80, HTTPS: 443, FTP: 21, SMTP: 25, DNS: 53).
-    *   **Puertos Registrados (Registered Ports: 1024-49151):** Pueden ser registrados por desarrolladores de software para aplicaciones específicas.
-    *   **Puertos Dinámicos/Privados/Efímeros (Dynamic/Private/Ephemeral Ports: 49152-65535):** Usados típicamente como puertos de origen temporales por los clientes.
-
-## 🔌 Sockets y Pares de Sockets: Claves de la Comunicación en Red
+## Sockets y Pares de Sockets: Claves de la Comunicación en Red
 
 **La Idea Esencial:** Para que tu computadora maneje múltiples conexiones de red (navegar, chatear) sin mezclar datos, usa "sockets".
 
@@ -509,26 +613,38 @@ Esto permite identificar de forma única cada conversación entre dos aplicacion
 | **Socket Proveedor**   (Servidor Web, HTTP) | `203.0.113.7:80`            |
 | **Par de Sockets (Conexión Única)** | **(`192.168.1.5:1099` , `203.0.113.7:80`)** |
 
-## Capas 5, 6 y 7: Sesión, Presentación y Aplicación – La interfaz *(API - Application Programming Interface)* con el Usuario y los Servicios de Red
+</details>
+
+## 7. Capas 5, 6 y 7 OSI: Sesión, Presentación y Aplicación – La interfaz *(API - Application Programming Interface)* con el Usuario y los Servicios de Red <a name="capas567-aplicacion"></a>
+
+<details>
+  <summary>Ver/Ocultar Detalles de Capas 5, 6 y 7: Aplicación</summary>
 
 En el modelo TCP/IP, las funciones de las capas de Sesión, Presentación y Aplicación del modelo OSI se consolidan en una única **Capa de Aplicación**.
 
-*   **Capa 5 (Sesión OSI):**
+### **Capa 5 (Sesión OSI):**
     *   **Función:** Establece, gestiona y finaliza las "conversaciones" (sesiones) entre aplicaciones en diferentes *dispositivos (hosts)*. Mantiene el diálogo y sincroniza la comunicación.
-*   **Capa 6 (Presentación OSI):**
+### **Capa 6 (Presentación OSI):**
     *   **Función:** Asegura que los datos intercambiados sean comprensibles para las aplicaciones. Se encarga de la sintaxis y semántica de la información, incluyendo:
         *   **Formato de Datos y Codificación de Caracteres:** (ej: ASCII, EBCDIC, Unicode).
         *   **Cifrado y Descifrado:** Para la seguridad (ej: SSL/TLS opera conceptualmente aquí, aunque su implementación a menudo se extiende a otras capas).
         *   **Compresión y Descompresión:** Para reducir el tamaño de los datos.
-*   **Capa 7 (Aplicación OSI) / Capa de Aplicación (TCP/IP):**
+### **Capa 7 (Aplicación OSI) / Capa de Aplicación (TCP/IP):**
     *   **Función:** Proporciona la interfaz *(API - Application Programming Interface)* directa entre las aplicaciones que usan los usuarios (o procesos de sistema) y los servicios de red subyacentes. Define los protocolos que las aplicaciones usan para intercambiar datos.
 *   **PDU (Protocol Data Unit) en estas capas:** Generalmente se refiere como "Datos" o "Mensaje".
 
-### 🌐 Servicios y Protocolos de Aplicación Comunes
+### Capa de Aplicación: Protocolos, Puertos y Servicios Esenciales 
 
 Un **protocolo** es un conjunto de reglas y convenciones que definen cómo se formatea, transmite y recibe la información entre dispositivos en una red. Actúa como una "regla de traducción del mensaje" para que diferentes sistemas puedan entenderse. Cada servicio de aplicación utiliza uno o más protocolos y, típicamente, escucha o envía mensajes a través de un **puerto** específico, que es como una "dirección" dentro de un dispositivo donde llega un mensaje destinado a una aplicación particular.
+Un **Números de Puerto** Son identificadores de 16 bits (0-65535) usados por TCP y UDP para diferenciar entre múltiples aplicaciones o procesos que se ejecutan en un host.
+    *   **Puerto de Origen:** Elegido dinámicamente por el host cliente (generalmente un número alto, >1023) para identificar de forma única su lado de la conversación.
+    *   **Puerto de Destino:** Usado por el cliente para indicar el servicio específico solicitado en el servidor (ej: puerto 80 para HTTP).
+    *   **Rangos de Puertos (administrados por IANA):**
+        *   **Puertos Bien Conocidos (Well-Known Ports: 0-1023):** Reservados para servicios y aplicaciones estándar (HTTP: 80, HTTPS: 443, FTP: 21, SMTP: 25, DNS: 53).
+        *   **Puertos Registrados (Registered Ports: 1024-49151):** Pueden ser registrados por desarrolladores de software para aplicaciones específicas.
+        *   **Puertos Dinámicos/Privados/Efímeros (Dynamic/Private/Ephemeral Ports: 49152-65535):** Usados típicamente como puertos de origen temporales por los clientes.
 
-| Protocolo                                | Puerto(s) Típicos | Transporte Usado | Descripción Detallada                                                                                                                               |
+| Nombre Protocolo                                | Puerto(s) Típicos | Transporte Usado | Descripción Protocolo                                                                                                                               |
 |------------------------------------------|-------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
 | **DNS (Domain Name System)**             | 53                | UDP (consultas), TCP (transferencias de zona) | **Traduce nombres de dominio** legibles por humanos (ej: www.google.com) a direcciones IP numéricas (ej: 172.217.160.142) y viceversa. Esencial para la navegación web y el acceso a servicios. Las consultas suelen usar UDP por su rapidez; las transferencias de zona (entre servidores DNS) usan TCP por su fiabilidad para grandes volúmenes de datos. |
 | **HTTP (Hypertext Transfer Protocol)**     | 80                | TCP               | Protocolo fundamental para la **World Wide Web**. Permite la solicitud y transferencia de recursos como documentos **HTML (Hypertext Markup Language)**, imágenes, y otros archivos entre un cliente (navegador) y un servidor web. Es un protocolo sin estado. |
@@ -557,7 +673,7 @@ Existen aplicaciones que implementan estos protocolos, permitiendo interactuar c
 
 Al utilizar estas herramientas, se puede observar el comportamiento del protocolo en acción. Por ejemplo, analizando el tráfico de red con herramientas como **Wireshark** mientras se usa FileZilla, se pueden ver los comandos FTP (puerto 21) y la transferencia de datos. En entornos de aprendizaje como **Packet Tracer**, se pueden simular estas interacciones, ayudando a comprender cómo se establece la comunicación, cómo se traducen los mensajes según las reglas del protocolo y cómo se transportan a través de los puertos específicos. Estas aplicaciones y simuladores son cruciales para validar la correcta implementación y funcionamiento de los servicios de red, diagnosticar problemas y profundizar en la comprensión del transporte de datos.
 
-### ⚙️ Configuración de Direcciones IP: Estática vs. Dinámica (DHCP) (capa 7)
+### Configuración de Direcciones IP: Estática vs. Dinámica (DHCP) (capa 7)
 Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servicio de aplicación para la configuración de *dispositivos (hosts)*(capa 7).
 *   **Estática:** La dirección IP, máscara de subred, puerta de enlace predeterminada y servidores DNS se configuran manualmente en cada host.
     *   **Ventajas:** Control predecible (bueno para servidores, impresoras).
@@ -570,12 +686,12 @@ Aunque DHCP usa UDP (Capa 4) y direcciones IP (Capa 3), su función es un servic
         3.  **Request (Cliente → Servidor, Broadcast):** Cliente solicita la configuración ofrecida.
         4.  **Acknowledge (Servidor → Cliente, Unicast o Broadcast según cliente):** Servidor DHCP confirma la asignación con un **DHCPACK** y el tiempo de **arrendamiento (lease)**.
 
-### 🔗 Tipos de Conexión a Internet (Servicios)
+### Tipos de Conexión a Internet (Servicios)
 Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
 *   **DSL (Digital Subscriber Line):** Usa líneas telefónicas de cobre.
 *   Otros: Cable Modem, Fibra Óptica (FTTH), Satélite, Celular (3G/4G/5G).
 
-### 📡 Identificadores de Red Comunes (Configuración de Usuario)
+### Identificadores de Red Comunes (Configuración de Usuario)
 *   **SSID (Service Set Identifier):** El nombre público de una red Wi-Fi, configurado en el Punto de Acceso.
 *   **Servidor DNS:** La dirección IP del servidor que el host usará para resolver nombres de dominio. A menudo se obtiene vía DHCP (capa 7).
 * "Guía telefónica" de Internet: Nombre de dominio (google.com) -> Dirección IP (142.250.184.142).
@@ -583,7 +699,12 @@ Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
 #### Caso de Uso Aplicacion capa 7: Servicios en la Nube (Cloud Computing)
 Actualmente, muchas aplicaciones usan protocolos de esta capa para acceder a servicios de **Computación en la Nube** (recursos como servidores y software vía Internet). Los modelos comunes incluyen nubes **Públicas** (ej: AWS, Azure), **Privadas** (dedicadas a una organización) **comunitarias** servicios como consultas medicas e **Híbridas** (combinación de ambas). La conectividad de red y los protocolos de aplicación son vitales para este acceso.
 
-## Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)*
+</details>
+
+## 8. Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)* <a name="herramientas-cli"></a> 
+
+<details>
+  <summary>Ver/Ocultar Herramientas CLI</summary>
 
 Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas del modelo de red.
 
@@ -654,7 +775,7 @@ Descubre la ruta (secuencia de routers o "saltos") que los paquetes toman para l
     Traza completa.
     ```
 
-#### 🔹 Opciones Comunes:
+#### 🔹 Opciones Comunes tracer:
 
 | Función                                    | Windows (`tracert`) | Linux/macOS (`traceroute`)    |
 |--------------------------------------------|---------------------|-------------------------------|
@@ -714,16 +835,21 @@ Herramienta para consultar servidores DNS (Domain Name System).
 *   set type=[TIPO_REGISTRO] (ej: set type=MX, set type=NS, set type=AAAA, set type=CNAME, set type=SOA): Para especificar el tipo de registro DNS a buscar.
 *   Luego, escribir el nombre de dominio para consultar ese tipo de registro.
 *   exit: Para salir del modo interactivo.
+  
+</details>
 
-## Fundamentos de Sistemas Numéricos
+## 9. Fundamentos de Sistemas Numéricos <a name="sistemas-numericos"></a>
+
+<details>
+  <summary>Ver/Ocultar Sistemas Numéricos</summary>
 
 *   **Números Decimales (Base 10):** Utilizan los dígitos del 0 al 9. Cada posición representa una potencia de 10. Es el sistema que usamos comúnmente.
 *   **Números Binarios (Base 2):** Utilizan solo los dígitos 0 y 1 (bits). Cada posición representa una potencia de 2. Fundamental para la computación.
 *   **Números Hexadecimales (Base 16):** Utilizan los dígitos del 0 al 9 y las letras de la A a la F (donde A=10, B=11, C=12, D=13, E=14, F=15). Cada posición representa una potencia de 16. Se usa a menudo como una representación más compacta del binario.
 
-## Métodos de Conversión entre Sistemas Numéricos
+### Métodos de Conversión entre Sistemas Numéricos
 
-### A. Conversión de Decimal a Binario (Usando Tabla Posicional)
+#### A. Conversión de Decimal a Binario (Usando Tabla Posicional)
 
 Este método se basa en encontrar qué potencias de 2 suman el número decimal.
 
@@ -755,7 +881,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 
 128 + 64 = 192. Por lo tanto, los bits correspondientes a esas posiciones son 1, y los demás son 0. El resultado binario se lee de izquierda a derecha dentro de la tabla, correspondiente al orden de los exponentes y posiciones.
 
-### B. Decimal a Hexadecimal (Usando División Sucesiva y Tabla de Posición)
+#### B. Decimal a Hexadecimal (Usando División Sucesiva y Tabla de Posición)
 
 **1. Tabla de Posición: Decimal ⇔ Hexadecimal ⇔ Binario**
 
@@ -774,7 +900,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
     *   Cada dígito decimal se multiplica por 16 elevado a la potencia de su posición (de derecha a izquierda, comenzando con 0).
     *   Los resultados se suman. **Ejemplo:** 7D = (7 * 16^1) + (13 * 16^0) = 112 + 13 = 125
 
-### C. Conversión de Decimal > Binario > Hexadecimal (usa tabla de posicion y tabla conversion)
+#### C. Conversión de Decimal > Binario > Hexadecimal (usa tabla de posicion y tabla conversion)
 
 **Tabla de Conversión (decimal a Binario):**
 
@@ -797,7 +923,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 
 el primero suma 8 + 4 = 12 = c (tabla conversion) y la otra mitad suma 4 + 1 = 5
 
-### D. Conversión de hexadecimal > binario > decimal (usa tabla de posicion y tabla conversion)
+#### D. Conversión de hexadecimal > binario > decimal (usa tabla de posicion y tabla conversion)
 
 **Tabla de Conversión (hexadecimal a Binario):**
 
@@ -819,3 +945,4 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 | **Bit** | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 |
 
 128 + 16 + 8 +4 +2 +1 = 159
+</details>
