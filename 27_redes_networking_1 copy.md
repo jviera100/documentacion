@@ -140,41 +140,60 @@ La Capa de Enlace de Datos en Ethernet se divide en:
 **Datos de tu Red (según tu `ipconfig /all`):**
 *   **Tu Adaptador Activo:** "Adaptador de LAN inalámbrica Wi-Fi"
 *   **Tu Dirección IPv4:** `192.168.100.170`
-*   **Tu Dirección MAC (Física):** `CC-47-40-5F-BE-BE`
+*   **Tu Dirección MAC (Física):** `CC-47-40-5F-BE-BE` (Identificada por Wireshark como `AzureWaveTec_5f:be:be`)
 *   **IP de tu Puerta de Enlace Predeterminada (Router):** `192.168.100.1`
+*   **MAC de tu Router (descubierta en tu captura):** `4c:f5:5b:a6:ed:4f` (Identificada por Wireshark como `HuaweiTechno_a6:ed:4f`)
 
 **Wireshark - Puntos Clave:**
-*   **Selección de Interfaz:** Al abrir Wireshark, identifica tu interfaz "Adaptador de LAN inalámbrica Wi-Fi". Verás una gráfica de actividad tipo "electrocardiograma" al lado de las interfaces activas. Selecciona la tuya.
-*   **Filtros:** Se escriben en **minúsculas** (ej: `arp`, `icmp`) en la barra de filtro de visualización.
+*   **Selección de Interfaz:** Al abrir Wireshark, identifica tu interfaz "Adaptador de LAN inalámbrica Wi-Fi". Verás una gráfica de actividad tipo "electrocardiograma" al lado de las interfaces activas.
+*   **Filtros:** Se escriben en **minúsculas** (ej: `arp`, `icmp`) en la barra de filtro de visualización. La barra se pondrá **verde** si el filtro es válido, o **roja** si es inválido. Aplica con Enter.
 
 ---
 
 ## Laboratorio 1: Viendo el Diálogo ARP (El "Quién es Quién" de tu Red Local)
 
-**Objetivo:** Ver cómo tu PC (`192.168.100.170`) pregunta por la MAC de tu router (`192.168.100.1`).
+**Objetivo:** Observar el proceso por el cual tu PC (`192.168.100.170`) obtiene la dirección MAC de tu router (`192.168.100.1`) usando ARP, si aún no la conoce.
 
-**Secuencia de Pasos:**
+**Secuencia de Pasos REFINADA:**
 
-1.  **En CMD (Símbolo del sistema) *COMO ADMINISTRADOR*:**
-    *   Abre el **Símbolo del sistema COMO ADMINISTRADOR** (Clic derecho en CMD en el menú inicio -> Ejecutar como administrador).
-    *   Escribe: `arp -d 192.168.100.1`
-    *   Presiona Enter.
-    *(Esto hace que tu PC "olvide" la MAC del router para forzar una nueva solicitud ARP. No deberías ver un error ahora).*
+1.  **Paso Opcional pero Recomendado (En CMD *COMO ADMINISTRADOR*): Limpiar y Verificar la caché ARP.**
+    *   Abre el **Símbolo del sistema COMO ADMINISTRADOR**.
+    *   Escribe: `arp -d 192.168.100.1` y presiona Enter.
+    *   Luego, escribe: `arp -a` y presiona Enter (para verificar que la entrada para `192.168.100.1` ya no esté o diga "incompleta").
+    *   Puedes cerrar esta ventana de CMD de administrador.
 
-2.  **En Wireshark:**
+2.  **En Wireshark: Preparar Filtro, Seleccionar Interfaz e Iniciar Captura.**
     *   Abre Wireshark.
-    *   En la pantalla de inicio, **haz doble clic en tu interfaz "Wi-Fi"** (la que tiene la IP `192.168.100.170` y muestra actividad en el "electrocardiograma"). *La captura comenzará.*
-    *   RÁPIDAMENTE, en la barra de filtro de visualización (arriba), escribe `arp` y presiona Enter.
+    *   **Opción A (Seleccionar interfaz, LUEGO escribir filtro para iniciar captura):**
+        1.  Haz un **solo clic** en tu interfaz **"Wi-Fi"** (la que muestra actividad) para seleccionarla/resaltarla.
+        2.  En la barra de filtro de visualización (arriba), escribe `arp` y presiona Enter. *Esto debería iniciar la captura en la interfaz seleccionada y aplicar el filtro.*
+    *   **Opción B (Escribir filtro, LUEGO seleccionar interfaz para iniciar captura):**
+        1.  En la barra de filtro de visualización (arriba), escribe `arp`.
+        2.  Haz un **doble clic** en tu interfaz **"Wi-Fi"** (la que muestra actividad). *Esto debería iniciar la captura en esa interfaz y aplicar el filtro escrito previamente.*
+    *   *(Ambas opciones buscan que Wireshark comience a capturar y te muestre solo paquetes ARP).
+    *   **Opción C (Seleccionar interfaz, iniciar captura, LUEGO escribir filtro en la parte superior):***
+    *   **NOTA IMPORTANTE:** *Aquí ya podrías ver el paquete ARP (Solicitud y Respuesta) si tu sistema necesitó resolver la MAC del router inmediatamente. Si es así, y ves el par de paquetes ARP que se describen en el paso 4, la misión principal de este laboratorio ya se cumplió. Los pasos 3 y 4 son para forzarlo si no apareció naturalmente.*
 
-3.  **En CMD (la misma ventana de administrador, o una nueva normal, MIENTRAS Wireshark está capturando con el filtro `arp`):**
-    *   Escribe: `ping 192.168.100.1`
+3.  **Si NO viste los paquetes ARP en el paso anterior, continúa (En CMD - ventana normal): Generar Tráfico que *necesitará* ARP.**
+    *   Abre una nueva ventana de **Símbolo del sistema (normal)**.
+    *   Escribe: `ping -n 1 192.168.100.1`
     *   Presiona Enter.
-    *(Este ping provocará la solicitud ARP).*
 
-4.  **En Wireshark:**
-    *   Observa los paquetes ARP que aparecen.
-    *   Cuando el ping en CMD haya terminado (o enviado un par de respuestas), haz clic en el **botón rojo cuadrado (Stop)** en Wireshark para detener la captura.
-    *   Analiza los paquetes (busca la "Solicitud ARP" de tu PC y la "Respuesta ARP" del router).
+4.  **En Wireshark: Detener y Analizar (si realizaste el paso 3).**
+    *   Poco después de que el ping se complete, vuelve a Wireshark.
+    *   Haz clic en el **botón rojo cuadrado (Stop)** para detener la captura.
+    *   **Busca en la lista de paquetes:**
+        *   **Una Solicitud ARP (ARP Request):**
+            *   `Source:` Tu MAC (`AzureWaveTec_5f:be:be`)
+            *   `Destination: Broadcast`
+            *   `Info: Who has 192.168.100.1? Tell 192.168.100.170`
+        *   **Una Respuesta ARP (ARP Reply):**
+            *   `Source:` La MAC de tu router (`HuaweiTechno_a6:ed:4f`)
+            *   `Destination:` Tu MAC (`AzureWaveTec_5f:be:be`)
+            *   `Info: 192.168.100.1 is at 4c:f5:5b:a6:ed:4f`
+
+**Conclusión del Laboratorio 1:**
+La misión es ver **ese par de paquetes ARP: la pregunta y la respuesta**. Si los viste, ¡el laboratorio fue un éxito!
 
 ---
 
@@ -185,30 +204,51 @@ La Capa de Enlace de Datos en Ethernet se divide en:
 **Secuencia de Pasos (Ping Local):**
 
 1.  **En Wireshark:**
-    *   Abre Wireshark (o si ya está abierto, detén cualquier captura anterior con el botón rojo).
-    *   Haz doble clic en tu interfaz **"Wi-Fi"** para iniciar una nueva captura.
-    *   En la barra de filtro de visualización, escribe `icmp` y presiona Enter.
+    *   Abre Wireshark (o detén la captura anterior).
+    *   **Prepara el filtro:** En la barra de filtro de visualización, escribe `icmp` y presiona Enter.
+    *   **Inicia la captura:** Haz doble clic en tu interfaz **"Wi-Fi"** (o selecciona y presiona la aleta de tiburón).
 
-2.  **En CMD (puede ser una ventana normal, no necesita ser administrador para `ping`):**
+2.  **En CMD (ventana normal):**
     *   Escribe: `ping 192.168.100.1`
     *   Presiona Enter.
 
-3.  **En Wireshark:**
+3.  **En Wireshark: Detener y Analizar.**
     *   Cuando el ping en CMD termine, haz clic en el **botón rojo cuadrado (Stop)**.
-    *   Analiza los paquetes "Echo (ping) request" y "Echo (ping) reply", fijándote en las MAC de origen/destino y las IP de origen/destino.
+    *   **Meta:** Encontrar los paquetes `Echo (ping) request` y ver sus direcciones.
+    *   **Análisis en Wireshark:**
+        1.  **Selecciona el Paquete:** En el **Panel Superior (Lista de Paquetes)**, busca y haz **UN SOLO CLIC** en una línea que sea un `Echo (ping) request` de tu IP (`192.168.100.170`) a la IP de tu router (`192.168.100.1`).
+        2.  **Visualiza y Expande los Detalles de Capa CON NOMBRES:**
+            *   **Opción 1 (Usando el Panel Medio - "recuadro inferior izquierdo"):**
+                *   Observa el **Panel Medio (Detalles del Paquete)**. Verás las capas listadas.
+                *   Haz clic en el `▶` al lado de `Ethernet II ...` para expandir y ver los campos `Destination MAC`, `Source MAC`, etc., CON SUS NOMBRES.
+                *   Haz clic en el `▶` al lado de `Internet Protocol Version 4 ...` para expandir y ver los campos `Source Address`, `Destination Address`, etc., CON SUS NOMBRES.
+            *   **Opción 2 (Usando una Nueva Ventana):**
+                *   Alternativamente, después de seleccionar el paquete en el Panel Superior con un solo clic, puedes hacer **DOBLE CLIC en esa misma línea del Panel Superior**. Esto abrirá una **nueva ventana separada** que muestra las mismas capas y campos detallados CON SUS NOMBRES (idéntico a lo que verías al expandir en el Panel Medio).
+        *   *Recuerda: Inicialmente ves la TRAMA. Al expandir (ya sea en el panel medio o en la nueva ventana), ves los detalles de Capa 2 (Ethernet), luego Capa 3 (IP) y Capa 4 (ICMP).*
 
 **Secuencia de Pasos (Ping Remoto):**
 
 1.  **En Wireshark:**
-    *   Haz clic en el icono de la **aleta de tiburón azul (Iniciar nueva captura)**. Si pregunta, elige "Continuar sin guardar".
+    *   Haz clic en el icono de la **aleta de tiburón azul (Iniciar nueva captura)**. Elige "Continuar sin guardar".
     *   Asegúrate de que el filtro `icmp` siga aplicado en la barra de filtro.
+    *   *(Si el filtro se borró, vuelve a escribir `icmp` y presiona Enter ANTES de iniciar la captura efectiva para la nueva sesión).*
+    *   Si no has iniciado la captura aún para esta nueva sesión, haz doble clic en tu interfaz **"Wi-Fi"**.
 
 2.  **En CMD (ventana normal):**
-    *   Escribe: `ping www.google.com` (o cualquier sitio web externo)
+    *   Escribe: `ping www.google.com`
     *   Presiona Enter.
 
-3.  **En Wireshark:**
+3.  **En Wireshark: Detener y Analizar.**
     *   Cuando el ping en CMD termine, haz clic en el **botón rojo cuadrado (Stop)**.
-    *   Analiza los paquetes "Echo (ping) request" y "Echo (ping) reply", comparando las MACs y las IPs con el ping local. Fíjate que la MAC de destino en la trama Ethernet sigue siendo la de tu router, pero la IP de destino es la de Google.
+    *   **Meta:** Encontrar los paquetes `Echo (ping) request` a Google y ver cómo las direcciones MAC difieren de las IP.
+    *   **Análisis en Wireshark:**
+        1.  **Selecciona el Paquete:** En el **Panel Superior**, haz **UN SOLO CLIC** en una línea que sea un `Echo (ping) request` de tu IP a la IP de Google.
+        2.  **Visualiza y Expande los Detalles de Capa CON NOMBRES (igual que en Ping Local):**
+            *   Usa el **Panel Medio ("recuadro inferior izquierdo")** y expande (`▶`) las capas "Ethernet II" e "Internet Protocol..." para ver los campos con nombres.
+            *   O, haz **DOBLE CLIC en la línea del paquete en el Panel Superior** para ver estos detalles con nombres en una nueva ventana.
+            *   **Compara:**
+                *   En "Ethernet II": `Destination MAC` será la MAC de tu Router.
+                *   En "Internet Protocol...": `Destination Address` será la IP de Google.
+
 
 ---
