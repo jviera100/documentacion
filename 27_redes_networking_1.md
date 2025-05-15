@@ -20,7 +20,8 @@
     - [3.1. Función Principal y PDU (Capa 1)](#capa1-funcion-pdu)
     - [3.2. Medios de Red](#capa1-medios)
     - [3.3. Multiplexación](#capa1-multiplexacion)
-    - [3.4. Otros Conceptos y Dispositivos de Capa 1](#capa1-otros)
+    - [3.4. Características Fundamentales de la Capa Física (Estándares, Codificación, Señalización y Ancho de Banda)](#capa1-caracteristicas-fundamentales)
+    - [3.5. Otros Conceptos y Dispositivos de Capa 1](#capa1-otros)
   - [4. Capa 2 OSI: Enlace de Datos – Comunicación en la Red Local](#capa2-enlace)
     - [4.1. Función Principal y PDU (Capa 2)](#capa2-funcion-pdu)
     - [4.2. Organizaciones y Estándares Clave (Capa 2)](#capa2-estandares)
@@ -41,12 +42,13 @@
       - [4.7.1. Fundamentos del Switch de Capa 2](#capa2-switches-fundamentos)
       - [4.7.2. Proceso de Aprendizaje y Reenvío del Switch](#capa2-switches-aprendizaje-reenvio)
       - [4.7.3. Consideraciones Adicionales sobre Switches](#capa2-switches-consideraciones)
-    - [4.8. Conceptos Adicionales de Capa 2](#capa2-conceptos-adicionales)
-      - [4.8.1. Dispositivos Primarios de Capa 2](#capa2-dispositivos)
-      - [4.8.2. Tipos de Redes por Alcance](#capa2-tipos-redes)
-      - [4.8.3. Segmentación en Capa 2: VLANs y Dominios de Difusión](#capa2-segmentacion)
-      - [4.8.4. VLAN vs SSID Adicional](#capa2-vlan-vs-ssid) <!-- Ancla específica para esta comparación -->
-    - [4.9. De la Trama a los Bits: Interacción con la Capa Física](#capa2-interaccion-capa1)
+    - [4.8. Topologías de Red y Control de Acceso al Medio](#capa2-topologias-control-acceso)
+      - [4.8.1. Topologías Físicas y Lógicas](#capa2-topologias-fisicas-logicas)
+      - [4.8.2. Métodos de Control de Acceso al Medio (MAC)](#capa2-metodos-control-acceso)
+      - [4.8.3. Dispositivos Primarios de Capa 2](#capa2-dispositivos)
+      - [4.8.4. Tipos de Redes por Alcance](#capa2-tipos-redes)
+      - [4.8.5. Segmentación en Capa 2: VLANs y Dominios de Difusión](#capa2-segmentacion)
+      - [4.8.6. VLAN vs SSID Adicional](#capa2-vlan-vs-ssid) <!-- Ancla específica para esta comparación -->
   - [5. Capa 3 OSI: Red – Direccionamiento Lógico y Enrutamiento Global](#capa3-red)
     - [5.1. Función Principal y PDU (Capa 3)](#capa3-funcion-pdu)
     - [5.2. Direccionamiento IP](#capa3-direccionamiento-ip)
@@ -61,9 +63,19 @@
     - [5.5. Clases de Direcciones IPv4 (Histórico)](#capa3-ipv4-clases)
     - [5.6. Asignación de Direcciones IP (IANA, RIRs, ISPs)](#capa3-asignacion-ip)
     - [5.7. Dirección IPv6 (128 bits)](#capa3-ipv6)
+        - [5.7.1. Categorías de Direcciones IPv6](#capa3-ipv6-categorias)
+        - [5.7.2. Longitud de Prefijo IPv6](#capa3-ipv6-prefijo)
+        - [5.7.3. Tipos de Direcciones Unicast](#capa3-ipv6-unicast-tipos)
+        - [5.7.4. Asignación de Direcciones GUA y LLA](#capa3-ipv6-asignacion)
+        - [5.7.5. Direcciones Multicast IPv6](#capa3-ipv6-multicast)
+        - [5.7.6. Verificación de la Configuración IPv6 en Cisco IOS](#capa3-ipv6-verificacion-ios)
     - [5.8. Dispositivos de Capa 3: Routers](#capa3-routers-dispositivos)
-    - [5.9. Tabla de Enrutamiento](#capa3-tabla-enrutamiento)
-        - [5.9.1. Ejemplo de Tabla de Enrutamiento](#capa3-tabla-ejemplo)
+    - [5.9. Tabla de Enrutamiento y Decisiones de Reenvío](#capa3-tabla-enrutamiento)
+        - [5.9.0. Decisiones de Reenvío del Host y Puerta de Enlace Predeterminada](#capa3-decision-host-gateway)
+        - [5.9.1. Tabla de Enrutamiento del Host](#capa3-tabla-host)
+        - [5.9.2. Tabla de Enrutamiento del Router](#capa3-tabla-router)
+        - [5.9.3. Interpretación de la Tabla de Enrutamiento de un Router Cisco (`show ip route`) ](#capa3-show-ip-route)
+        - [5.9.4. Ejemplo de Tabla de Enrutamiento](#capa3-tabla-ejemplo)
     - [5.10. Diseño de Red Jerárquico](#capa3-diseno-jerarquico)
     - [5.11. ARP y NDP: Resolución de Direcciones IP a MAC](#capa3-arp-ndp)
     - [5.12. ARP Spoofing/Poisoning Seguridad](#capa3-arp-spoofing-poisoning-security)
@@ -200,7 +212,7 @@ Una arquitectura de red bien diseñada se esfuerza por cumplir con cuatro pilare
 
 ### 3.1. Función Principal y PDU (Capa 1) <a name="capa1-funcion-pdu"></a>
 
-*   **Función Principal (OSI):** Transmitir el flujo de bits (0s y 1s) a través del medio físico. Define características eléctricas, mecánicas y funcionales (voltajes, tasas de bits, conectores, tipos de cable, radiofrecuencias).
+*   **Función Principal (OSI):** Transmitir el flujo de bits (0s y 1s) a través del medio físico. Esta capa **acepta una trama completa desde la capa de enlace de datos y la codifica como una secuencia de señales que se transmiten en los medios locales, una a la vez.** Define características eléctricas, mecánicas y funcionales (voltajes, tasas de bits, conectores, tipos de cable, radiofrecuencias). **La capa física del nodo de destino recupera estas señales individuales de los medios, las restaura a sus representaciones en bits y pasa los bits a la capa de enlace de datos en forma de trama completa.**
 *   **Equivalente TCP/IP:** Parte de la capa de Acceso a la Red.
 *   **PDU (Protocol Data Unit):** Bits.
 
@@ -208,12 +220,22 @@ Una arquitectura de red bien diseñada se esfuerza por cumplir con cuatro pilare
 
 El "camino" físico por el que viajan los datos.
 
-| Medio                               | Tipo de Datos         | Distancia Máxima                          | Ancho de Banda/Velocidad | Funcionalidad                                                                            | Ejemplo de Uso                                                                     |
-|-------------------------------------|-----------------------|-------------------------------------------|--------------------------|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| **Par Trenzado (Cat5/5e/6/6a)**     | Impulsos Eléctricos   | Hasta 100 metros (Ethernet)               | Moderado a Alto          | Conexión de dispositivos en redes Ethernet (LAN). Base de la mayoría de redes locales.     | Conectar una PC a un router en casa o en la oficina.                                 |
-| **Coaxial**                         | Impulsos Eléctricos   | Media (depende de la frecuencia)          | Moderado                 | Transmisión de señales de TV, conexión satelital. Como cables de cobre de compañías de TV. | Conexión de un televisor a un servicio de cable, conexión satelital.                 |
-| **Fibra Óptica**                    | Pulsos de Luz         | Varios kilómetros o más                   | Muy Alto                 | Transmisión de datos a alta velocidad, inmune a interferencia.                             | Redes troncales, conexión de ciudades, centros de datos, compañías telefónicas.      |
-| **Inalámbrico**                     | Ondas Electromagnéticas | Variable (depende del estándar y entorno) | Bajo a Moderado          | Conexión de dispositivos sin cables mediante modulación de frecuencias.                    | Conexión de laptops, smartphones, tablets a redes Wi-Fi; Bluetooth; redes celulares. |
+**Consideraciones Generales para Cableado de Cobre:**
+Las redes utilizan medios de cobre por ser económicos, fáciles de instalar y tener baja resistencia eléctrica. Sin embargo, están limitados por la distancia y la interferencia de señal. Los datos se transmiten como impulsos eléctricos.
+*   **Atenuación:** Es el deterioro o pérdida de fuerza de la señal a medida que viaja más lejos por el medio.
+*   **Interferencia:**
+    *   **EMI (Interferencia Electromagnética) / RFI (Interferencia de Radiofrecuencia):** Pueden distorsionar las señales de datos. Provienen de fuentes como ondas de radio, luces fluorescentes o motores eléctricos. El blindaje en cables como STP o coaxial ayuda a contrarrestarlas, pero requiere una correcta conexión a tierra (de lo contrario, el blindaje puede actuar como antena).
+    *   **Diafonía (Crosstalk):** Perturbación causada por campos eléctricos o magnéticos de una señal en un cable que afectan la señal en un cable adyacente. En cables UTP, se contrarresta mediante:
+        *   **Anulación:** Los pares de hilos trenzados crean campos magnéticos opuestos que se cancelan entre sí.
+        *   **Variación del número de vueltas:** Cada par de hilos en un cable UTP tiene un número diferente de trenzas por metro para optimizar la cancelación.
+
+| Medio                               | Tipo de Datos         | Distancia Máxima                          | Ancho de Banda/Velocidad | Funcionalidad y Detalles Adicionales                                                                                                                                                                                                                                                                                                                                                                                                                      | Ejemplo de Uso                                                                     |
+|-------------------------------------|-----------------------|-------------------------------------------|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| **Par Trenzado (UTP - Cat5/5e/6/6a)**     | Impulsos Eléctricos   | Hasta 100 metros (Ethernet)               | Moderado a Alto          | El cableado UTP (Par Trenzado No Blindado) es el más común en LAN. Consta de cuatro pares de hilos de cobre trenzados, codificados por colores, dentro de una funda plástica. Se termina con conectores RJ-45. **Estándares UTP:** La ANSI/TIA-568 define estándares comerciales para cableado LAN (tipos, longitudes, conectores, terminación). El IEEE califica el cableado UTP por rendimiento en categorías (ej: Cat 5e para Gigabit Ethernet, Cat 6 recomendada para nuevas instalaciones, Cat 6a, Cat 7, Cat 8 para velocidades superiores). **Tipos de Cable UTP por terminación (T568A/T568B):** Cable Directo (Straight-through), Cable Cruzado (Crossover - legado debido a Auto-MDIX), Cable de Consola (Rollover - Cisco). Una terminación incorrecta puede degradar el rendimiento. | Conectar una PC a un router en casa o en la oficina.                                 |
+| **Par Trenzado Blindado (STP)**     | Impulsos Eléctricos   | Similar a UTP                             | Moderado a Alto          | Ofrece mejor protección contra ruido (EMI/RFI) que UTP, pero es más costoso y difícil de instalar. Utiliza conectores RJ-45 (especiales blindados). Combina blindaje (lámina individual por par y/o una malla/lámina general) y trenzado de hilos. Requiere una correcta conexión a tierra del blindaje.                                                                                                                                                 | Entornos con alta interferencia electromagnética.                                  |
+| **Coaxial**                         | Impulsos Eléctricos   | Media (depende de la frecuencia)          | Moderado                 | Consta de un conductor de cobre central, aislamiento plástico, una malla de cobre tejida (segundo conductor y blindaje contra EMI/RFI) y cubierta exterior. Dos conductores comparten el mismo eje. **Conectores comunes:** BNC, Tipo N, Tipo F. **Usos actuales:** Instalaciones inalámbricas (conexión de antenas), instalaciones de Internet por cable (cableado dentro de la casa del cliente).                                                                       | Conexión de un televisor a un servicio de cable, conexión satelital, antenas Wi-Fi. |
+| **Fibra Óptica**                    | Pulsos de Luz         | Varios kilómetros o más                   | Muy Alto                 | Transmite datos como impulsos de luz, ideal para largas distancias y altos anchos de banda. Inmune a EMI/RFI y con baja atenuación. Hilo delgado de vidrio puro. **Tipos:** **Monomodo (SMF):** Núcleo pequeño (~9 micras), láser, un rayo de luz, largas distancias, menor dispersión. **Multimodo (MMF):** Núcleo más grande (~50/62.5 micras), LEDs, múltiples rayos, distancias más cortas, mayor dispersión. **Conectores:** ST, SC, LC (común en SFP). **Colores de patch cords:** Amarillo (SMF), Naranja/Aguamarina (MMF). Proteger conectores con capuchones. | Redes troncales, conexión de ciudades, centros de datos, FTTH.                      |
+| **Inalámbrico**                     | Ondas Electromagnéticas | Variable (depende del estándar y entorno) | Bajo a Moderado          | Conexión de dispositivos sin cables mediante modulación de frecuencias.                                                                                                                                                                                                                                                                                                                                                                                                  | Conexión de laptops, smartphones, tablets a redes Wi-Fi; Bluetooth; redes celulares. |
 
 *(EMI: Interferencia Electromagnética, RFI: Interferencia de Radiofrecuencia)*
 
@@ -229,7 +251,42 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
 | **CDM** (Código)    | Cada señal se mezcla con un código único que permite separarlas en el receptor aunque usen la misma frecuencia/tiempo. | Redes celulares (CDMA, WCDMA), GPS                |
 | **SDM** (Espacial)  | Utiliza diferentes rutas físicas o antenas para transmitir señales separadas simultáneamente. | Antenas MIMO en Wi-Fi y 4G/5G, sistemas de fibra óptica paralela |
 
-### 3.4. Otros Conceptos y Dispositivos de Capa 1 <a name="capa1-otros"></a>
+### 3.4. Características Fundamentales de la Capa Física (Estándares, Codificación, Señalización y Ancho de Banda) <a name="capa1-caracteristicas-fundamentales"></a>
+
+*   **Estándares de la Capa Física:**
+    *   La capa física consta de **circuitos electrónicos, medios y conectores** desarrollados por ingenieros.
+    *   Sus estándares (hardware, medios, codificación, señalización) son definidos por organizaciones como **ISO, ANSI/TIA, ITU, IEEE**, y autoridades reguladoras nacionales/regionales (ej: FCC en EE.UU., ETSI en Europa).
+    *   Esto contrasta con los protocolos de capas superiores (ej: TCP/IP regidos por la IETF) que se implementan principalmente en software.
+
+*   **Componentes Físicos:**
+    *   Incluyen el **hardware electrónico (como las NIC), los medios (cables, aire), y los conectores** especificados en los estándares. Definen cómo se transmiten físicamente las señales que representan los bits.
+
+*   **Codificación de Línea, Señalización y Sincronización:**
+    *   Una vez que la Capa de Enlace de Datos (específicamente la subcapa MAC) ha ensamblado completamente la trama (ej: trama Ethernet con su preámbulo, SFD, direcciones MAC, EtherType, datos y FCS), esta secuencia de bits lógicos debe ser convertida en señales físicas para su transmisión a través del medio de red. Esta es una función principal de la Capa 1.
+    *   **Codificación de Línea (Line Coding):** Es el método para convertir el flujo de bits de datos en un "código" predefinido, un patrón de señales reconocible tanto por el emisor como por el receptor. Se utiliza para que el dispositivo receptor pueda:
+        1.  Distinguir correctamente entre un bit '0' y un bit '1' representado por la señal física.
+        2.  Mantener la sincronización del reloj entre el transmisor y el receptor (saber cuándo comienza y termina cada bit).
+        *   **Propósito:** Convertir los bits lógicos en señales físicas (eléctricas, ópticas) que sean robustas, interpretables por el receptor y que faciliten la sincronización.
+        *   **Ejemplos de Esquemas de Codificación (especificados por estándares como IEEE 802.3 para Ethernet):**
+            *   **En Cobre (Par Trenzado):**
+                *   **Manchester Coding (utilizado en 10BASE-T Ethernet):** Cada bit tiene una transición de voltaje en el medio de su período (ej: '0' = alto a bajo, '1' = bajo a alto). La transición constante ayuda a la recuperación del reloj.
+                *   **MLT-3 (Multi-Level Transmit, 3 niveles - usado en 100BASE-TX "Fast Ethernet"):** Utiliza tres niveles de voltaje, reduciendo la frecuencia de señal necesaria.
+                *   **PAM (Pulse Amplitude Modulation - ej: PAM-5 para Gigabit Ethernet 1000BASE-T, PAM-16 para 10GBASE-T y superiores):** Utiliza múltiples niveles de amplitud de pulso para codificar varios bits por símbolo, permitiendo mayores velocidades.
+            *   **En Fibra Óptica:** Implican modular la luz. Se usan esquemas como **NRZ (Non-Return to Zero)** (presencia/ausencia de luz) o más complejos como **8B/10B** (8 bits de datos se codifican en un símbolo de 10 bits para asegurar transiciones y balance DC) o **64B/66B** para velocidades más altas.
+    *   **Señalización:** Es la generación de las señales físicas (eléctricas, ópticas o de ondas de radio) que representan los '1' y los '0' en el medio de transmisión. Los estándares definen qué tipo de señal (ej: un nivel de voltaje específico, un pulso de luz) representa un '1' y cuál un '0'.
+    *   **Sincronización del Reloj:**
+        *   El **Preámbulo** (7 bytes de `10101010...` en tramas Ethernet) al inicio de la trama es crucial. Esta secuencia predecible de bits alternantes permite al circuito receptor "enganchar" su reloj (PLL - Phase-Locked Loop) al ritmo de la señal entrante.
+        *   El **SFD (Start Frame Delimiter)** (`10101011` en tramas Ethernet), con su patrón final `11`, indica al receptor que la sincronización ha terminado y que los siguientes bits corresponden al inicio de la carga útil de la trama (la dirección MAC de destino en Ethernet).
+
+*   **Ancho de Banda y Terminología Relacionada:**
+    *   **Ancho de Banda:** Es la capacidad teórica de un medio para transportar datos. Se mide en bits por segundo (bps), kbps, Mbps, Gbps. Indica la **cantidad de bits que se pueden transmitir por segundo**, no la velocidad a la que viaja un bit individual. (Permite enviar más bits, no es velocidad, es cantidad).
+    *   **Latencia:** Es la cantidad de tiempo, incluidas las demoras, que tardan los datos en transferirse de un punto a otro.
+    *   **Rendimiento (Throughput):** Es la medida real de la transferencia de bits a través del medio durante un período determinado. Generalmente es menor que el ancho de banda especificado debido a factores como la cantidad y tipo de tráfico, y la latencia introducida por los dispositivos de red.
+    *   **Capacidad de Transferencia Útil (Goodput):** Es la medida de los datos *utilizables* transferidos, excluyendo la sobrecarga de los protocolos (encabezados, acuses de recibo, bits retransmitidos). Siempre es menor que el rendimiento.
+
+</details>
+
+### 3.5. Otros Conceptos y Dispositivos de Capa 1 <a name="capa1-otros"></a>
 
 *   **Codificación y Sincronización de Bits.**
 *   **Dispositivos de Capa 1:**
@@ -248,7 +305,7 @@ Técnica para combinar múltiples flujos de datos en un único canal de comunica
 
 ### 4.1. Función Principal y PDU <a name="capa2-funcion-pdu"></a>  
 
-*   **Función Principal (OSI):** La Capa de Enlace de Datos es responsable de la **transferencia fiable de datos (en forma de tramas)** entre dos nodos (dispositivos) directamente conectados en la *misma red local física (segmento de red)*. Se encarga del direccionamiento físico (usando direcciones MAC), de controlar el acceso al medio de transmisión compartido, y de la detección básica de errores ocurridos durante la transmisión física.
+*   **Función Principal (OSI):** La Capa de Enlace de Datos es responsable de la **transferencia fiable de datos (en forma de tramas)** entre dos nodos (dispositivos) directamente conectados en la *misma red local física (segmento de red)*. Se encarga del direccionamiento físico (usando direcciones MAC), de **controlar el acceso al medio de transmisión compartido**, y de la detección básica de errores ocurridos durante la transmisión física.
 *   **Equivalente TCP/IP:** Las funciones de la Capa de Enlace de Datos (y también de la Capa Física) se agrupan en la capa de **Acceso a la Red** del modelo TCP/IP.
 *   **PDU (Protocol Data Unit):** En esta capa, la unidad de datos se denomina **Trama (Frame)**.
 
@@ -466,16 +523,65 @@ Un switch realiza dos operaciones principales con cada trama que recibe:
     *   La **dirección MAC de destino de esta trama Ethernet será la dirección MAC de su puerta de enlace predeterminada** (generalmente la interfaz del router en su red local).
     *   El switch local, al recibir esta trama, buscará la MAC del router en su tabla MAC y reenviará la trama al puerto donde está conectado el router. El router luego se encargará de desencapsular el paquete IP, consultar su propia tabla de enrutamiento y reenrutar el paquete IP hacia la red de destino, creando una nueva trama de Capa 2 para el siguiente salto si es necesario.
 
-### 4.8. Conceptos Adicionales de Capa 2 <a name="capa2-conceptos-adicionales"></a>
+### 4.8. Topologías de Red y Control de Acceso al Medio <a name="capa2-topologias-control-acceso"></a>
 
-#### 4.8.1. Dispositivos Primarios de Capa 2 <a name="capa2-dispositivos"></a>
+**(Esta sección reemplaza y expande el antiguo "4.8. Conceptos Adicionales de Capa 2" e integra la mayor parte del Módulo 31)**
+
+#### 4.8.1. Topologías Físicas y Lógicas <a name="capa2-topologias-fisicas-logicas"></a>
+*   **Topología Física:** Identifica las conexiones físicas y cómo se interconectan los dispositivos finales e intermedios (ej: routers, switches, APs). También puede incluir la ubicación específica del dispositivo.
+    *   **Ejemplos comunes (LAN):**
+        *   **Estrella:** Dispositivos finales conectados a un dispositivo intermediario central (ej: switch). Fácil de instalar, escalar y solucionar problemas.
+        *   **Estrella Extendida:** Interconexión de múltiples switches (dispositivos centrales en estrella).
+        *   **Bus (Heredada):** Todos los sistemas finales encadenados y terminados en cada extremo. No requiere dispositivos intermediarios como switches. Común en Ethernet heredado con cable coaxial.
+        *   **Anillo (Heredada):** Sistemas finales conectados a su vecino formando un anillo. No necesita terminación. Usado en FDDI y Token Ring heredados.
+    *   **Ejemplos comunes (WAN):**
+        *   **Punto a Punto:** La topología WAN más simple. Un enlace permanente entre dos puntos finales (nodos). Los dos nodos no comparten el medio con otros y los protocolos de enlace de datos lógicos pueden ser simples.
+        *   **Hub-and-Spoke (Estrella WAN):** Un sitio central (hub) se conecta a múltiples sitios remotos (spokes).
+        *   **Malla:** Interconecta múltiples sitios. Puede ser malla completa (todos los sitios conectados entre sí) o malla parcial.
+*   **Topología Lógica:** Se refiere a la forma en que una red transfiere tramas de un nodo al siguiente, independientemente de la conexión física. Esta topología influye en el tipo de trama de red y el control de acceso a los medios que se utilizan. La capa de enlace de datos "ve" la topología lógica al controlar el acceso a los medios.
+    *   *Nota:* Agregar dispositivos físicos intermedios no necesariamente cambia la topología lógica punto a punto subyacente.
+
+#### 4.8.2. Métodos de Control de Acceso al Medio (MAC) <a name="capa2-metodos-control-acceso"></a>
+En redes de **acceso múltiple** (donde dos o más dispositivos finales pueden intentar acceder a la red simultáneamente, como Ethernet LANs y WLANs), se requieren reglas para compartir el medio físico.
+
+*   **Comunicación Dúplex:** Se refiere a la dirección de la transmisión de datos.
+    *   **Semidúplex (Half-duplex):** Los dispositivos pueden transmitir y recibir en los medios, pero **no simultáneamente**. Solo un dispositivo puede enviar o recibir a la vez. Usado en WLANs y topologías de bus Ethernet heredadas con hubs.
+    *   **Dúplex Completo (Full-duplex):** Ambos dispositivos pueden transmitir y recibir **simultáneamente** en los medios compartidos. La capa de enlace de datos asume que los medios están disponibles para ambos nodos en cualquier momento. Los switches Ethernet operan en modo dúplex completo por defecto.
+    *   *Importante:* Dos interfaces interconectadas (ej: NIC de host y puerto de switch) deben operar en el mismo modo dúplex para evitar incompatibilidad, ineficiencia y latencia.
+
+*   **Tipos de Control de Acceso al Medio:**
+    *   **Acceso Basado en Contención:**
+        *   Todos los nodos operan en semidúplex, compitiendo por el uso del medio. Solo un dispositivo puede enviar a la vez.
+        *   **CSMA/CD (Carrier Sense Multiple Access with Collision Detection):**
+            *   Utilizado en LAN Ethernet de topología de bus heredada y LAN Ethernet heredada con un concentrador (hub).
+            *   Proceso:
+                1.  Los dispositivos "escuchan" el medio (Carrier Sense) para ver si está libre.
+                2.  Si está libre, transmiten. Múltiples dispositivos pueden acceder simultáneamente (Multiple Access).
+                3.  Si dos dispositivos transmiten al mismo tiempo, ocurre una **colisión**.
+                4.  Ambos dispositivos detectan la colisión (Collision Detection) comparando datos transmitidos con recibidos o por una amplitud de señal anómala.
+                5.  Los datos se dañan y deben reenviarse después de que cada dispositivo espere un tiempo aleatorio (algoritmo de backoff).
+        *   **CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance):**
+            *   Utilizado en LAN inalámbricas (WLANs IEEE 802.11).
+            *   Similar a CSMA/CD en escuchar el medio, pero intenta **evitar colisiones** en lugar de solo detectarlas (ya que la detección es difícil en entornos inalámbricos).
+            *   Mecanismos:
+                *   Espera un tiempo aleatorio antes de transmitir si el canal está ocupado.
+                *   Cada dispositivo que transmite incluye la duración que necesita para la transmisión; otros dispositivos reciben esta información y saben cuánto tiempo el medio no estará disponible.
+                *   Uso de acuses de recibo (ACKs) para confirmar la recepción de tramas.
+        *   *Nota:* Los sistemas basados en contención no escalan bien bajo uso intensivo de medios.
+    *   **Acceso Controlado (Determinista):**
+        *   Cada nodo tiene su propio tiempo asignado para usar el medio; no hay competencia.
+        *   Menos eficiente si un dispositivo debe esperar su turno incluso si el medio está libre.
+        *   Ejemplos heredados: Token Ring, ARCNET.
+    *   *Nota:* Las LAN Ethernet modernas que utilizan **switches** operan en **dúplex completo** y **no requieren métodos de acceso por contención como CSMA/CD** en las conexiones entre el switch y el host, ya que cada puerto del switch es un dominio de colisión separado.
+
+#### 4.8.3. Dispositivos Primarios de Capa 2 <a name="capa2-dispositivos"></a>
 *   ***Switches (Conmutadores)***: Como se describió anteriormente, son el pilar de las LAN modernas. Toman decisiones de reenvío inteligentes basadas en direcciones MAC, crean una tabla MAC, y cada puerto es un dominio de colisión separado. Por defecto, un switch forma un único dominio de difusión.
 *   **Puntos de Acceso Inalámbricos (WAP o AP - Wireless Access Point):** Permiten a los dispositivos Wi-Fi (IEEE 802.11) conectarse a una red cableada Ethernet. Actúan funcionalmente como un "bridge" (puente) entre el medio inalámbrico y el medio cableado, traduciendo entre los formatos de trama 802.11 y 802.3.
 *   **Bridges (Puentes):** Dispositivos más antiguos, predecesores de los switches. Conectaban dos o más segmentos de red LAN y tomaban decisiones de reenvío basadas en direcciones MAC. Tenían menos puertos y eran menos eficientes que los switches modernos.
 *   **Tarjetas de Red (NIC):** Esenciales para cada dispositivo que se conecta a la red, implementando la Capa 2 y Capa 1.
 *   *Nota sobre Routers:* Aunque los routers son dispositivos de Capa 3, sus interfaces (puertos) tienen componentes de Capa 2 (como una dirección MAC si es una interfaz Ethernet) para conectarse a los segmentos LAN. Los routers son cruciales para conectar diferentes dominios de difusión de Capa 2.
 
-#### 4.8.2. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2 para el acceso) <a name="capa2-tipos-redes"></a>
+#### 4.8.4. Tipos de Redes por Alcance (Predominantemente Capa 1 y 2 para el acceso) <a name="capa2-tipos-redes"></a>
 
 | Tipo de Red (General)        | Descripción                                                                    | Cobertura Típica      | Ejemplo                                               | Tecnologías Comunes de Acceso (L1/L2) |
 | :--------------------------- | :----------------------------------------------------------------------------- | :-------------------- | :---------------------------------------------------- | :------------------------------------ |
@@ -487,7 +593,7 @@ Un switch realiza dos operaciones principales con cada trama que recibe:
 *   La letra **W** delante de PAN, LAN, MAN, WAN (ej: **WLAN**) generalmente indica que la tecnología de acceso principal es inalámbrica (Wireless).
 *   Las MAN y WAN, aunque utilizan tecnologías de Capa 1 y 2 para los enlaces físicos entre sitios, dependen fundamentalmente del enrutamiento de Capa 3 para interconectar las diferentes redes que las componen.
 
-#### 4.8.3. Segmentación en Capa 2: VLANs y Dominios de Difusión <a name="capa2-segmentacion"></a>
+#### 4.8.5. Segmentación en Capa 2: VLANs y Dominios de Difusión <a name="capa2-segmentacion"></a>
 *   **Dominio de Difusión (Broadcast Domain):** Es el área lógica de una red donde cualquier trama de difusión (broadcast) enviada por un dispositivo es recibida por todos los demás dispositivos en ese mismo dominio.
     *   Por defecto, un **switch (conmutador)** forma un único dominio de difusión grande; es decir, si un dispositivo conectado a un puerto envía una trama de broadcast, el switch la reenviará a todos los demás puertos.
     *   Los **routers**, en cambio, no reenvían tramas de broadcast de un interfaz a otro por defecto, por lo que cada interfaz de un router típicamente define el límite de un dominio de difusión.
@@ -503,7 +609,7 @@ Un switch realiza dos operaciones principales con cada trama que recibe:
         *   **Flexibilidad:** Facilita movimientos, adiciones y cambios de dispositivos.
     *   **Etiquetado de Tramas (IEEE 802.1Q):** Para que los switches puedan identificar a qué VLAN pertenece una trama cuando esta atraviesa enlaces troncales (trunks) entre switches, se utiliza el estándar IEEE 802.1Q. Este estándar añade una "etiqueta" de 4 bytes a la trama Ethernet original, que contiene el VLAN ID.
 
-*  #### 4.8.4. VLAN vs SSID Adicional (en un Punto de Acceso Wi-Fi):** <a name="capa2-vlan-vs-ssid"></a> 
+#### 4.8.6. VLAN vs SSID Adicional (en un Punto de Acceso Wi-Fi):** <a name="capa2-vlan-vs-ssid"></a> 
     Es común confundir la creación de múltiples SSIDs (nombres de red Wi-Fi) en un punto de acceso con la creación de VLANs. Si bien ambos pueden dar la apariencia de redes separadas, son fundamentalmente diferentes:
 
     | Característica             | SSID Adicional (sin VLAN asociada)                      | VLAN (Virtual LAN)                                                              |
@@ -518,40 +624,19 @@ Un switch realiza dos operaciones principales con cada trama que recibe:
 
     ✅ **Conclusión:** Un SSID adicional sin una VLAN subyacente es principalmente una conveniencia de nombres. Una **VLAN** proporciona una segmentación de red lógica real y robusta con aislamiento y control de tráfico significativamente mayores. Muchos APs empresariales permiten mapear diferentes SSIDs a diferentes VLANs.
 
-### 4.9. De la Trama a los Bits: Interacción con la Capa Física <a name="capa2-interaccion-capa1"></a>
-Una vez que la Capa de Enlace de Datos (específicamente la subcapa MAC) ha ensamblado completamente la trama Ethernet (con su preámbulo, SFD, direcciones MAC, EtherType, datos y FCS), esta secuencia de bits lógicos debe ser convertida en señales físicas para su transmisión a través del medio de red (cable de cobre, fibra óptica, aire). Esta es la función principal de la **Capa 1 (Física)**.
-
-*   **Bits:** La trama completa se considera una secuencia de unidades de datos binarias, los bits (0s y 1s).
-*   **Codificación de Línea (Line Coding):** Para que el dispositivo receptor pueda:
-    1.  Distinguir correctamente entre un bit '0' y un bit '1' representado por la señal física.
-    2.  Mantener la sincronización del reloj entre el transmisor y el receptor (saber cuándo comienza y termina cada bit).
-    Se utilizan diversos **esquemas de codificación de línea**. Estos esquemas son especificados por los estándares IEEE 802.3 para cada tipo y velocidad de Ethernet.
-    *   **Propósito:** Convertir los bits lógicos en señales físicas (eléctricas, ópticas) que sean robustas, interpretables por el receptor y que faciliten la sincronización.
-    *   **Ejemplos de Esquemas de Codificación:**
-        *   **En Cobre (Par Trenzado):**
-            *   **Manchester Coding (utilizado en 10BASE-T Ethernet):** Cada bit tiene una transición de voltaje en el medio de su período. Por ejemplo, un '0' podría ser una transición de bajo a alto voltaje, y un '1' una transición de alto a bajo (o viceversa). Esta transición constante ayuda enormemente a la recuperación del reloj y la sincronización en el receptor.
-            *   **MLT-3 (Multi-Level Transmit, 3 niveles - usado en 100BASE-TX "Fast Ethernet"):** Utiliza tres niveles de voltaje para representar los datos, lo que permite reducir la frecuencia de la señal necesaria en el cable en comparación con esquemas más simples para la misma tasa de bits.
-            *   **PAM (Pulse Amplitude Modulation - ej: PAM-5 para Gigabit Ethernet 1000BASE-T, PAM-16 para 10GBASE-T y superiores):** Utiliza múltiples niveles de amplitud de pulso para codificar varios bits en cada cambio de señal (símbolo). Por ejemplo, PAM-5 usa cinco niveles de voltaje para codificar datos, permitiendo transmitir más bits por símbolo y alcanzar mayores velocidades sobre el mismo tipo de cableado de par trenzado.
-        *   **En Fibra Óptica:** Los esquemas implican modular la luz. A menudo se usan esquemas de codificación como **NRZ (Non-Return to Zero)** donde la presencia o ausencia de luz (o diferentes niveles de intensidad/fase) representan los bits, o esquemas más complejos como **8B/10B** (donde 8 bits de datos se codifican en un símbolo de 10 bits para asegurar suficientes transiciones para la sincronización y balance DC) o **64B/66B** para velocidades más altas.
-*   **Sincronización del Reloj:**
-    *   El **Preámbulo** (7 bytes de `10101010...`) al inicio de la trama Ethernet es crucial. Esta secuencia predecible de bits alternantes permite al circuito receptor "enganchar" su reloj (PLL - Phase-Locked Loop) al ritmo de la señal entrante.
-    *   El **SFD (Start Frame Delimiter)** (`10101011`) inmediatamente después del preámbulo, con su patrón final `11`, le indica al receptor que la fase de sincronización ha concluido y que los siguientes bits corresponden al inicio de la dirección MAC de destino, marcando el comienzo de la trama útil.
-
-</details>
-
 ## 5. Capa 3 OSI: Red – Direccionamiento Lógico y Enrutamiento Global <a name="capa3-red"></a>
 <details>
   <summary>Ver/Ocultar Detalles de Capa 3: Red</summary>
 
 ### 5.1. Función Principal y PDU (Capa 3) <a name="capa3-funcion-pdu"></a>
-*   **Función Principal (OSI):** Proporcionar direccionamiento lógico único (principalmente *IP - Internet Protocol*) a los dispositivos en la internetwork y determinar la mejor ruta (**enrutamiento**) para los **paquetes** de datos a través de múltiples redes interconectadas. ***La capa de red logra esto mediante cuatro operaciones básicas: direccionamiento de dispositivos finales, encapsulación de datos de la capa de transporte en paquetes IP, enrutamiento de estos paquetes a través de las redes, y desencapsulación en el host destino.***
+*   **Función Principal (OSI):** Proporcionar direccionamiento lógico único (principalmente *IP - Internet Protocol*) a los dispositivos en la internetwork y determinar la mejor ruta (**enrutamiento**) para los **paquetes** de datos a través de múltiples redes interconectadas. La capa de red logra esto mediante cuatro operaciones básicas: direccionamiento de dispositivos finales, encapsulación de datos de la capa de transporte en paquetes IP, enrutamiento de estos paquetes a través de las redes, y desencapsulación en el host destino.
 *   **Equivalente TCP/IP:** Capa de Internet.
 *   **PDU (Protocol Data Unit):** Paquetes.
 
-***El Protocolo de Internet (IP) es el pilar de esta capa y opera con las siguientes características fundamentales:***
-    *   ***Sin Conexión: No establece una sesión previa; cada paquete es independiente.***
-    *   ***Mejor Esfuerzo: No garantiza la entrega, el orden, ni la ausencia de errores en los paquetes IP. La fiabilidad es tarea de capas superiores (ej. TCP).***
-    *   ***Independiente de los Medios: Funciona sobre diversas tecnologías de Capa 2/1. Debe considerar la Unidad Máxima de Transmisión (MTU) del enlace, lo que puede llevar a la fragmentación de paquetes IPv4 por routers intermedios (los routers no fragmentan IPv6; el origen o los encabezados de extensión lo manejan).***
+**El Protocolo de Internet (IP)** es el pilar de esta capa y opera con las siguientes características fundamentales:
+    *   **Sin Conexión:** No establece una sesión previa; cada paquete es independiente.
+    *   **Mejor Esfuerzo:** No garantiza la entrega, el orden, ni la ausencia de errores en los paquetes IP. La fiabilidad es tarea de capas superiores (ej. TCP).
+    *   **Independiente de los Medios:** Funciona sobre diversas tecnologías de Capa 2/1. Debe considerar la Unidad Máxima de Transmisión (MTU) del enlace, lo que puede llevar a la fragmentación de paquetes IPv4 por routers intermedios (los routers no fragmentan IPv6; el origen o los encabezados de extensión lo manejan).
 
 ### 5.2. Direccionamiento IP <a name="capa3-direccionamiento-ip"></a>
 *(Introducción)*
@@ -706,6 +791,88 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones públicas IPv
     2.  **Comprimir Secuencia de Ceros:** Una *única* secuencia contigua de hextetos que sean todos cero puede reemplazarse por dos puntos dobles (`::`). *Esta regla solo puede aplicarse una vez por dirección*.
         *   Ej: `2001:0db8:0000:0000:0000:ff00:0042:8329` → `2001:db8::ff00:42:8329`
 *   ***El encabezado IPv6, de 40 bytes fijos, incluye campos como "Siguiente Encabezado" (análogo al campo "Protocolo" de IPv4, para identificar la carga útil) y "Límite de Saltos" (similar al TTL). Una característica importante de IPv6 es el uso de "Encabezados de Extensión" opcionales para funcionalidades como fragmentación o seguridad, manteniendo el encabezado principal simple.***
+
+#### 5.7.1. Categorías de Direcciones IPv6 <a name="capa3-ipv6-categorias"></a>
+Existen tres categorías amplias de direcciones IPv6:
+*   **Unicast (Unidifusión):** Identifica de forma exclusiva una interfaz en un dispositivo habilitado para IPv6. Un paquete enviado a una dirección unicast se entrega a la interfaz específica identificada por esa dirección. Al igual que una dirección MAC unicast permite la comunicación uno a uno en la LAN (Capa 2), una dirección IP unicast permite la comunicación uno a uno a nivel global o de red (Capa 3).
+*   **Multicast (Multidifusión):** Se utiliza para enviar un único paquete IPv6 a múltiples destinos (un grupo de multidifusión). Similar al concepto de MAC multicast en Capa 2, una dirección IP multicast permite enviar un paquete desde un origen a múltiples destinos interesados. Sin embargo, a diferencia de la MAC multicast que opera solo en la LAN, la IP multicast puede ser enrutada entre redes si los routers están configurados para ello. IPv6 usa extensivamente la multidifusión para funciones que en IPv4 requerían difusión (broadcast).
+*   **Anycast:** Una dirección IPv6 anycast es una dirección unicast que se puede asignar a varios dispositivos (generalmente servidores que ofrecen el mismo servicio). Un paquete enviado a una dirección anycast se enruta al dispositivo *más cercano* (en términos de métrica de enrutamiento) que tenga esa dirección.
+ A diferencia de IPv4, **IPv6 no tiene dirección de Broadcast (Difusión)**. Sus funciones se realizan principalmente mediante direcciones de multidifusión de alcance de enlace.
+
+#### 5.7.2. Longitud de Prefijo IPv6 <a name="capa3-ipv6-prefijo"></a>
+ IPv6 utiliza la **Longitud del Prefijo** para indicar la porción de red de la dirección, representada en notación de barra (ej: `/64`). No utiliza máscara de subred en notación decimal punteada.
+ *   La longitud de prefijo puede ir de 0 a 128.
+ *   La longitud de prefijo recomendada para la mayoría de las LAN es **/64**.
+ *   Esto divide la dirección de 128 bits en un **Prefijo de 64 bits (Parte de Red)** y un **ID de Interfaz de 64 bits (Parte de Host)**.
+ *   Usar un /64 facilita la Autoconfiguración de Dirección Sin Estado (SLAAC) y la gestión de subredes.
+
+#### 5.7.3. Tipos de Direcciones Unicast <a name="capa3-ipv6-unicast-tipos"></a>
+Un dispositivo habilitado para IPv6 típicamente tiene, como mínimo, una dirección Link-Local, y a menudo también una Global Unicast.
+*   **GUA (Global Unicast Address - Dirección de Unidifusión Global):**
+    *   Equivalente a una dirección IPv4 pública. Son globalmente únicas y enrutables en Internet.
+    *   Actualmente asignadas por IANA/RIRs desde el rango `2000::/3` (direcciones que empiezan por '2' o '3' en el primer hexteto).
+    *   La dirección `2001:DB8::/32` está reservada para documentación y ejemplos.
+    *   **Estructura GUA:** Típicamente tiene 3 partes:
+        1.  **Prefijo de Enrutamiento Global:** Parte asignada por el ISP al sitio (ej: un `/48`). Identifica la red del cliente en Internet.
+        2.  **ID de Subred:** Parte utilizada por una organización para identificar sus subredes internas. Si se recibe un `/48` y se usan prefijos `/64` para las LAN, quedan 16 bits para el ID de subred (2^16 = 65,536 subredes).
+        3.  **ID de Interfaz:** Los 64 bits más bajos, identifican de forma única la interfaz dentro de la subred.
+*   **LLA (Link-Local Address - Dirección Local de Enlace):**
+     *   **Requerida para cada interfaz habilitada para IPv6.**
+     *   Se utiliza para comunicarse con otros dispositivos en el **mismo enlace local (subred)**.
+     *   Se crean automáticamente por el dispositivo, incluso si no se asigna una GUA.
+     *   Se encuentran en el rango `FE80::/10`.
+     *   **Los routers NO reenvían paquetes** con una dirección LLA de origen o destino.
+     *   Usos comunes: Mensajes de protocolo de enrutamiento entre routers vecinos; usada frecuentemente por los hosts como su dirección de Puerta de Enlace Predeterminada.
+*   **ULA (Unique Local Address - Dirección Local Única):**
+    *   Rango `FC00::/7` a `FDFF::/7`.
+    *   Conceptualmente similares a las direcciones privadas RFC 1918 de IPv4, pero no destinadas a ser traducidas mediante NAT.
+    *   Se utilizan para direccionamiento local dentro de un sitio o entre un número limitado de sitios, para dispositivos que no deben ser accesibles directamente desde Internet. No se enrutan globalmente.
+*   **Loopback:** La dirección `::1/128` se usa para que un host se envíe paquetes a sí mismo para pruebas.
+*   **Dirección Sin Especificar (Unspecified):** La dirección `::/128` (todos ceros) no se puede asignar a una interfaz. Se usa como dirección de origen por un dispositivo que aún no tiene una dirección IPv6, por ejemplo, durante el proceso DAD o al solicitar una dirección a un servidor DHCPv6.
+*   *Nota:* En IPv6, las direcciones de interfaz (host) con todos los bits a cero o todos a uno son, por lo general, direcciones válidas y utilizables (a diferencia de IPv4 donde la dirección de red y broadcast no se asignan a hosts).
+
+#### 5.7.4. Asignación de Direcciones GUA y LLA <a name="capa3-ipv6-asignacion"></a>
+Las direcciones pueden asignarse estática o dinámicamente.
+
+*   **Asignación Estática:**
+     *   Se configura manualmente la dirección completa en el host o en la interfaz del router.
+     *   Comando IOS para GUA: `ipv6 address <ipv6-address>/<prefix-length>`
+     *   Comando IOS para LLA: `ipv6 address <fe80::-address> link-local` (la palabra clave `link-local` es necesaria).
+     *   Configurar LLAs estáticas en routers (ej: `FE80::1`) es una buena práctica para tener direcciones de gateway fáciles de reconocer.
+*   **Asignación Dinámica (GUA):**
+     Los dispositivos usan mensajes **ICMPv6** para la asignación dinámica:
+     *   **Mensaje RS (Router Solicitation):** Enviado por un host para localizar routers y solicitar un Mensaje RA.
+     *   **Mensaje RA (Router Advertisement):** Enviado periódicamente por los routers (o en respuesta a un RS) para anunciar información de direccionamiento. Para que un router Cisco envíe RAs, debe tener activado el enrutamiento IPv6 (`ipv6 unicast-routing` en configuración global).
+     *   El mensaje RA indica uno de los siguientes **tres métodos** de asignación que el cliente puede usar:
+         1.  **Método 1: SLAAC (Stateless Address Autoconfiguration):** El RA proporciona el Prefijo de Red y la Longitud del Prefijo. El dispositivo cliente genera entonces su propio ID de Interfaz de 64 bits para formar su GUA. El RA también proporciona la dirección de la Puerta de Enlace Predeterminada (la LLA del router).
+         2.  **Método 2: SLAAC y DHCPv6 Sin Estado (Stateless):** El dispositivo usa SLAAC para generar su GUA y obtiene la Puerta de Enlace del RA, pero consulta a un servidor DHCPv6 Sin Estado para obtener información adicional, como direcciones de servidor DNS y nombre de dominio.
+         3.  **Método 3: DHCPv6 Con Estado (Stateful):** El RA indica al dispositivo que contacte a un servidor DHCPv6 Con Estado para obtener su GUA y toda la información de configuración (DNS, nombre de dominio). El RA sigue proporcionando la dirección de la Puerta de Enlace Predeterminada (LLA del router). El servidor DHCPv6 con estado mantiene un registro de qué direcciones ha asignado.
+*   **Creación Dinámica del ID de Interfaz (para SLAAC):**
+     Si se usa SLAAC (Método 1 o 2), el cliente crea su ID de Interfaz de 64 bits mediante uno de estos procesos:
+     *   **EUI-64:** Modifica la dirección MAC de 48 bits de la interfaz: inserta el valor hexadecimal `FFFE` en el medio y voltea el 7º bit (bit U/L) de la dirección MAC. Permite correlacionar la MAC con la IP.
+     *   **Generado Aleatoriamente:** Muchos sistemas operativos modernos (incluido Windows a partir de Vista) generan un ID de interfaz aleatorio de 64 bits temporal o estable para mejorar la privacidad, evitando que la dirección IP pueda ser rastreada hasta la dirección MAC del hardware.
+*   **Asignación Dinámica (LLA):**
+     Las LLA se generan dinámicamente de forma automática en todas las interfaces habilitadas para IPv6, usando EUI-64 o un valor aleatorio, según el SO. Los routers Cisco IOS utilizan EUI-64 por defecto para generar LLAs dinámicas (a menos que se configure una estáticamente).
+*   **DAD (Duplicate Address Detection):** Antes de usar una dirección unicast (estática o dinámica), un host utiliza DAD (parte de NDP) para verificar que la dirección es única en el enlace, enviando un mensaje para ver si algún otro dispositivo responde con esa misma dirección.
+
+#### 5.7.5. Direcciones Multicast IPv6 <a name="capa3-ipv6-multicast"></a>
+ *   Usadas para enviar un paquete desde un único origen a un grupo de interfaces de destino.
+ *   Utilizan el prefijo `FF00::/8`. Sólo pueden ser direcciones de destino, no de origen.
+ *   **Dos tipos principales de direcciones de multidifusión IPv6:**
+     *   **Multidifusión Asignada (Well-Known Multicast):** Son direcciones reservadas para grupos predefinidos de dispositivos que ejecutan un protocolo o servicio común.
+         *   `FF02::1`: Grupo **Todos los Nodos** del Enlace-Local. Todos los dispositivos habilitados para IPv6 en un enlace (subred) se unen automáticamente a este grupo. Cuando un paquete se envía a esta dirección, es recibido y procesado por todas las interfaces IPv6 en ese enlace. Funcionalmente, reemplaza a la difusión (broadcast) de IPv4 para muchas operaciones locales. Los mensajes RA de los routers se envían a esta dirección. Para su transmisión en Ethernet, se mapea a la dirección MAC de multidifusión `33:33:00:00:00:01`.
+         *   `FF02::2`: Grupo **Todos los Routers** del Enlace-Local. Todos los routers IPv6 en un enlace se unen automáticamente a este grupo (si `ipv6 unicast-routing` está habilitado). Los mensajes RS de los hosts se envían a esta dirección. Para su transmisión en Ethernet, se mapea a la dirección MAC de multidifusión `33:33:00:00:00:02`.
+     *   **Multidifusión de Nodo Solicitado (Solicited-Node Multicast):**
+         *   Una dirección de multidifusión generada automáticamente para cada dirección unicast y anycast configurada en una interfaz. Se forma tomando los últimos 24 bits de la dirección unicast/anycast y añadiéndolos al prefijo `FF02::1:FF00:0/104`.
+         *   Se utiliza en el proceso de Descubrimiento de Vecinos (NDP), específicamente para la resolución de direcciones (similar a ARP en IPv4) y para DAD.
+         *   La ventaja es que esta dirección IP multicast se mapea a una dirección MAC Ethernet de multidifusión única (formada por `33:33:FF` seguido de los últimos 24 bits de la IP unicast/anycast). Esto permite que las NICs de los dispositivos que no son el objetivo previsto filtren la trama a nivel de hardware, reduciendo significativamente el procesamiento en la CPU en comparación con una difusión de Capa 2.
+
+#### 5.7.6. Verificación de la Configuración IPv6 en Cisco IOS <a name="capa3-ipv6-verificacion-ios"></a>
+*   `show ipv6 interface brief`: Muestra un resumen de las direcciones IPv6 (GUA y LLA) y el estado (Capa 1 / Capa 2: [up/up], [down/down], etc.) de cada interfaz.
+*   `show ipv6 route`: Muestra la tabla de enrutamiento IPv6.
+     *   Las rutas conectadas (`C`) y las rutas de interfaz local (`L` con prefijo `/128` para la GUA específica de la interfaz) se añaden automáticamente cuando una interfaz con una GUA configurada está activa.
+     *   **Las LLAs NO aparecen en la tabla de enrutamiento principal del router**, ya que no son direcciones destinadas a ser enrutadas entre diferentes enlaces.
+*   `ping <ipv6-address>`: Verifica la conectividad de Capa 3 con otra dirección IPv6. Si se hace ping a una LLA desde un router Cisco, a menudo se debe especificar la interfaz de salida, ya que la misma LLA podría ser válida en múltiples enlaces.
   
 ### 5.8. Dispositivos de Capa 3: Routers <a name="capa3-routers-dispositivos"></a>
 *   Función principal: Conectar diferentes redes (subredes) y tomar decisiones de **enrutamiento** para reenviar paquetes entre ellas basándose en la dirección IP de destino.
@@ -719,21 +886,70 @@ Diseñada para suceder a IPv4 debido al agotamiento de direcciones públicas IPv
     *   **Fuente de Alimentación.**
 *   **ISR (Integrated Services Router):** Router que combina funciones de enrutamiento con otros servicios como firewall, VPN, telefonía IP.
 
-### 5.9. Tabla de Enrutamiento (memoria) <a name="capa3-tabla-enrutamiento"></a>
-Es una base de datos que un router (o incluso un host) utiliza para decidir cómo reenviar un paquete IP hacia su destino.
-*   🧩 Cada entrada contiene:
-    *   Red de destino y máscara de subred: Identifican a qué red pertenece un paquete.
-    *   Dirección IP del siguiente salto (Next Hop "el próximo router en la ruta") al que debe enviarse el paquete o la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* de salida si la red está conectada directamente.
-    *   Métrica (un valor que indica la "preferencia" o "costo" de la ruta). Se elige la ruta con menor métrica si hay varias posibles.
-*   🔄 ¿Cómo se llena la tabla?
-    *   **Redes Conectadas Directamente(fisicamente):** Agregadas automáticamente a la tabla cuando una *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* del router es configurada con una dirección IP y está activa. El router sabe que puede alcanzar cualquier host en estas redes sin necesidad de otro router.
-    *   **Rutas Estáticas:** Configuradas manualmente por un administrador.
-    *   **Rutas Dinámicas:** Aprendidas a través de protocolos de enrutamiento (ej: RIP, EIGRP, OSPF, BGP) que intercambian información de enrutamiento con otros routers.
-*   🚪 Ruta predeterminada (0.0.0.0/0)
-*   Conocida como (Gateway of Last Resort):** Una ruta especial (a menudo `0.0.0.0/0`) que se usa si no existe una coincidencia más específica en la tabla para la red de destino. Dirige el tráfico hacia un router que tiene más conocimiento de la red (ej: el router del ISP).
-*   *Puerta de Enlace Predeterminada (Default Gateway):* En un host, es la dirección IP de la *Tarjeta de Interfaz de Red (NIC - Network Interface Card)* del router en su LAN a la que el host enviará todo el tráfico destinado a redes externas.
+### 5.9. Tabla de Enrutamiento y Decisiones de Reenvío (memoria) <a name="capa3-tabla-enrutamiento"></a>
 
-#### 5.9.1. Ejemplo de Tabla de Enrutamiento <a name="capa3-tabla-ejemplo"></a>
+#### 5.9.0. Decisiones de Reenvío del Host y Puerta de Enlace Predeterminada <a name="capa3-decision-host-gateway"></a>
+
+Antes de que un paquete llegue a un router, el host de origen debe tomar una decisión inicial de reenvío. El host determina si el destino es:
+*   **A sí mismo:** Para pruebas internas (ej: `ping 127.0.0.1` en IPv4 o `::1` en IPv6 - interfaz de loopback). La comunicación no sale de la pila TCP/IP del host.
+*   **Un host local:** Si la dirección IP de destino se encuentra en la misma red local que el host emisor. Esta determinación se realiza:
+    *   En IPv4, comparando la dirección de red del destino (obtenida aplicando la máscara de subred a la IP de destino) con la propia dirección de red del host.
+    *   En IPv6, verificando si el prefijo de la dirección de destino coincide con el prefijo de red local anunciado por el router.
+    Si el destino es local, el paquete se encapsula en una trama de Capa 2 y se envía directamente al host de destino a través de la infraestructura de la LAN (ej: un switch).
+*   **Un host remoto:** Si la dirección IP de destino está en una red diferente. En este caso, el paquete debe ser enviado a la **puerta de enlace predeterminada (default gateway)**.
+
+La **puerta de enlace predeterminada** es la dirección IP de la interfaz del router local que sirve como "salida" de la red local hacia otras redes. Esta dirección se configura en el host (ya sea manualmente o dinámicamente a través de DHCP para IPv4, o mediante Anuncios de Router - RA para IPv6) y es crucial para la comunicación con redes externas. En la tabla de enrutamiento del host, la puerta de enlace predeterminada se representa como una **ruta predeterminada**.
+
+#### 5.9.1. Tabla de Enrutamiento del Host <a name="capa3-tabla-host"></a>
+
+Al igual que los routers, los dispositivos finales (hosts) mantienen una tabla de enrutamiento para tomar decisiones de reenvío. Aunque más simple que la de un router, es esencial.
+*   En un host Windows, esta tabla se puede visualizar con los comandos `route print` o `netstat -r` en el Símbolo del sistema.
+*   La salida típicamente muestra:
+    *   **Lista de Interfaces:** Información sobre las interfaces de red del host (Ethernet, Wi-Fi), incluyendo sus direcciones MAC y números de interfaz asignados.
+    *   **Tabla de Rutas (IPv4 e IPv6):** Lista las rutas conocidas por el host. Esto incluye:
+        *   Rutas a la red de loopback (ej: `127.0.0.0` con máscara `255.0.0.0` para `127.0.0.1`).
+        *   Rutas a la red local a la que está conectado el host (a menudo etiquetadas como 'On-link' o con la dirección de red local).
+        *   La dirección IP específica del host en la red local.
+        *   Direcciones de broadcast y multicast locales.
+        *   La **ruta predeterminada** (ej: destino `0.0.0.0` con máscara `0.0.0.0` en IPv4) que apunta a la dirección IP de la puerta de enlace predeterminada configurada en el host. Esta ruta se utiliza para todo el tráfico destinado a redes no listadas explícitamente en la tabla.
+
+#### 5.9.2. Tabla de Enrutamiento del Router <a name="capa3-tabla-router"></a>
+
+Es una base de datos que un router utiliza para decidir cómo reenviar un paquete IP hacia su destino. El router examina la dirección IP de destino del paquete y busca la mejor coincidencia (la entrada con el prefijo de red más largo que coincida con la IP de destino) en su tabla de enrutamiento.
+*   🧩 Cada entrada en la tabla de enrutamiento de un router contiene típicamente:
+    *   Red de destino y máscara de subred (o prefijo de red).
+    *   Dirección IP del siguiente salto (Next Hop): El router al que se debe enviar el paquete a continuación, o la interfaz de salida del router si la red de destino está directamente conectada.
+    *   Métrica: Un valor que indica la "preferencia" o "costo" de la ruta. Se elige la ruta con la métrica más baja si hay múltiples rutas al mismo destino aprendidas por el mismo protocolo de enrutamiento.
+*   🔄 ¿Cómo se llena la tabla?
+    *   **Redes Conectadas Directamente:** Agregadas automáticamente cuando una interfaz del router es configurada con una dirección IP y está activa ('up/up'). El router sabe que puede alcanzar cualquier host en estas redes sin necesidad de otro router. Estas suelen ser las rutas más preferidas.
+    *   **Rutas Estáticas:** Configuradas manualmente por un administrador, especificando la red de destino y el siguiente salto o la interfaz de salida. Son apropiadas para redes pequeñas, para rutas específicas que no cambian, o para definir una ruta a una red stub. **No se adaptan automáticamente a cambios en la topología de la red; si la ruta estática se vuelve inválida debido a un cambio, debe ser reconfigurada manualmente.**
+    *   **Rutas Dinámicas:** Aprendidas a través de protocolos de enrutamiento (ej: **OSPF, EIGRP**, RIP, BGP). Los routers que ejecutan estos protocolos **intercambian información de enrutamiento automáticamente con otros routers, se adaptan a cambios en la topología, pueden elegir la mejor ruta entre varias opciones (basándose en métricas específicas del protocolo) y buscar rutas alternativas si una ruta principal falla.** La configuración básica implica que el administrador habilite el protocolo en las interfaces relevantes y defina qué redes anunciar.
+    *   Es común que los routers utilicen una **combinación de rutas estáticas (incluyendo la ruta predeterminada) y protocolos de enrutamiento dinámico.**
+*   🚪 **Ruta Predeterminada (Gateway of Last Resort):** Una ruta especial (a menudo `0.0.0.0/0` para IPv4 o `::/0` para IPv6) que se usa si no existe una coincidencia más específica en la tabla para la red de destino. Dirige el tráfico hacia un router que tiene más conocimiento de la red (ej: el router del ISP). Una ruta predeterminada puede ser configurada estáticamente o aprendida dinámicamente.
+
+#### 5.9.3. Interpretación de la Tabla de Enrutamiento de un Router Cisco (`show ip route`) <a name="capa3-show-ip-route"></a>
+
+En routers Cisco IOS, el comando `show ip route` (ejecutado en modo EXEC privilegiado) es fundamental para visualizar la tabla de enrutamiento IPv4. Comprender su salida es crucial para el diagnóstico y la verificación de la red.
+*   **Códigos de Origen de Ruta:** Al inicio de la salida, y precediendo a cada entrada de ruta, un código indica cómo el router aprendió sobre esa ruta en particular:
+    *   `L` - Interfaz Local (Local): La dirección IP específica asignada a la interfaz del router en esa red. Solo visible en IOS versiones más recientes.
+    *   `C` - Red Conectada Directamente (Connected): La red a la que una de las interfaces del router está directamente conectada y activa.
+    *   `S` - Ruta Estática (Static): Una ruta configurada manualmente por un administrador.
+    *   `O` - OSPF: Una ruta aprendida a través del protocolo de enrutamiento dinámico OSPF.
+    *   `D` - EIGRP: Una ruta aprendida a través del protocolo de enrutamiento dinámico EIGRP (propiedad de Cisco).
+    *   (Existen otros códigos para RIP, BGP, IS-IS, etc.)
+    *   `S*` - Ruta Estática Predeterminada Candidata (Static candidate default): Indica una ruta estática que podría ser la puerta de enlace de último recurso.
+*   **Información Detallada de la Ruta:** Cada línea en la tabla de enrutamiento proporciona detalles sobre una ruta específica:
+    *   **Red de Destino y Prefijo/Máscara:** La red a la que esta ruta conduce.
+    *   **`[Distancia Administrativa/Métrica]`:**
+        *   **Distancia Administrativa (AD):** Un valor (0-255) que indica la confiabilidad de la fuente de la ruta. Valores más bajos son más preferibles. (Ej: Conectada=0, Estática=1, EIGRP=90, OSPF=110).
+        *   **Métrica:** Un valor calculado por el protocolo de enrutamiento para determinar el "costo" o "preferencia" para llegar a la red de destino. El significado de la métrica varía entre protocolos (ej: conteo de saltos para RIP, costo basado en ancho de banda para OSPF, métrica compuesta para EIGRP).
+    *   **`via [Dirección_IP_Siguiente_Salto]`:** La dirección IP del próximo router al que se debe enviar el paquete para alcanzar la red de destino.
+    *   **`[Tiempo]`:** El tiempo transcurrido desde que la ruta fue aprendida o actualizada por última vez.
+    *   **`[Interfaz_Salida]`:** La interfaz física o lógica del router que se usará para enviar paquetes por esta ruta.
+*   **Puerta de Enlace de Último Recurso (Gateway of Last Resort):** La salida del comando `show ip route` indicará si una ruta predeterminada está configurada y activa. Por ejemplo: `Gateway of last resort is 209.165.200.226 to network 0.0.0.0`.
+*   **Proceso de Búsqueda:** Cuando un router recibe un paquete, busca en su tabla de enrutamiento la **coincidencia de prefijo más larga** con la dirección IP de destino del paquete. Si existen múltiples rutas con la misma longitud de prefijo aprendidas de diferentes fuentes, el router elegirá la ruta con la **menor Distancia Administrativa**. Si hay múltiples rutas con la misma longitud de prefijo y la misma AD (aprendidas por el mismo protocolo), se usará la **métrica más baja** para seleccionar la mejor ruta.
+
+#### 5.9.4. Ejemplo de Tabla de Enrutamiento <a name="capa3-tabla-ejemplo"></a>
 
 | Red de destino | Máscara de subred | Puerta de enlace (Gateway) | Interfaz de salida | Métrica |
 |----------------|-------------------|-----------------------------|--------------------|---------|
