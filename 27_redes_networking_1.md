@@ -69,7 +69,7 @@
     - [5.12. ARP Spoofing/Poisoning Seguridad](#capa3-arp-spoofing-poisoning-security)
   - [6. Capa 4 OSI: Transporte – Comunicación Extremo a Extremo](#capa4-transporte)
     - [6.1. Función Principal y PDU (Capa 4)](#capa4-funcion-pdu)
-    - [6.2. TCP vs. UDP](#capa4-tcp-udp)
+    - [6.2. TCP vs. UDP](#capa4-tcp-udp-detallado)
     - [6.3. Sockets y Pares de Sockets](#capa4-sockets-pares)
       - [6.3.1. ¿Qué es un Socket?](#capa4-socket-que-es)
       - [6.3.2. El Par de Sockets: La Conexión Única](#capa4-par-sockets)
@@ -827,23 +827,66 @@ ARP tiene dos funciones principales: resolver direcciones IPv4 a direcciones MAC
   <summary>Ver/Ocultar Detalles de Capa 4: Transporte</summary>
 
 ### 6.1. Función Principal y PDU (Capa 4) <a name="capa4-funcion-pdu"></a>  
-  *   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
+  *   **Función Principal (OSI):** Proporcionar comunicación lógica directa y segmentación de datos entre *procesos de aplicación* en *dispositivos (hosts)* diferentes. ***Realiza el seguimiento de conversaciones individuales entre aplicaciones, segmenta los datos de la aplicación en unidades más pequeñas para la transmisión y los reensambla en el destino.*** Ofrece servicios de transporte fiables y orientados a conexión (TCP) o servicios rápidos y no fiables sin conexión (UDP). Maneja el control de flujo y la multiplexación de conversaciones usando números de puerto.
  *   **Equivalente TCP/IP:** Capa de Transporte.
  *   **PDU (Protocol Data Unit):** Segmentos (TCP), Datagramas (UDP).
  
- ### 6.2. TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4. <a name="capa4-tcp-udp"></a>
+ ### 6.2. TCP (Transmission Control Protocol) vs. UDP (User Datagram Protocol) capa 4. <a name="capa4-tcp-udp-detallado"></a>
  
- | Característica   | TCP                                     | UDP                                     |
- | :--------------- | :-------------------------------------- | :-------------------------------------- |
- | **Confiabilidad**| Alta (ACKs, NACKs, retransmisiones, secuenciación) | Baja ("mejor esfuerzo", sin confirmación) |
- | **Conexión**     | Orientado a conexión (Three-way handshake) | Sin conexión                            |
- | **Velocidad**    | Más lento (por sobrecarga de control)   | Más rápido (menor sobrecarga)           |
- | **Control Flujo**| Sí (evita saturación del receptor)      | No                                      |
- | **Uso Típico**   | Web (HTTP/S), Email (SMTP), FTP, SSH    | Streaming (video/voz), DNS, DHCP, TFTP  |
+La capa de transporte ofrece principalmente dos protocolos, TCP y UDP, cada uno con características y mecanismos distintos, diseñados para diferentes tipos de aplicaciones.
+
+#### Protocolo de Control de Transmisión (TCP)
+
+TCP es un protocolo **orientado a conexión** y **con estado**, lo que significa que establece una sesión antes de transmitir datos y mantiene información sobre el estado de esa sesión. Está diseñado para proporcionar un transporte **fiable** de datos.
+
+*   ***Encabezado TCP: Añade 20 bytes (o más con opciones) de información de control a los datos de la aplicación. Campos clave incluyen Puertos de Origen/Destino, Números de Secuencia, Números de Acuse de Recibo, Flags (bits de control), Tamaño de Ventana y Suma de Comprobación.***
+*   **Características y Mecanismos Clave de TCP:**
+    *   **Establecimiento de Sesión (Handshake de Tres Vías):**
+        1.  El cliente envía un segmento con el flag **SYN** (Sincronizar) activado y un Número de Secuencia Inicial (ISN).
+        2.  El servidor responde con un segmento con los flags **SYN y ACK** (Acuse de Recibo) activados, su propio ISN, y acusa recibo del ISN del cliente.
+        3.  El cliente responde con un segmento con el flag **ACK** activado, confirmando la recepción y estableciendo la conexión.
+    *   **Entrega Confiable y Ordenada:**
+        *   ***Numeración y Seguimiento:*** TCP numera los bytes de datos con **Números de Secuencia (ISN y subsecuentes)** para rastrear los segmentos y permitir el reensamblaje en el orden correcto en el destino, incluso si llegan desordenados.
+        *   ***Acuses de Recibo (ACKs):*** El receptor envía ACKs para confirmar los bytes recibidos. TCP utiliza **acuses de recibo de expectativa** (indicando el siguiente byte esperado).
+        *   ***Retransmisión de Datos Perdidos:*** Si un ACK no se recibe en un tiempo determinado, el emisor retransmite los datos no confirmados. Mecanismos como el **Reconocimiento Selectivo (SACK)** permiten al receptor informar qué segmentos específicos ha recibido (incluso si hay huecos), para que el emisor solo retransmita los segmentos realmente perdidos.
+    *   **Control de Flujo:**
+        *   ***Tamaño de la Ventana (Window Size):*** El receptor especifica en el encabezado TCP la cantidad de datos (en bytes) que está dispuesto a recibir antes de que el emisor deba esperar un ACK. Esto evita que el emisor desborde los búferes del receptor.
+        *   ***Ventanas Deslizantes:*** Permiten al emisor enviar múltiples segmentos antes de requerir un ACK, ajustando dinámicamente la cantidad de datos en tránsito según los ACKs y el tamaño de ventana anunciado por el receptor.
+        *   ***Tamaño Máximo de Segmento (MSS):*** Durante el establecimiento de la conexión, los hosts negocian el MSS, que es la cantidad más grande de datos que un dispositivo puede recibir en un solo segmento TCP. El MSS se calcula típicamente restando los tamaños de los encabezados IP y TCP de la MTU del enlace subyacente (ej: 1500 bytes MTU - 20 bytes IP - 20 bytes TCP = 1460 bytes MSS).
+    *   **Prevención de Congestión:** TCP puede detectar la congestión de la red (ej: por pérdida de paquetes o aumento de retardos en los ACKs) y reduce proactivamente su tasa de transmisión para evitar sobrecargar la red.
+    *   **Terminación de Sesión (Handshake de Cuatro Vías):**
+        1.  Un host envía un segmento con el flag **FIN** (Finalizar) activado.
+        2.  El otro host responde con un **ACK**.
+        3.  Ese otro host, cuando también está listo para cerrar, envía su propio **FIN**.
+        4.  El primer host responde con un **ACK**, cerrando la conexión.
+
+#### Protocolo de Datagramas de Usuario (UDP)
+
+UDP es un protocolo **sin conexión** y **sin estado**. Proporciona una funcionalidad básica de transporte con una sobrecarga mínima, lo que lo hace rápido pero no fiable.
+
+*   ***Encabezado UDP: Es muy simple, solo 8 bytes. Contiene Puertos de Origen/Destino, Longitud del datagrama y una Suma de Comprobación opcional (para integridad de datos y encabezado).***
+*   **Características Clave de UDP:**
+    *   **Entrega de "Mejor Esfuerzo":** No hay confirmaciones, ni retransmisiones de segmentos perdidos, ni garantía de entrega ordenada.
+    *   ***Reconstrucción en Orden de Llegada: Los datagramas UDP se entregan a la aplicación en el orden en que llegan, sin intentar reordenarlos si llegan fuera de secuencia.***
+    *   **Baja Sobrecarga:** El encabezado simple y la ausencia de mecanismos de control lo hacen más rápido que TCP.
+    *   **Sin Establecimiento de Sesión:** Los datos se envían sin negociación previa.
+
+#### ¿Cuándo Usar TCP o UDP?
+
+| Característica   | TCP                                     | UDP                                     |
+| :--------------- | :-------------------------------------- | :-------------------------------------- |
+| **Confiabilidad**| **Alta** (ACKs, SACK, retransmisiones, secuenciación) | **Baja** ("mejor esfuerzo", sin confirmación) |
+| **Conexión**     | Orientado a conexión (Handshakes)       | Sin conexión                            |
+| **Estado**       | **Con estado** (rastrea la sesión)      | **Sin estado**                          |
+| **Velocidad**    | Más lento (por sobrecarga de control)   | Más rápido (menor sobrecarga)           |
+| **Control Flujo/Congestión**| **Sí** (Ventanas, MSS, algoritmos de congestión) | No                                      |
+| **Uso Típico**   | Web (HTTP/S), Email (SMTP), FTP, SSH (donde cada bit cuenta) | Streaming (video/voz en tiempo real), DNS (consultas rápidas), DHCP, TFTP, Juegos en línea (donde la velocidad es crítica y alguna pérdida puede ser tolerable) |
+
+***En resumen, las aplicaciones que requieren que todos los datos lleguen intactos y en orden (navegadores web, correo, transferencia de archivos) utilizan TCP. Aquellas que pueden tolerar alguna pérdida de datos pero necesitan baja latencia y rapidez (VoIP, video en vivo, DNS) a menudo prefieren UDP. Los desarrolladores eligen el protocolo de transporte según los requisitos de la aplicación.***
  
  ### 6.3. Sockets y Pares de Sockets <a name="capa4-sockets-pares"></a>
  
- **La Idea Esencial:** Para que tu computadora maneje múltiples conexiones de red (navegar, chatear) sin mezclar datos, usa "sockets".
+ **La Idea Esencial:** Para que tu computadora maneje múltiples conexiones de red simultáneamente (navegar, chatear) y dirija los datos de la Capa de Transporte al proceso de aplicación correcto, utiliza "sockets".
  
  #### 6.3.1. ¿Qué es un Socket? <a name="capa4-socket-que-es"></a>
  
