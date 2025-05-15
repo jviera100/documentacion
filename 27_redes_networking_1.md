@@ -115,6 +115,15 @@
       - [11.1.1. Configuración de la Interfaz Virtual del Switch (SVI) para Gestión Remota](#switch-svi-config)
     - [11.2. Configuración de los Ajustes Iniciales del Router Cisco](#cisco-router-config-inicial)
       - [11.2.1. Pasos Esenciales de Configuración Básica del Router](#router-pasos-basicos)
+  - [12. ICMP y Herramientas de Diagnóstico de Red (Ping y Traceroute)](#icmp-ping-traceroute-diagnostico)
+    - [12.1. Protocolo de Mensajes de Control de Internet (ICMP)](#icmp-protocolo)
+      - [12.1.1. Fundamentos y Propósito de ICMP](#icmp-fundamentos)
+      - [12.1.2. Tipos Comunes de Mensajes ICMP (v4 y v6)](#icmp-tipos-comunes-v4v6)
+      - [12.1.3. Mensajes Específicos de ICMPv6 para el Descubrimiento de Vecinos (NDP)](#icmpv6-ndp-mensajes-seccion12)
+    - [12.2. `ping`: Prueba de Conectividad](#ping-herramienta)
+      - [12.2.1. Funcionamiento y Casos de Uso de `ping`](#ping-funcionamiento-usos)
+    - [12.3. `traceroute` / `tracert`: Trazado de Ruta](#traceroute-herramienta)
+      - [12.3.1. Funcionamiento Detallado de `traceroute`](#traceroute-funcionamiento)
 </details>
 
 ---
@@ -1465,5 +1474,96 @@ R1# copy running-config startup-config
 Destination filename [startup-config]? [Presionar Enter]
 Building configuration...
 [OK]
+```
+</details>
+
+
+## 12. ICMP y Herramientas de Diagnóstico de Red (Ping y Traceroute) <a name="icmp-ping-traceroute-diagnostico"></a>
+
+<details>
+  <summary>Ver/Ocultar Detalles de ICMP, Ping y Traceroute</summary>
+
+Este módulo explora el Protocolo de Mensajes de Control de Internet (ICMP) y dos herramientas de diagnóstico fundamentales, `ping` y `traceroute` (o `tracert`), que dependen de ICMP para su funcionamiento. Estos elementos son cruciales para verificar la conectividad, solucionar problemas de red y comprender cómo viajan los datos.
+
+### 12.1. Protocolo de Mensajes de Control de Internet (ICMP) <a name="icmp-protocolo"></a>
+
+#### 12.1.1. Fundamentos y Propósito de ICMP <a name="icmp-fundamentos"></a>
+Aunque el Protocolo de Internet (IP) es un protocolo de "mejor esfuerzo" (no garantiza la entrega), el conjunto TCP/IP necesita una forma de comunicar errores y enviar mensajes informativos relacionados con el procesamiento de paquetes IP. Esta función la cumple el **Protocolo de Mensajes de Control de Internet (ICMP)**.
+
+*   **Propósito Principal:** Proporcionar retroalimentación sobre problemas encontrados durante la transmisión de paquetes IP (ej: destino inalcanzable, tiempo de vida del paquete expirado) y permitir pruebas de diagnóstico (ej: verificar la accesibilidad de un host).
+*   **Fiabilidad de IP:** Es crucial entender que ICMP **no hace que IP sea un protocolo fiable**. Simplemente reporta errores o estados; la corrección o manejo de estos errores suele ser responsabilidad de protocolos de capas superiores (como TCP) o de la aplicación.
+*   **Obligatoriedad y Seguridad:** Los mensajes ICMP no son estrictamente obligatorios para la funcionalidad básica de IP y, a menudo, su tráfico es filtrado o bloqueado por firewalls en redes por razones de seguridad, ya que ciertos mensajes ICMP pueden ser explotados para reconocimiento de red o ataques.
+*   **Versiones:**
+    *   **ICMPv4:** Funciona junto con IPv4.
+    *   **ICMPv6:** Funciona con IPv6. Proporciona servicios análogos a ICMPv4 pero incluye funcionalidades adicionales importantes, especialmente para el Protocolo de Descubrimiento de Vecinos (NDP).
+
+#### 12.1.2. Tipos Comunes de Mensajes ICMP (v4 y v6) <a name="icmp-tipos-comunes-v4v6"></a>
+
+| Tipo de Mensaje ICMP                | Descripción y Propósito                                                                                                                                                                                              |
+| :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Solicitud de Eco (Echo Request)** <br> **Respuesta de Eco (Echo Reply)** | Se utiliza para probar la **accesibilidad del host**. Un dispositivo envía una Solicitud de Eco; si el host destino está disponible y no bloquea ICMP, responde con una Respuesta de Eco. Este es el mecanismo fundamental de la utilidad `ping`. |
+| **Destino Inalcanzable**            | Enviado por un host o un router cuando no puede entregar un paquete. El mensaje incluye un código que especifica la razón de la inaccesibilidad.                                                                      |
+| **Tiempo Excedido (Time Exceeded)**   | Principalmente enviado por un router cuando descarta un paquete porque su campo **TTL (Time To Live en IPv4)** o **Límite de Salto (Hop Limit en IPv6)** ha llegado a cero. Este mecanismo es fundamental para la utilidad `traceroute`/`tracert`. |
+
+**Códigos Comunes de "Destino Inalcanzable" - ICMPv4:**
+
+| Código | Significado           |
+| :----- | :-------------------- |
+| 0      | Red inalcanzable      |
+| 1      | Host inalcanzable     |
+| 2      | Protocolo inalcanzable|
+| 3      | Puerto inalcanzable   |
+
+**Códigos Comunes de "Destino Inalcanzable" - ICMPv6:**
+
+| Código | Significado                                               |
+| :----- | :-------------------------------------------------------- |
+| 0      | No hay ruta para el destino                                 |
+| 1      | Comunicación con el destino prohibida administrativamente |
+| 2      | Más allá del alcance de la dirección de origen              |
+| 3      | No se puede alcanzar la dirección                           |
+| 4      | Puerto inalcanzable                                       |
+
+#### 12.1.3. Mensajes Específicos de ICMPv6 para el Descubrimiento de Vecinos (NDP) <a name="icmpv6-ndp-mensajes-seccion12"></a>
+ICMPv6 es una parte integral del **Protocolo de Descubrimiento de Vecinos (NDP)**, que en IPv6 maneja funciones como la resolución de direcciones (similar a ARP en IPv4) y la autoconfiguración de direcciones.
+
+| Mensaje ICMPv6 (NDP)                   | Propósito Principal                                                                                                                                                                                                                                                          |
+| :------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Solicitud de Router (RS - Router Solicitation)** | Enviada por hosts para localizar routers en el enlace local y solicitarles que envíen Anuncios de Router (RA) inmediatamente.                                                                                                                                  |
+| **Anuncio de Router (RA - Router Advertisement)** | Enviados periódicamente por los routers (o en respuesta a un RS) para anunciar su presencia, prefijos de red, y otros parámetros de configuración del enlace (como MTU, Límite de Salto). Crucial para SLAAC (Autoconfiguración de Dirección Sin Estado). Un host que usa SLAAC establece su gateway predeterminado a la dirección de enlace local del router que envió el RA. |
+| **Solicitud de Vecino (NS - Neighbor Solicitation)** | Usada para resolver la dirección MAC de una IPv6, verificar alcanzabilidad de vecinos, y detectar direcciones duplicadas.                                                                                                                                     |
+| **Anuncio de Vecino (NA - Neighbor Advertisement)** | Enviado en respuesta a una NS o para anunciar cambios en la dirección de capa de enlace.                                                                                                                                                                       |
+| **Redirección (Redirect Message)**       | Usado por un router para informar a un host sobre un mejor router de primer salto para un destino específico.                                                                                                                                                           |
+
+### 12.2. `ping`: Prueba de Conectividad <a name="ping-herramienta"></a>
+
+#### 12.2.1. Funcionamiento y Casos de Uso de `ping` <a name="ping-funcionamiento-usos"></a>
+El comando `ping` (Packet Internet Groper) es una utilidad fundamental para probar la conectividad de Capa 3 entre un host local y un destino especificado.
+*   **Mecanismo:** Utiliza mensajes **ICMP Echo Request** (Solicitud de Eco) e **ICMP Echo Reply** (Respuesta de Eco).
+    1.  El origen envía un ICMP Echo Request.
+    2.  Si el destino es accesible, responde con un ICMP Echo Reply.
+    3.  `ping` muestra el tiempo de ida y vuelta (RTT) y si la respuesta fue recibida.
+*   **Timeout:** Si no se recibe respuesta, `ping` indica un timeout.
+*   **Resolución Previa:** El primer `ping` a un destino local puede tardar más si se requiere ARP/NDP.
+*   **Casos de Uso:**
+    *   **Ping al Loopback Local** (`127.0.0.1` o `::1`): Verifica la pila TCP/IP interna del host.
+    *   **Ping a la Puerta de Enlace Predeterminada:** Prueba la conectividad con el router local.
+    *   **Ping a un Host Remoto:** Prueba la conectividad de extremo a extremo a través de la(s) red(es).
+*   **Información Obtenida:** Tasa de éxito, RTT promedio, mínimo y máximo.
+
+*(Aquí puedes insertar tus tablas existentes de "Opciones Comunes de `ping`" y "Ejemplos de Uso (`ping`)" de tu sección CLI).*
+
+### 12.3. `traceroute` / `tracert`: Trazado de Ruta <a name="traceroute-herramienta"></a>
+
+#### 12.3.1. Funcionamiento Detallado de `traceroute` <a name="traceroute-funcionamiento"></a>
+La utilidad `traceroute` (o `tracert` en Windows) descubre la ruta (secuencia de routers o "saltos") que los paquetes toman para llegar a un destino y mide la latencia a cada salto.
+*   **Mecanismo con TTL/Límite de Salto e ICMP:**
+    1.  Envía una serie de paquetes. El primer conjunto tiene un **TTL (IPv4) o Límite de Salto (IPv6) de 1**.
+    2.  El primer router decrementa el TTL/Límite de Salto a 0, descarta el paquete, y envía un **ICMP "Time Exceeded"** al origen. `traceroute` identifica así al primer salto.
+    3.  Incrementa el TTL/Límite de Salto en 1 para cada conjunto subsecuente de paquetes, revelando cada router en la ruta.
+    4.  Al alcanzar el destino final, este responde (comúnmente con **ICMP "Port Unreachable"** si los sondeos son UDP, o **ICMP Echo Reply** si los sondeos son ICMP).
+*   **Interpretación de la Salida:** Lista los saltos (IPs/nombres) y los RTT. Un asterisco (`*`) indica un salto sin respuesta.
+
+*(Aquí puedes insertar tus tablas existentes de "Opciones Comunes tracer" y "Ejemplos de Uso" de tu sección CLI).*
 
 </details>
