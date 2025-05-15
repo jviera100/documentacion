@@ -110,6 +110,11 @@
     - [10.5. Funciones de Ayuda y Atajos en la CLI](#ios-cli-ayuda-atajos)
     - [10.6. Visualización de Información del Dispositivo con Comandos `show`](#ios-cli-comandos-show)
     - [10.7. Nota sobre Herramientas de Simulación (Packet Tracer, etc.)](#ios-cli-simulacion)
+  - [11. Configuración Básica de Dispositivos de Red Cisco (Switches y Routers)](#cisco-dispositivos-config-basica)
+    - [11.1. Configuración Inicial de un Switch Cisco](#cisco-switch-config-inicial)
+      - [11.1.1. Configuración de la Interfaz Virtual del Switch (SVI) para Gestión Remota](#switch-svi-config)
+    - [11.2. Configuración de los Ajustes Iniciales del Router Cisco](#cisco-router-config-inicial)
+      - [11.2.1. Pasos Esenciales de Configuración Básica del Router](#router-pasos-basicos)
 </details>
 
 ---
@@ -1398,3 +1403,67 @@ Es recomendable practicar en estos entornos para desarrollar habilidades de conf
 
 </details>
 
+# 11. Configuración Básica de Dispositivos de Red Cisco (Switches y Routers) <a name="cisco-dispositivos-config-basica"></a>
+
+<details>
+  <summary>Ver/Ocultar Detalles de Configuración Básica de Dispositivos Cisco</summary>
+
+Una vez comprendidos los fundamentos de la CLI del IOS de Cisco, el siguiente paso es aplicar ese conocimiento para realizar la configuración inicial esencial en switches y routers. Esta configuración básica es crucial para la operatividad, la gestión remota y la seguridad de los dispositivos de red.
+
+## 11.1. Configuración Inicial de un Switch Cisco <a name="cisco-switch-config-inicial"></a>
+
+Los switches Cisco, aunque son dispositivos de Capa 2, requieren una configuración IP mínima para permitir la gestión remota (por ejemplo, vía Telnet o SSH). Esto se logra configurando una **Interfaz Virtual de Switch (SVI - Switch Virtual Interface)**, comúnmente en la VLAN 1 por defecto, o en una VLAN de gestión dedicada.
+
+### 11.1.1. Configuración de la Interfaz Virtual del Switch (SVI) para Gestión Remota <a name="switch-svi-config"></a>
+Para acceder al switch de manera remota, se debe asignar una dirección IP y una máscara de subred a una SVI. La SVI es una interfaz lógica en el switch asociada a una VLAN.
+
+| Paso                                    | Comando de Ejemplo (desde Configuración Global o modo indicado) | Propósito                                                                                                                               |
+| :-------------------------------------- | :---------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Ingresar al modo de config. de interfaz VLAN | `Switch(config)# interface vlan 1`                          | Accede al modo de configuración para la SVI de la VLAN 1 (o la VLAN de gestión que se desee usar).                                      |
+| 2. Asignar dirección IP y máscara       | `Switch(config-if)# ip address 192.168.1.20 255.255.255.0`  | Asigna una dirección IPv4 y máscara de subred a la SVI, permitiendo que el switch sea direccionable en esa red/VLAN.                 |
+| 3. Habilitar la interfaz virtual        | `Switch(config-if)# no shutdown`                            | Activa la SVI. Por defecto, las SVIs suelen estar administrativamente desactivadas.                                                     |
+| 4. (Opcional) Salir del modo de interfaz | `Switch(config-if)# exit`                                   | Regresa al modo de configuración global.                                                                                                |
+| 5. Configurar Puerta de Enlace Predeterminada | `Switch(config)# ip default-gateway 192.168.1.1`            | **Esencial si se necesita gestionar el switch desde una red diferente a la de la SVI.** Especifica el router al que el switch enviará el tráfico destinado a redes remotas. |
+
+*Nota: La VLAN 1 es la VLAN por defecto en los switches Cisco. Para una mejor seguridad y organización, a menudo se crea una VLAN de gestión separada (ej: VLAN 99) y se le asigna la IP de gestión.*
+
+## 11.2. Configuración de los Ajustes Iniciales del Router Cisco <a name="cisco-router-config-inicial"></a>
+
+La configuración inicial de un router establece su identidad en la red y asegura un nivel básico de seguridad para el acceso administrativo.
+
+### 11.2.1. Pasos Esenciales de Configuración Básica del Router <a name="router-pasos-basicos"></a>
+
+| Paso                                      | Comando(s) de Ejemplo (desde Configuración Global o modo indicado) | Propósito                                                                                                                                                              |
+| :---------------------------------------- | :----------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. **Configurar el Nombre del Dispositivo (Hostname)** | `Router(config)# hostname R1`                                      | Asigna un nombre único y descriptivo al router (ej: R1). El prompt cambiará para reflejar el nuevo nombre.                                                              |
+| 2. **Proteger el Modo EXEC Privilegiado**   | `R1(config)# enable secret [contraseña_fuerte]`                      | Establece una contraseña cifrada para acceder al modo EXEC privilegiado (`#`). Esta es la protección más importante.                                                          |
+| 3. **Proteger el Acceso por Consola (EXEC Usuario)** | `R1(config)# line console 0` <br> `R1(config-line)# password [contraseña_consola]` <br> `R1(config-line)# login` | Asegura el acceso físico a través del puerto de consola. `login` habilita la solicitud de contraseña.                                                                 |
+| 4. **Proteger el Acceso Remoto por VTY (Telnet/SSH)** | `R1(config)# line vty 0 4` (o `0 15`) <br> `R1(config-line)# password [contraseña_vty]` <br> `R1(config-line)# login` <br> `R1(config-line)# transport input [ssh | telnet | all | none]` | Asegura las líneas de terminal virtual para acceso remoto. `transport input` especifica qué protocolos se permiten (SSH es el preferido por seguridad). `0 4` es común para routers, `0 15` para switches. |
+| 5. **Cifrar Todas las Contraseñas de Texto Plano** | `R1(config)# service password-encryption`                          | Cifra las contraseñas que de otro modo se almacenarían en texto plano en la configuración (como la contraseña de consola y vty, *no* la `enable secret` que ya es cifrada). |
+| 6. **Proporcionar un Banner de Notificación Legal (MOTD)** | `R1(config)# banner motd # [Mensaje de advertencia] #`             | Muestra un mensaje de advertencia (Message Of The Day) a cualquiera que intente acceder al dispositivo, disuadiendo el acceso no autorizado. El `#` es un carácter delimitador. |
+| 7. **Guardar la Configuración**             | `R1# copy running-config startup-config` (o `wr`)                | **Crucial.** Guarda la configuración activa (en RAM, `running-config`) a la configuración de inicio (en NVRAM, `startup-config`) para que persista después de un reinicio.   |
+
+*Ejemplo de Secuencia Completa (adaptado de 28.2.2):*
+```cisco
+Router> enable
+Router# configure terminal
+Router(config)# hostname R1
+R1(config)# enable secret class
+R1(config)# line console 0
+R1(config-line)# password cisco
+R1(config-line)# login
+R1(config-line)# exit
+R1(config)# line vty 0 4
+R1(config-line)# password cisco
+R1(config-line)# login
+R1(config-line)# transport input ssh telnet
+R1(config-line)# exit
+R1(config)# service password-encryption
+R1(config)# banner motd # WARNING: Unauthorized access is prohibited! #
+R1(config)# end
+R1# copy running-config startup-config
+Destination filename [startup-config]? [Presionar Enter]
+Building configuration...
+[OK]
+
+</details>
