@@ -102,6 +102,14 @@
       - [9.2.2. Decimal a Hexadecimal y Hexadecimal a Decimal](#sistemas-numericos-dec-hex-y-hex-dex)
       - [9.2.3. Conversión de Decimal > Binario > Hexadecimal](#sistemas-numericos-dec-bin-hex)
       - [9.2.4. Conversión de Hexadecimal > Binario > Decimal](#sistemas-numericos-hex-bin-dec)
+  - [10. Interfaz de Línea de Comandos (CLI) del IOS de Cisco: Configuración de Routers y Switches](#cisco-ios-cli-configuracion)
+    - [10.1. Contexto y Fundamentos de la CLI del IOS de Cisco](#ios-cli-contexto)
+    - [10.2. Modos de Comando del IOS](#ios-cli-modos)
+    - [10.3. Navegación entre los Modos del IOS](#ios-cli-navegacion)
+    - [10.4. Estructura de los Comandos del IOS](#ios-cli-estructura-comandos)
+    - [10.5. Funciones de Ayuda y Atajos en la CLI](#ios-cli-ayuda-atajos)
+    - [10.6. Visualización de Información del Dispositivo con Comandos `show`](#ios-cli-comandos-show)
+    - [10.7. Nota sobre Herramientas de Simulación (Packet Tracer, etc.)](#ios-cli-simulacion)
 </details>
 
 ---
@@ -960,6 +968,7 @@ Un **Números de Puerto** Son identificadores de 16 bits (0-65535) usados por TC
 | **SSH (Secure Shell)**                   | 22                        | TCP               | Protocolo **seguro para acceso remoto, emulación de terminales**, transferencia de archivos (SFTP, SCP) y tunelización de otros protocolos. Cifra toda la sesión, protegiendo contra escuchas y manipulación. Es el reemplazo estándar de Telnet. |
 | **DHCP (Dynamic Host Configuration Protocol)**| 67 (servidor), 68 (cliente) | UDP    | **Asigna automáticamente direcciones IP** y otra información de configuración de red (máscara de subred, puerta de enlace, servidores DNS) a los dispositivos cliente en una red. Simplifica la administración de direcciones IP. |
 | **SNMP (Simple Network Management Protocol)**| 161 (agente), 162 (trap) | UDP               | Utilizado para la **monitorización y gestión de dispositivos de red** (routers, switches, servidores, impresoras). Permite a los administradores consultar el estado de los dispositivos, recibir alertas (traps) y, en algunos casos, modificar configuraciones. |
+| **RADIUS (Remote Authentication Dial-In User Service)** | 1812 (Autenticación), 1813 (Accounting) <br/> (o legados 1645, 1646) | UDP               | Protocolo cliente-servidor que proporciona servicios centralizados de **Autenticación, Autorización y Contabilidad (AAA)** para usuarios que se conectan y utilizan un servicio de red. Comúnmente usado para autenticar usuarios en accesos Wi-Fi (ej: WPA2/3-Enterprise), VPNs, y accesos de red por marcado. |
 
 ### 7.3. Tecnologías Relacionadas con Servicios de Aplicación <a name="capas567-tecnologias-relacionadas"></a>
 *   **VoIP (Voice over IP):** Es una familia de tecnologías y protocolos que permiten la transmisión de **voz sobre redes IP**. Protocolos clave incluyen:
@@ -1261,3 +1270,131 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 
 128 + 16 + 8 +4 +2 +1 = 159
 </details>
+
+## 10. Interfaz de Línea de Comandos (CLI) del IOS de Cisco <a name="cisco-ios-cli-configuracion"></a>
+
+<details>
+  <summary>Ver/Ocultar Detalles de la CLI del IOS de Cisco</summary>
+
+### 10.1. Contexto y Fundamentos de la CLI del IOS de Cisco <a name="ios-cli-contexto"></a>
+
+El **IOS (Internetwork Operating System) de Cisco** es el sistema operativo propietario que se ejecuta en la gran mayoría de los routers y switches fabricados por Cisco Systems. Al igual que una computadora personal tiene un sistema operativo (como Windows, macOS o Linux) para gestionar sus recursos y permitir la interacción del usuario, los dispositivos de red Cisco utilizan IOS para sus funciones de red.
+
+La **Interfaz de Línea de Comandos (CLI)** del IOS de Cisco es el principal método basado en texto para interactuar con este sistema operativo. Permite a los administradores de red:
+
+*   **Configurar** los dispositivos (establecer direcciones IP, protocolos de enrutamiento, políticas de seguridad, etc.).
+*   **Monitorear** el estado y el rendimiento de la red y del dispositivo.
+*   **Mantener y Solucionar Problemas (Troubleshooting)** en la red.
+
+**¿Cómo se Accede a la CLI?**
+Aunque la CLI se ejecuta *en el router o switch Cisco*, se accede a ella *desde* una computadora (PC o estación de trabajo) mediante diferentes métodos:
+
+*   **Conexión de Consola (Fuera de Banda - Out-of-Band):** Conexión física directa al puerto de consola del dispositivo Cisco usando un cable de consola (generalmente un cable rollover con un adaptador USB a serial o un puerto serial DB-9 en PCs más antiguas) y un programa de emulación de terminal (como PuTTY, Tera Term, SecureCRT, o la terminal integrada en macOS/Linux). Este método se usa para la configuración inicial o cuando el acceso por red no está disponible.
+*   **Conexión Remota (Dentro de Banda - In-Band):**
+    *   **Telnet (Puerto 23 TCP):** Permite el acceso remoto a la CLI a través de la red. **Es inseguro** ya que la comunicación (incluidas las credenciales) viaja en texto plano.
+    *   **SSH (Secure Shell - Puerto 22 TCP):** Proporciona un acceso remoto **seguro y cifrado** a la CLI a través de la red. Es el método preferido para la administración remota.
+    *   **HTTP/HTTPS (GUI):** Algunos dispositivos IOS también ofrecen una Interfaz Gráfica de Usuario (GUI) accesible vía web, pero la CLI sigue siendo fundamental para la mayoría de las tareas avanzadas y la automatización.
+
+**Importancia de la CLI:**
+A pesar de la existencia de GUIs, la CLI del IOS de Cisco sigue siendo la herramienta preferida por muchos profesionales de redes debido a su potencia, precisión, eficiencia para tareas repetitivas (mediante scripts) y la consistencia de los comandos a través de diferentes dispositivos Cisco. Dominar la CLI es una habilidad esencial para cualquier persona que trabaje con infraestructura de red Cisco.
+
+### 10.2. Modos de Comando del IOS <a name="ios-cli-modos"></a>
+
+El IOS de Cisco utiliza una estructura jerárquica de modos de comando para proporcionar diferentes niveles de acceso y funcionalidad, principalmente por razones de seguridad y para organizar los comandos. Cada modo se identifica por un `prompt` (indicador) diferente en la línea de comandos.
+
+| Modo de Comando         | Prompt Típico | Descripción y Propósito Principal                                                                                                                                                           |
+| :---------------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **EXEC del Usuario**    | `Router>` o `Switch>` | **Nivel de acceso inicial y limitado.** Permite ejecutar comandos básicos de monitoreo y visualización (ej: `ping`, `show version` limitado, `show interfaces` limitado). No permite realizar cambios en la configuración del dispositivo. |
+| **EXEC Privilegiado**   | `Router#` o `Switch#` | **Nivel de acceso completo (superusuario o "enable mode").** Permite ejecutar todos los comandos `show` para ver cualquier aspecto de la configuración y el estado, comandos de depuración (`debug`), gestión de archivos del sistema operativo, y, crucialmente, es el punto de entrada para acceder a los modos de configuración. |
+| **Configuración Global**| `Router(config)#` o `Switch(config)#` | **Permite realizar cambios que afectan al dispositivo en su totalidad.** Desde aquí se configuran parámetros globales como el nombre del host, contraseñas, banners, y se accede a submodos de configuración más específicos. |
+| **Configuración de Interfaz** | `Router(config-if)#` o `Switch(config-if)#` | **Permite configurar parámetros específicos de una interfaz de red** (ej: dirección IP, descripción, velocidad, dúplex, encapsulación). Se accede desde el modo de configuración global. |
+| **Configuración de Línea** | `Router(config-line)#` o `Switch(config-line)#` | **Permite configurar los parámetros de las líneas de acceso** (consola, vty para Telnet/SSH, aux). Se accede desde el modo de configuración global. |
+| **Configuración de Router** | `Router(config-router)#` o `Switch(config-router)#` | **Permite configurar protocolos de enrutamiento** (ej: OSPF, EIGRP, RIP). Se accede desde el modo de configuración global. |
+| *(Otros modos específicos)* | *(Varía)*      | Existen muchos otros submodos de configuración para características específicas (VLANs, ACLs, etc.), generalmente accesibles desde el modo de configuración global. |
+
+### 10.3. Navegación entre los Modos del IOS <a name="ios-cli-navegacion"></a>
+
+Moverse entre los diferentes modos de comando es una tarea fundamental al trabajar con la CLI del IOS.
+
+| Comando        | Modo Actual Típico        | Modo Destino Típico      | Propósito                                                                                                                               |
+| :------------- | :------------------------ | :----------------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
+| `enable`       | EXEC del Usuario (`>`)    | EXEC Privilegiado (`#`)  | Ingresar al modo EXEC privilegiado (generalmente requiere una contraseña si está configurada).                                          |
+| `disable`      | EXEC Privilegiado (`#`)   | EXEC del Usuario (`>`)   | Regresar al modo EXEC del usuario.                                                                                                      |
+| `configure terminal` (o `conf t`) | EXEC Privilegiado (`#`)   | Configuración Global (`(config)#`) | Ingresar al modo de configuración global para realizar cambios en la configuración del dispositivo.                                      |
+| `interface [tipo] [número]` (ej: `interface gigabitethernet 0/0/0`, `interface vlan 1`) | Configuración Global (`(config)#`) | Configuración de Interfaz (`(config-if)#`) | Ingresar al modo de configuración específico para la interfaz indicada.                                                                   |
+| `line [tipo] [número]` (ej: `line console 0`, `line vty 0 4`) | Configuración Global (`(config)#`) | Configuración de Línea (`(config-line)#`) | Ingresar al modo de configuración específico para la línea de acceso indicada.                                                              |
+| `router [protocolo] [id_proceso_opcional]` (ej: `router ospf 10`) | Configuración Global (`(config)#`) | Configuración de Router (`(config-router)#`) | Ingresar al modo de configuración para el protocolo de enrutamiento especificado.                                                       |
+| `exit`         | Cualquier modo de sub-configuración (ej: `(config-if)#`, `(config-line)#`, `(config-router)#`) | Modo de Configuración inmediatamente superior (ej: `(config)#`) | Salir del modo de configuración actual y regresar al modo anterior en la jerarquía. Si se usa en Configuración Global, regresa a EXEC Privilegiado. |
+| `end`          | Cualquier modo de configuración o sub-configuración | EXEC Privilegiado (`#`)  | Salir de cualquier modo de configuración y regresar directamente al modo EXEC privilegiado.                                               |
+| `Ctrl+Z`       | Cualquier modo de configuración o sub-configuración | EXEC Privilegiado (`#`)  | Equivalente a `end`. Sale de cualquier modo de configuración y regresa directamente al modo EXEC privilegiado.                         |
+
+### 10.4. Estructura de los Comandos del IOS <a name="ios-cli-estructura-comandos"></a>
+
+Los comandos del IOS siguen una estructura general que es importante entender para usarlos correctamente.
+
+| Componente del Comando | Descripción                                                                                                                                                              | Ejemplo en `ping 192.168.1.1` | Ejemplo en `show ip interface brief` |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------- | :----------------------------------- |
+| **Comando**            | La palabra de acción inicial que le dice al IOS qué hacer.                                                                                                               | `ping`                        | `show`                               |
+| **Espacio**            | Un separador requerido entre el comando y sus parámetros.                                                                                                              | (espacio después de `ping`)   | (espacio después de `show`)          |
+| **Palabra Clave (Keyword)** | Un parámetro específico y predefinido que modifica o especifica la acción del comando. No todos los comandos requieren palabras clave.                                 | (No aplica directamente)      | `ip`, `interface`                    |
+| **Argumento**          | Un valor o variable proporcionado por el usuario que el comando necesita para ejecutarse. No todos los comandos requieren argumentos.                                        | `192.168.1.1`                 | `brief` (en este caso, actúa como una palabra clave que especifica el formato de salida) |
+
+**Sintaxis General:** `prompt comando [palabra_clave1 [argumento1]] [palabra_clave2 [argumento2]] ...`
+
+*   **Texto en negrita** en la documentación de Cisco usualmente indica comandos y palabras clave que se ingresan tal cual.
+*   **Texto en cursiva** usualmente indica argumentos para los cuales el usuario debe proporcionar un valor.
+*   **Ejemplo de Sintaxis:** El comando para poner una descripción en una interfaz es `description <string>`.
+    *   `description` es el comando.
+    *   `<string>` es el argumento (la cadena de texto que el usuario escribe).
+    *   Ejemplo de uso: `R1(config-if)# description Enlace_WAN_a_Oficina_Central`
+
+### 10.5. Funciones de Ayuda y Atajos en la CLI (shortcuts) <a name="ios-cli-ayuda-shortcuts"></a>
+
+La CLI del IOS ofrece varias características para facilitar su uso y hacer más eficiente la configuración y el monitoreo.
+
+| Característica                      | Cómo se Usa / Tecla(s)                                        | Descripción y Propósito                                                                                                                                                                                               |
+| :---------------------------------- | :------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ayuda Sensible al Contexto**      | `?` (signo de interrogación)                                  | Escribir `?` en cualquier punto de un comando (o solo) muestra los comandos disponibles en ese modo o las siguientes palabras clave/argumentos posibles para el comando que se está escribiendo. Es extremadamente útil. |
+| **Completado de Comandos/Palabras Clave** | `Tab` (tecla Tabulador)                                       | Después de escribir parte de un comando o palabra clave, presionar `Tab` intentará completarlo automáticamente. Si hay múltiples opciones, no completará o mostrará las opciones si se presiona `Tab` dos veces (o `?`). |
+| **Abreviación de Comandos/Palabras Clave** | Escribir solo los caracteres iniciales únicos.              | Se pueden abreviar comandos y palabras clave a la cantidad mínima de caracteres que los identifiquen unívocamente. Ej: `conf t` en lugar de `configure terminal`; `sh run` en lugar de `show running-config`. |
+| **Recuperación de Comandos Anteriores** | Flecha Arriba (`↑`), Flecha Abajo (`↓`)                        | Permite navegar por el historial de comandos ingresados previamente en la sesión actual.                                                                                                                            |
+| **Mover el Cursor en la Línea**     | Flecha Izquierda (`←`), Flecha Derecha (`→`)                   | Mueve el cursor carácter por carácter.                                                                                                                                                                                  |
+|                                     | `Ctrl+A`                                                      | Mueve el cursor al inicio de la línea.                                                                                                                                                                                |
+|                                     | `Ctrl+E`                                                      | Mueve el cursor al final de la línea.                                                                                                                                                                                 |
+| **Borrar Caracteres/Línea**         | `Backspace`                                                   | Borra el carácter a la izquierda del cursor.                                                                                                                                                                           |
+|                                     | `Ctrl+U`                                                      | Borra toda la línea actual.                                                                                                                                                                                           |
+|                                     | `Ctrl+W`                                                      | Borra la palabra a la izquierda del cursor.                                                                                                                                                                            |
+| **Interrumpir un Proceso**          | `Ctrl+C`                                                      | Termina un comando en ejecución (como un `ping` continuo o un `debug`).                                                                                                                                                   |
+| **Salir de Modos de Configuración** | `Ctrl+Z`                                                      | Regresa directamente al modo EXEC Privilegiado desde cualquier submodo de configuración (equivalente a `end`).                                                                                                        |
+| **Mostrar Más Salida**              | `Barra Espaciadora`                                           | Cuando la salida de un comando (ej: `show running-config`) es más larga que la pantalla, muestra la siguiente pantalla completa.                                                                                     |
+|                                     | `Enter`                                                       | Muestra la siguiente línea de la salida.                                                                                                                                                                              |
+|                                     | `q` (o cualquier otra tecla)                                  | Detiene la visualización de la salida paginada y regresa al prompt.                                                                                                                                                     |
+
+### 10.6. Visualización de Información del Dispositivo con Comandos `show` <a name="ios-cli-comandos-show"></a>
+
+Los comandos `show` son herramientas de diagnóstico y verificación fundamentales en el IOS de Cisco. Se utilizan principalmente en el modo EXEC del Usuario y, con más detalle, en el modo EXEC Privilegiado para mostrar el estado actual del dispositivo, su configuración, tablas de protocolos, estadísticas de interfaces, etc. **No modifican la configuración.**
+
+| Comando `show` Común        | Propósito Principal y Qué Muestra                                                                                                                                                                                                   | Modo Típico de Uso |
+| :-------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------- |
+| `show running-config`       | Muestra la **configuración actualmente activa** que está en la RAM. Refleja todos los cambios realizados desde que el dispositivo se encendió o desde que se cargó la última configuración guardada.                                 | EXEC Privilegiado  |
+| `show startup-config`       | Muestra la **configuración guardada** que está almacenada en la NVRAM. Esta es la configuración que el dispositivo cargará la próxima vez que se reinicie.                                                                            | EXEC Privilegiado  |
+| `show interfaces [tipo número]` | Muestra estadísticas detalladas y el estado de todas las interfaces o de una interfaz específica. Incluye estado de Capa 1 (up/down) y Capa 2 (line protocol up/down), dirección MAC, MTU, contadores de errores, velocidad, dúplex. | EXEC Usuario/Priv. |
+| `show ip interface [tipo número]` | Muestra la información de configuración IP (Capa 3) para todas las interfaces o una específica. Incluye dirección IP, máscara de subred, estado de helper-address, ACLs aplicadas, etc.                                              | EXEC Usuario/Priv. |
+| `show ip interface brief`   | Proporciona un resumen conciso del estado de las interfaces (IP, estado de Capa 1 y Capa 2). Muy útil para una verificación rápida.                                                                                              | EXEC Usuario/Priv. |
+| `show arp`                  | Muestra la tabla ARP del dispositivo, que contiene los mapeos entre direcciones IP y direcciones MAC de los dispositivos en las redes directamente conectadas.                                                                      | EXEC Usuario/Priv. |
+| `show ip route`             | Muestra la tabla de enrutamiento IP del dispositivo. Detalla las redes conocidas, cómo llegar a ellas (siguiente salto o interfaz de salida), la métrica de la ruta y cómo se aprendió la ruta (conectada, estática, dinámica).        | EXEC Usuario/Priv. |
+| `show protocols`            | Muestra el estado de los protocolos de Capa 3 configurados en cada interfaz (ej: si IP está habilitado) y las direcciones IP de las interfaces.                                                                                    | EXEC Usuario/Priv. |
+| `show version`              | Muestra información crítica del sistema, incluyendo la versión del software IOS, tiempo de actividad del sistema, información de hardware (CPU, memoria RAM/Flash/NVRAM), interfaces físicas, y el valor del registro de configuración. | EXEC Usuario/Priv. |
+| `show mac address-table` (en Switches) | Muestra la tabla de direcciones MAC del switch, con las MACs aprendidas, el puerto asociado y la VLAN. (Comando específico de switches).                                                                                | EXEC Usuario/Priv. |
+| `show vlan brief` (en Switches) | Muestra un resumen de las VLANs configuradas en el switch y los puertos asignados a cada una. (Comando específico de switches).                                                                                             | EXEC Usuario/Priv. |
+
+### 10.7. Nota sobre Herramientas de Simulación <a name="ios-cli-simulacion"></a>
+Cuando se aprende a configurar dispositivos Cisco, es común utilizar herramientas de simulación o emulación antes de trabajar en equipos de producción reales.
+*   **Verificadores de Sintaxis (Syntax Checkers):** Herramientas simples que a menudo requieren que los comandos se ingresen de forma exacta y completa. Son útiles para familiarizarse con la sintaxis precisa.
+*   **Simuladores más Avanzados (ej: Cisco Packet Tracer):** Permiten una experiencia más realista, aceptando comandos abreviados, el uso de la tecla `Tab` para completar, y simulando el comportamiento de una red. Aunque son muy completos, pueden no tener todas las funcionalidades de un equipo real.
+*   **Emuladores (ej: GNS3, EVE-NG):** Permiten ejecutar imágenes reales del IOS de Cisco en un entorno virtualizado, ofreciendo la experiencia más cercana al hardware real.
+
+Es recomendable practicar en estos entornos para desarrollar habilidades de configuración y resolución de problemas de forma segura.
+
+</details>
+
