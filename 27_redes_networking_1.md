@@ -1,4 +1,4 @@
-# 🌐 Guía de Estudio de Networking: Del Modelo OSI a la Práctica <a name="guia-networking-main-title"></a>
+# 🌐 Guía de Estudio de Networking Cisco: Del Modelo OSI a la Ciberseguridad <a name="guia-networking-main-title"></a>
 
 <p align="center">
   Una guía completa para entender los fundamentos de las redes de computadoras, desde los modelos teóricos hasta los protocolos y herramientas prácticas.
@@ -10,7 +10,7 @@
 <details>
   <summary>Ver/Ocultar Índice</summary>
 
-- [🌐 Guía de Estudio de Networking: Del Modelo OSI a la Práctica](#guia-networking-main-title) <!-- Ancla para el título principal -->
+- [🌐 Guía de Estudio de Networking Cisco: Del Modelo OSI a la Ciberseguridad](#guia-networking-main-title) <!-- Ancla para el título principal -->
   - [1. Introducción a las Redes](#introduccion-redes)
     - [1.1. ¿Qué es Internet y Cómo se Organiza la Comunicación?](#que-es-internet)
     - [1.2. Modelos de Referencia: TCP/IP y OSI](#modelos-referencia)
