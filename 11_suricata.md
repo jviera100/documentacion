@@ -1,107 +1,135 @@
-### 1. Tarea 1: Examina una regla personalizada en Suricata
+# Guía Introductoria a Suricata: Detección de Intrusiones en Red (NIDS/NIPS)
 
-1. **Regla Personalizada en Suricata**:
-    ```plaintext
-    alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"GET on wire"; flow:established,to_server; content:"GET"; http_method; sid:12345; rev:3;)
-    ```
+## 1. ¿Qué es Suricata?
 
-2. **Acción NIDS**:
-    - **alert**: Alerta de tráfico e IDS inspecciona.
-    - **drop**: Alerta de tráfico, descarta tráfico, Suricata en modo IPS.
-    - **pass**: Permite que pase el tráfico por la interfaz de la red.
-    - **reject**: No permite que pase el tráfico y envía un paquete de restablecimiento de TCP.
+Suricata es un motor de **Detección de Intrusiones en Red (NIDS)** y **Prevención de Intrusiones en Red (NIPS)** de alto rendimiento, gratuito y de código abierto. Inspecciona el tráfico de red en tiempo real o desde archivos de captura (`.pcap`) comparándolo con un conjunto de reglas (firmas) para identificar actividad maliciosa, violaciones de políticas o comportamientos anómalos.
 
-3. **Encabezado**:
-    - Define el tráfico de red de la firma, incluyendo protocolo, dirección del tráfico y direcciones IP y puertos de origen y destino.
-    - **Ejemplo**: `http $HOME_NET any -> $EXTERNAL_NET any`.
-    - `$HOME_NET`: Variable de Suricata definida en `/etc/suricata/suricata.yaml`.
+**Funcionalidades Clave:**
+*   **Detección basada en Firmas:** Utiliza reglas para identificar patrones conocidos de ataques.
+*   **Análisis de Protocolos:** Entiende y decodifica una amplia gama de protocolos de red (TCP, UDP, HTTP, TLS, DNS, etc.).
+*   **Generación de Alertas:** Registra eventos de seguridad detectados.
+*   **Modo IPS (Intrusion Prevention System):** Puede configurarse para bloquear activamente el tráfico malicioso.
+*   **Registro Extensivo:** Genera logs detallados en varios formatos, incluyendo `eve.json` (un formato JSON todo-en-uno) y `fast.log` (alertas rápidas).
 
-4. **Opciones de la Regla**:
-    - **msg**: Proporciona el mensaje de alerta.
-    - **flow**: Establece la dirección del tráfico.
-    - **content**: Indica a Suricata que busque contenido específico.
-    - **sid**: ID de la firma.
-    - **rev**: Revisión de la firma.
+## 2. Anatomía de una Regla de Suricata
 
-### 2. Tarea 2: Activa una regla personalizada en Suricata
+Las reglas son el corazón de Suricata y definen qué buscar en el tráfico de red. Una regla típica tiene la siguiente estructura:
 
-1. **Lista de Archivos en `/var/log/suricata`**:
-    ```sh
-    ls -l /var/log/suricata
-    ```
+**`ACCIÓN PROTOCOLO IP_ORIGEN PUERTO_ORIGEN -> IP_DESTINO PUERTO_DESTINO (OPCIONES_DE_REGLA)`**
 
-2. **Ejecutar Suricata**:
-    ```sh
-    sudo suricata -r sample.pcap -S custom.rules -k none
-    ```
-    - `-r`: Especifica un archivo de entrada.
-    - `-S`: Usa las reglas definidas.
-    - `-k none`: Inhabilita todas las sumas de verificación.
+### Ejemplo de Regla Personalizada:
+plaintext
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"GET on wire"; flow:established,to_server; content:"GET"; http_method; sid:12345; rev:3;)
 
-3. **Verificar Nuevos Archivos en `/var/log/suricata`**:
-    ```sh
-    ls -l /var/log/suricata
-    ```
+# Desglose de Componentes de Reglas en Suricata
 
-4. **Mostrar Contenido de `fast.log`**:
-    ```sh
-    cat /var/log/suricata/fast.log
-    ```
-    - Ejemplo de resultado:
-        ```plaintext
-        11/23/2022-12:38:34.624866  [**] [1:12345:3] GET on wire [**] [Classification: (null)] [Priority: 3] {TCP} 172.21.224.2:49652 -> 142.250.1.139:80
-        11/23/2022-12:38:58.958203  [**] [1:12345:3] GET on wire [**] [Classification: (null)] [Priority: 3] {TCP} 172.21.224.2:58494 -> 142.250.1.139:80
-        ```
+## Componentes de la Regla
 
-### 3. Tarea 3: Examina el resultado de `eve.json`
+| Componente           | Descripción                                                                 | Ejemplo de la Regla                                     |
+|----------------------|-----------------------------------------------------------------------------|----------------------------------------------------------|
+| **Acción NIDS/NIPS** | Define qué hacer cuando la regla coincide.                                  | `alert`                                                  |
+| **Protocolo**        | El protocolo de red al que se aplica la regla.                              | `http`                                                   |
+| **IP de Origen**     | Dirección IP o variable de red de origen del tráfico.                       | `$HOME_NET`                                              |
+| **Puerto de Origen** | El puerto de origen del tráfico. `any` significa cualquier puerto.          | `any`                                                    |
+| **Dirección (->)**   | Dirección del flujo de tráfico inspeccionado.                               | `->`                                                     |
+| **IP de Destino**    | Dirección IP o variable de red de destino del tráfico.                      | `$EXTERNAL_NET`                                          |
+| **Puerto de Destino**| Puerto de destino del tráfico.                                              | `any`                                                    |
+| **Opciones de Regla**| Entre paréntesis, define condiciones exactas y mensaje de alerta.           | `(msg:"GET on wire"; flow:...; sid:...; rev:...;)`       |
 
-1. **Mostrar Contenido de `eve.json`**:
-    ```sh
-    cat /var/log/suricata/eve.json
-    ```
+## Acciones NIDS/NIPS Comunes
 
-2. **Mostrar Contenido en Formato Mejorado con `jq`**:
-    ```sh
-    jq . /var/log/suricata/eve.json | less
-    ```
-    - Nota: Puedes usar las teclas `f` y `b` minúsculas para avanzar o retroceder en el resultado. Presiona `Q` para salir del comando `less`.
+| Acción   | Descripción                                                                                         |
+|----------|-----------------------------------------------------------------------------------------------------|
+| `alert`  | Genera una alerta y registra el evento. El tráfico no se bloquea. (Modo IDS por defecto)           |
+| `drop`   | Genera una alerta, registra y descarta el paquete y flujo subsecuente. (Modo IPS)                  |
+| `pass`   | Permite el tráfico sin generar alerta, incluso si coincide con reglas posteriores.                 |
+| `reject` | Bloquea el tráfico y envía paquete TCP de reset al origen y/o destino. (Modo IPS)                  |
 
-**Pregunta: ¿Cuál es el valor de la propiedad de gravedad de la primera alerta que devuelve el comando `jq`?**
-- 1
-- 3
-- 4
-- 0
+## Opciones de Regla Comunes
 
-3. **Extraer Datos Específicos de Eventos con `jq`**:
-    ```sh
-    jq -c "[.timestamp,.flow_id,.alert.signature,.proto,.dest_ip]" /var/log/suricata/eve.json
-    ```
+| Opción        | Descripción                                                                                  | Ejemplo                  |
+|---------------|----------------------------------------------------------------------------------------------|--------------------------|
+| `msg`         | Mensaje descriptivo que se incluirá en la alerta. Debe ir entre comillas dobles.            | `"GET on wire"`          |
+| `flow`        | Estado y dirección del flujo de tráfico.                                                     | `established,to_server`  |
+| `content`     | Busca una cadena específica en el payload. Es sensible a mayúsculas/minúsculas.             | `"GET"`                  |
+| `http_method` | Palabra clave específica para HTTP que detecta métodos como GET, POST, etc.                 | `http_method`            |
+| `sid`         | ID único de la regla. Para reglas personalizadas, usar SID > 1,000,000.                     | `12345`                  |
+| `rev`         | Número de revisión de la regla. Se incrementa si la regla cambia.                           | `3`                      |
 
-**Pregunta: ¿Cuál es la dirección IP de destino que aparece para el último evento en el archivo 'eve.json'?**
-- 192.168.0.1
-- 172.21.224.2
-- 142.250.1.102
-- 142.250.1.139
+## Variables Predefinidas
 
-**Pregunta: ¿Cuál es la firma de alerta de la primera entrada de alerta en el archivo 'eve.json'?**
-- BAD USER-AGENT
-- DROP ICMP for HOMENET
-- GET on wire
-- Pass ICMP for HOMENET
+- `$HOME_NET`: Red local definida en `suricata.yaml`.
+- `$EXTERNAL_NET`: Redes externas.
 
-4. **Mostrar Registros de Eventos Relacionados con un `flow_id`**:
-    ```sh
-    jq "select(.flow_id==X)" /var/log/suricata/eve.json
-    ```
+## Ejecutar Suricata y Analizar Resultados
 
-Nota: Un flujo de red es una secuencia de paquetes entre un origen y un destino que comparten características en común, como direcciones IP, protocolos, entre otras. En seguridad cibernética, los flujos de tráfico de red ayudan a los analistas a comprender el comportamiento del tráfico de red para identificar y analizar amenazas. Suricata asigna un flow_id único para cada flujo de red. Todos los registros de un flujo de red comparten el mismo flow_id. Por ello, el campo flow_id es útil para relacionar tráfico de red que pertenezca a los mismos flujos de red.
+### A. Comandos Básicos
 
-¡Excelente trabajo completando la actividad! 🚀
+```bash
+# Modo NIDS (tráfico en vivo)
+sudo suricata -i <interfaz> -c /etc/suricata/suricata.yaml -S /ruta/a/tus/reglas.rules
 
-Ahora tienes la capacidad de utilizar Suricata para activar alertas relacionadas con el tráfico de red. Con esta experiencia práctica, has aprendido a:
+# Analizar archivo pcap
+sudo suricata -r <archivo.pcap> -c /etc/suricata/suricata.yaml -S /ruta/a/tus/reglas.rules
 
-- **Crear Reglas Personalizadas**: Definir y configurar reglas para Suricata.
-- **Supervisar Tráfico Capturado**: Analizar archivos de captura de paquetes.
-- **Examinar Resultados**: Interpretar los datos en `fast.log` y `eve.json`.
+# Ejemplo específico con desactivación de checksums
+sudo suricata -r sample.pcap -S custom.rules -k none
+```
+
+### B. Logs Generados
+
+Suricata guarda logs por defecto en `/var/log/suricata/`.
+
+```bash
+# Ver archivos de log
+ls -l /var/log/suricata
+
+# Ver resumen de alertas
+cat /var/log/suricata/fast.log
+
+# Ver log unificado en JSON
+cat /var/log/suricata/eve.json
+```
+
+### C. Ejemplo de Salida de fast.log
+
+```
+11/23/2022-12:38:34.624866  [**] [1:12345:3] GET on wire [**] [Classification: (null)] [Priority: 3] {TCP} 172.21.224.2:49652 -> 142.250.1.139:80
+```
+
+- **Timestamp:** Fecha y hora de la alerta.
+- **[1:12345:3]:** GID:SID:REV y mensaje.
+- **Classification/Priority:** Clasificación (si existe) y prioridad.
+- **{TCP}...:** Protocolo, IP y puerto de origen/destino.
+
+### D. Análisis Avanzado con `jq` y `eve.json`
+
+```bash
+# Mostrar todo con formato
+jq . /var/log/suricata/eve.json
+
+# Mostrar con paginación
+jq . /var/log/suricata/eve.json | less
+
+# Extraer campos clave
+jq -c "[.timestamp,.flow_id,.alert.signature,.proto,.dest_ip]" /var/log/suricata/eve.json
+
+# Filtrar solo alertas y mostrar severidad
+jq "select(.event_type==\"alert\") | .alert.severity" /var/log/suricata/eve.json
+
+# Mostrar todos los eventos de un flow_id específico
+jq "select(.flow_id==123456789)" /var/log/suricata/eve.json
+```
+
+> **Nota sobre `flow_id`:** Es un identificador único para cada flujo de red. Todos los eventos relacionados (alertas, http, dns, etc.) compartirán el mismo `flow_id`.
+
+## Flujo de Trabajo Típico
+
+1. **Definir/Actualizar Reglas:** Crear reglas personalizadas o usar conjuntos comunitarios (como ET Open).
+2. **Configurar Suricata:** Ajustar `suricata.yaml` (interfaces, variables de red, salidas de log).
+3. **Ejecutar Suricata:** En tiempo real o contra archivos `.pcap`.
+4. **Monitorear Logs:** Usar `fast.log` para alertas rápidas y `eve.json` para análisis detallado.
+5. **Analizar Eventos:** Filtrar y correlacionar con `jq` u otras herramientas.
+6. **Ajustar Reglas:** Refinar reglas para reducir falsos positivos y mejorar la detección.
 
 
