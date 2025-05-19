@@ -103,23 +103,23 @@
     - [7.6. Tipos de Conexión a Internet (Servicios)](#capas567-conexion-internet)
     - [7.7. Identificadores de Red Comunes (Configuración de Usuario)](#capas567-identificadores-usuario)
     - [7.8. Caso de Uso: Servicios en la Nube](#capas567-cloud)
-  - [8. Herramientas de Solución de Problemas de Red (CLI)](#herramientas-cli)
-    - [8.1. Comandos de Configuración IP (`ipconfig`, `ifconfig`, `ip`)](#cli-ipconfig)
-    - [8.2. `ping` (Diagnóstico de Conectividad)](#cli-ping)
-      - [8.2.1. Opciones Comunes de `ping`](#cli-ping-opciones)
-      - [8.2.2. Ejemplos de Uso (`ping`)](#cli-ping-ejemplos)
-    - [8.3. `tracert` / `traceroute` (Trazado de Ruta)](#cli-traceroute)
-      - [8.3.1. Opciones Comunes de `tracert`/`traceroute`](#cli-traceroute-opciones)
-      - [8.3.2. Ejemplos de Uso (`tracert`/`traceroute`)](#cli-traceroute-ejemplos)
-    - [8.4. `netstat` / `ss` (Monitoreo de Conexiones Activas)](#cli-netstat-ss)
-    - [8.5. `nslookup` (Consulta a DNS)](#cli-nslookup)
-  - [9. Fundamentos de Sistemas Numéricos](#sistemas-numericos)
-    - [9.1. Tipos de Sistemas Numéricos (Decimal, Binario, Hexadecimal)](#sistemas-numericos-tipos)
-    - [9.2. Métodos de Conversión entre Sistemas Numéricos](#sistemas-numericos-conversion)
-      - [9.2.1. Conversión de Decimal a Binario](#sistemas-numericos-dec-bin)
-      - [9.2.2. Decimal a Hexadecimal y Hexadecimal a Decimal](#sistemas-numericos-dec-hex-y-hex-dex)
-      - [9.2.3. Conversión de Decimal > Binario > Hexadecimal](#sistemas-numericos-dec-bin-hex)
-      - [9.2.4. Conversión de Hexadecimal > Binario > Decimal](#sistemas-numericos-hex-bin-dec)
+  - [8. Fundamentos de Sistemas Numéricos](#sistemas-numericos)
+    - [8.1. Tipos de Sistemas Numéricos (Decimal, Binario, Hexadecimal)](#sistemas-numericos-tipos)
+    - [8.2. Métodos de Conversión entre Sistemas Numéricos](#sistemas-numericos-conversion)
+      - [8.2.1. Conversión de Decimal a Binario](#sistemas-numericos-dec-bin)
+      - [8.2.2. Decimal a Hexadecimal y Hexadecimal a Decimal](#sistemas-numericos-dec-hex-y-hex-dex)
+      - [8.2.3. Conversión de Decimal > Binario > Hexadecimal](#sistemas-numericos-dec-bin-hex)
+      - [8.2.4. Conversión de Hexadecimal > Binario > Decimal](#sistemas-numericos-hex-bin-dec)  
+  - [9. Herramientas de Solución de Problemas de Red (CLI)](#herramientas-cli)
+    - [9.1. Comandos de Configuración IP (`ipconfig`, `ifconfig`, `ip`)](#cli-ipconfig)
+    - [9.2. `ping` (Diagnóstico de Conectividad)](#cli-ping)
+      - [9.2.1. Opciones Comunes de `ping`](#cli-ping-opciones)
+      - [9.2.2. Ejemplos de Uso (`ping`)](#cli-ping-ejemplos)
+    - [9.3. `tracert` / `traceroute` (Trazado de Ruta)](#cli-traceroute)
+      - [9.3.1. Opciones Comunes de `tracert`/`traceroute`](#cli-traceroute-opciones)
+      - [9.3.2. Ejemplos de Uso (`tracert`/`traceroute`)](#cli-traceroute-ejemplos)
+    - [9.4. `netstat` / `ss` (Monitoreo de Conexiones Activas)](#cli-netstat-ss)
+    - [9.5. `nslookup` (Consulta a DNS)](#cli-nslookup)
   - [10. Interfaz de Línea de Comandos (CLI) del IOS de Cisco: Configuración de Routers y Switches](#cisco-ios-cli-configuracion)
     - [10.1. Contexto y Fundamentos de la CLI del IOS de Cisco](#ios-cli-contexto)
     - [10.2. Modos de Comando del IOS](#ios-cli-modos)
@@ -1554,157 +1554,20 @@ Actualmente, muchas aplicaciones usan protocolos de esta capa para acceder a ser
 
 </details>
 
-## 8. Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)* <a name="herramientas-cli"></a> 
-
-<details>
-  <summary>Ver/Ocultar Herramientas CLI</summary>
-
-Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas del modelo de red.
-
-### 8.1. Comandos de Configuración IP (`ipconfig`, `ifconfig`, `ip`) <a name="cli-ipconfig"></a>
-
-| Propósito / Opción Común                     | Windows (`ipconfig`)   | Linux/macOS (Tradicional: `ifconfig`) | Linux/macOS (Moderno: `ip`)     |
-|----------------------------------------------|------------------------|---------------------------------------|---------------------------------|
-| Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (Gateway)*). | `ipconfig`             | `ifconfig -a`                         | `ip addr show` o `ip a`         |
-| Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease). | `ipconfig /all`        | `ifconfig -a` (menos detalle que Win) | `ip addr show` (detalle similar)|
-| Libera la concesión de dirección IP actual obtenida vía DHCP | `ipconfig /release`    | `sudo dhclient -r [interfaz]`         | `sudo dhclient -r [interfaz]`   |
-| Solicita una nueva configuración al servidor DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS | `ipconfig /renew`      | `sudo dhclient [interfaz]`            | `sudo dhclient [interfaz]`      |
-| Asignar IP estática (ejemplo)                | (Vía GUI o `netsh`)    | `sudo ifconfig [if] [ip] netmask [mask]` | `sudo ip addr add [ip]/[cidr] dev [if]` |
-| Habilitar/Deshabilitar interfaz              | `netsh interface set interface "Nombre" admin=enable/disable` | `sudo ifconfig [if] up/down` | `sudo ip link set [if] up/down` |
-
-*   **Nota Windows:** Si se detecta una IP incorrecta asignada por DHCP, es común usar `ipconfig /release` para liberar, seguido de `ipconfig /renew` para renovar configuracion DHCP.
-*   **Nota Linux/macOS:** `ifconfig` está siendo reemplazado por el conjunto de herramientas `ip` (parte de `iproute2`) en muchas distribuciones modernas de Linux. `dhclient` es un cliente DHCP común en Linux.
-
-### 8.2. `ping` (Diagnóstico de Conectividad) <a name="cli-ping"></a>
-
-El comando `ping` (Packet Internet Groper) se utiliza para probar la conectividad de red en la **Capa 3 (Red)** con un host destino. Funciona enviando mensajes **ICMP (Internet Control Message Protocol) Echo Request** y esperando recibir mensajes **ICMP Echo Reply**. Mide la latencia total de ida y vuelta (RTT) y verifica la alcanzabilidad.
-
-*   **Salida Típica:** Indica si el destino respondió, tiempo de ida y vuelta (latencia), y TTL.
-    ```cmd
-    C:\> ping www.google.com
-    Haciendo ping a www.google.com [142.250.190.36] con 32 bytes de datos:
-    Respuesta desde 142.250.190.36: bytes=32 tiempo=10ms TTL=118
-    ```
-
-#### 8.2.1. Opciones Comunes de `ping` <a name="cli-ping-opciones"></a>
-
-| Función                                    | Opción Windows | Opción Linux/macOS (Conceptual/Común) |
-|--------------------------------------------|----------------|---------------------------------------|
-| Resolver nombre de host desde IP (en salida) | `-a`           | (Por defecto; `-n` para no resolver)  |
-| Enviar pings indefinidamente               | `-t`           | (Comportamiento por defecto)          |
-| Especificar número de solicitudes echo     | `-n count`     | `-c count`                            |
-| Especificar tamaño del payload de datos    | `-l size`      | `-s size` (payload, no incl. cabecera ICMP) |
-| Forzar uso de IPv4                         | `-4`           | `-4`                                  |
-| Forzar uso de IPv6                         | `-6`           | `-6`                                  |
-| Establecer intervalo entre pings (segundos)| (N/A directo)  | `-i interval`                         |
-
-#### 8.2.2. Ejemplos de Uso (`ping`) <a name="cli-ping-ejemplos"></a>
-
-```bash
-# Windows & Linux/macOS (conceptual)
-ping www.google.com       # Prueba básica
-ping 8.8.8.8              # Prueba a IP
-ping -t 192.168.1.1       # (Win) Ping continuo
-ping 192.168.1.1          # (Linux) Ping continuo (Ctrl+C para parar)
-ping -n 10 www.ejemplo.com # (Win) 10 pings
-ping -c 10 www.ejemplo.com # (Linux) 10 pings
-```
-
-### 8.3. `tracert` / `traceroute` (Trazado de Ruta) <a name="cli-traceroute"></a>
-
-Descubre la ruta (secuencia de routers o "saltos") que los paquetes toman para llegar a un host destino. Mide la latencia a cada salto, ayudando a identificar dónde pueden estar ocurriendo retrasos o pérdidas.
-
-*   **Funcionamiento:** Envía paquetes con TTL (Time To Live) incremental. Cada router en la ruta devuelve un mensaje ICMP "Time Exceeded", identificándose y permitiendo medir la latencia hasta él.   
-*   **Salida Típica:** Lista los saltos con sus IPs y tiempos de respuesta.
-    ```cmd
-    C:\> tracert www.google.com
-
-    Traza a la dirección www.google.com [142.250.190.36] sobre un máximo de 30 saltos:
-      1     1 ms     1 ms     1 ms  mi.router.local [192.168.1.1]
-      2     8 ms     7 ms     8 ms  router.isp.com [10.0.0.1]
-      3     *        *        *     Tiempo de espera agotado para esta solicitud.
-    ... (saltos intermedios pueden mostrar latencias variables o más tiempos de espera) ...
-      9    20 ms    20 ms    20 ms  mad41s19-in-f4.1e100.net [142.250.190.36]
-    Traza completa.
-    ```
-
-#### 8.3.1. Opciones Comunes de `tracert`/`traceroute` <a name="cli-traceroute-opciones"></a>
-
-| Función                                    | Windows (`tracert`) | Linux/macOS (`traceroute`)    |
-|--------------------------------------------|---------------------|-------------------------------|
-| No resolver IPs a nombres de host          | `-d`                | `-n`                          |
-| Número máximo de saltos (TTL máximo)       | `-h max_saltos`     | `-m max_ttl`                  |
-| Tiempo de espera por respuesta             | `-w timeout (ms)`   | `-w waittime (s, flotante)`   |
-| Forzar uso de IPv4                         | `-4`                | `-4`                          |
-| Forzar uso de IPv6                         | `-6`                | `-6`                          |
-| Usar paquetes ICMP Echo (en lugar de UDP)  | (Por defecto)       | `-I` (puede requerir `sudo`)  |
-| Especificar puerto destino (si usa UDP)    | (N/A, usa ICMP)     | `-p puerto`                   |
-| Número de paquetes de sondeo por salto     | (N/A directo, 3 por defecto) | `-q nqueries`              |
-
-#### 8.3.2. Ejemplos de Uso (`tracert`/`traceroute`) <a name="cli-traceroute-ejemplos"></a>
-
-```bash
-# Windows & Linux/macOS (conceptual)
-tracert -d www.google.com # Windows: Trazar ruta a google.com sin resolver nombres de host
-sudo traceroute -I www.google.com # Linux/macOS: Trazar ruta a google.com usando ICMP
-traceroute -6 ipv6.google.com # Linux/macOS: Trazar ruta a google.com usando IPv6
-```
-
-### 8.4. `netstat` / `ss` (Monitoreo de Conexiones Activas) <a name="cli-netstat-ss"></a>
-Muestra información sobre conexiones de red activas, puertos en escucha, estadísticas de Ethernet, la tabla de enrutamiento IP, estadísticas de IPv4/IPv6, etc.
-
-| Función                                                      | Opción Windows | Opción Linux/macOS (o `ss`)   |
-|--------------------------------------------------------------|----------------|-------------------------------|
-| Muestra todas las conexiones activas y puertos en escucha    | `-a`           | `-a`                          |
-| Muestra direcciones/puertos en formato numérico (no resolver)| `-n`           | `-n`                          |
-| Muestra el ID del proceso (PID) asociado a la conexión     | `-o`           | `-p` (puede requerir `sudo`)  |
-| Muestra la tabla de enrutamiento IP                          | `-r`           | `-r`                          |
-| Muestra estadísticas de interfaz Ethernet/red                | `-e`           | `-i`                          |
-| Muestra estadísticas por protocolo (TCP, UDP, ICMP, IP)      | `-s`           | `-s`                          |
-| Muestra solo sockets TCP                                     | (Filtrar salida) | `-t` (o `ss -t`)              |
-| Muestra solo sockets UDP                                     | (Filtrar salida) | `-u` (o `ss -u`)              |
-| Muestra solo sockets en estado de escucha                    | (Filtrar salida con `findstr LISTEN`) | `-l` (o `ss -l`)              |
-
-*   **Ejemplos de Combinaciones Populares:**
-    *   **Windows:** `netstat -ano`(muestra todo, numérico, con PIDs).
-    *   **Linux:** `netstat -tulnp` o, preferiblemente, `ss -tulnp` (muestra puertos TCP/UDP (tu) en escucha (l), numéricos (n), con programa/PID (p)).
-    *   Nota: En muchas distribuciones Linux modernas, `ss (socket statistics)` es el sucesor de `netstat` y ofrece un rendimiento superior y más opciones.
-
-### 8.5. `nslookup` (Consulta a DNS) <a name="cli-nslookup"></a>
-Herramienta para consultar servidores DNS (Domain Name System).
-*   **Uso Básico:** Resuelve un nombre de dominio a una dirección IP, o viceversa (búsqueda inversa si se proporciona una IP).
-    ```cmd
-    C:\> nslookup www.google.com
-    Servidor:  mi.dns.local
-    Address:  192.168.1.1
-
-    Respuesta no autoritativa:
-    Nombre:  www.google.com
-    Addresses:  2607:f8b0:4004:c06::64
-                142.250.190.36
-    ```
-*   **Modo Interactivo:** Escribiendo nslookup sin argumentos se entra en modo interactivo. Para especificar servidores DNS a consultar, tipos de registros a buscar (A, MX, NS, CNAME, etc.) Dentro de este modo, se pueden usar comandos como:
-*   server [IP_servidor_DNS]: Para cambiar el servidor DNS a consultar.
-*   set type=[TIPO_REGISTRO] (ej: set type=MX, set type=NS, set type=AAAA, set type=CNAME, set type=SOA): Para especificar el tipo de registro DNS a buscar.
-*   Luego, escribir el nombre de dominio para consultar ese tipo de registro.
-*   exit: Para salir del modo interactivo.
-  
-</details>
-
-## 9. Fundamentos de Sistemas Numéricos <a name="sistemas-numericos"></a>
+## 8. Fundamentos de Sistemas Numéricos <a name="sistemas-numericos"></a>
 
 <details>
   <summary>Ver/Ocultar Sistemas Numéricos</summary>
 
-### 9.1. Tipos de Sistemas Numéricos (Decimal, Binario, Hexadecimal) <a name="sistemas-numericos-tipos"></a>
+### 8.1. Tipos de Sistemas Numéricos (Decimal, Binario, Hexadecimal) <a name="sistemas-numericos-tipos"></a>
 
 *   **Números Decimales (Base 10):** Utilizan los dígitos del 0 al 9. Cada posición representa una potencia de 10. Es el sistema que usamos comúnmente.
 *   **Números Binarios (Base 2):** Utilizan solo los dígitos 0 y 1 (bits). Cada posición representa una potencia de 2. Fundamental para la computación.
 *   **Números Hexadecimales (Base 16):** Utilizan los dígitos del 0 al 9 y las letras de la A a la F (donde A=10, B=11, C=12, D=13, E=14, F=15). Cada posición representa una potencia de 16. Se usa a menudo como una representación más compacta del binario.
 
-### 9.2. Métodos de Conversión entre Sistemas Numéricos <a name="sistemas-numericos-conversion"></a>
+### 8.2. Métodos de Conversión entre Sistemas Numéricos <a name="sistemas-numericos-conversion"></a>
 
-#### 9.2.1. Conversión de Decimal a Binario (Usando Tabla Posicional) <a name="sistemas-numericos-dec-bin"></a> 
+#### 8.2.1. Conversión de Decimal a Binario (Usando Tabla Posicional) <a name="sistemas-numericos-dec-bin"></a> 
 
 Este método se basa en encontrar qué potencias de 2 suman el número decimal.
 
@@ -1736,7 +1599,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 
 128 + 64 = 192. Por lo tanto, los bits correspondientes a esas posiciones son 1, y los demás son 0. El resultado binario se lee de izquierda a derecha dentro de la tabla, correspondiente al orden de los exponentes y posiciones.
 
-#### 9.2.2. Decimal a Hexadecimal y Hexadecimal a Decimal (Usando División Sucesiva y Tabla de Posición) <a name="sistemas-numericos-dec-hex-y-hex-dex"></a> 
+#### 8.2.2. Decimal a Hexadecimal y Hexadecimal a Decimal (Usando División Sucesiva y Tabla de Posición) <a name="sistemas-numericos-dec-hex-y-hex-dex"></a> 
 
 **1. Tabla de Posición: Decimal ⇔ Hexadecimal ⇔ Binario**
 
@@ -1755,7 +1618,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
     *   Cada dígito decimal se multiplica por 16 elevado a la potencia de su posición (de derecha a izquierda, comenzando con 0).
     *   Los resultados se suman. **Ejemplo:** 7D = (7 * 16^1) + (13 * 16^0) = 112 + 13 = 125
 
-#### 9.2.3. Conversión de Decimal > Binario > Hexadecimal (usa tabla de posicion y tabla conversion) <a name="sistemas-numericos-dec-bin-hex"></a> 
+#### 8.2.3. Conversión de Decimal > Binario > Hexadecimal (usa tabla de posicion y tabla conversion) <a name="sistemas-numericos-dec-bin-hex"></a> 
 
 **Tabla de Conversión (decimal a Binario):**
 
@@ -1778,7 +1641,7 @@ Para obtener 192 en decimal, necesitamos los siguientes valores posicionales:
 
 el primero suma 8 + 4 = 12 = c (tabla conversion) y la otra mitad suma 4 + 1 = 5
 
-#### 9.2.4. Conversión de Hexadecimal > Binario > Decimal (usa tabla de posicion y tabla conversion) <a name="sistemas-numericos-hex-bin-dec"></a> 
+#### 8.2.4. Conversión de Hexadecimal > Binario > Decimal (usa tabla de posicion y tabla conversion) <a name="sistemas-numericos-hex-bin-dec"></a> 
 
 **Tabla de Conversión (hexadecimal a Binario):**
 
@@ -1801,6 +1664,144 @@ el primero suma 8 + 1 = 9 y la otra mitad suma 8 + 4+ 2 + 1 = 15 (porque F=15)
 
 128 + 16 + 8 +4 +2 +1 = 159
 </details>
+
+## 9. Herramientas de Solución de Problemas de Red *(CLI - interfaz de Línea de Comandos)* <a name="herramientas-cli"></a> 
+
+<details>
+  <summary>Ver/Ocultar Herramientas CLI</summary>
+
+Estos comandos son esenciales para diagnosticar problemas de conectividad y configuración en diversas capas del modelo de red.
+
+### 9.1. Comandos de Configuración IP (`ipconfig`, `ifconfig`, `ip`) <a name="cli-ipconfig"></a>
+
+| Propósito / Opción Común                     | Windows (`ipconfig`)   | Linux/macOS (Tradicional: `ifconfig`) | Linux/macOS (Moderno: `ip`)     |
+|----------------------------------------------|------------------------|---------------------------------------|---------------------------------|
+| Muestra la configuración basica IP del host (IP, máscara, *Puerta de Enlace (Gateway)*). | `ipconfig`             | `ifconfig -a`                         | `ip addr show` o `ip a`         |
+| Información detallada (muestra dirección MAC, servidores DNS, estado de DHCP, tiempo de lease). | `ipconfig /all`        | `ifconfig -a` (menos detalle que Win) | `ip addr show` (detalle similar)|
+| Libera la concesión de dirección IP actual obtenida vía DHCP | `ipconfig /release`    | `sudo dhclient -r [interfaz]`         | `sudo dhclient -r [interfaz]`   |
+| Solicita una nueva configuración al servidor DHCP, es decir asigna automaticamente Dirección IP, Máscara de subred, Puerta de enlace predeterminada (gateway) y Servidor DNS | `ipconfig /renew`      | `sudo dhclient [interfaz]`            | `sudo dhclient [interfaz]`      |
+| Asignar IP estática (ejemplo)                | (Vía GUI o `netsh`)    | `sudo ifconfig [if] [ip] netmask [mask]` | `sudo ip addr add [ip]/[cidr] dev [if]` |
+| Habilitar/Deshabilitar interfaz              | `netsh interface set interface "Nombre" admin=enable/disable` | `sudo ifconfig [if] up/down` | `sudo ip link set [if] up/down` |
+
+*   **Nota Windows:** Si se detecta una IP incorrecta asignada por DHCP, es común usar `ipconfig /release` para liberar, seguido de `ipconfig /renew` para renovar configuracion DHCP.
+*   **Nota Linux/macOS:** `ifconfig` está siendo reemplazado por el conjunto de herramientas `ip` (parte de `iproute2`) en muchas distribuciones modernas de Linux. `dhclient` es un cliente DHCP común en Linux.
+
+### 9.2. `ping` (Diagnóstico de Conectividad) <a name="cli-ping"></a>
+
+El comando `ping` (Packet Internet Groper) se utiliza para probar la conectividad de red en la **Capa 3 (Red)** con un host destino. Funciona enviando mensajes **ICMP (Internet Control Message Protocol) Echo Request** y esperando recibir mensajes **ICMP Echo Reply**. Mide la latencia total de ida y vuelta (RTT) y verifica la alcanzabilidad.
+
+*   **Salida Típica:** Indica si el destino respondió, tiempo de ida y vuelta (latencia), y TTL.
+    ```cmd
+    C:\> ping www.google.com
+    Haciendo ping a www.google.com [142.250.190.36] con 32 bytes de datos:
+    Respuesta desde 142.250.190.36: bytes=32 tiempo=10ms TTL=118
+    ```
+
+#### 9.2.1. Opciones Comunes de `ping` <a name="cli-ping-opciones"></a>
+
+| Función                                    | Opción Windows | Opción Linux/macOS (Conceptual/Común) |
+|--------------------------------------------|----------------|---------------------------------------|
+| Resolver nombre de host desde IP (en salida) | `-a`           | (Por defecto; `-n` para no resolver)  |
+| Enviar pings indefinidamente               | `-t`           | (Comportamiento por defecto)          |
+| Especificar número de solicitudes echo     | `-n count`     | `-c count`                            |
+| Especificar tamaño del payload de datos    | `-l size`      | `-s size` (payload, no incl. cabecera ICMP) |
+| Forzar uso de IPv4                         | `-4`           | `-4`                                  |
+| Forzar uso de IPv6                         | `-6`           | `-6`                                  |
+| Establecer intervalo entre pings (segundos)| (N/A directo)  | `-i interval`                         |
+
+#### 9.2.2. Ejemplos de Uso (`ping`) <a name="cli-ping-ejemplos"></a>
+
+```bash
+# Windows & Linux/macOS (conceptual)
+ping www.google.com       # Prueba básica
+ping 8.8.8.8              # Prueba a IP
+ping -t 192.168.1.1       # (Win) Ping continuo
+ping 192.168.1.1          # (Linux) Ping continuo (Ctrl+C para parar)
+ping -n 10 www.ejemplo.com # (Win) 10 pings
+ping -c 10 www.ejemplo.com # (Linux) 10 pings
+```
+
+### 9.3. `tracert` / `traceroute` (Trazado de Ruta) <a name="cli-traceroute"></a>
+
+Descubre la ruta (secuencia de routers o "saltos") que los paquetes toman para llegar a un host destino. Mide la latencia a cada salto, ayudando a identificar dónde pueden estar ocurriendo retrasos o pérdidas.
+
+*   **Funcionamiento:** Envía paquetes con TTL (Time To Live) incremental. Cada router en la ruta devuelve un mensaje ICMP "Time Exceeded", identificándose y permitiendo medir la latencia hasta él.   
+*   **Salida Típica:** Lista los saltos con sus IPs y tiempos de respuesta.
+    ```cmd
+    C:\> tracert www.google.com
+
+    Traza a la dirección www.google.com [142.250.190.36] sobre un máximo de 30 saltos:
+      1     1 ms     1 ms     1 ms  mi.router.local [192.168.1.1]
+      2     8 ms     7 ms     8 ms  router.isp.com [10.0.0.1]
+      3     *        *        *     Tiempo de espera agotado para esta solicitud.
+    ... (saltos intermedios pueden mostrar latencias variables o más tiempos de espera) ...
+      9    20 ms    20 ms    20 ms  mad41s19-in-f4.1e100.net [142.250.190.36]
+    Traza completa.
+    ```
+
+#### 9.3.1. Opciones Comunes de `tracert`/`traceroute` <a name="cli-traceroute-opciones"></a>
+
+| Función                                    | Windows (`tracert`) | Linux/macOS (`traceroute`)    |
+|--------------------------------------------|---------------------|-------------------------------|
+| No resolver IPs a nombres de host          | `-d`                | `-n`                          |
+| Número máximo de saltos (TTL máximo)       | `-h max_saltos`     | `-m max_ttl`                  |
+| Tiempo de espera por respuesta             | `-w timeout (ms)`   | `-w waittime (s, flotante)`   |
+| Forzar uso de IPv4                         | `-4`                | `-4`                          |
+| Forzar uso de IPv6                         | `-6`                | `-6`                          |
+| Usar paquetes ICMP Echo (en lugar de UDP)  | (Por defecto)       | `-I` (puede requerir `sudo`)  |
+| Especificar puerto destino (si usa UDP)    | (N/A, usa ICMP)     | `-p puerto`                   |
+| Número de paquetes de sondeo por salto     | (N/A directo, 3 por defecto) | `-q nqueries`              |
+
+#### 9.3.2. Ejemplos de Uso (`tracert`/`traceroute`) <a name="cli-traceroute-ejemplos"></a>
+
+```bash
+# Windows & Linux/macOS (conceptual)
+tracert -d www.google.com # Windows: Trazar ruta a google.com sin resolver nombres de host
+sudo traceroute -I www.google.com # Linux/macOS: Trazar ruta a google.com usando ICMP
+traceroute -6 ipv6.google.com # Linux/macOS: Trazar ruta a google.com usando IPv6
+```
+
+### 9.4. `netstat` / `ss` (Monitoreo de Conexiones Activas) <a name="cli-netstat-ss"></a>
+Muestra información sobre conexiones de red activas, puertos en escucha, estadísticas de Ethernet, la tabla de enrutamiento IP, estadísticas de IPv4/IPv6, etc.
+
+| Función                                                      | Opción Windows | Opción Linux/macOS (o `ss`)   |
+|--------------------------------------------------------------|----------------|-------------------------------|
+| Muestra todas las conexiones activas y puertos en escucha    | `-a`           | `-a`                          |
+| Muestra direcciones/puertos en formato numérico (no resolver)| `-n`           | `-n`                          |
+| Muestra el ID del proceso (PID) asociado a la conexión     | `-o`           | `-p` (puede requerir `sudo`)  |
+| Muestra la tabla de enrutamiento IP                          | `-r`           | `-r`                          |
+| Muestra estadísticas de interfaz Ethernet/red                | `-e`           | `-i`                          |
+| Muestra estadísticas por protocolo (TCP, UDP, ICMP, IP)      | `-s`           | `-s`                          |
+| Muestra solo sockets TCP                                     | (Filtrar salida) | `-t` (o `ss -t`)              |
+| Muestra solo sockets UDP                                     | (Filtrar salida) | `-u` (o `ss -u`)              |
+| Muestra solo sockets en estado de escucha                    | (Filtrar salida con `findstr LISTEN`) | `-l` (o `ss -l`)              |
+
+*   **Ejemplos de Combinaciones Populares:**
+    *   **Windows:** `netstat -ano`(muestra todo, numérico, con PIDs).
+    *   **Linux:** `netstat -tulnp` o, preferiblemente, `ss -tulnp` (muestra puertos TCP/UDP (tu) en escucha (l), numéricos (n), con programa/PID (p)).
+    *   Nota: En muchas distribuciones Linux modernas, `ss (socket statistics)` es el sucesor de `netstat` y ofrece un rendimiento superior y más opciones.
+
+### 9.5. `nslookup` (Consulta a DNS) <a name="cli-nslookup"></a>
+Herramienta para consultar servidores DNS (Domain Name System).
+*   **Uso Básico:** Resuelve un nombre de dominio a una dirección IP, o viceversa (búsqueda inversa si se proporciona una IP).
+    ```cmd
+    C:\> nslookup www.google.com
+    Servidor:  mi.dns.local
+    Address:  192.168.1.1
+
+    Respuesta no autoritativa:
+    Nombre:  www.google.com
+    Addresses:  2607:f8b0:4004:c06::64
+                142.250.190.36
+    ```
+*   **Modo Interactivo:** Escribiendo nslookup sin argumentos se entra en modo interactivo. Para especificar servidores DNS a consultar, tipos de registros a buscar (A, MX, NS, CNAME, etc.) Dentro de este modo, se pueden usar comandos como:
+*   server [IP_servidor_DNS]: Para cambiar el servidor DNS a consultar.
+*   set type=[TIPO_REGISTRO] (ej: set type=MX, set type=NS, set type=AAAA, set type=CNAME, set type=SOA): Para especificar el tipo de registro DNS a buscar.
+*   Luego, escribir el nombre de dominio para consultar ese tipo de registro.
+*   exit: Para salir del modo interactivo.
+  
+</details>
+
 
 ## 10. Interfaz de Línea de Comandos (CLI) del IOS de Cisco <a name="cisco-ios-cli-configuracion"></a>
 
@@ -1929,18 +1930,18 @@ Es recomendable practicar en estos entornos para desarrollar habilidades de conf
 
 </details>
 
-# 11. Configuración Básica de Dispositivos de Red Cisco (Switches y Routers) <a name="cisco-dispositivos-config-basica"></a>
+## 11. Configuración Básica de Dispositivos de Red Cisco (Switches y Routers) <a name="cisco-dispositivos-config-basica"></a>
 
 <details>
   <summary>Ver/Ocultar Detalles de Configuración Básica de Dispositivos Cisco</summary>
 
 Una vez comprendidos los fundamentos de la CLI del IOS de Cisco, el siguiente paso es aplicar ese conocimiento para realizar la configuración inicial esencial en switches y routers. Esta configuración básica es crucial para la operatividad, la gestión remota y la seguridad de los dispositivos de red.
 
-## 11.1. Configuración Inicial de un Switch Cisco <a name="cisco-switch-config-inicial"></a>
+### 11.1. Configuración Inicial de un Switch Cisco <a name="cisco-switch-config-inicial"></a>
 
 Los switches Cisco, aunque son dispositivos de Capa 2, requieren una configuración IP mínima para permitir la gestión remota (por ejemplo, vía Telnet o SSH). Esto se logra configurando una **Interfaz Virtual de Switch (SVI - Switch Virtual Interface)**, comúnmente en la VLAN 1 por defecto, o en una VLAN de gestión dedicada.
 
-### 11.1.1. Configuración de la Interfaz Virtual del Switch (SVI) para Gestión Remota <a name="switch-svi-config"></a>
+#### 11.1.1. Configuración de la Interfaz Virtual del Switch (SVI) para Gestión Remota <a name="switch-svi-config"></a>
 Para acceder al switch de manera remota, se debe asignar una dirección IP y una máscara de subred a una SVI. La SVI es una interfaz lógica en el switch asociada a una VLAN.
 
 | Paso                                    | Comando de Ejemplo (desde Configuración Global o modo indicado) | Propósito                                                                                                                               |
@@ -1953,11 +1954,11 @@ Para acceder al switch de manera remota, se debe asignar una dirección IP y una
 
 *Nota: La VLAN 1 es la VLAN por defecto en los switches Cisco. Para una mejor seguridad y organización, a menudo se crea una VLAN de gestión separada (ej: VLAN 99) y se le asigna la IP de gestión.*
 
-## 11.2. Configuración de los Ajustes Iniciales del Router Cisco <a name="cisco-router-config-inicial"></a>
+### 11.2. Configuración de los Ajustes Iniciales del Router Cisco <a name="cisco-router-config-inicial"></a>
 
 La configuración inicial de un router establece su identidad en la red y asegura un nivel básico de seguridad para el acceso administrativo.
 
-### 11.2.1. Pasos Esenciales de Configuración Básica del Router <a name="router-pasos-basicos"></a>
+#### 11.2.1. Pasos Esenciales de Configuración Básica del Router <a name="router-pasos-basicos"></a>
 
 | Paso                                      | Comando(s) de Ejemplo (desde Configuración Global o modo indicado) | Propósito                                                                                                                                                              |
 | :---------------------------------------- | :----------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
