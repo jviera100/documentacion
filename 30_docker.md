@@ -58,8 +58,9 @@ Docker puede contener:
 *   en configuraciones y en software updates, instala actualizaciones y reinicia pc.
 *   ✅ Ahora sí WSL2 está correctamente instalado con Ubuntu, y Docker puede usarlo.
 *   si ves error en aplicacion de docker escritorio como que esta pegado y en la extension docker de microsoft en visual estudio code, es porque instalacion no fue exitosa
+*   instalaremos wsl desde terminal
 *   abre terminal de windows como administrador y ejecuta los comandos: 
-*   wsl --install
+*   wsl --install    aqui pones usuario y contraseña cuando lo pida
 *   wsl --update
 *   wsl --shutdown
 *   docker run hello-world
