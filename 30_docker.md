@@ -46,12 +46,25 @@ Docker puede contener:
 5.  Finaliza la instalación.
 
 ### ⚙️ Paso 2: Al abrir Docker por primera vez…
-**Sorpresa #1: Instalación de WSL2 + kernel de Linux**
+**Sorpresa #1: Instalación de WSL2 + kernel de Linux (ubuntu)**
+*   Docker necesita un mini Linux para funcionar, y lo instala automáticamente.
 *   Se abrirá una ventana negra (terminal) automáticamente.
 *   Te pedirá que presiones una tecla en 60 segundos para continuar.
 *   Esto es normal y necesario: Docker necesita instalar el kernel de Linux (porque corre sobre Linux).
 *   Cuando termine, te pedirá presionar otra tecla para cerrar.
-*   ✅ No estás siendo hackeado. Solo es Docker preparando Linux para funcionar.
+*   Espera unos minutos mientras descarga y configura.
+*   Cuando te lo pida, escribe un nombre de usuario
+*   Luego, escribe una contraseña (dos veces). No se verá al escribir, pero está funcionando.
+*   en configuraciones y en software updates, instala actualizaciones y reinicia pc.
+*   ✅ Ahora sí WSL2 está correctamente instalado con Ubuntu, y Docker puede usarlo.
+*   si ves error en aplicacion de docker escritorio como que esta pegado y en la extension docker de microsoft en visual estudio code, es porque instalacion no fue exitosa
+*   abre terminal de windows como administrador y ejecuta los comandos: 
+*   wsl --install
+*   wsl --update
+*   wsl --shutdown
+*   docker run hello-world
+*   si no funciona, reinicia tu pc y vuelve a intentarlo.
+*   ✅ Ahora sí WSL2 está correctamente instalado con Ubuntu, y Docker puede usarlo.
 
 **Sorpresa #2: Pantalla de suscripción**
 *   Docker te mostrará un mensaje que parece una "versión de pago".
