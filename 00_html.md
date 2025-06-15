@@ -36,6 +36,12 @@
 <section>Contenido de la sección</section>
 <article>Contenido del artículo</article>
 ```
+**Contenido Desplegable (Acordeón)**
+```<details>
+  <summary>Haz clic para ver más</summary>
+  <p>Este es el contenido oculto que se revela al hacer clic.</p>  
+</details>
+```
 **Listas**
 
 - *Lista Sin Orden (círculos "●")*: 
@@ -126,14 +132,15 @@ En Markdown, se utiliza triple backtick <code>\`\`\`</code> para abrir y cerrar 
 - `Ctrl + S`: Guardar el archivo actual.
 - `Ctrl + Z`: deshacer la última acción.
 - `Ctrl + Y`: rehacer la acción deshecha.
-- `Ctrl + P`: imprimir el documento.
+- `Ctrl + P`: buscar un documento.
 - `Ctrl + F`: Buscar texto en el archivo.
 - `Ctrl + D`: Seleccionar la siguiente ocurrencia del texto.
 - `Ctrl + Shift + L`: Seleccionar todas las ocurrencias del mismo texto.
 - `Ctrl + K + C`: mantiene el botón `Ctrl` presionado para presionar `K` y luego `C`. Esto convierte la selección en un comentario.
 - `Ctrl + Alt + ↓`: Añadir un cursor en la línea de abajo para edición múltiple.
 - `Shift + Alt + ↓`: Duplicar la línea actual (o la selección) hacia abajo.
-- `Alt + ↓ / Alt + ↓`: Mover la línea actual hacia arriba o hacia abajo.
+- `Alt + ↑`: Mover la línea actual hacia arriba.
+- `Alt + ↓`: Mover la línea actual hacia abajo.
 - `Alt + Z`: Ajustar vista de línea del codigo al ancho de la pantalla.
 - `Ctrl + ]`: Aumentar la sangría (indentar).
 - `Ctrl + [`: Disminuir la sangría (quitar indentación).
