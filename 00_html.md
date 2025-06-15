@@ -37,7 +37,8 @@
 <article>Contenido del artículo</article>
 ```
 **Contenido Desplegable (Acordeón)**
-```<details>
+```
+<details>
   <summary>Haz clic para ver más</summary>
   <p>Este es el contenido oculto que se revela al hacer clic.</p>  
 </details>
