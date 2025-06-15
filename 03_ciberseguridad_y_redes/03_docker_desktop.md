@@ -1,4 +1,4 @@
-## 🧠 1. ¿Qué es Docker?
+## 🧠 1. ¿Qué es Docker? 🐳
 Docker es como un emulador de aplicaciones.
 Similar a VirtualBox, pero mucho más liviano y especializado.
 Permite crear contenedores, que son como mini computadoras virtuales que:
