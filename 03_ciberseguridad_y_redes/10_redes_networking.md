@@ -97,6 +97,7 @@
         - [7.1.2. Capa 6 (Presentación OSI)](#capas567-presentacion)
         - [7.1.3. Capa 7 (Aplicación OSI) / Capa de Aplicación (TCP/IP)](#capas567-aplicacion-tcpip)
     - [7.2. Capa de Aplicación: Protocolos, Puertos y Servicios Esenciales](#capas567-protocolos-puertos)
+        - [7.2.1. Caso Práctico: Cliente Web (Navegador) vs. Servidor Web (NGINX)](#caso-practico-cliente-servidor-web)
     - [7.3. Tecnologías Relacionadas con Servicios de Aplicación](#capas567-tecnologias-relacionadas)
     - [7.4. Herramientas para Pruebas y Análisis de Protocolos (Aplicación)](#capas567-herramientas-analisis)
     - [7.5. Configuración de Direcciones IP: Estática vs. Dinámica (DHCP)](#capas567-dhcp)
@@ -1501,6 +1502,17 @@ Un **Números de Puerto** Son identificadores de 16 bits (0-65535) usados por TC
 | **SNMP (Simple Network Management Protocol)**| 161 (agente), 162 (trap) | UDP               | Utilizado para la **monitorización y gestión de dispositivos de red** (routers, switches, servidores, impresoras). Permite a los administradores consultar el estado de los dispositivos, recibir alertas (traps) y, en algunos casos, modificar configuraciones. |
 | **RADIUS (Remote Authentication Dial-In User Service)** | 1812 (Autenticación), 1813 (Accounting) <br/> (o legados 1645, 1646) | UDP               | Protocolo cliente-servidor que proporciona servicios centralizados de **Autenticación, Autorización y Contabilidad (AAA)** para usuarios que se conectan y utilizan un servicio de red. Comúnmente usado para autenticar usuarios en accesos Wi-Fi (ej: WPA2/3-Enterprise), VPNs, y accesos de red por marcado. |
 
+#### 7.2.1. Caso Práctico: Cliente Web (Navegador) vs. Servidor Web (NGINX) <a name="caso-practico-cliente-servidor-web"></a>
+
+Para consolidar los conceptos de la Capa de Aplicación, es útil diferenciar entre el software que solicita contenido web (cliente) y el que lo entrega (servidor). El navegador web es el cliente, mientras que NGINX (junto con otros como Apache) es un ejemplo popular de software de servidor web.
+
+**Resumen Comparativo: NGINX vs. Navegador Web**
+
+| Concepto | Rol en la Red | ¿Qué es? | ¿Dónde se Instala Típicamente? | Función Principal |
+| :--- | :--- | :--- | :--- | :--- |
+| **Navegador Web** (Chrome, Firefox) | **Cliente** | Programa para **solicitar y visualizar** sitios web. | En tu computador, smartphone, o tablet. | Envía una solicitud HTTP/HTTPS para obtener una página web y la renderiza para el usuario. |
+| **Servidor Web** (NGINX, Apache) | **Servidor** | Software que **almacena y entrega** sitios web. | En un servidor físico, máquina virtual (VirtualBox), contenedor (Docker), o un proveedor de hosting (VPS). | Escucha las solicitudes HTTP/HTTPS entrantes y responde entregando los archivos del sitio web (HTML, CSS, imágenes). |
+
 ### 7.3. Tecnologías Relacionadas con Servicios de Aplicación <a name="capas567-tecnologias-relacionadas"></a>
 *   **VoIP (Voice over IP):** Es una familia de tecnologías y protocolos que permiten la transmisión de **voz sobre redes IP**. Protocolos clave incluyen:
     *   **SIP (Session Initiation Protocol):** Para establecer, modificar y terminar sesiones de comunicación (ej: llamadas de voz o video). Puerto 5060/5061 (TCP/UDP).
@@ -1537,6 +1549,17 @@ Aunque DHCP utiliza UDP (Capa 4) para el transporte de sus mensajes y asigna dir
         *   ***Proporciona servicios similares de asignación de direcciones para clientes IPv6.***
         *   ***Una diferencia clave es que DHCPv6 típicamente no asigna la dirección de la puerta de enlace predeterminada; esta información la obtienen los clientes IPv6 a través de los mensajes de Anuncio de Router (Router Advertisement - RA) enviados por el router local (parte del protocolo NDP).***
         *   ***Los mensajes en DHCPv6 tienen nombres diferentes pero cumplen funciones análogas: SOLICIT (similar a Discover), ADVERTISE (similar a Offer), REQUEST o RENEW (similar a Request), y REPLY (similar a Acknowledge). También existe el mensaje INFORMATION-REQUEST para obtener otra información de configuración sin necesidad de una dirección IP.***
+
+#### Comparación Clave: DHCP vs. Protocolos de Enrutamiento (OSPF)
+
+Aunque tanto DHCP como los protocolos de enrutamiento (como OSPF) trabajan con direcciones IP, sus funciones son fundamentalmente diferentes y ocurren en distintas capas y tipos de dispositivos. Esta tabla aclara sus roles para evitar confusiones.
+
+**Resumen Comparativo: DHCP vs. OSPF**
+
+| Concepto | Capa OSI | Dispositivo Principal | Función Principal | Ejemplo Sencillo |
+| :--- | :--- | :--- | :--- | :--- |
+| **DHCP** | Capa 7 (Aplicación) | **Servidor DHCP** (en un router o servidor dedicado) | **Asigna direcciones IP a dispositivos finales (hosts)** como PCs y móviles de forma automática. | Como un **"recepcionista"** que te asigna un número de asiento (IP) cuando entras a una sala (red). |
+| **OSPF** | Capa 3 (Red) | **Routers** | **Calcula la mejor ruta** para que los datos viajen entre diferentes redes. Los routers lo usan para comunicarse entre sí. | Como un **"GPS"** que siempre busca el camino más corto y rápido para que los paquetes lleguen a su destino final. |
 
 ### 7.6. Tipos de Conexión a Internet (Servicios) <a name="capas567-conexion-internet"></a>
 Generalmente provistos por un **ISP (Proveedor de Servicios de Internet)**.
