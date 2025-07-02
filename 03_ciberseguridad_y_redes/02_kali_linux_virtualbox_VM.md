@@ -49,58 +49,58 @@ Existen dos tipos principales de hipervisores:
 
 2.  **Crear Nueva Máquina Virtual (VM) en VirtualBox:**
     *   En VirtualBox Manager, clic en "Nuevo".
-    *   **(B1 01) Nombre y SO:**
+    *   **Nombre y SO:**
         *   **Nombre:** `Ubuntu_VM` (o `Kali_VM`).
         *   **Imagen ISO:** **Selecciona el archivo `.iso` descargado.** VirtualBox intentará detectar Tipo y Versión.
         *   **Tipo:** `Linux`.
         *   **Versión:** Ej: `Ubuntu (64-bit)` o `Debian (64-bit)` para Kali.
         *   *(Opcional)*: Marcar "Omitir instalación desatendida" para control manual completo.
         *   Clic "Siguiente".
-    *   **(B 03) Hardware:**
+    *   **Hardware:**
         *   **Memoria base (RAM):** Aumentar (ej. 2048MB-4096MB+), **mantenerse en la zona verde.**
         *   **Procesadores (CPU):** Aumentar (ej. 2+ núcleos), **mantenerse en la zona verde.**
-        *   **(Opcional, recomendado por usuario) Habilitar EFI:** Marcar "Habilitar EFI (solo SO especiales)".
+        *   **No marcar habilitar EFI:** (solo SO especiales)".porque daria error al iniciar la MV pidiendo el archivo de instalacion nuevamente con extension .ISO
         *   Clic "Siguiente".
-    *   **(B1 04) Disco Duro Virtual (.vdi en SATA):**
+    *   **Disco Duro Virtual (.vdi en SATA):**
         *   Seleccionar "Crear un disco duro virtual ahora". (Este será el archivo `.vdi` que se montará en SATA).
         *   **Tamaño del disco:** Ajustar (ej. Ubuntu: 25GB+, Kali: 20-30GB+).
         *   **Tipo de archivo:** `VDI (VirtualBox Disk Image)`.
-        *   **Almacenamiento:** Elegir "Reservado completamente" (recomendado por defecto para que no de error de espacio en la instalacion) .
+        *   **Almacenamiento:** NO Elegir "Reservado completamente" (asi ocupa espacio dinamicamente a medida que se usa y no todo el espacio del disco (ROM) desde el principio).
         *   Clic "Siguiente" y "Terminar".
-    *   **(B 05) Resumen:** Verifica la configuración.
-    *   **(B1 06) Error Nombre Existente / Limpieza:** Si el nombre de la VM ya existe, VirtualBox dará error. Cambia el nombre. *Para eliminar VMs antiguas o defectuosas que ocupan nombres y espacio: En VirtualBox Manager, clic derecho sobre la VM > Eliminar > "Eliminar todos los archivos".*
+    *   **Resumen:** Verifica la configuración.
+    *   **Error Nombre Existente / Limpieza:** Si el nombre de la VM ya existe, VirtualBox dará error. Cambia el nombre. *Para eliminar VMs antiguas o defectuosas que ocupan nombres y espacio: En VirtualBox Manager, clic derecho sobre la VM > Eliminar > "Eliminar todos los archivos".*
 
 **Parte 2: Instalación del Sistema Operativo Linux**
 
 3.  **Iniciar Instalación y Primer Arranque:**
     *   Selecciona la VM creada y clic en "Iniciar".
-    *   **(B 09 - Error de arranque / Selección de ISO):** Si la VM no arranca desde la ISO (que debería estar asignada al IDE virtual) o pide un disco de inicio:
+    *   **(Error de arranque / Selección de ISO):** Si la VM no arranca desde la ISO (que debería estar asignada al IDE virtual) o pide un disco de inicio:
         *   Aparecerá un desplegable o ventana pidiendo seleccionar un medio de inicio.
         *   **Selecciona tu archivo `.iso` (el instalador) nuevamente.** El sistema debería iniciar desde él.
-    *   **(B 10) Proceso de Instalación del SO:**
+    *   **Proceso de Instalación del SO:**
         *   Sigue el asistente de instalación de Ubuntu/Kali (Idioma, teclado, particionado, usuario, contraseña).
         *   **Particionado:** Seleccionar "Borrar disco e instalar [Ubuntu/Kali]" (esto opera sobre el `.vdi` en SATA y es seguro para el host).
         *   Espera a que la instalación finalice.
-    *   **(B1 11) Reinicio Inicial Post-Instalación:** El instalador pedirá reiniciar. Haz clic en "Reiniciar ahora".
+    *   **Reinicio Inicial Post-Instalación:** El instalador pedirá reiniciar. Haz clic en "Reiniciar ahora".
 
 4.  **Gestión Post-Reinicio Inicial y Arranque desde Disco Duro Virtual:**
     *   **Situación:** Tras el reinicio inicial, el sistema operativo ya está instalado en el disco duro virtual (`.vdi` en SATA). El archivo `.iso` (instalador en IDE) ya no es necesario para arrancar el SO instalado, y si sigue montado, podría intentar reinstalar.
     *   **Acciones ANTES del siguiente arranque completo del SO (o si intenta reinstalar):**
-        1.  **(Opcional pero recomendado AHORA) Configurar Portapapeles y Red:**
+        1.  **Configurar Portapapeles, arrastrar y soltar, y Red:**
             *   Apaga la VM si llegó a arrancar en el SO instalado.
             *   En VirtualBox Manager > Configuración de la VM (estando apagada):
-                *   **(B1 07) General > Avanzado:** "Portapapeles compartido: Bidireccional", "Arrastrar y soltar: Bidireccional".
-                *   **(B1 08) Red > Adaptador 1:** "Conectado a: Adaptador puente" (para que la VM tenga su propia IP en tu red, como otra máquina).
+                *   **General > Avanzado:** "Portapapeles compartido: Bidireccional", "Arrastrar y soltar: Bidireccional"(Opcionalmente util, pero mas vulnerable).
+                *   **Red > Adaptador 1:** "Conectado a: Adaptador puente" (para que la VM tenga su propia IP en tu red, como otra máquina)(Opcionalmente util, pero mas vulnerable), es mas seguro red NAT (al final del texto se explica en profundidad).
         2.  **Opción A (Recomendada para evitar reinstalación): Eliminar ISO del IDE.**
             *   Con la VM apagada, en VirtualBox Manager > Configuración de la VM > Almacenamiento.
             *   Selecciona el "Controlador: IDE" y el archivo `.iso` montado.
             *   Haz clic en el icono de CD con una flecha hacia abajo (o clic derecho) y selecciona "Eliminar disco de la unidad virtual". El IDE debe quedar "[Vacío]".
-            *   **(B 13, B 14, B1 15)** El "Controlador: SATA" con tu archivo `.vdi` debe permanecer intacto. El sistema ahora arrancará desde SATA.
+            *   El "Controlador: SATA" con tu archivo `.vdi` debe permanecer intacto. El sistema ahora arrancará desde SATA.
         3.  **Opción B (Alternativa si se van a instalar Guest Additions inmediatamente):** Las Guest Additions también vienen como un archivo `.iso` que se montará en el IDE, reemplazando la ISO de instalación. Puedes proceder directamente a instalar las Guest Additions (paso 5), lo que implícitamente desmontará la ISO de instalación original.
 
 **Parte 3: Configuración Esencial Post-Instalación**
 
-5.  **(B1 16, B1 17, B1 18) Instalar VirtualBox Guest Additions (Para resolución, portapapeles, etc.):**
+5.  **Instalar VirtualBox Guest Additions (Para resolución, portapapeles, etc.):**
     *   Inicia la VM. Debería arrancar desde el SO instalado en el disco duro virtual (SATA).
     *   Con la VM Ubuntu/Kali iniciada y con sesión activa:
     *   En el menú de la ventana de la VM de VirtualBox: Dispositivos > "Insertar imagen de CD de los Complementos de invitado..." (Esto monta la ISO de Guest Additions en el IDE).
@@ -120,53 +120,26 @@ Existen dos tipos principales de hipervisores:
             Luego, reintenta la instalación de las Guest Additions y reinicia.
     *   **Activar Pantalla Completa:** En el menú de la ventana de VirtualBox > Ver > "Modo pantalla completa" (Host+F, donde Host suele ser Ctrl Derecha). El menú de VirtualBox se ocultará en la parte inferior (baja el mouse para mostrarlo). Para salir: Host+F.
 
-6.  **(B1 19, B 20, B 21) Crear Instantánea (Snapshot - ¡MUY RECOMENDADO!):**
+6.  **Crear Instantánea (Snapshot - ¡MUY RECOMENDADO!):**
     *   Una vez el SO esté instalado, actualizado y con Guest Additions funcionando:
         *   En VirtualBox Manager, selecciona la VM (puede estar encendida o apagada).
         *   Pestaña "Instantáneas" (o clic derecho sobre la VM > Instantáneas).
         *   Clic en "Tomar". Dale un nombre (ej. "Instalación Limpia con Guest Additions") y descripción.
     *   **Para restaurar:** Selecciona la instantánea > "Restaurar".
 
-7.  **(B1 22) Personalización de Apariencia en el SO Invitado:**
+7.  **Personalización de Apariencia en el SO Invitado:**
     *   Dentro de Ubuntu/Kali: Aplicaciones/Configuración/Accesibilidad para ajustar temas, iconos, tamaño de fuentes.
 
 ---
 
-**(B 23, B 24, B 25) ¡Listo!** Tienes tus VMs Linux funcionales.
+**¡Listo!** Tienes tus VMs Linux funcionales.
 
-### 📊 Tabla: Modos de red en VirtualBox
+### 📊 Tabla Completa: Modos de Red en VirtualBox
 
-| Modo de Red VirtualBox | ¿Accede a Internet? | ¿Se ve como otro equipo en tu red LAN? | ¿Tiene su propia IP del router? |
-|------------------------|----------------------|----------------------------------------|---------------------------------|
-| NAT                    | ✅ Sí                | ❌ No                                   | 🚫 No (usa la IP del host)       |
-| Bridged (Puente)       | ✅ Sí                | ✅ **Sí**                               | ✅ Sí                            |
-| Host-only              | ❌ No                | ✅ Solo se comunica con el host         | ✅ Sí                            |
-| Internal Network       | ❌ No                | ✅ Solo entre VMs en red interna        | ✅ Sí                            |
+| Modo de Red | Acceso a Internet | Visibilidad en Red Local (LAN) | Comunicación Principal | Caso de Uso y Nivel de Seguridad |
+| :--- | :--- | :--- | :--- | :--- |
+| **NAT** | ✅ **Sí** | ❌ **No.** La VM está oculta tras la IP del PC anfitrión. | VM ↔ Internet | **Uso general y seguro.** Ideal para navegar y actualizar. La VM está protegida y aislada de la red local. |
+| **Adaptador Puente (Bridge)** | ✅ **Sí** | ✅ **Sí.** La VM aparece como un dispositivo físico más, con su propia IP del router. | VM ↔ Internet <br> VM ↔ Dispositivos LAN | **Laboratorios de red y servidores.** Máxima flexibilidad, pero ⚠️ **menos seguro**, ya que la VM está expuesta directamente a la red. |
+| **Red sólo-anfitrión (Host-only)** | ❌ **No** | ❌ **No.** | VM ↔ PC Anfitrión | **Entorno de pruebas aislado.** Perfecto para comunicar la VM únicamente con el PC físico, sin acceso al exterior. |
+| **Red Interna** | ❌ **No** | ❌ **No.** | VM ↔ Otras VMs (en la misma red interna) | **Simulación de LAN aislada.** Ideal para crear laboratorios con varias VMs que se comunican entre sí, pero están completamente aisladas del mundo exterior y del anfitrión. |
 
----
-
-### 🔧 Ventajas del modo **Bridge (Adaptador en Puente)** en VirtualBox (simula conexion por cable alrouter ethernet como si fuera otro PC)
-
-1. ✅ **Aparece como un dispositivo más en tu red local (LAN)**.  
-   - Es detectado por tu router como si fuera otro PC real.
-
-2. ✅ **Recibe una IP real del router mediante DHCP**.  
-   - No usa NAT ni una IP interna invisible.
-
-3. ✅ **Puede comunicarse con otros dispositivos reales (PCs, impresoras, celulares, etc.)**.  
-   - Ideal para hacer pruebas de red, compartir carpetas, hacer ping, etc.
-
-4. ✅ **Accede a internet sin restricciones, como un PC físico**.  
-   - No depende del host para salir a internet.
-
-5. ✅ **Puedes hacer pruebas de firewall, sniffing o escaneo como si fuera una red real**.  
-   - Kali Linux, por ejemplo, puede hacer escaneos en tu red.
-
-6. ✅ **Facilita compartir carpetas y archivos entre la VM y otros equipos en la red**.  
-   - Usando Samba (Linux) o Compartir de Windows.
-
-7. ✅ **Permite simular entornos corporativos reales**.  
-   - Ideal para labs de ciberseguridad, administración de red o configuración de servidores.
-
-8. ✅ **Puedes ser alcanzado desde otros dispositivos de la red** (servidor web, SSH, FTP, etc.).  
-   - Muy útil si estás practicando servicios o servidores locales.
