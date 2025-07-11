@@ -553,8 +553,8 @@ S = 25 * 25 = 625
 2. **`reduce`**: Aplica una función a un acumulador y a cada valor de un array (de izquierda a derecha) para reducirlo a un único valor.
     ```js
     var deudas = [10000, 5000, 50000, 35000];
-    var sumatoriaDeudas = deudas.reduce(function(contador, deuda) {
-        return contador + deuda;
+    var sumatoriaDeudas = deudas.reduce(function(acumulador, valorActual) {
+        return acumulador + valorActual; //aqui dice que se suma
     }, 0);
     console.log(sumatoriaDeudas); // 100000
     ```
