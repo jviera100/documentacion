@@ -130,6 +130,13 @@
     let user2 = new User("tu");
     user1.sayHello();
     ```
+    🔍 Explicación paso a paso:
+      1. class User {}: Define una clase (molde para crear objetos).      
+      2. constructor(name): Se ejecuta automáticamente al crear un nuevo objeto.
+      3. Guarda el parámetro name dentro del objeto como this.name.
+      4. sayHello(): Es un método (función dentro de la clase) que muestra un saludo con el nombre.
+      5. let user1 = new User("yo"): Crea un nuevo objeto usando la clase User y le asigna "yo" como nombre.
+      6. user1.sayHello(): Ejecuta el método y muestra una alerta con "Hola yo".
 
 ### 9. Otros Métodos y Funciones
 
@@ -142,11 +149,17 @@
     let soyvariableprompt = prompt("soy texto");
     alert("soy texto" + soyvariableprompt);
     ```
-- **`parseInt()`**: Convierte un texto a un número entero.
+- **`parseInt()`**: Convierte un número como texto a un número entero.
     ```js
     let soyvariable = parseInt(prompt("soy texto"));
-    alert("soy texto" + soyvariable);
+    alert("soy texto" + soyvariable); 
     ```
+    ejemplos:
+    parseInt("123")        // ✅ 123
+    parseInt("123abc")     // ✅ 123 (ignora lo que viene después del número)
+    parseInt("abc123")     // ❌ NaN (Not a Number)
+    parseInt("")           // ❌ NaN
+
 
 ### 10. Manipulación del DOM
 
