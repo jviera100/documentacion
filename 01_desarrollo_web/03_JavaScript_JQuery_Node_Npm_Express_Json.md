@@ -2942,9 +2942,6 @@ Ejemplo:
 }
 ```
 
----
-Vamos a mejorar y clarificar las secciones que has mencionado en el manual. También quitaremos o ajustaremos aquellas que puedan ser innecesarias.
-
 ### 160. Obtener IDs de Emisor y Receptor
 
 **Descripción**: Se realiza una consulta a la base de datos para obtener los IDs de los usuarios "emisor" y "receptor".
