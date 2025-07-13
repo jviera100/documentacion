@@ -154,11 +154,11 @@
     let soyvariable = parseInt(prompt("soy texto"));
     alert("soy texto" + soyvariable); 
     ```
-    ejemplos:
-    parseInt("123")        // ✅ 123
-    parseInt("123abc")     // ✅ 123 (ignora lo que viene después del número)
-    parseInt("abc123")     // ❌ NaN (Not a Number)
-    parseInt("")           // ❌ NaN
+  -  ejemplos:
+  -  parseInt("123")        // ✅ 123
+  -  parseInt("123abc")     // ✅ 123 (ignora lo que viene después del número)
+  -  parseInt("abc123")     // ❌ NaN (Not a Number)
+  -  parseInt("")           // ❌ NaN
 
 
 ### 10. Manipulación del DOM
