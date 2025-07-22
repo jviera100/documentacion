@@ -113,6 +113,8 @@
 2. **Redirigir Salida a Archivo**:
     - **>**: Sobreescribe archivos.
     - **>>**: Agrega texto al final de un archivo.
+3. **echo "Chile" | tee pais.txt**      # Crea o sobreescribe pais.txt
+   **echo "Santiago" | tee -a pais.txt**  # Agrega "Santiago" al final
 
 #### 1.9 Otros Comandos Útiles
 
