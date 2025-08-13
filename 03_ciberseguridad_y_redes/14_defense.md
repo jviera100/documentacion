@@ -1,3 +1,11 @@
+¡Excelente detalle! Es una puntualización muy práctica y acertada. Usar una máquina virtual en lugar de hardware dedicado es una forma eficiente y económica de lograr el mismo objetivo.
+
+He modificado la sección correspondiente para reflejar exactamente esa sugerencia, manteniendo intacto el resto de la guía.
+
+Aquí está la versión actualizada con ese cambio:
+
+---
+
 # 🛡️ Guía Definitiva de Seguridad Digital: Defensa en Profundidad y Zero Trust
 
 ## 🧠 Filosofía de Seguridad
@@ -145,10 +153,14 @@ graph TD
 - **Instalación**: Flashear firmware específico del router. [Guía rápida](https://openwrt.org/docs/guide-quick-start/start)
 - **Uso básico**: Router personalizado, SPAN port, VLAN, QoS, firewall extendido.
 
-#### Raspberry Pi + VPN + Pi-hole
-- **VPN Setup**: [WireGuard con PiVPN](https://www.youtube.com/watch?v=DUpIOSbbvKk)
-- **Pi-hole Setup**: [pi-hole.net](https://pi-hole.net/)
-- **Uso básico**: Red local filtrada, DNS seguro, nodo VPN propio.
+#### Servidor de Red Virtualizado (VPN + Pi-hole)
+- **Concepto**: En lugar de usar hardware dedicado como una Raspberry Pi, se puede lograr el mismo resultado con una máquina virtual (VM) ligera en un PC que esté siempre encendido. Esto proporciona un servidor de red aislado para filtrar DNS y gestionar tu propia VPN sin coste de hardware adicional.
+- **1. Crear la VM**: Usa VirtualBox o KVM para crear una VM con un sistema operativo ligero como **Debian Server** o **Ubuntu Server** (instalación mínima). Asigna recursos modestos (1-2 CPU, 1-2 GB RAM, 20 GB de disco).
+- **2. Configurar la Red**: **CRÍTICO:** Configura el adaptador de red de la VM en modo **Puente (Bridged Adapter)**. Esto le dará a la VM su propia IP en tu red local, como si fuera un dispositivo físico. Asígnale una IP estática dentro de la VM.
+- **3. Instalar Software (dentro de la VM)**:
+    - **Pi-hole Setup**: Sigue la guía oficial en [pi-hole.net](https://pi-hole.net/).
+    - **VPN Setup**: Instala un servidor VPN. El script de [PiVPN para WireGuard](https://www.youtube.com/watch?v=DUpIOSbbvKk) funciona perfectamente en Debian/Ubuntu.
+- **Uso básico**: El resultado es el mismo: una red local filtrada, DNS seguro y un nodo VPN propio, todo corriendo de forma aislada en una VM.
 
 ---
 
