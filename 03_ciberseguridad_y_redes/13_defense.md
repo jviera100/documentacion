@@ -241,6 +241,21 @@ graph TD
 
 ---
 
+### Análisis de Seguridad de Aplicaciones (SAST, DAST, etc.)
+
+Esta es una parte crucial de la defensa activa, enfocada en el software que se ejecuta en tu infraestructura.
+
+| Técnica / Acrónimo | Nombre Completo | ¿Pentesting o Defensa? | Tipo de Análisis | Propósito Principal |
+| :--- | :--- | :--- | :--- | :--- |
+| **SAST** | Static Application Security Testing | Defensa | **Estático (Caja Blanca)** | Detectar vulnerabilidades en el código fuente. |
+| **SASH** | Static Application Security Hardening | **Defensa** | **Acción de Remediación** | **Corregir y reforzar** el código fuente basado en hallazgos. |
+| **DAST** | Dynamic Application Security Testing | Defensa / Pentesting | **Dinámico (Caja Negra)** | Encontrar fallos explotables en la aplicación en ejecución. |
+| **DASH** | Dynamic Application Security Hardening | **Defensa** | **Acción de Remediación** | **Corregir y reforzar** la configuración en tiempo de ejecución. |
+| **IAST** | Interactive Application Security Testing | Defensa | **Híbrido (Caja Gris)** | Detectar vulnerabilidades con contexto en tiempo real durante las pruebas. |
+| **RASP** | Runtime Application Self-Protection | Defensa | **Activo en Producción** | Bloquear ataques en tiempo real mientras la aplicación se ejecuta. |
+| **Pentesting** | Penetration Testing | **Pentesting** | **Manual + Automatizado** | Simular ataques reales para evaluar el riesgo global del sistema. |
+
+---
 ## 🧰 Anexo: Herramientas y Scripts
 
 ### Scripts Útiles
