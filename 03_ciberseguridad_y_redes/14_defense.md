@@ -63,7 +63,7 @@ graph TD
         L[💾 Backups Offline Cifrados]
     end
 
-    style L fill:#fff,stroke:#000,stroke-width:2px
+    style L fill:#111,stroke:#000,stroke-width:2px
 ```
 
 ---
