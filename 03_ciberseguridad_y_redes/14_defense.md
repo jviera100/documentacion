@@ -1,4 +1,4 @@
-# 🛡️ Guía Definitiva de Seguridad Digital: Defensa en Profundidad y Zero Trust
+# 🛡️ Guía de Seguridad Digital: Defensa en Profundidad y Zero Trust
 
 ## 🧠 Filosofía de Seguridad
 
