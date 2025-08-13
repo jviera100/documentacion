@@ -1,11 +1,3 @@
-¡Excelente detalle! Es una puntualización muy práctica y acertada. Usar una máquina virtual en lugar de hardware dedicado es una forma eficiente y económica de lograr el mismo objetivo.
-
-He modificado la sección correspondiente para reflejar exactamente esa sugerencia, manteniendo intacto el resto de la guía.
-
-Aquí está la versión actualizada con ese cambio:
-
----
-
 # 🛡️ Guía Definitiva de Seguridad Digital: Defensa en Profundidad y Zero Trust
 
 ## 🧠 Filosofía de Seguridad
