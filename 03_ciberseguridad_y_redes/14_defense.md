@@ -60,7 +60,7 @@ graph TD
     end
 
     subgraph Almacenamiento y Recuperación
-        H --> L[💾 Backups Offline Cifrados]
+        L[💾 Backups Offline Cifrados]
     end
 
     style L fill:#f9f,stroke:#333,stroke-width:2px
