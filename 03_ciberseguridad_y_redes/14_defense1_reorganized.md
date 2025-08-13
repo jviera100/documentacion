@@ -27,56 +27,43 @@ graph TD
 
 ### Arquitectura Final Tipo "Dark Army"
 
-```
-INTERNET HOSTIL
-      ↓
-┌─────────────────────────────────────┐
-│  🌐 ISP MODEM (No tocar - ISP)      │  
-└─────────────────┬───────────────────┘
-                  ↓
-┌─────────────────────────────────────┐
-│  🛡️ pfSense FIREWALL + IDS/IPS      │ ← Hardware dedicado
-│  • Geo-blocking (bloquea países)    │   (PC vieja con 2 NICs)
-│  • DPI + Suricata rules             │
-│  • pfBlockerNG threat intel         │
-└─────────────────┬───────────────────┘
-                  ↓
-┌─────────────────────────────────────┐
-│  🔀 MANAGED SWITCH + VLANs          │
-│  ├─ VLAN 10: Management            │
-│  ├─ VLAN 20: Workstations          │  
-│  ├─ VLAN 30: IoT Devices           │
-│  ├─ VLAN 40: Guests                │
-│  └─ VLAN 50: Honeypots             │
-└─────┬─────┬─────┬─────┬─────────────┘
-      ↓     ↓     ↓     ↓     
-  [MGT]  [WORK] [IoT] [HONEY]
-      ↓     ↓           ↓
-┌──────┐ ┌─────────────────┐ ┌──────────┐
-│ SIEM │ │ 💻 WORKSTATION  │ │ 🍯 TRAPS │
-│ +ELK │ │ ┌─────────────┐ │ │ Cowrie   │
-│ +Pi  │ │ │ Qubes OS    │ │ │ Canary   │
-│ hole │ │ │ ├─ work-vm  │ │ │ OpenC.   │
-└──────┘ │ │ ├─ anon-vm  │ │ └──────────┘
-         │ │ ├─ vault-vm │ │
-         │ │ └─ untrst   │ │
-         │ └─────────────┘ │
-         │ ┌─────────────┐ │
-         │ │ Whonix      │ │ ← Para tareas anónimas
-         │ │ Gateway+WS  │ │   TODO por Tor
-         │ └─────────────┘ │
-         │ ┌─────────────┐ │  
-         │ │ TAILS USB   │ │ ← Boot cuando necesites
-         │ │ (amnésico)  │ │   sesión sin rastros
-         │ └─────────────┘ │
-         └─────────────────┘
+```mermaid
+graph TD
+    subgraph Internet Hostil
+        A[Internet]
+    end
 
-      ALMACENAMIENTO OFFLINE
-         ┌─────────────┐
-         │ 💾 Backups  │ ← Air-gapped, cifrados
-         │ + Claves    │   Nunca conectados
-         │ + Recovery  │   a internet
-         └─────────────┘
+    subgraph Perímetro
+        B[ISP Modem en modo Bridge] --> C{🛡️ pfSense Firewall + IDS/IPS};
+    end
+
+    subgraph Red Interna Segmentada
+        C --> D[🔀 Managed Switch];
+        D --> V10[VLAN 10: Management];
+        D --> V20[VLAN 20: Trabajo Confiable];
+        D --> V30[VLAN 30: IoT No Confiable];
+        D --> V40[VLAN 40: Invitados Aislados];
+        D --> V50[VLAN 50: Honeypots & Trampas];
+    end
+    
+    subgraph Endpoints y Servicios
+        V10 --> E[🧠 SIEM + Pi-hole];
+        V20 --> F[💻 Workstations];
+        V50 --> G[🍯 Honeypots];
+    end
+
+    subgraph Aislamiento en Workstation
+        F --> H[Qubes OS];
+        H --> I[VM de Trabajo];
+        H --> J[VM de Navegación Anónima - Whonix];
+        H --> K[VM de Vault - KeePassXC];
+    end
+
+    subgraph Almacenamiento y Recuperación
+        L[💾 Backups Offline Cifrados]
+    end
+
+    style L fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
 ---
@@ -104,6 +91,28 @@ INTERNET HOSTIL
 | **Flatpak** | Linux | `flatpak run org.mozilla.firefox` | Contenedor seguro |
 | **Windows Sandbox**| Windows Pro/Ent | Ejecutar entorno aislado temporal | Pruebas seguras |
 
+### Guía de Instalación y Uso de Herramientas Clave
+
+#### Qubes OS
+- **Descarga**: [qubes-os.org/downloads](https://www.qubes-os.org/downloads/)
+- **Instalación**: [Guía paso a paso con capturas](https://computingforgeeks.com/install-qubes-os-step-by-step-with-screenshots/)
+- **Uso básico**: Aislamiento por qubes (VMs), cada uno con propósito distinto. Ideal para tareas separadas como navegación, pentesting, correo.
+
+#### Tails OS
+- **Descarga**: [tails.net/install](https://tails.net/install/)
+- **Instalación**: USB booteable con Etcher o Rufus. [Guía oficial](https://tails.net/install/windows/)
+- **Uso básico**: Navegación anónima por Tor, no deja rastros en el sistema. Ideal para sesiones temporales.
+
+#### Whonix
+- **Descarga**: [whonix.org/wiki/Download](https://www.whonix.org/wiki/Download)
+- **Instalación**: Importar Gateway y Workstation en VirtualBox. [Guía detallada](https://www.techiemike.com/a-step-by-step-guide-to-setting-up-whonix-for-enhanced-internet-privacy/)
+- **Uso básico**: Todo el tráfico pasa por Tor. Gateway maneja red, Workstation ejecuta apps.
+
+#### GrapheneOS
+- **Descarga**: [grapheneos.org/install](https://grapheneos.org/install/)
+- **Instalación**: WebUSB installer desde navegador Chromium. Solo para dispositivos Pixel compatibles.
+- **Uso básico**: Android hardened, sin Google. Auditor, Vanadium, control granular de permisos.
+
 ---
 
 ## 🌐 Dominio 2: Perímetro de Red y Conectividad
@@ -123,6 +132,23 @@ INTERNET HOSTIL
 | **VPN** | Mullvad / ProtonVPN / VPN propio en VPS | Sin logs, IP dinámica, túnel cifrado |
 | **DNS Seguro** | DNSCrypt / DoH con NextDNS o Pi-hole | Evita filtrado ISP y rastreo por DNS |
 | **Red WiFi** | WPA3, SSID oculto, MAC filtering | Reduce vectores de ataque locales |
+
+### Guía de Instalación y Uso de Herramientas Clave
+
+#### pfSense
+- **Descarga**: [pfsense.org/download](https://www.pfsense.org/download/)
+- **Instalación**: USB booteable, interfaz web. [Guía oficial](https://docs.netgate.com/pfsense/en/latest/install/install-walkthrough.html)
+- **Uso básico**: Firewall completo, NAT, VPN, VLAN, reglas granulares.
+
+#### OpenWRT
+- **Descarga**: [openwrt.org](https://openwrt.org/)
+- **Instalación**: Flashear firmware específico del router. [Guía rápida](https://openwrt.org/docs/guide-quick-start/start)
+- **Uso básico**: Router personalizado, SPAN port, VLAN, QoS, firewall extendido.
+
+#### Raspberry Pi + VPN + Pi-hole
+- **VPN Setup**: [WireGuard con PiVPN](https://www.youtube.com/watch?v=DUpIOSbbvKk)
+- **Pi-hole Setup**: [pi-hole.net](https://pi-hole.net/)
+- **Uso básico**: Red local filtrada, DNS seguro, nodo VPN propio.
 
 ---
 
@@ -240,11 +266,11 @@ sudo cscli decisions list
 
 #### Crear red segmentada en OpenWRT
 ```bash
-ucisetnetwork.iot=interface
-ucisetnetwork.iot.proto='static'
-ucisetnetwork.iot.ipaddr='192.168.50.1'
-ucisetnetwork.iot.netmask='255.255.255.0'
-uocommitnetwork
+uci set network.iot=interface
+uci set network.iot.proto='static'
+uci set network.iot.ipaddr='192.168.50.1'
+uci set network.iot.netmask='255.255.255.0'
+uci commit network
 /etc/init.d/network restart
 ```
 
