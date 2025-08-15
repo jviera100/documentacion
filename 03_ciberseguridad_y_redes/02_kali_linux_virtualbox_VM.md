@@ -24,7 +24,7 @@ La virtualización nos permite ejecutar sistemas operativos completos (llamados 
 - PC con al menos **4 GB de RAM** y **25-30 GB de espacio libre en disco**.
 - Conexión a Internet para las descargas.
 
-## 🧠 9. Simultaneidad en Sistemas Operativos Modernos
+## 🧠 Simultaneidad en Sistemas Operativos Modernos
 
 La "simultaneidad" en sistemas operativos no es magia: es una gestión precisa de colas, turnos y eventos que ocurre tan rápido que parece que todo sucede al mismo tiempo.
 
