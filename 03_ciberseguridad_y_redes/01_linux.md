@@ -25,6 +25,32 @@ Esta guía presenta los comandos esenciales de Linux organizados de forma progre
 | `/run`       | Datos de estado en tiempo de ejecución (PID, sockets).                    |
 | `/sys`       | Información del sistema en tiempo real (dispositivos,procesos)            |
 
+### 0.1. 📁 `/etc` — Configuración del Sistema Linux
+
+El directorio `/etc` contiene los archivos de configuración esenciales para el funcionamiento del sistema operativo y sus servicios. Aquí se definen usuarios, redes, tareas programadas, servicios, y parámetros globales. Es uno de los puntos más críticos en la administración de sistemas Linux.
+
+#### 🧩 Archivos y Subdirectorios Comunes en `/etc`
+
+| Archivo/Directorio     | Propósito técnico                                                                 |
+|------------------------|------------------------------------------------------------------------------------|
+| `/etc/passwd`          | Base de datos de usuarios: nombre, UID, GID, shell, directorio personal.          |
+| `/etc/shadow`          | Contraseñas encriptadas de los usuarios.                                          |
+| `/etc/group`           | Define los grupos del sistema y sus miembros.                                     |
+| `/etc/fstab`           | Tabla de sistemas de archivos a montar automáticamente en el arranque.            |
+| `/etc/hostname`        | Nombre del host del sistema.                                                      |
+| `/etc/hosts`           | Resolución local de nombres (IP ↔ nombre).                                        |
+| `/etc/network/`        | Configuración de interfaces de red (según la distribución).                       |
+| `/etc/resolv.conf`     | Servidores DNS utilizados por el sistema.                                         |
+| `/etc/crontab`         | Tareas programadas del sistema (cron jobs).                                       |
+| `/etc/systemd/`        | Archivos de configuración para servicios y unidades de systemd.                   |
+| `/etc/init.d/`         | Scripts de inicio de servicios (usado en sistemas con SysVinit).                  |
+| `/etc/profile`         | Variables de entorno globales para todos los usuarios.                            |
+| `/etc/bash.bashrc`     | Alias y funciones globales para sesiones Bash.                                    |
+| `/etc/issue`           | Mensaje mostrado antes del login (usado por `getty`).                             |
+| `/etc/motd`            | “Message of the Day” mostrado tras iniciar sesión.                                |
+| `/etc/exports`         | Configuración de directorios compartidos vía NFS.                                 |
+| `/etc/alternatives/`   | Sistema de enlaces simbólicos para gestionar múltiples versiones de binarios.     |
+
 ## 1. Navegación y Orientación Básica
 
 ### 1.1 Comandos de Ubicación y Navegación
