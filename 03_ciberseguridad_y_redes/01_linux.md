@@ -25,11 +25,9 @@ Esta guía presenta los comandos esenciales de Linux organizados de forma progre
 | `/run`       | Datos de estado en tiempo de ejecución (PID, sockets).                    |
 | `/sys`       | Información del sistema en tiempo real (dispositivos,procesos)            |
 
-### 0.1. 📁 `/etc` — Configuración del Sistema Linux
+### 0.1. 📁 `/etc` — Configuración del Sistema Linux - Archivos y Subdirectorios Comunes
 
 El directorio `/etc` contiene los archivos de configuración esenciales para el funcionamiento del sistema operativo y sus servicios. Aquí se definen usuarios, redes, tareas programadas, servicios, y parámetros globales. Es uno de los puntos más críticos en la administración de sistemas Linux.
-
-#### 🧩 Archivos y Subdirectorios Comunes en `/etc`
 
 | Archivo/Directorio     | Propósito técnico                                                                 |
 |------------------------|------------------------------------------------------------------------------------|
@@ -50,6 +48,21 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `/etc/motd`            | “Message of the Day” mostrado tras iniciar sesión.                                |
 | `/etc/exports`         | Configuración de directorios compartidos vía NFS.                                 |
 | `/etc/alternatives/`   | Sistema de enlaces simbólicos para gestionar múltiples versiones de binarios.     |
+
+### 0.2. 📁 Archivos Ocultos Comunes en Linux/Unix
+
+| Archivo/Directorio | Tipo        | Propósito técnico                                                  |
+|--------------------|-------------|---------------------------------------------------------------------|
+| `.bashrc`          | Archivo     | Configura alias, funciones y entorno para Bash.                    |
+| `.profile`         | Archivo     | Define variables de entorno y comandos al iniciar sesión.          |
+| `.config/`         | Directorio  | Contiene configuraciones de apps gráficas y CLI.                   |
+| `.local/`          | Directorio  | Instalaciones y datos locales del usuario.                         |
+| `.ssh/`            | Directorio  | Claves privadas/públicas y configuración de acceso remoto SSH.     |
+| `.git/`            | Directorio  | Metadatos y configuración de repositorios Git.                     |
+| `.vimrc`           | Archivo     | Configuración personalizada para el editor Vim.                    |
+| `.npmrc`           | Archivo     | Configuración de NPM (Node.js).                                    |
+| `.docker/`         | Directorio  | Configuración de Docker CLI y credenciales.                        |
+| `.env`             | Archivo     | Variables de entorno para proyectos (usado en desarrollo web).     |
 
 ## 1. Navegación y Orientación Básica
 
@@ -72,7 +85,7 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `ls` | Lista archivos y carpetas básico | Linux/Unix |
 | `dir` | Lista archivos y carpetas | Windows |
 | `ls -l` | Muestra detalles (permisos, fechas, tamaños) | Linux/Unix |
-| `ls -a` | Muestra archivos y carpetas ocultas | Linux/Unix |
+| `ls -a`/ `ls --all` | Muestra archivos y carpetas ocultas | Linux/Unix |
 | `ls -la` | Combina detalles + archivos ocultos | Linux/Unix |
 
 #### Comandos Avanzados de Listado
