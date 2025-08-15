@@ -2,6 +2,29 @@
 
 Esta guía presenta los comandos esenciales de Linux organizados de forma progresiva, desde los más básicos hasta los más avanzados, agrupados por funcionalidad para facilitar el aprendizaje.
 
+## 0.📁 Directorios Principales en Linux
+
+| Directorio   | Propósito                                                                 |
+|--------------|---------------------------------------------------------------------------|
+| `/`          | Raíz del sistema. Punto de partida de toda la jerarquía.                  |
+| `/bin`       | Binarios esenciales accesibles para todos los usuarios (`ls`, `cp`, etc.).|
+| `/sbin`      | Binarios del sistema, usados por el administrador (`reboot`, `iptables`). |
+| `/etc`       | Archivos de configuración del sistema y servicios.                        |
+| `/home`      | Directorios personales de los usuarios.                                   |
+| `/root`      | Directorio personal del usuario root.                                     |
+| `/usr`       | Programas y archivos compartidos del sistema (`/usr/bin`, `/usr/lib`).    |
+| `/var`       | Datos variables como logs, colas de impresión, bases de datos.            |
+| `/tmp`       | Archivos temporales. Se limpia al reiniciar.                              |
+| `/dev`       | Archivos de dispositivos (discos, puertos, etc.).                         |
+| `/proc`      | Información del sistema y procesos en tiempo real.                        |
+| `/boot`      | Archivos de arranque, como el kernel (`vmlinuz`).                         |
+| `/lib`       | Bibliotecas esenciales para binarios en `/bin` y `/sbin`.                 |
+| `/opt`       | Software adicional o de terceros.                                         |
+| `/mnt`       | Punto de montaje temporal para sistemas de archivos externos.             |
+| `/media`     | Montaje automático de dispositivos (USB, CD-ROM).                         |
+| `/run`       | Datos de estado en tiempo de ejecución (PID, sockets).                    |
+| `/sys`       | Información del sistema en tiempo real (dispositivos,procesos)            |
+
 ## 1. Navegación y Orientación Básica
 
 ### 1.1 Comandos de Ubicación y Navegación
@@ -31,7 +54,10 @@ Esta guía presenta los comandos esenciales de Linux organizados de forma progre
 | Comando | Descripción |
 |---------|-------------|
 | `ls -LS` | Ordena por tamaño (mayor a menor) |
+| `ls -LH` | Lista con detalles y tamaños legibles (KB, MB…), sin orden específico |
+| `ls -LH/usr` | Lista el contenido del directorio /usr con detalles y tamaños legibles |
 | `ls -LSH` | Ordena por tamaño en formato legible (MB, GB) |
+| `ls -LSHR` | Ordena por tamaño (mayor a menor), formato legible, y en orden inverso |
 | `ls -lr` | Ordena al revés |
 | `tree` | Muestra estructura en forma de árbol |
 
