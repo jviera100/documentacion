@@ -66,6 +66,14 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 
 ## 1. Navegación y Orientación Básica
 
+### 1.0 🔧 **Conceptos Básicos de la Shell**
+
+| Símbolo | Significado                                                                 |
+|---------|------------------------------------------------------------------------------|
+| `$`     | Prompt de un usuario normal. Ej: `[user@host ~]$`                            |
+| `#`     | Prompt del superusuario (root). Ej: `[root@host ~]#`                         |
+| `~`     | Representa el directorio "home" del usuario actual.                          |
+
 ### 1.1 Comandos de Ubicación y Navegación
 
 | Comando | Descripción | Ejemplo |
@@ -119,10 +127,11 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 
 ### 2.2 Eliminación de Directorios
 
-| Comando | Descripción | Precaución |
-|---------|-------------|------------|
-| `rmdir carpeta` | Elimina carpeta vacía | Solo carpetas vacías |
-| `rm -r carpeta` | Elimina carpeta y contenido recursivamente | **¡Irreversible!** |
+| Comando           | Descripción                                      | Precaución                                                  |
+|------------------|--------------------------------------------------|-------------------------------------------------------------|
+| `rmdir carpeta`  | Elimina carpeta vacía                            | Solo carpetas vacías                                        |
+| `rm -r carpeta`  | Elimina carpeta y contenido recursivamente       | **¡Irreversible!**                                          |
+| `rm -rf carpeta` | Elimina carpeta y contenido recursivamente, forzado | **¡Irreversible! Omite confirmaciones y errores. Úsalo con extrema precaución.** |
 
 #### Ejemplos de Eliminación por Rutas
 
@@ -223,7 +232,7 @@ echo "Santiago" | tee -a pais.txt       # Agrega al final
 |---------|-------------|---------|
 | `chmod +x script.sh` | Agrega permiso de ejecución | `chmod +x mi_script.sh` |
 | `chmod -w archivo.txt` | Elimina permiso de escritura | `chmod -w documento.txt` |
-| `chmod 755 archivo` | Asigna permisos específicos | `chmod 644 archivo.txt` |
+| `chmod 755 archivo` | Asigna permisos específicos (uso estandar)| `chmod 644 archivo.txt` |
 | `chmod =755 archivo` | Asigna permisos específicos | `chmod 644 archivo.txt` |
 
 #### Tabla de Permisos Numéricos
@@ -267,10 +276,11 @@ echo "Santiago" | tee -a pais.txt       # Agrega al final
 
 ### 7.2 Verificación de Grupos
 
-| Comando | Descripción |
-|---------|-------------|
-| `grep nombre_grupo /etc/group` | Busca grupo específico |
-| `grep -E 'grupo1\|grupo2' /etc/group` | Busca múltiples grupos |
+| Comando                                 | Descripción                         |
+|----------------------------------------|-------------------------------------|
+| `grep nombre_grupo /etc/group`         | Busca grupo específico              |
+| `grep -E 'grupo1\|grupo2' /etc/group`  | Busca múltiples grupos              |
+| `getent group nombre_grupo`            | Muestra información del grupo desde NSS |
 
 ### 7.3 Creación de Usuarios
 
@@ -314,10 +324,12 @@ grep -E 'profesores|alumnos' /etc/group
 
 ### 7.6 Verificación de Usuarios
 
-| Comando | Descripción |
-|---------|-------------|
-| `grep usuario /etc/passwd` | Busca usuario específico |
-| `grep -E 'user1\|user2' /etc/passwd` | Busca múltiples usuarios |
+| Comando                                 | Descripción                         |
+|----------------------------------------|-------------------------------------|
+| `grep usuario /etc/passwd`             | Busca usuario específico            |
+| `grep -E 'user1\|user2' /etc/passwd`   | Busca múltiples usuarios            |
+| `id usuario`                           | Muestra UID, GID y grupos del usuario |
+| `groups usuario`                       | Lista los grupos a los que pertenece el usuario |
 
 ### 7.7 Eliminación de Grupos
 
@@ -353,9 +365,17 @@ grep -E 'profesores|alumnos' /etc/group
 
 #### Comparar Hashes de Archivos
 
-| Comando | Descripción |
-|---------|-------------|
-| `sha256sum archivo >> archivo_hash` | Compara hashes de archivos |
+| Comando                        | Descripción                                |
+|-------------------------------|--------------------------------------------|
+| `sha256sum -c archivo.hash`   | Verifica integridad comparando el hash     |
+
+Ejemplo:
+-1. Generar el hash original
+sha256sum archivo_original.zip > archivo.hash
+
+- 2. Verificar integridad
+sha256sum -c archivo.hash
+- Salida esperada: archivo_original.zip: OK
 
 ### 8.3 Comparación de Archivos
 
@@ -470,6 +490,62 @@ find backup_documentos/ -type f -exec sha256sum {} \; > checksums_backup.txt
 # Comparar
 diff checksums.txt checksums_backup.txt
 ```
+## 12 🔧 Acceso Remoto y Gestión de Servicios con SSH
+
+Secure Shell (SSH) es el protocolo estándar para acceder y administrar servidores remotos de forma segura.
+
+### 12.1 **Conexión a un Servidor Remoto**
+Para conectarte a una máquina remota, necesitas su dirección IP o nombre, un nombre de usuario y sus credenciales (contraseña o clave SSH).
+
+| Tarea | ⭐ Comando Esencial | Opciones Comunes |
+| :--- | :--- | :--- |
+| **Conexión con Contraseña** | `ssh usuario@<IP_OBJETIVO>` | El método más básico. Te solicitará la contraseña.|
+| **Especificar Puerto** | `ssh -p <PUERTO> usuario@<IP_OBJETIVO>` | `-p`: Util si SSH no corre en el puerto estándar 22. |
+| **Usar Llave Privada** | `ssh -i /ruta/a/llave.pem usuario@<IP_OBJETIVO>` | `-i`: Archivo para autenticación con llaves (la clave) en lugar de contraseña. |
+| **Configurar Login sin Contraseña** | `ssh-copy-id usuario@<IP_OBJETIVO>` | Copia la clave pública al servidor remoto para habilitar el login sin contraseña. |                     |  |
+
+- **📝 Nota sobre la primera conexión SSH**
+
+La primera vez que te conectes a un servidor, verás un mensaje como:
+
+"The authenticity of host 'remotehost' can't be established..."
+
+Escribe `yes` para aceptar y guardar la clave "huella digital" (fingerprint) del servidor del host, protegiendo conexiones futuras.
+Esto es normal y esperado en la primera conexión.
+
+### 12.2 Gestión del Servicio SSH (en el Servidor).
+
+Estos comandos se usan en el servidor al que te quieres conectar para asegurarte de que el servicio SSH está funcionando. La mayoría de sistemas modernos usan systemd.
+
+| Acción                          | ⭐ Comando Esencial                  |
+|----------------------------------|-------------------------------------|
+| Iniciar servicio (temporal)     | `sudo systemctl start ssh`         |
+| Habilitar en el arranque (permanente) | `sudo systemctl enable ssh`        |
+| Habilitar y arrancar ahora (mixto) | `sudo systemctl enable ssh --now`  |
+| Detener servicio (temporal)     | `sudo systemctl stop ssh`          |
+| Deshabilitar en el arranque (permanente) | `sudo systemctl disable ssh`       |
+| Ver estado del servicio         | `sudo systemctl status ssh`        |
+| Reiniciar servicio              | `sudo systemctl restart ssh`       |
+| Ver logs del servicio           | `sudo journalctl -u ssh`           |
+
+### 12.3 🧭 Referencia: Gestores de Servicios por Distribución.
+
+| Distribución             | Gestor de Servicios | Comando para iniciar SSH         |
+|--------------------------|---------------------|----------------------------------|
+| Ubuntu / Debian          | `systemctl`         | `sudo systemctl start ssh`       |
+| Arch Linux | Fedora / CentOS / RHEL / OpenSUSE / SUSE | `systemctl`         | `sudo systemctl start sshd` |
+| Alpine Linux             | `rc-service`        | `sudo rc-service sshd start`     |
+| Gentoo                   | `rc-service`        | `sudo rc-service sshd start`     |
+| Devuan                   | `service`           | `sudo service ssh start`         |
+| Void Linux               | `runit`             | `sudo sv up sshd`                |
+| Slackware                | `rc`                | `sudo rc sshd start`             |
+| FreeBSD                  | `service`           | `sudo service sshd start`        |
+| OpenBSD / NetBSD / DragonFly BSD | `rc.d` | `sudo rc.d sshd start`        |
+| macOS (Homebrew)         | `brew services`     | `brew services start ssh`        |
+| macOS (System)           | `launchctl`         | `sudo launchctl load /Library/LaunchDaemons/ssh.iterm` |
+| Windows (PowerShell)     | `Start-Service`     | `Start-Service ssh`              |
+| Windows (cmd)            | `net start`         | `net start ssh`                  |
+| Windows Subsystem for Linux (WSL)  | `wsl`               | `sudo systemctl start ssh` |
 
 ## Consejos de Uso
 
@@ -483,11 +559,15 @@ diff checksums.txt checksums_backup.txt
 
 | Atajo | Acción |
 |-------|--------|
+| `bind -p` | Muestra todos los atajos de teclado (key bindings) disponibles en la shell Bash **(Bourne-Again Shell)**. |
 | `Ctrl + C` | Interrumpe comando actual |
 | `Ctrl + Z` | Suspende proceso |
 | `Ctrl + L` | Limpia pantalla (igual que `clear`) |
 | `Ctrl + R` | Busca en historial de comandos |
-| `Tab` | Autocompletar |
+| `Ctrl + D`/ `exit` | Cierra la sesion de shell actual(logout) |
+| `Ctrl + shift + T` | Abre nueva pestaña en emulador terminal gráficos (como GNOME Terminal). |
+| `Tab` | Autocompleta comandos o rutas. |
+| `ls ~/.ssh` | Lista claves y configuración directorio .ssh del usuario (tu ~ home). |
 | `↑/↓` | Navegar historial de comandos |
 
 
