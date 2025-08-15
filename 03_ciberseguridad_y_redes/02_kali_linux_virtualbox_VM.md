@@ -24,6 +24,18 @@ La virtualización nos permite ejecutar sistemas operativos completos (llamados 
 - PC con al menos **4 GB de RAM** y **25-30 GB de espacio libre en disco**.
 - Conexión a Internet para las descargas.
 
+## 🧠 9. Simultaneidad en Sistemas Operativos Modernos
+
+La "simultaneidad" en sistemas operativos no es magia: es una gestión precisa de colas, turnos y eventos que ocurre tan rápido que parece que todo sucede al mismo tiempo.
+
+## 🔄 Tabla de Simultaneidad por Componente
+
+| Componente     | Rol Principal                                      | ¿Cómo maneja la "Simultaneidad"?                                                                 |
+|----------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| El Kernel      | Administrador de recursos (CPU, RAM).              | Por División de Tiempo (*Time-Slicing*): ejecuta trozos de cada proceso en secuencia rápida.     |
+| Wayland        | Director del tráfico gráfico (ventanas, clics).    | En Serie: procesa eventos (teclado, ratón) en orden exacto y los dirige a la app activa.         |
+| La Aplicación  | Ejecuta su tarea.                                  | Recibe su turno: obtiene tiempo de CPU y eventos solo cuando le corresponde.                     |
+
 ### Paso 1: Descargar el Software Necesario
 
 **VirtualBox**
