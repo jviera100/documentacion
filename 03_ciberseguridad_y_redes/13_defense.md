@@ -306,22 +306,7 @@ Esta es la caja de herramientas táctica para la búsqueda proactiva de amenazas
 | `maldetect` | Escáner de malware para Linux, enfocado en webshells y backdoors. |
 | `yara` | Permite identificar malware basado en reglas de patrones textuales o binarios. |
 
-## **Dominio 7 - Análisis de Seguridad de Aplicaciones (SAST, DAST, etc.)**
-
-Esta es una parte crucial de la defensa activa, enfocada en el software que se ejecuta en tu infraestructura.
-
-| Técnica / Acrónimo | Nombre Completo | ¿Pentesting o Defensa? | Tipo de Análisis | Propósito Principal |
-| :--- | :--- | :--- | :--- | :--- |
-| **SAST** | Static Application Security Testing | Defensa | **Estático (Caja Blanca)** | Detectar vulnerabilidades en el código fuente. |
-| **SASH** | Static Application Security Hardening | **Defensa** | **Acción de Remediación** | **Corregir y reforzar** el código fuente basado en hallazgos. |
-| **DAST** | Dynamic Application Security Testing | Defensa / Pentesting | **Dinámico (Caja Negra)** | Encontrar fallos explotables en la aplicación en ejecución. |
-| **DASH** | Dynamic Application Security Hardening | **Defensa** | **Acción de Remediación** | **Corregir y reforzar** la configuración en tiempo de ejecución. |
-| **IAST** | Interactive Application Security Testing | Defensa | **Híbrido (Caja Gris)** | Detectar vulnerabilidades con contexto en tiempo real durante las pruebas. |
-| **RASP** | Runtime Application Self-Protection | Defensa | **Activo en Producción** | Bloquear ataques en tiempo real mientras la aplicación se ejecuta. |
-| **Pentesting** | Penetration Testing | **Pentesting** | **Manual + Automatizado** | Simular ataques reales para evaluar el riesgo global del sistema. |
-
----
-## 🧰 Anexo: Herramientas y Scripts
+## 🧰 Anexo: Referencia Rápida y Playbooks de Emergencia
 
 ### Scripts Útiles
 
@@ -429,3 +414,122 @@ apt autoremove --purge
 # 5. Restore from clean backup
 rsync -av /backup/clean_system/ / --exclude=/proc --exclude=/sys
 ```
+
+## **Dominio 7 - Análisis de Seguridad de Aplicaciones (SAST, DAST, etc.)**
+
+Esta es una parte crucial de la defensa activa, enfocada en el software que se ejecuta en tu infraestructura.
+
+| Técnica / Acrónimo | Nombre Completo | ¿Pentesting o Defensa? | Tipo de Análisis | Propósito Principal |
+| :--- | :--- | :--- | :--- | :--- |
+| **SAST** | Static Application Security Testing | Defensa | **Estático (Caja Blanca)** | Detectar vulnerabilidades en el código fuente. |
+| **SASH** | Static Application Security Hardening | **Defensa** | **Acción de Remediación** | **Corregir y reforzar** el código fuente basado en hallazgos. |
+| **DAST** | Dynamic Application Security Testing | Defensa / Pentesting | **Dinámico (Caja Negra)** | Encontrar fallos explotables en la aplicación en ejecución. |
+| **DASH** | Dynamic Application Security Hardening | **Defensa** | **Acción de Remediación** | **Corregir y reforzar** la configuración en tiempo de ejecución. |
+| **IAST** | Interactive Application Security Testing | Defensa | **Híbrido (Caja Gris)** | Detectar vulnerabilidades con contexto en tiempo real durante las pruebas. |
+| **RASP** | Runtime Application Self-Protection | Defensa | **Activo en Producción** | Bloquear ataques en tiempo real mientras la aplicación se ejecuta. |
+| **Pentesting** | Penetration Testing | **Pentesting** | **Manual + Automatizado** | Simular ataques reales para evaluar el riesgo global del sistema. |
+
+---
+
+## **🛡️ Dominio 8: Implementación Práctica de un EDR/SIEM de Código Abierto**
+
+Los dominios anteriores han establecido la filosofía, la arquitectura y las herramientas conceptuales de una defensa robusta. Este dominio es la guía práctica y táctica para construir el sistema de monitoreo y respuesta activa en nuestros endpoints, aplicando los principios de "Defensa en Profundidad" y "Monitoreo Continuo".
+
+Imagina que tienes que proteger dos castillos: uno es un robusto castillo de piedra llamado **Linux** y el otro es un moderno castillo de cristal llamado **Windows**. Ambos son valiosos, pero se protegen de manera diferente.
+
+*   **El Informante (Espía Silencioso):** Anota todo lo que pasa dentro de cada castillo.
+    *   En el castillo **Linux**, se llama **Auditd**.
+    *   En el castillo **Windows**, se llama **Sysmon**.
+*   **El Guardia de la Puerta:** Si alguien intenta forzar la cerradura muchas veces, ¡PUM!, le cierra la reja.
+    *   En **Linux**, se llama **Fail2Ban**.
+    *   En **Windows**, se llama **IPBan**.
+*   **El Capitán de la Guardia (El Cerebro):** Se sienta en la sala de control central, lee las notas de todos los espías y guardias de *ambos* castillos y da la alarma si ve un plan malvado.
+    *   Este capitán se llama **Wazuh**, y es tan inteligente que entiende los idiomas de ambos castillos.
+
+Esta guía te enseña a contratar y coordinar a este equipo de seguridad para proteger tus dos castillos.
+
+### **8.1 El Stack de Defensa Unificado: Windows y Linux**
+
+Construiremos un sistema de EDR (Endpoint Detection and Response) y SIEM (Security Information and Event Management) utilizando un "stack" de herramientas de código abierto que trabajan en conjunto. Cada herramienta tiene un rol específico, adaptado a las particularidades de cada sistema operativo.
+
+| Rol de Seguridad | 🐧 Herramienta en Linux | 🏰 Herramienta en Windows |
+| :--- | :--- | :--- |
+| **Sensor de Host Detallado** | **Auditd** (Linux Audit Daemon) | **Sysmon** (System Monitor) |
+| **Bloqueador de Fuerza Bruta** | **Fail2Ban** | **IPBan** |
+| **Sensor de Red (NIDS)** | **Suricata** (o Snort) | *(Función delegada al EDR/Firewall)* |
+| **SIEM / XDR (El Cerebro)** | **Wazuh** (Agente y Servidor) | **Wazuh** (Agente) |
+
+---
+
+### **8.2 Capa 1: Los Informantes - Instalación de Sensores de Host**
+
+El primer paso es generar telemetría de alta calidad. Estos sensores son nuestros "espías silenciosos" que registran todo.
+
+| Característica | 🐧 Linux: Auditd | 🏰 Windows: Sysmon |
+| :--- | :--- | :--- |
+| **Propósito** | Registrar actividad a nivel de llamadas al sistema (syscalls) del kernel. | Registrar actividad del sistema (procesos, red, registro) con gran detalle. |
+| **Instalación** | Instalar desde los repositorios (`apt`, `yum`) y configurar reglas en `/etc/audit/rules.d/`. | Descargar de Microsoft, instalar vía PowerShell con un archivo de configuración XML. |
+| **Comando Clave** | `sudo apt install auditd` | `.\Sysmon64.exe -i config.xml` |
+| **Configuración** | Usar una base de reglas como las de [CIS Benchmarks](https://github.com/CISOfy/auditing). | La configuración de [SwiftOnSecurity](https://github.com/SwiftOnSecurity/sysmon-config) es el estándar. |
+
+---
+
+### **8.3 Capa 2: Los Guardias - Bloqueo Automatizado de Fuerza Bruta**
+
+Esta es nuestra defensa automatizada contra los ataques más comunes de adivinación de contraseñas.
+
+| Característica | 🐧 Linux: Fail2Ban | 🏰 Windows: IPBan |
+| :--- | :--- | :--- |
+| **Propósito** | Bloquear IPs que intentan forzar servicios como SSH, FTP, servidores web, etc. | Bloquear IPs que intentan forzar servicios como RDP, MS-SQL, etc. |
+| **Instalación** | Instalar desde los repositorios (`apt`, `yum`). | Descargar de GitHub, ejecutar `install-service.bat`. |
+| **Comando Clave** | `sudo apt install fail2ban` | `install-service.bat` |
+| **Configuración** | Crear `jail.local` y habilitar las "cárceles" para los servicios a proteger (ej. `[sshd]`). | Editar `DigitalRuby.IPBan.dll.config` para ajustar umbrales. |
+
+---
+
+### **8.4 Capa 3: El Cerebro - Centralización con Wazuh**
+
+Wazuh es el componente universal que une todo. El servidor se instala en Linux, y los agentes se despliegan en todos los endpoints que queremos monitorear.
+
+#### **Pasos de Implementación:**
+
+1.  **Instalar el Servidor Wazuh:**
+    *   Se instala en un servidor Linux dedicado (puede ser una VM). Sigue la [guía oficial de inicio rápido](https://documentation.wazuh.com/current/quickstart.html).
+
+2.  **Instalar el Agente Wazuh en los Endpoints:**
+    *   **En Linux:** Usa el gestor de paquetes para instalar el agente y configúralo con la IP del servidor.
+    *   **En Windows:** Descarga e instala el agente MSI, apuntando a la IP de tu servidor Wazuh.
+
+3.  **Configurar la Recolección de Logs en los Agentes:**
+    *   Edita el archivo `ossec.conf` en cada agente para que recopile los logs de las herramientas que instalaste.
+    *   **Agente de Linux (añadir bloques para Auditd y Suricata si se usa):**
+        ```xml
+        <localfile>
+          <location>/var/log/audit/audit.log</location>
+          <log_format>audit</log_format>
+        </localfile>
+        <localfile>
+          <location>/var/log/suricata/eve.json</location>
+          <log_format>json</log_format>
+        </localfile>
+        ```
+    *   **Agente de Windows (añadir bloque para Sysmon):**
+        ```xml
+        <localfile>
+          <location>Microsoft-Windows-Sysmon/Operational</location>
+          <log_format>eventchannel</log_format>
+        </localfile>
+        ```
+
+4.  **Reiniciar los Agentes:** Una vez guardada la configuración, reinicia el servicio del agente en cada endpoint.
+
+### **8.5 Anexo del Dominio: ¿Es Wazuh un SIEM?**
+
+**Sí, Wazuh funciona como un SIEM, pero es más que eso.**
+
+*   **Como un SIEM:** Un SIEM (Security Information and Event Management) **agrega, correlaciona y alerta** sobre datos de logs. El servidor de Wazuh hace exactamente esto.
+
+*   **Más que un SIEM (XDR):** Wazuh también tiene capacidades de **XDR** (Extended Detection and Response). No solo detecta, sino que también puede **responder** (ej. ejecutar un script para aislar una máquina). Además, sus agentes actúan como **HIDS** (Host-based Intrusion Detection System), monitoreando activamente la integridad de los archivos y la configuración del sistema.
+
+En resumen, puedes pensar en Wazuh como un **SIEM de código abierto con esteroides**, que incluye capacidades de HIDS y XDR de forma nativa.
+
