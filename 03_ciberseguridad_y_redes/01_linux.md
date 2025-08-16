@@ -155,14 +155,7 @@ Usa estos atajos para editar comandos largos sin usar el ratón.
 | `Ctrl + K` | **Borrar** desde el cursor hasta el **final** de la línea. |
 | `Ctrl + ←/→` | Moverse palabra por palabra. |
 
-#### 1.4.4 Ejecución Múltiple y Multilínea
-
-| Sintaxis | Descripción | Ejemplo |
-| :--- | :--- | :--- |
-| `comando1 ; comando2` | Ejecuta un comando después del otro, en una sola línea. | `sudo apt update ; sudo apt upgrade -y` |
-| `comando \<Enter>` | Permite continuar un comando largo en la siguiente línea para mayor legibilidad. La shell mostrará un prompt secundario (`>`). | `head -n 3 \`<br>`/etc/passwd \`<br>`/etc/group` |
-
-#### Operadores de Control
+#### 1.4.4  Encadenamiento de Comandos y Operadores de Control
 
 | Operador | Nombre | Descripción | Ejemplo |
 | :--- | :--- | :--- | :--- |
