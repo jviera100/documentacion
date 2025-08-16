@@ -216,32 +216,97 @@ graph TD
 | **ProtonMail** | Correo electrónico cifrado | Alto | No |
 | **Tutanota** | Correo electrónico cifrado | Alto | No |
 
----
+## **🛡️ Dominio 6: Detección, Respuesta y Defensa Activa (Versión Completa y Corregida)**
 
-## 🛡️ Dominio 6: Detección, Respuesta y Defensa Activa
+Este dominio cubre las herramientas y técnicas para monitorear activamente el sistema, detectar anomalías que puedan indicar un compromiso y responder a incidentes de seguridad.
 
-### Detección de Intrusos
+### **6.1 Defensa Proactiva y Automatizada**
+
+Esta sección se enfoca en las herramientas y estrategias que se configuran para prevenir, detectar y alertar sobre amenazas de forma continua.
+
+#### **6.1.1 Herramientas de Detección de Intrusos (HIDS)**
 
 | Herramienta | Tipo | Uso Básico | Nivel de Visibilidad |
-|---|---|---|---|
+| :--- | :--- | :--- | :--- |
 | **OSSEC** | HIDS (Linux/Win) | Monitorea logs, integridad, alertas por correo | Alta |
 | **CrowdSec** | HIDS + Remediación | Detecta ataques → Bouncer bloquea IPs | Muy alta |
 | **Auditd** | Linux | Monitorea syscalls, accesos, cambios críticos | Alta |
 | **Fail2Ban** | Linux | Detecta brute force → bloquea IPs | Media |
 
-### Técnicas Avanzadas de Protección
+#### **6.1.2 Técnicas Avanzadas de Protección y Engaño**
 
 | Técnica | Descripción | Herramienta Recomendada |
-|---|---|---|
-| **Honeytokens** | Archivos falsos para detectar acceso no autorizado | Crear `.docx` con alerta → monitorear acceso |
-| **Canary Files** | Archivos trampa con alertas automáticas | OSSEC / Auditd / scripts personalizados |
-| **Steganografía** | Ocultar datos dentro de imágenes o audio | `steghide`, `zsteg`, `outguess` |
-| **Red Team Local** | Simular ataques para probar defensas | `Metasploit`, `Caldera`, `Atomic Red Team` |
-| **Control de Integridad**| Detectar cambios en archivos clave | `AIDE`, `Tripwire`, `OSSEC` |
+| :--- | :--- | :--- |
+| **Control de Integridad** | Detectar cambios no autorizados en archivos clave del sistema. | `AIDE`, `Tripwire`, `OSSEC` |
+| **Honeytokens** | Credenciales o archivos falsos diseñados para alertar si son accedidos. | Crear un `.docx` o `API_key.txt` con una alerta → monitorear acceso. |
+| **Canary Files** | Archivos trampa que, al ser leídos o modificados, disparan una alerta. | OSSEC / Auditd / scripts personalizados. |
+| **Red Team Local** | Simular ataques internamente para validar y mejorar las defensas. | `Metasploit`, `Caldera`, `Atomic Red Team`. |
+| **Steganografía Defensiva** | Ocultar datos de monitoreo o honeytokens dentro de otros archivos. | `steghide`, `zsteg`, `outguess`. |
 
----
+### **6.2 Threat Hunting e Investigación (Respuesta Activa)**
 
-### Análisis de Seguridad de Aplicaciones (SAST, DAST, etc.)
+Esta es la caja de herramientas táctica para la búsqueda proactiva de amenazas y la respuesta a incidentes.
+
+#### **6.2.1 Detección de Conexiones de Red Sospechosas**
+
+| Herramienta / Comando | Descripción | Uso principal |
+| :--- | :--- | :--- |
+| `ss -tulwnp` | Lista sockets en escucha y conexiones activas con PID/usuario. | Detectar servicios y procesos sospechosos. |
+| `netstat -tulnp` | Alternativa a `ss` para mostrar conexiones y procesos asociados. | Puertos abiertos no estándar. |
+| `lsof -i` | Lista procesos que tienen conexiones de red abiertas. | Identificar procesos inusuales con actividad de red. |
+| `tcpdump` | Captura paquetes para inspección detallada. | Análisis de contenido y patrones de C2. |
+| `tshark` | Versión CLI de Wireshark para captura y análisis avanzado. | Filtrar patrones de beaconing. |
+| `ngrep` | Busca cadenas (regex) en tráfico de red en tiempo real. | Detección de indicadores C2 en texto plano. |
+| `iftop` | Monitor de tráfico en tiempo real por conexión. | Detección de grandes volúmenes de tráfico (exfiltración). |
+| `nethogs` | Muestra el uso de ancho de banda por proceso. | Identificar qué aplicación está consumiendo la red. |
+| `nload` | Monitor simple de ancho de banda entrante y saliente por interfaz. | Detectar picos de tráfico inusuales. |
+| `iptraf-ng` | Interfaz interactiva para monitorear conexiones y tráfico. | Análisis visual y estadístico del tráfico. |
+| `sar -n DEV 1 5` | Muestra estadísticas de red por interfaz (5 reportes, cada 1 seg). | Detectar anomalías en el volumen de paquetes/bytes. |
+| `conntrack -L` | Lista todas las conexiones rastreadas por el firewall netfilter. | Identificar conexiones persistentes o inusuales. |
+
+#### **6.2.2 Análisis de Procesos y Memoria**
+
+| Herramienta/Comando | Descripción breve |
+| :--- | :--- |
+| `ps aux` | Lista todos los procesos activos con usuario, PID y consumo. |
+| `top` / `htop` | Monitor interactivo de procesos y uso de recursos. |
+| `pstree` | Muestra la jerarquía de procesos (padre-hijo). |
+| `lsof` | Lista los archivos abiertos por los procesos. |
+| `volatility` | Análisis forense de un volcado de memoria RAM. |
+| `avml` | Herramienta para realizar el volcado de memoria. |
+
+#### **6.2.3 Auditoría de Usuarios y Privilegios**
+
+| Herramienta/Comando | Descripción |
+| :--- | :--- |
+| `who` / `w` | Lista los usuarios actualmente conectados. |
+| `last` / `lastlog` | Muestra el historial de inicios de sesión y fallos. |
+| `cat /etc/passwd` | Lista todas las cuentas de usuario del sistema. |
+| `awk -F: '($3 == 0) {print $1}' /etc/passwd` | Lista todas las cuentas con UID 0 (privilegios de root). |
+| `getent group sudo wheel admin` | Lista los usuarios en grupos administrativos. |
+| `find / -perm -4000 -ls 2>/dev/null` | Busca archivos con el bit SUID, un vector común de escalada. |
+
+#### **6.2.4 Búsqueda de Mecanismos de Persistencia**
+
+| Herramienta/Comando | Descripción breve |
+| :--- | :--- |
+| `crontab -l` | Lista las tareas programadas del usuario actual. |
+| `ls -la /etc/cron*` | Verifica las tareas programadas a nivel de sistema. |
+| `systemctl list-unit-files --type=service` | Lista todos los servicios, buscando anomalías. |
+| `chkrootkit` / `rkhunter` | Escáneres especializados en buscar rootkits y backdoors. |
+
+#### **6.2.5 Análisis de Binarios, Logs y Detección de Malware**
+
+| Herramienta/Comando | Descripción breve |
+| :--- | :--- |
+| `file [archivo]` | Identifica el tipo real de un archivo (ej. ELF, script, etc.). |
+| `strings [archivo]` | Extrae texto legible de archivos binarios (útil para buscar IPs, dominios). |
+| `journalctl` | Consulta los logs centralizados del sistema (systemd). |
+| `ausearch` / `aureport` | Busca y genera reportes de eventos de auditoría (`auditd`). |
+| `maldetect` | Escáner de malware para Linux, enfocado en webshells y backdoors. |
+| `yara` | Permite identificar malware basado en reglas de patrones textuales o binarios. |
+
+## **Dominio 7 - Análisis de Seguridad de Aplicaciones (SAST, DAST, etc.)**
 
 Esta es una parte crucial de la defensa activa, enfocada en el software que se ejecuta en tu infraestructura.
 
