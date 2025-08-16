@@ -137,9 +137,11 @@ La shell recuerda los comandos que has ejecutado. El comando `history` los muest
 | :--- | :--- | :--- |
 | `history` | Muestra la lista de comandos ejecutados. | `history` |
 | `!numero` | Ejecuta el comando con ese número del historial. | `!26` |
-| `!string` | Ejecuta el último comando que empezó con `string`. | `!ls` (ejecuta el último `ls`, como `ls -l`) |
+| `!string` | Ejecuta el último comando que empezó con `string`. | `!ls` |
+| **`!!`** | **Ejecuta el último comando ejecutado.** | `sudo !!` |
+| **`^old^new`** | **Sustituye 'old' por 'new' en el último comando y lo ejecuta.** | `^/usr^/tmp` |
 | `Ctrl + R` | **Búsqueda inversa:** Empieza a escribir y te mostrará comandos del historial que coincidan. | |
-| `Esc` + `.` (o `Alt` + `.`) | Inserta el último argumento del comando anterior en la posición del cursor. Muy útil para no reescribir rutas largas. | |
+| `Alt` + `.` (o `Esc` + `.`) | Inserta el **último argumento del comando anterior** en la posición del cursor. | |
 
 #### 1.4.3 Edición Rápida de la Línea de Comandos
 
@@ -160,6 +162,15 @@ Usa estos atajos para editar comandos largos sin usar el ratón.
 | `comando1 ; comando2` | Ejecuta un comando después del otro, en una sola línea. | `sudo apt update ; sudo apt upgrade -y` |
 | `comando \<Enter>` | Permite continuar un comando largo en la siguiente línea para mayor legibilidad. La shell mostrará un prompt secundario (`>`). | `head -n 3 \`<br>`/etc/passwd \`<br>`/etc/group` |
 
+#### Operadores de Control
+
+| Operador | Nombre | Descripción | Ejemplo |
+| :--- | :--- | :--- | :--- |
+| `;` | Separador | Ejecuta los comandos en secuencia, sin importar el resultado del anterior. | `sudo apt update ; sudo apt upgrade -y` |
+| `&&` | Y Lógico | Ejecuta el segundo comando **solo si el primero tiene éxito**. | `mkdir backup && cp *.txt backup/` |
+| `||` | O Lógico | Ejecuta el segundo comando **solo si el primero falla**. | `git pull || echo "Error al actualizar"` |
+| `\|` | Pipe (Tubería) | La salida del primer comando se convierte en la entrada del segundo. | `ls -l \| grep ".txt"` |
+| `\` | Continuación de línea | Permite escribir un comando largo en varias líneas. | `head -n 3 \`<br>`/etc/passwd` |
 ---
 
 ## 2. Gestión de Directorios y Archivos
@@ -252,7 +263,7 @@ echo "Santiago" | tee -a pais.txt       # Agrega al final
 | `less archivo.txt` | Muestra contenido por páginas | Archivos grandes |
 | `head -n 10 archivo.txt` | Muestra primeras 10 líneas | Vista previa |
 | `tail -n 10 archivo.txt` | Muestra últimas 10 líneas | Logs recientes |
-| `wc archivo.txt` | **W**ord **C**ount: cuenta líneas, palabras y caracteres. | `wc -l archivo.txt` (solo líneas)|
+| `wc archivo.txt` | **W**ord **C**ount: cuenta líneas, palabras y caracteres. | `wc -l archivo.txt` (muy útil para contar solo líneas) |
 
 
 ## 4. Búsqueda y Filtrado
@@ -551,7 +562,9 @@ diff checksums.txt checksums_backup.txt
 | Comando | Descripción |
 | :--- | :--- |
 | `date` | Muestra la fecha y hora actual del sistema. |
-| `date +%x` | Muestra la fecha en formato local (ej. 05/20/2025). |
+| `date +%x` | Muestra la fecha en formato local (ej. `05/20/2025`). |
+| **`date +%F`** | **Muestra la fecha en formato ISO (`AÑO-MES-DÍA`).** |
+| **`date +%r`** | **Muestra la hora en formato 12h con AM/PM.** |
 | `whoami` | Muestra el nombre del usuario con el que has iniciado sesión. |
 
 ## 12 🔧 Acceso Remoto y Gestión de Servicios con SSH
