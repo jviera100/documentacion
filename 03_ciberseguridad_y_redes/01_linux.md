@@ -115,6 +115,53 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `clear` | Limpia la pantalla de la terminal |
 | `Flecha ↑` | Recupera comandos ingresados previamente |
 
+
+### **1.4 Productividad y Sintaxis Avanzada en la Shell**
+
+#### 1.4.1 Autocompletado con Tabulador (Tab Completion)
+
+El autocompletado es la herramienta de productividad más importante. Permite completar comandos, nombres de archivo y hasta opciones de comandos.
+
+| Acción | Resultado |
+| :--- | :--- |
+| `pas<Tab>` | Si es único, se autocompleta a `passwd`. |
+| `pas<Tab><Tab>` | Si no es único, muestra todas las opciones que empiezan con "pas" (ej. `passwd`, `paste`). |
+| `ls /etc/pass<Tab>` | Autocompleta nombres de archivo o directorios en una ruta. |
+| `useradd --<Tab><Tab>` | **(Avanzado)** Muestra todas las opciones disponibles para un comando. |
+
+#### 1.4.2 Historial de Comandos
+
+La shell recuerda los comandos que has ejecutado. El comando `history` los muestra numerados.
+
+| Comando/Atajo | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `history` | Muestra la lista de comandos ejecutados. | `history` |
+| `!numero` | Ejecuta el comando con ese número del historial. | `!26` |
+| `!string` | Ejecuta el último comando que empezó con `string`. | `!ls` (ejecuta el último `ls`, como `ls -l`) |
+| `Ctrl + R` | **Búsqueda inversa:** Empieza a escribir y te mostrará comandos del historial que coincidan. | |
+| `Esc` + `.` (o `Alt` + `.`) | Inserta el último argumento del comando anterior en la posición del cursor. Muy útil para no reescribir rutas largas. | |
+
+#### 1.4.3 Edición Rápida de la Línea de Comandos
+
+Usa estos atajos para editar comandos largos sin usar el ratón.
+
+| Atajo | Acción |
+| :--- | :--- |
+| `Ctrl + A` | Mover el cursor al **inicio** de la línea. |
+| `Ctrl + E` | Mover el cursor al **final** de la línea. |
+| `Ctrl + U` | **Borrar** desde el cursor hasta el **inicio** de la línea. |
+| `Ctrl + K` | **Borrar** desde el cursor hasta el **final** de la línea. |
+| `Ctrl + ←/→` | Moverse palabra por palabra. |
+
+#### 1.4.4 Ejecución Múltiple y Multilínea
+
+| Sintaxis | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `comando1 ; comando2` | Ejecuta un comando después del otro, en una sola línea. | `sudo apt update ; sudo apt upgrade -y` |
+| `comando \<Enter>` | Permite continuar un comando largo en la siguiente línea para mayor legibilidad. La shell mostrará un prompt secundario (`>`). | `head -n 3 \`<br>`/etc/passwd \`<br>`/etc/group` |
+
+---
+
 ## 2. Gestión de Directorios y Archivos
 
 ### 2.1 Creación de Directorios
@@ -205,6 +252,8 @@ echo "Santiago" | tee -a pais.txt       # Agrega al final
 | `less archivo.txt` | Muestra contenido por páginas | Archivos grandes |
 | `head -n 10 archivo.txt` | Muestra primeras 10 líneas | Vista previa |
 | `tail -n 10 archivo.txt` | Muestra últimas 10 líneas | Logs recientes |
+| `wc archivo.txt` | **W**ord **C**ount: cuenta líneas, palabras y caracteres. | `wc -l archivo.txt` (solo líneas)|
+
 
 ## 4. Búsqueda y Filtrado
 
@@ -336,6 +385,13 @@ grep -E 'profesores|alumnos' /etc/group
 | Comando | Descripción |
 |---------|-------------|
 | `sudo groupdel nombre_grupo` | Elimina grupo del sistema |
+
+### **7.8 Gestión de Contraseñas**
+
+| Comando | Descripción |
+| :--- | :--- |
+| `passwd` | Permite al usuario actual cambiar su propia contraseña. |
+| `sudo passwd usuario` | Permite al superusuario cambiar la contraseña de otro usuario. |
 
 ## 8. Análisis de Archivos y Seguridad
 
@@ -490,6 +546,14 @@ find backup_documentos/ -type f -exec sha256sum {} \; > checksums_backup.txt
 # Comparar
 diff checksums.txt checksums_backup.txt
 ```
+### **11.4 Comandos de Información del Sistema**
+
+| Comando | Descripción |
+| :--- | :--- |
+| `date` | Muestra la fecha y hora actual del sistema. |
+| `date +%x` | Muestra la fecha en formato local (ej. 05/20/2025). |
+| `whoami` | Muestra el nombre del usuario con el que has iniciado sesión. |
+
 ## 12 🔧 Acceso Remoto y Gestión de Servicios con SSH
 
 Secure Shell (SSH) es el protocolo estándar para acceder y administrar servidores remotos de forma segura.
