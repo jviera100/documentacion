@@ -611,6 +611,43 @@ Estos comandos se usan en el servidor al que te quieres conectar para asegurarte
 | Windows (cmd)            | `net start`         | `net start ssh`                  |
 | Windows Subsystem for Linux (WSL)  | `wsl`               | `sudo systemctl start ssh` |
 
+
+
+### **13. 🌐 Red y Transferencia de Archivos (Referencia Rápida)**
+
+#### **13.1 `wget` – El Descargador No Interactivo**
+
+**Uso principal:** Bajar archivos de internet. Guarda en disco por defecto.
+
+**Comando Básico:** `wget <URL_DEL_ARCHIVO>`
+
+| Flag | Descripción |
+| :--- | :--- |
+| `-O <archivo>` | Guardar con un **nombre diferente**. |
+| `-c` | **Continuar** una descarga interrumpida. |
+| `-P <directorio>` | Guardar en un **directorio específico**. |
+| `-b` | Descargar en **segundo plano** (background). |
+| `-r` | Descarga **recursiva** (clonar un sitio). |
+| `--limit-rate=1m` | **Limita la velocidad** de descarga (ej. 1 MB/s). |
+| `-i <archivo.txt>` | Descarga **múltiples URLs** de un archivo. |
+
+---
+
+#### **13.2 `curl` – La Navaja Suiza para URLs**
+
+**Uso principal:** Interactuar con URLs (probar APIs, ver cabeceras, transferir datos). Muestra en pantalla por defecto.
+
+**Comando Básico (para guardar archivo):** `curl <URL> -o <nombre_archivo>`
+
+| Flag | Descripción |
+| :--- | :--- |
+| `-o <archivo>` | Guardar la salida en un **archivo específico**. |
+| `-O` | Guardar con el **nombre original** de la URL. |
+| `-I` | Mostrar solo las **cabeceras** (headers) de la respuesta. |
+| `-X <MÉTODO>` | Especificar el **método HTTP** (ej. `POST`, `PUT`). |
+| `-d <datos>` | **Enviar datos** en una petición (ej. para un formulario). |
+| `-H <cabecera>` | Añadir una **cabecera HTTP** personalizada. |
+
 ## Consejos de Uso
 
 1. **Siempre usa `sudo` con precaución** - Los comandos con privilegios elevados pueden afectar el sistema
