@@ -107,6 +107,9 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `ls -LSHR` | Ordena por tamaño (mayor a menor), formato legible, y en orden inverso |
 | `ls -lr` | Ordena al revés |
 | `tree` | Muestra estructura en forma de árbol |
+| `ls /` | muestra el contenido inmediato del directorio raíz. |
+| `tree -L 1 /` | Muestra la estructura de directorios en forma de árbol, solo hasta el nivel 1. |
+| `tree -L 1 -x /` | Muestra la estructura en árbol de la raíz (nivel 1), sin cruzar a otros sistemas de archivos. (evita cruzar a /proc, /sys, etc.).|
 
 ### 1.3 Limpieza y Ayuda
 
@@ -557,7 +560,8 @@ diff checksums.txt checksums_backup.txt
 | `date` | Muestra la fecha y hora actual del sistema. |
 | `date +%x` | Muestra la fecha en formato local (ej. `05/20/2025`). |
 | **`date +%F`** | **Muestra la fecha en formato ISO (`AÑO-MES-DÍA`).** |
-| **`date +%r`** | **Muestra la hora en formato 12h con AM/PM.** |
+| **`date +%r`** | **Muestra la hora en formato 12h con AM/PM y segundos (ej. 03:45:10 PM).** |
+| **`date +%R`** | **Muestra la hora en formato 24h, solo hora y minuto (ej. 15:45).** |
 | `whoami` | Muestra el nombre del usuario con el que has iniciado sesión. |
 
 ## 12 🔧 Acceso Remoto y Gestión de Servicios con SSH
