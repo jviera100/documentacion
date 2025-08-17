@@ -470,7 +470,7 @@ El primer paso es generar telemetría de alta calidad. Estos sensores son nuestr
 | **Propósito** | Registrar actividad a nivel de llamadas al sistema (syscalls) del kernel. | Registrar actividad del sistema (procesos, red, registro) con gran detalle. |
 | **Instalación** | Instalar desde los repositorios (`apt`, `yum`) y configurar reglas en `/etc/audit/rules.d/`. | Descargar de Microsoft, instalar vía PowerShell con un archivo de configuración XML. |
 | **Configuración** | Usar una base de reglas como las de [CIS Benchmarks](https://github.com/CISOfy/auditing). | Descarga archivo de configuración desde github [SwiftOnSecurity](https://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml) es el estándar **(no se elimina carpeta)**. |
-| **Comando Clave desde carpeta sysmon** | `sudo apt install auditd` | `.\Sysmon64.exe -accepteula -i sysmonconfig-export.xml` |
+| **Comando instalar desde carpeta sysmon** | `sudo apt install auditd` | `.\Sysmon64.exe -accepteula -i sysmonconfig-export.xml` |
 
 
 ---
@@ -482,8 +482,9 @@ Esta es nuestra defensa automatizada contra los ataques más comunes de adivinac
 | Característica | 🐧 Linux: Fail2Ban | 🏰 Windows: IPBan |
 | :--- | :--- | :--- |
 | **Propósito** | Bloquear IPs que intentan forzar servicios como SSH, FTP, servidores web, etc. | Bloquear IPs que intentan forzar servicios como RDP, MS-SQL, etc. |
-| **Instalación** | Instalar desde los repositorios (`apt`, `yum`). | Descargar de GitHub, ejecutar `install-service.bat`. |
-| **Comando Clave** | `sudo apt install fail2ban` | `install-service.bat` |
+| **Instalación** | Instalar desde los repositorios (`apt`, `yum`). | Descargar de GitHub **(no se elimina carpeta)** [carpeta de instalacion](https://github.com/DigitalRuby/IPBan/releases/tag/3.0.0). |
+| **Comando instalar desde carpeta ipban** | `sudo apt install fail2ban` | `sc.exe create IPBan binPath="C:\Program Files\IPBan-Windows-x64_3_0_0\DigitalRuby.IPBan.exe" start=auto DisplayName="IPBan Service"` |
+| **Comando usar** | `sudo systemctl start fail2ban` | `sc.exe start IPBan` |
 | **Configuración** | Crear `jail.local` y habilitar las "cárceles" para los servicios a proteger (ej. `[sshd]`). | Editar `DigitalRuby.IPBan.dll.config` para ajustar umbrales. |
 
 ---
