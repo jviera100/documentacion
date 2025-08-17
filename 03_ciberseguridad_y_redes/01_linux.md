@@ -86,7 +86,7 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 
 ### 1.2 Visualización de Contenidos
 
-#### Comandos Básicos de Listado
+#### 1.2.1 Comandos Básicos de Listado
 
 | Comando | Descripción | Sistema |
 |---------|-------------|---------|
@@ -96,12 +96,22 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `ls -a`/ `ls --all` | Muestra archivos y carpetas ocultas | Linux/Unix |
 | `ls -la` | Combina detalles + archivos ocultos | Linux/Unix |
 
-#### Comandos Avanzados de Listado
+#### 1.2.2 Flags solo para ls
+
+| Opción | Función |
+|--------|--------|
+| `-l`   | Modo detallado (long listing) |
+| `-a`   | Incluye archivos ocultos |
+| `-s`   | Muestra tamaño en bloques |
+| `-h`   | Tamaños legibles (KB, MB…) |
+
+#### 1.2.3 Comandos Avanzados de Listado
 
 | Comando | Descripción |
 |---------|-------------|
 | `ls -LS` | Ordena por tamaño (mayor a menor) |
 | `ls -LH` | Lista con detalles y tamaños legibles (KB, MB…), sin orden específico |
+| `ls -LASH` | Lista incluye archivos ocultos con detalles y tamaños legibles (KB, MB…), Ordena por tamaño (mayor a menor) |
 | `ls -LH/usr` | Lista el contenido del directorio /usr con detalles y tamaños legibles |
 | `ls -LSH` | Ordena por tamaño en formato legible (MB, GB) |
 | `ls -LSHR` | Ordena por tamaño (mayor a menor), formato legible, y en orden inverso |
@@ -111,7 +121,22 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `tree -L 1 /` | Muestra la estructura de directorios en forma de árbol, solo hasta el nivel 1. |
 | `tree -L 1 -x /` | Muestra la estructura en árbol de la raíz (nivel 1), sin cruzar a otros sistemas de archivos. (evita cruzar a /proc, /sys, etc.).|
 
-### 1.3 Limpieza y Ayuda
+
+### **1.3 Análisis de Espacio en Disco (`du`)**
+
+El comando `du` (disk usage) calcula y muestra el espacio en disco utilizado por archivos y directorios. A diferencia de `ls -l`, que solo muestra el tamaño del archivo de metadatos de un directorio, `du` recorre el directorio y suma el tamaño de todos los archivos y subdirectorios que contiene.
+
+| Comando                       | Descripción                                                                 | Uso Recomendado                                                               |
+|-------------------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `du carpeta/`                 | Muestra el uso de disco de una carpeta y cada uno de sus subdirectorios.      | Útil para un desglose detallado, pero puede ser abrumador por la cantidad de información. |
+| `du -h carpeta/`              | Muestra el uso de disco en formato **legible por humanos** (KB, MB, GB).        | **La forma más común de usar `du`**. La opción `-h` es casi indispensable.      |
+| `du -sh carpeta/`             | Muestra solo el **resumen (s)** total de la carpeta en formato legible (`h`).   | **Esencial para saber rápidamente cuánto pesa una carpeta en total.**            |
+| `du -h --max-depth=1 .`       | Muestra el tamaño de los archivos y directorios del nivel actual (`.`).       | **Perfecto para identificar qué subcarpeta ocupa más espacio en tu ubicación actual.** |
+| `du -h --max-depth=1 . | sort -h` | Muestra el tamaño de los archivos y directorios del primer nivel, ordenamos para ver las mas grandes al final (`.`). | **Perfecto para identificar qué subcarpeta ocupa más espacio en tu ubicación actual.** |
+| `du -ah carpeta/`             | Muestra el tamaño de **todos los archivos (`a`)** y directorios, no solo los directorios. | Para un análisis exhaustivo que incluya archivos individuales en el listado.   |
+| `du -csh carpeta1/ carpeta2/` | Muestra el total de varias carpetas y un **gran total (`c`)** al final.      | Para calcular el espacio combinado de múltiples directorios a la vez.          |
+
+### 1.4 Limpieza y Ayuda
 
 | Comando | Descripción |
 |---------|-------------|
@@ -119,9 +144,9 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `Flecha ↑` | Recupera comandos ingresados previamente |
 
 
-### **1.4 Productividad y Sintaxis Avanzada en la Shell**
+### **1.5 Productividad y Sintaxis Avanzada en la Shell**
 
-#### 1.4.1 Autocompletado con Tabulador (Tab Completion)
+#### 1.5.1 Autocompletado con Tabulador (Tab Completion)
 
 El autocompletado es la herramienta de productividad más importante. Permite completar comandos, nombres de archivo y hasta opciones de comandos.
 
@@ -132,7 +157,7 @@ El autocompletado es la herramienta de productividad más importante. Permite co
 | `ls /etc/pass<Tab>` | Autocompleta nombres de archivo o directorios en una ruta. |
 | `useradd --<Tab><Tab>` | **(Avanzado)** Muestra todas las opciones disponibles para un comando. |
 
-#### 1.4.2 Historial de Comandos
+#### 1.5.2 Historial de Comandos
 
 La shell recuerda los comandos que has ejecutado. El comando `history` los muestra numerados.
 
@@ -146,7 +171,7 @@ La shell recuerda los comandos que has ejecutado. El comando `history` los muest
 | `Ctrl + R` | **Búsqueda inversa:** Empieza a escribir y te mostrará comandos del historial que coincidan. | |
 | `Alt` + `.` (o `Esc` + `.`) | Inserta el **último argumento del comando anterior** en la posición del cursor. | |
 
-#### 1.4.3 Edición Rápida de la Línea de Comandos
+#### 1.5.3 Edición Rápida de la Línea de Comandos
 
 Usa estos atajos para editar comandos largos sin usar el ratón.
 
@@ -158,7 +183,7 @@ Usa estos atajos para editar comandos largos sin usar el ratón.
 | `Ctrl + K` | **Borrar** desde el cursor hasta el **final** de la línea. |
 | `Ctrl + ←/→` | Moverse palabra por palabra. |
 
-#### 1.4.4  Encadenamiento de Comandos y Operadores de Control
+#### 1.5.4  Encadenamiento de Comandos y Operadores de Control
 
 | Operador | Nombre | Descripción | Ejemplo |
 | :--- | :--- | :--- | :--- |
@@ -680,6 +705,8 @@ Estos comandos se usan en el servidor al que te quieres conectar para asegurarte
 | `Tab` | Autocompleta comandos o rutas. |
 | `ls ~/.ssh` | Lista claves y configuración directorio .ssh del usuario (tu ~ home). |
 | `↑/↓` | Navegar historial de comandos |
+
+
 
 
 
