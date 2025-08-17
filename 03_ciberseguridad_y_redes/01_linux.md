@@ -6,7 +6,7 @@ Esta guía presenta los comandos esenciales de Linux organizados de forma progre
 
 | Directorio   | Propósito                                                                 |
 |--------------|---------------------------------------------------------------------------|
-| `/`          | ==Raíz== del sistema. Punto de partida de toda la jerarquía.                  |
+| `/`          | **Raíz** del sistema. Punto de partida de toda la jerarquía.                  |
 | `/bin`       | Binarios esenciales accesibles para todos los usuarios (`ls`, `cp`, etc.).|
 | `/sbin`      | Binarios del sistema, usados por el administrador (`reboot`, `iptables`). |
 | `/etc`       | Archivos de **configuración** del sistema y servicios.                        |
