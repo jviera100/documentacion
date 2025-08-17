@@ -136,7 +136,18 @@ El comando `du` (disk usage) calcula y muestra el espacio en disco utilizado por
 | `du -ah carpeta/`             | Muestra el tamaño de **todos los archivos (`a`)** y directorios, no solo los directorios. | Para un análisis exhaustivo que incluya archivos individuales en el listado.   |
 | `du -csh carpeta1/ carpeta2/` | Muestra el total de varias carpetas y un **gran total (`c`)** al final.      | Para calcular el espacio combinado de múltiples directorios a la vez.          |
 
-### 1.4 Limpieza y Ayuda
+### **1.4 Análisis Global de Disco y Memoria (`df`, `free`)**
+
+| Comando                         | Descripción                                                                                   | Uso Recomendado                                                                 |
+|----------------------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `df -h`                          | Muestra el uso de disco por sistema de archivos en formato legible (KB, MB, GB).             | Ver espacio libre y usado en cada partición montada.                            |
+| `df -hT`                         | Igual que `df -h`, pero incluye el tipo de sistema de archivos (`T`).                        | Distinguir entre ext4, xfs, tmpfs, etc.                                          |
+| `df -h /ruta`                    | Muestra el uso de disco solo para el punto de montaje asociado a `/ruta`.                   | Verificar espacio disponible en una carpeta específica.                         |
+| `free -h`                        | Muestra el uso de memoria RAM y swap en formato legible por humanos.                        | Ver consumo de memoria y swap de forma rápida.                                  |
+| `free -m`                        | Muestra el uso de memoria en megabytes.                                                      | Útil para scripts o comparativas más precisas.                                  |
+| `free -t -h`                     | Muestra el total combinado de RAM y swap (`t`) en formato legible (`h`).                    | Obtener visión global del uso de memoria.                                       |
+
+### 1.5 Limpieza y Ayuda
 
 | Comando | Descripción |
 |---------|-------------|
@@ -144,9 +155,9 @@ El comando `du` (disk usage) calcula y muestra el espacio en disco utilizado por
 | `Flecha ↑` | Recupera comandos ingresados previamente |
 
 
-### **1.5 Productividad y Sintaxis Avanzada en la Shell**
+### **1.6 Productividad y Sintaxis Avanzada en la Shell**
 
-#### 1.5.1 Autocompletado con Tabulador (Tab Completion)
+#### 1.6.1 Autocompletado con Tabulador (Tab Completion)
 
 El autocompletado es la herramienta de productividad más importante. Permite completar comandos, nombres de archivo y hasta opciones de comandos.
 
@@ -157,7 +168,7 @@ El autocompletado es la herramienta de productividad más importante. Permite co
 | `ls /etc/pass<Tab>` | Autocompleta nombres de archivo o directorios en una ruta. |
 | `useradd --<Tab><Tab>` | **(Avanzado)** Muestra todas las opciones disponibles para un comando. |
 
-#### 1.5.2 Historial de Comandos
+#### 1.6.2 Historial de Comandos
 
 La shell recuerda los comandos que has ejecutado. El comando `history` los muestra numerados.
 
@@ -171,7 +182,7 @@ La shell recuerda los comandos que has ejecutado. El comando `history` los muest
 | `Ctrl + R` | **Búsqueda inversa:** Empieza a escribir y te mostrará comandos del historial que coincidan. | |
 | `Alt` + `.` (o `Esc` + `.`) | Inserta el **último argumento del comando anterior** en la posición del cursor. | |
 
-#### 1.5.3 Edición Rápida de la Línea de Comandos
+#### 1.6.3 Edición Rápida de la Línea de Comandos
 
 Usa estos atajos para editar comandos largos sin usar el ratón.
 
@@ -183,7 +194,7 @@ Usa estos atajos para editar comandos largos sin usar el ratón.
 | `Ctrl + K` | **Borrar** desde el cursor hasta el **final** de la línea. |
 | `Ctrl + ←/→` | Moverse palabra por palabra. |
 
-#### 1.5.4  Encadenamiento de Comandos y Operadores de Control
+#### 1.6.4  Encadenamiento de Comandos y Operadores de Control
 
 | Operador | Nombre | Descripción | Ejemplo |
 | :--- | :--- | :--- | :--- |
