@@ -489,81 +489,80 @@ Esta es nuestra defensa automatizada contra los ataques más comunes de adivinac
 
 ### **8.4 Capa 3: El Cerebro - 🛡️Centralización con Wazuh**
 
-
-#### ✅ Paso 1: Instalación Servidor (COMPLETADO)
+#### 🎯 Requisitos Previos CRÍTICOS
 ```bash
-# IMPORTANTE: Asegurar 4+ GB RAM libres antes de instalar
+# PASO 0: Verificar RAM antes de instalar (OBLIGATORIO)
 free -h
-
-curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
-sudo bash ./wazuh-install.sh -a
+# Debe mostrar 4+ GB disponibles (no 3.6 GB) para evitar fallo de instalación
 ```
-**✅ FUNCIONANDO** - Instala todo automáticamente y genera credenciales
 
 ---
 
-#### 🔧 Paso 2: Configurar Acceso Web (OBLIGATORIO)
-
-##### 2.1 Abrir Firewall RHEL
+#### ✅ PASO 1: Instalación Servidor (Comando Único)
 ```bash
-# RHEL bloquea puertos por defecto - hay que abrirlos
+curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
+sudo bash ./wazuh-install.sh -a
+
+# ⚠️ IMPORTANTE: Guarda las credenciales que aparecen al final
+# Si se te pasan de largo, continúa al paso 1.1
+```
+
+##### 1.1 Recuperar Credenciales (Si no las viste)
+```bash
+# Extraer el archivo con las credenciales
+sudo tar -xvf wazuh-install-files.tar
+sudo cat wazuh-install-files/wazuh-passwords.txt
+
+# GUARDAR: Usuario admin y su contraseña
+```
+
+---
+
+#### 🔧 PASO 2: Abrir Firewall (OBLIGATORIO en RHEL)
+```bash
+# Abrir puertos para acceso web
 sudo firewall-cmd --permanent --add-port=443/tcp
-sudo firewall-cmd --permanent --add-port=9200/tcp
 sudo firewall-cmd --permanent --add-port=1514/tcp
 sudo firewall-cmd --reload
 
-# Verificar puertos abiertos ✅
-sudo firewall-cmd --list-ports
+# Obtener IP del servidor
+ip addr show | grep "inet " | grep -v 127.0.0.1
 ```
-
-##### 2.2 Obtener Credenciales Generadas
-```bash
-# Buscar el archivo de contraseñas que se creó
-sudo find /home -name "wazuh-install-files.tar" -type f
-sudo find /root -name "wazuh-install-files.tar" -type f
-
-# Extraer y ver las credenciales
-sudo tar -xvf wazuh-install-files.tar
-sudo cat wazuh-passwords.txt
-```
-
-##### 2.3 Resetear Contraseña (Si no encuentras las originales)
-```bash
-sudo /usr/share/wazuh-indexer/plugins/opensearch-security/tools/wazuh-passwords-tool.sh -u admin -p Password123!
-```
-
-##### 2.4 Acceso desde Windows ✅
-- **URL:** `https://TU_IP_RHEL` (ej: https://192.168.1.25)
-- **Usuario:** `admin`
-- **Contraseña:** La del archivo wazuh-passwords.txt
-- **Importante:** Acepta el certificado autofirmado en Chrome
 
 ---
 
-#### 🖥️ Paso 3: Instalar Agente Windows (SIMPLE)
+#### 🌐 PASO 3: Acceso Web desde Windows
+1. **URL:** `https://TU_IP_SERVIDOR` (ej: `https://192.168.1.25`)
+2. **Aceptar certificado** en Chrome: "Avanzado" → "Continuar al sitio"
+3. **Login:**
+   - Usuario: `admin`
+   - Contraseña: La del archivo `wazuh-passwords.txt`
 
-##### 3.1 Desde el Dashboard Web de Wazuh
-1. Ve a `Wazuh → Agents → Deploy new agent`
+---
+
+#### 🖥️ PASO 4: Instalar Agente Windows (Método GUI)
+
+##### 4.1 Desde Dashboard Web
+1. `Wazuh → Agents → Deploy new agent`
 2. Selecciona **Windows**
-3. Pon la IP de tu servidor RHEL
-4. Copia el comando PowerShell que genera
+3. IP del servidor: Tu IP de RHEL
+4. **Copia el comando PowerShell completo**
 
-##### 3.2 En Windows (PowerShell como Admin)
+##### 4.2 En Windows (PowerShell como Admin)
 ```powershell
-# Ejemplo del comando que copiaste:
-Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.0-1.msi -OutFile wazuh-agent.msi; ./wazuh-agent.msi /q WAZUH_MANAGER='TU_IP_RHEL' WAZUH_REGISTRATION_SERVER='TU_IP_RHEL'
+# Pegar y ejecutar el comando copiado del dashboard
+# Ejemplo:
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.0-1.msi -OutFile wazuh-agent.msi; msiexec.exe /i wazuh-agent.msi /q WAZUH_MANAGER='192.168.1.25' WAZUH_REGISTRATION_SERVER='192.168.1.25'
 
-# Iniciar el servicio
+# Iniciar servicio
 net start WazuhSvc
 ```
 
 ---
 
-#### 🔍 Paso 4: Configurar Sysmon + Wazuh (MONITOREO REAL)
+#### 🔍 PASO 5: Configurar Sysmon (Ya instalado) + Wazuh
 
-##### 4.1 Ya tienes Sysmon ✅
-
-##### 4.2 Configurar Wazuh para leer Sysmon
+##### 5.1 Configurar Wazuh para leer Sysmon
 ```xml
 # Editar: C:\Program Files (x86)\ossec-agent\ossec.conf
 # Agregar dentro de <ossec_config>:
@@ -574,7 +573,64 @@ net start WazuhSvc
 </localfile>
 ```
 
-##### 4.3 Reiniciar agente Windows
+##### 5.2 Reiniciar Agente
+```cmd
+net stop WazuhSvc
+net start WazuhSvc
+```
+
+---
+
+#### ✅ PASO 6:Verificación Final
+
+##### Servidor RHEL:
+```bash
+# Ver agentes conectados
+sudo /var/ossec/bin/agent_control -l
+```
+
+##### Dashboard Web:
+- `Wazuh → Agents` - Tu Windows debe aparecer **Activo**
+- `Security Events` - Eventos de Sysmon apareciendo
+
+---
+
+#### 🆘 ANEXO 1: Troubleshooting Rápido
+
+| Error | Solución |
+|-------|----------|
+| "Installation failed" | Verificar RAM: `free -h` - necesitas 4+ GB libres |
+| Chrome no carga IP | Firewall: `sudo firewall-cmd --add-port=443/tcp --permanent; sudo firewall-cmd --reload` |
+| Credenciales incorrectas | `sudo cat wazuh-install-files/wazuh-passwords.txt` |
+| Agente no aparece | Verificar conectividad: `ping IP_SERVIDOR` desde Windows |
+| Sin eventos Sysmon | Revisar Event Viewer Windows: `Aplicaciones y servicios → Microsoft → Windows → Sysmon` |
+
+---
+
+#### 💡 ANEXO 2: Comandos de Emergencia
+
+##### Resetear contraseña admin:
+```bash
+sudo /usr/share/wazuh-indexer/plugins/opensearch-security/tools/wazuh-passwords-tool.sh -u admin -p NuevaPassword123!
+```
+
+##### Reiniciar todos los servicios:
+```bash
+sudo systemctl restart wazuh-indexer wazuh-manager wazuh-dashboard
+```
+
+---
+
+#### 🎯 ANEXO 3: Resumen del Flujo Exitoso
+
+1. **Verificar RAM** → **Instalar Wazuh** → **Anotar credenciales**
+2. **Abrir firewall** → **Obtener IP**
+3. **Acceder desde Windows** → **Desplegar agente**
+4. **Configurar Sysmon** → **Verificar eventos**
+
+**Total de comandos críticos:** 6
+**Tiempo estimado:** 15-20 minutos
+
 ```cmd
 net stop WazuhSvc
 net start WazuhSvc
