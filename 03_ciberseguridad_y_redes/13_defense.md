@@ -470,7 +470,7 @@ El primer paso es generar telemetría de alta calidad. Estos sensores son nuestr
 | **Propósito** | Registrar actividad a nivel de llamadas al sistema (syscalls) del kernel. | Registrar actividad del sistema (procesos, red, registro) con gran detalle. |
 | **Instalación** | Instalar desde los repositorios (`apt`, `yum`) y configurar reglas en `/etc/audit/rules.d/`. | Descargar de Microsoft, instalar vía PowerShell con un archivo de configuración XML. |
 | **Configuración** | Usar una base de reglas como las de [CIS Benchmarks](https://github.com/CISOfy/auditing). | Descarga archivo de configuración desde github [SwiftOnSecurity](https://github.com/SwiftOnSecurity/sysmon-config/blob/master/sysmonconfig-export.xml) es el estándar. |
-| **Comando Clave** | `sudo apt install auditd` | `.\Sysmon64.exe -accepteula -i sysmonconfig-export.xml` |
+| **Comando Clave desde carpeta sysmon** | `sudo apt install auditd` | `.\Sysmon64.exe -accepteula -i sysmonconfig-export.xml` |
 
 
 ---
