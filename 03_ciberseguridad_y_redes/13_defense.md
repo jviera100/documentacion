@@ -461,7 +461,7 @@ Construiremos un sistema de EDR (Endpoint Detection and Response) y SIEM (Securi
 
 ---
 
-### **8.2 Capa 1: Los Informantes - Instalación de Sensores de Host**
+### **8.2 Capa 1: Los Informantes (Sysmon) - Instalación de Sensores de Host**
 
 El primer paso es generar telemetría de alta calidad. Estos sensores son nuestros "espías silenciosos" que registran todo.
 
@@ -475,7 +475,7 @@ El primer paso es generar telemetría de alta calidad. Estos sensores son nuestr
 
 ---
 
-### **8.3 Capa 2: Los Guardias - Bloqueo Automatizado de Fuerza Bruta**
+### **8.3 Capa 2: Los Guardias (IPban) - Bloqueo Automatizado de Fuerza Bruta**
 
 Esta es nuestra defensa automatizada contra los ataques más comunes de adivinación de contraseñas.
 
@@ -487,34 +487,65 @@ Esta es nuestra defensa automatizada contra los ataques más comunes de adivinac
 | **Comando usar** | `sudo systemctl start fail2ban` | `sc.exe start IPBan` |
 | **Configuración** | Crear `jail.local` y habilitar las "cárceles" para los servicios a proteger (ej. `[sshd]`). | Editar `DigitalRuby.IPBan.dll.config` para ajustar umbrales. |
 
-
 ### **8.4 Capa 3: El Cerebro - Centralización con Wazuh**
 
-Wazuh es el componente universal que une todo. El servidor se instala en Linux, y los agentes se despliegan en todos los endpoints que queremos monitorear.
+Wazuh es el componente universal que une todo. El servidor (el cerebro) se instala en Linux, y los agentes (los ojos y oídos) se despliegan en todos los endpoints.
 
-#### **Pasos de Implementación:**
+#### **8.4.1 Instalación del Servidor Wazuh en RHEL (Método Robusto)**
 
-1.  **Instalar el Servedor Wazuh (en VM Linux):**
-    *   En una VM Linux (Ubuntu/RHEL) con red en modo "Adaptador Puente", ejecutar el siguiente comando en la terminal:
-        ```bash
-        curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
-        ```
-    *   Guardar la IP y la contraseña de administrador que se muestran al finalizar.
+Usaremos el método de instalación paso a paso, que es más fiable que el script "todo en uno", ya que evita falsos negativos en las comprobaciones de hardware.
 
-2.  **Instalar el Agente Wazuh en Windows:**
-    *   Acceder al panel web de Wazuh (`https://<IP_DEL_SERVIDOR>`).
-    *   Ir a `Wazuh -> Agents -> Deploy new agent`.
-    *   Seleccionar "Windows" y configurar la IP del servidor y el nombre del agente.
-    *   Copiar el comando de PowerShell generado.
-    *   Pegar y ejecutar el comando en una ventana de **PowerShell (como Administrador)** en la máquina Windows.
+1.  **Configurar el Repositorio de Wazuh:**
+    ```bash
+    sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
+    sudo tee /etc/yum.repos.d/wazuh.repo <<EOF
+    [wazuh]
+    gpgcheck=1
+    gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH
+    enabled=1
+    name=Wazuh repository
+    baseurl=https://packages.wazuh.com/4.x/yum/
+    protect=1
+    EOF
+    ```
 
-3.  **Configurar la Recolección de Logs de Sysmon:**
-    *   En la máquina Windows, editar el archivo `C:\Program Files (x86)\ossec-agent\ossec.conf`.
-    *   Añadir el siguiente bloque dentro de la sección `<ossec_config>`:
-        ```xml
-        <localfile>
-          <location>Microsoft-Windows-Sysmon/Operational</location>
-          <log_format>eventchannel</log_format>
-        </localfile>
-        ```
-    *   Guardar el archivo y reiniciar el servicio **"Wazuh Agent"** desde `services.msc`.
+2.  **Instalar los Componentes de Wazuh (Indexer, Server, Dashboard):**
+    ```bash
+    # Instalar la base de datos que almacena los datos
+    sudo yum install wazuh-indexer
+
+    # Instalar el servidor que analiza los datos
+    sudo yum install wazuh-manager
+
+    # Instalar la interfaz web para ver los datos
+    sudo yum install wazuh-dashboard
+    ```
+
+3.  **Habilitar e Iniciar los Servicios:**
+    ```bash
+    sudo systemctl daemon-reload
+    sudo systemctl enable wazuh-indexer wazuh-manager wazuh-dashboard
+    sudo systemctl start wazuh-indexer wazuh-manager wazuh-dashboard
+    ```
+
+4.  **Obtener la IP y las Credenciales para el Acceso Web:**
+    *   **Obtener la IP:** En la terminal de tu RHEL, ejecuta `ip a` para encontrar la dirección IP de tu servidor.
+    *   **Acceder al Dashboard:** Abre un navegador en tu máquina Windows y ve a `https://<IP_DE_TU_SERVIDOR_RHEL>`.
+    *   **Credenciales por Defecto:**
+        *   Usuario: `admin`
+        *   Contraseña: `admin` (te pedirá cambiarla al primer inicio de sesión).
+
+    > 💡 **Nota:** Tu VM RHEL debe permanecer encendida para que el servidor de Wazuh funcione.
+
+#### **8.4.2 Instalación de los Agentes y Configuración de Logs**
+
+Una vez que el servidor está funcionando, despliega los agentes en las máquinas que quieres monitorear.
+
+| 🐧 Linux (RHEL/CentOS/Fedora) | 🏰 Windows |
+| :--- | :--- |
+| **1. Instalar el Agente:** Configura el mismo repositorio del paso 8.4.1 y luego instala el agente. | **1. Generar Comando desde el Dashboard:** |
+| ```bash # Reemplaza <IP_DE_TU_SERVIDOR> con la IP real WAZUH_MANAGER="<IP_DE_TU_SERVIDOR>" sudo yum install wazuh-agent sudo systemctl daemon-reload sudo systemctl enable wazuh-agent sudo systemctl start wazuh-agent ``` | • Accede a tu panel web de Wazuh.<br>• Ve a `Wazuh -> Agents -> Deploy new agent`.<br>• Selecciona "Windows" y sigue los pasos.<br>• Copia el comando de PowerShell que se genera. |
+| **2. Configurar Recolección de Logs:** Edita `/var/ossec/etc/ossec.conf` y añade los bloques para `auditd` y `suricata`. | **2. Ejecutar el Comando y Configurar Logs:**<br>• Pega y ejecuta el comando en **PowerShell (como Administrador)**.<br>• Edita `C:\Program Files (x86)\ossec-agent\ossec.conf` y añade el bloque para `Sysmon`. |
+| ```xml <localfile>   <location>/var/log/audit/audit.log</location>   <log_format>audit</log_format> </localfile> ``` | ```xml <localfile>   <location>Microsoft-Windows-Sysmon/Operational</location>   <log_format>eventchannel</log_format> </localfile> ``` |
+| **3. Reiniciar el Agente:** | **3. Reiniciar el Agente:** |
+| `sudo systemctl restart wazuh-agent` | Reinicia el servicio **"Wazuh Agent"** desde `services.msc`. |
