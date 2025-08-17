@@ -532,8 +532,8 @@ sudo firewall-cmd --list-ports
 sudo tar -xvf wazuh-install-files.tar
 sudo cat wazuh-install-files/wazuh-passwords.txt
 
-# OPCIÓN B: Resetear con contraseña simple (MÁS FÁCIL)
-sudo /usr/share/wazuh-indexer/plugins/opensearch-security/tools/wazuh-passwords-tool.sh -u admin -p Wazuh123<
+# OPCIÓN B: Resetear con contraseña simple (MÁS FÁCIL) usa mayuscula, minuscula, numero y simbolo .*+?- y de 8 a 64 caracteres
+sudo /usr/share/wazuh-indexer/plugins/opensearch-security/tools/wazuh-passwords-tool.sh -u admin -p Wazuh123*
 sudo systemctl restart wazuh-dashboard
 
 # ✅ CREDENCIALES FINALES: admin / Wazuh123<
