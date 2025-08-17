@@ -520,6 +520,8 @@ sudo bash ./wazuh-install.sh -a
 # RHEL bloquea puertos por defecto - hay que abrirlos
 sudo firewall-cmd --permanent --add-port=443/tcp
 sudo firewall-cmd --permanent --add-port=1514/tcp
+sudo firewall-cmd --permanent --add-port=9200/tcp
+sudo firewall-cmd --permanent --add-port=55000/tcp #permite conectar wazuh de windows a la API
 sudo firewall-cmd --reload
 
 # Verificar puertos abiertos ✅
