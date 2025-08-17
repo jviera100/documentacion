@@ -475,7 +475,7 @@ El primer paso es generar telemetría de alta calidad. Estos sensores son nuestr
 
 ---
 
-### **8.3 Capa 2: Los Guardias (IPban) - Bloqueo Automatizado de Fuerza Bruta**
+### **8.3 Capa 2: Los Guardias (IPban)   - Bloqueo Automatizado de Fuerza Bruta**
 
 Esta es nuestra defensa automatizada contra los ataques más comunes de adivinación de contraseñas.
 
@@ -487,65 +487,129 @@ Esta es nuestra defensa automatizada contra los ataques más comunes de adivinac
 | **Comando usar** | `sudo systemctl start fail2ban` | `sc.exe start IPBan` |
 | **Configuración** | Crear `jail.local` y habilitar las "cárceles" para los servicios a proteger (ej. `[sshd]`). | Editar `DigitalRuby.IPBan.dll.config` para ajustar umbrales. |
 
-### **8.4 Capa 3: El Cerebro - Centralización con Wazuh**
+### **8.4 Capa 3: El Cerebro - 🛡️Centralización con Wazuh**
 
-Wazuh es el componente universal que une todo. El servidor (el cerebro) se instala en Linux, y los agentes (los ojos y oídos) se despliegan en todos los endpoints.
 
-#### **8.4.1 Instalación del Servidor Wazuh en RHEL (Método Robusto)**
+#### ✅ Paso 1: Instalación Servidor (COMPLETADO)
+```bash
+# IMPORTANTE: Asegurar 4+ GB RAM libres antes de instalar
+free -h
 
-Usaremos el método de instalación paso a paso, que es más fiable que el script "todo en uno", ya que evita falsos negativos en las comprobaciones de hardware.
+curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
+sudo bash ./wazuh-install.sh -a
+```
+**✅ FUNCIONANDO** - Instala todo automáticamente y genera credenciales
 
-1.  **Configurar el Repositorio de Wazuh:**
-    ```bash
-    sudo rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
-    sudo tee /etc/yum.repos.d/wazuh.repo <<EOF
-    [wazuh]
-    gpgcheck=1
-    gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH
-    enabled=1
-    name=Wazuh repository
-    baseurl=https://packages.wazuh.com/4.x/yum/
-    protect=1
-    EOF
-    ```
+---
 
-2.  **Instalar los Componentes de Wazuh (Indexer, Server, Dashboard):**
-    ```bash
-    # Instalar la base de datos que almacena los datos
-    sudo yum install wazuh-indexer
+#### 🔧 Paso 2: Configurar Acceso Web (OBLIGATORIO)
 
-    # Instalar el servidor que analiza los datos
-    sudo yum install wazuh-manager
+##### 2.1 Abrir Firewall RHEL
+```bash
+# RHEL bloquea puertos por defecto - hay que abrirlos
+sudo firewall-cmd --permanent --add-port=443/tcp
+sudo firewall-cmd --permanent --add-port=9200/tcp
+sudo firewall-cmd --permanent --add-port=1514/tcp
+sudo firewall-cmd --reload
 
-    # Instalar la interfaz web para ver los datos
-    sudo yum install wazuh-dashboard
-    ```
+# Verificar puertos abiertos ✅
+sudo firewall-cmd --list-ports
+```
 
-3.  **Habilitar e Iniciar los Servicios:**
-    ```bash
-    sudo systemctl daemon-reload
-    sudo systemctl enable wazuh-indexer wazuh-manager wazuh-dashboard
-    sudo systemctl start wazuh-indexer wazuh-manager wazuh-dashboard
-    ```
+##### 2.2 Obtener Credenciales Generadas
+```bash
+# Buscar el archivo de contraseñas que se creó
+sudo find /home -name "wazuh-install-files.tar" -type f
+sudo find /root -name "wazuh-install-files.tar" -type f
 
-4.  **Obtener la IP y las Credenciales para el Acceso Web:**
-    *   **Obtener la IP:** En la terminal de tu RHEL, ejecuta `ip a` para encontrar la dirección IP de tu servidor.
-    *   **Acceder al Dashboard:** Abre un navegador en tu máquina Windows y ve a `https://<IP_DE_TU_SERVIDOR_RHEL>`.
-    *   **Credenciales por Defecto:**
-        *   Usuario: `admin`
-        *   Contraseña: `admin` (te pedirá cambiarla al primer inicio de sesión).
+# Extraer y ver las credenciales
+sudo tar -xvf wazuh-install-files.tar
+sudo cat wazuh-passwords.txt
+```
 
-    > 💡 **Nota:** Tu VM RHEL debe permanecer encendida para que el servidor de Wazuh funcione.
+##### 2.3 Resetear Contraseña (Si no encuentras las originales)
+```bash
+sudo /usr/share/wazuh-indexer/plugins/opensearch-security/tools/wazuh-passwords-tool.sh -u admin -p Password123!
+```
 
-#### **8.4.2 Instalación de los Agentes y Configuración de Logs**
+##### 2.4 Acceso desde Windows ✅
+- **URL:** `https://TU_IP_RHEL` (ej: https://192.168.1.25)
+- **Usuario:** `admin`
+- **Contraseña:** La del archivo wazuh-passwords.txt
+- **Importante:** Acepta el certificado autofirmado en Chrome
 
-Una vez que el servidor está funcionando, despliega los agentes en las máquinas que quieres monitorear.
+---
 
-| 🐧 Linux (RHEL/CentOS/Fedora) | 🏰 Windows |
-| :--- | :--- |
-| **1. Instalar el Agente:** Configura el mismo repositorio del paso 8.4.1 y luego instala el agente. | **1. Generar Comando desde el Dashboard:** |
-| ```bash # Reemplaza <IP_DE_TU_SERVIDOR> con la IP real WAZUH_MANAGER="<IP_DE_TU_SERVIDOR>" sudo yum install wazuh-agent sudo systemctl daemon-reload sudo systemctl enable wazuh-agent sudo systemctl start wazuh-agent ``` | • Accede a tu panel web de Wazuh.<br>• Ve a `Wazuh -> Agents -> Deploy new agent`.<br>• Selecciona "Windows" y sigue los pasos.<br>• Copia el comando de PowerShell que se genera. |
-| **2. Configurar Recolección de Logs:** Edita `/var/ossec/etc/ossec.conf` y añade los bloques para `auditd` y `suricata`. | **2. Ejecutar el Comando y Configurar Logs:**<br>• Pega y ejecuta el comando en **PowerShell (como Administrador)**.<br>• Edita `C:\Program Files (x86)\ossec-agent\ossec.conf` y añade el bloque para `Sysmon`. |
-| ```xml <localfile>   <location>/var/log/audit/audit.log</location>   <log_format>audit</log_format> </localfile> ``` | ```xml <localfile>   <location>Microsoft-Windows-Sysmon/Operational</location>   <log_format>eventchannel</log_format> </localfile> ``` |
-| **3. Reiniciar el Agente:** | **3. Reiniciar el Agente:** |
-| `sudo systemctl restart wazuh-agent` | Reinicia el servicio **"Wazuh Agent"** desde `services.msc`. |
+#### 🖥️ Paso 3: Instalar Agente Windows (SIMPLE)
+
+##### 3.1 Desde el Dashboard Web de Wazuh
+1. Ve a `Wazuh → Agents → Deploy new agent`
+2. Selecciona **Windows**
+3. Pon la IP de tu servidor RHEL
+4. Copia el comando PowerShell que genera
+
+##### 3.2 En Windows (PowerShell como Admin)
+```powershell
+# Ejemplo del comando que copiaste:
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.0-1.msi -OutFile wazuh-agent.msi; ./wazuh-agent.msi /q WAZUH_MANAGER='TU_IP_RHEL' WAZUH_REGISTRATION_SERVER='TU_IP_RHEL'
+
+# Iniciar el servicio
+net start WazuhSvc
+```
+
+---
+
+#### 🔍 Paso 4: Configurar Sysmon + Wazuh (MONITOREO REAL)
+
+##### 4.1 Ya tienes Sysmon ✅
+
+##### 4.2 Configurar Wazuh para leer Sysmon
+```xml
+# Editar: C:\Program Files (x86)\ossec-agent\ossec.conf
+# Agregar dentro de <ossec_config>:
+
+<localfile>
+  <location>Microsoft-Windows-Sysmon/Operational</location>
+  <log_format>eventchannel</log_format>
+</localfile>
+```
+
+##### 4.3 Reiniciar agente Windows
+```cmd
+net stop WazuhSvc
+net start WazuhSvc
+```
+
+---
+
+###### 🚀 Verificación Final
+
+###### En RHEL:
+```bash
+# Ver agentes conectados
+sudo /var/ossec/bin/agent_control -l
+```
+
+###### En Dashboard Web:
+- `Wazuh → Agents` - Debería aparecer tu Windows
+- `Security Events` - Deberías ver eventos de Sysmon
+
+---
+
+###### 🆘 Troubleshooting Express
+
+| Problema | Solución Rápida |
+|----------|----------------|
+| Chrome no carga la IP | `sudo firewall-cmd --add-port=443/tcp --permanent && sudo firewall-cmd --reload` |
+| "Connection refused" | `sudo systemctl restart wazuh-dashboard` |
+| Agente no aparece | Verificar que Windows pueda hacer ping a la IP de RHEL |
+| Sin eventos | Revisar que Sysmon esté generando logs en Event Viewer |
+
+---
+
+###### 💡 Docker vs Instalación Directa
+
+**Tu profesor tiene razón:** Docker da aislamiento y es más fácil de limpiar después del laboratorio. Pero para aprender cómo funciona realmente el sistema, la instalación directa te da mejor comprensión.
+
+**Para producción:** Docker es mejor
+**Para aprendizaje:** Instalación directa como estás haciendo
