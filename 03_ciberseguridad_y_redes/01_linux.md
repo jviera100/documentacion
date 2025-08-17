@@ -706,6 +706,50 @@ Estos comandos se usan en el servidor al que te quieres conectar para asegurarte
 | `ls ~/.ssh` | Lista claves y configuración directorio .ssh del usuario (tu ~ home). |
 | `↑/↓` | Navegar historial de comandos |
 
+## 🎹 Comportamiento de teclas en la terminal
+
+### 🧠 ¿Por qué aparecen letras como `a`, `b`, `c`, `d`?
+
+| Combinación         | Resultado visible |
+|---------------------|-------------------|
+| `Shift + ↑`         | `a`               |
+| `Shift + ↓`         | `b`               |
+| `Shift + →`         | `c`               |
+| `Shift + ←`         | `d`               |
+
+> Esto ocurre porque la terminal **no tiene una acción definida** para esas combinaciones, y las interpreta como **secuencias de escape incompletas** o como entrada cruda.
+
+---
+
+### 🧩 ¿Qué está pasando técnicamente?
+
+| Componente | Explicación |
+|------------|-------------|
+| Terminal (ej. Bash, Zsh) | Recibe códigos ASCII o secuencias de escape de teclado |
+| Emulador de terminal (ej. GNOME Terminal, Konsole) | Traduce pulsaciones a códigos que Bash interpreta |
+| Sin mapeo definido | Si `Shift + flecha` no tiene función asignada, puede enviar caracteres como `a`, `b`, `c`, `d` |
+
+---
+
+### 🛠️ ¿Cómo se puede verificar?
+
+```bash
+# Ver entrada cruda del teclado
+cat
+# Luego pulsa Shift + flechas y observa qué aparece
+# Ctrl+C para salir
+```
+
+---
+
+### ✅ ¿Cómo se soluciona o personaliza?
+
+| Método | Resultado |
+|--------|-----------|
+| Usar `showkey` o `xev` | Ver qué códigos se envían por cada tecla |
+| Configurar `.inputrc` | Personalizar comportamiento de teclas en Bash |
+| Usar terminales avanzados | Algunos permiten mapear combinaciones como `Shift + flecha` a funciones útiles |
+
 
 
 
