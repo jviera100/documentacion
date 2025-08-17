@@ -487,7 +487,6 @@ Esta es nuestra defensa automatizada contra los ataques más comunes de adivinac
 | **Comando usar** | `sudo systemctl start fail2ban` | `sc.exe start IPBan` |
 | **Configuración** | Crear `jail.local` y habilitar las "cárceles" para los servicios a proteger (ej. `[sshd]`). | Editar `DigitalRuby.IPBan.dll.config` para ajustar umbrales. |
 
----
 
 ### **8.4 Capa 3: El Cerebro - Centralización con Wazuh**
 
@@ -495,43 +494,27 @@ Wazuh es el componente universal que une todo. El servidor se instala en Linux, 
 
 #### **Pasos de Implementación:**
 
-1.  **Instalar el Servidor Wazuh:**
-    *   Se instala en un servidor Linux dedicado (puede ser una VM). Sigue la [guía oficial de inicio rápido](https://documentation.wazuh.com/current/quickstart.html).
-
-2.  **Instalar el Agente Wazuh en los Endpoints:**
-    *   **En Linux:** Usa el gestor de paquetes para instalar el agente y configúralo con la IP del servidor.
-    *   **En Windows:** Descarga e instala el agente MSI, apuntando a la IP de tu servidor Wazuh.
-
-3.  **Configurar la Recolección de Logs en los Agentes:**
-    *   Edita el archivo `ossec.conf` en cada agente para que recopile los logs de las herramientas que instalaste.
-    *   **Agente de Linux (añadir bloques para Auditd y Suricata si se usa):**
-        ```xml
-        <localfile>
-          <location>/var/log/audit/audit.log</location>
-          <log_format>audit</log_format>
-        </localfile>
-        <localfile>
-          <location>/var/log/suricata/eve.json</location>
-          <log_format>json</log_format>
-        </localfile>
+1.  **Instalar el Servedor Wazuh (en VM Linux):**
+    *   En una VM Linux (Ubuntu/RHEL) con red en modo "Adaptador Puente", ejecutar el siguiente comando en la terminal:
+        ```bash
+        curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
         ```
-    *   **Agente de Windows (añadir bloque para Sysmon):**
+    *   Guardar la IP y la contraseña de administrador que se muestran al finalizar.
+
+2.  **Instalar el Agente Wazuh en Windows:**
+    *   Acceder al panel web de Wazuh (`https://<IP_DEL_SERVIDOR>`).
+    *   Ir a `Wazuh -> Agents -> Deploy new agent`.
+    *   Seleccionar "Windows" y configurar la IP del servidor y el nombre del agente.
+    *   Copiar el comando de PowerShell generado.
+    *   Pegar y ejecutar el comando en una ventana de **PowerShell (como Administrador)** en la máquina Windows.
+
+3.  **Configurar la Recolección de Logs de Sysmon:**
+    *   En la máquina Windows, editar el archivo `C:\Program Files (x86)\ossec-agent\ossec.conf`.
+    *   Añadir el siguiente bloque dentro de la sección `<ossec_config>`:
         ```xml
         <localfile>
           <location>Microsoft-Windows-Sysmon/Operational</location>
           <log_format>eventchannel</log_format>
         </localfile>
         ```
-
-4.  **Reiniciar los Agentes:** Una vez guardada la configuración, reinicia el servicio del agente en cada endpoint.
-
-### **8.5 Anexo del Dominio: ¿Es Wazuh un SIEM?**
-
-**Sí, Wazuh funciona como un SIEM, pero es más que eso.**
-
-*   **Como un SIEM:** Un SIEM (Security Information and Event Management) **agrega, correlaciona y alerta** sobre datos de logs. El servidor de Wazuh hace exactamente esto.
-
-*   **Más que un SIEM (XDR):** Wazuh también tiene capacidades de **XDR** (Extended Detection and Response). No solo detecta, sino que también puede **responder** (ej. ejecutar un script para aislar una máquina). Además, sus agentes actúan como **HIDS** (Host-based Intrusion Detection System), monitoreando activamente la integridad de los archivos y la configuración del sistema.
-
-En resumen, puedes pensar en Wazuh como un **SIEM de código abierto con esteroides**, que incluye capacidades de HIDS y XDR de forma nativa.
-
+    *   Guardar el archivo y reiniciar el servicio **"Wazuh Agent"** desde `services.msc`.
