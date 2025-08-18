@@ -520,8 +520,9 @@ sudo bash ./wazuh-install.sh -a
 # RHEL bloquea puertos por defecto - hay que abrirlos
 sudo firewall-cmd --permanent --add-port=443/tcp
 sudo firewall-cmd --permanent --add-port=1514/tcp
+sudo firewall-cmd --permanent --add-port=1515/tcp # ⚠️ CRÍTICO: Puerto de enrollment, escucha desde rhel al agente de windows
 sudo firewall-cmd --permanent --add-port=9200/tcp
-sudo firewall-cmd --permanent --add-port=55000/tcp #permite conectar wazuh de windows a la API
+sudo firewall-cmd --permanent --add-port=55000/tcp #⚠️ CRÍTICO: Escucha desde dashboard windows a la API wazuh de rhel
 sudo firewall-cmd --reload
 
 # Verificar puertos abiertos ✅
@@ -575,8 +576,45 @@ Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.0-
 # Iniciar servicio
 net start WazuhSvc
 ```
+##### **8.4.5.3 Verificación Inmediata**
 
+###### Test conectividad OBLIGATORIO después de instalar
+Test-NetConnection -ComputerName 192.168.1.25 -Port 1515
+Test-NetConnection -ComputerName 192.168.1.25 -Port 1514
+
+###### Si alguno falla: TcpTestSucceeded: False = problema de firewall
 ---
+###### Troubleshooting Wazuh - Tabla de Diagnóstico
+
+| **Problema** | **Síntoma** | **Comando Diagnóstico** | **Solución** |
+|--------------|-------------|------------------------|--------------|
+| Agente no se registra | `Unable to connect :1515` | `Test-NetConnection -ComputerName IP_SERVIDOR -Port 1515` desde Windows | `sudo firewall-cmd --add-port=1515/tcp --permanent` en servidor |
+| Agente "never connected" | Aparece en CLI pero inactive | `Test-NetConnection -ComputerName IP_SERVIDOR -Port 1514` | Verificar servicio en Windows: `net restart WazuhSvc` |
+| Dashboard no muestra agente | Servidor ve agente pero web no | Refresh navegador (F5) | `sudo systemctl restart wazuh-dashboard` |
+| Estructura archivos incompleta | Servicio corre pero sin logs | `dir "C:\Program Files (x86)\ossec-agent\"` | Reinstalar con `.msi` explícito |
+
+###### **8.4.6 Instalación de Agentes Linux**
+
+| ID | Equipo | Tipo | Función |
+|---|---|---|---|
+| **000** | VM RHEL | Automático | Monitorea el servidor Wazuh |
+| **001** | Windows Host | Manual | Monitorea tu PC principal |
+
+**000** = Se crea solo al instalar Wazuh  
+**001** = Lo registraste tú manualmente
+
+##### **8.4.5.4 Gestión Manual de Agentes**
+
+# Comando universal para gestionar agentes
+sudo /var/ossec/bin/manage_agents
+
+# Opciones del menú:
+# A = Add agent (registro manual)
+# R = Remove agent (eliminar)
+# L = List agents
+# E = Extract key
+# I = Import key
+# Q = Quit
 
 #### **8.4.6 Configurar Monitoreo Sysmon**
 
