@@ -518,6 +518,7 @@ sudo bash ./wazuh-install.sh -a
 ##### **8.4.3.1 Abrir Firewall RHEL (OBLIGATORIO)**
 ```bash
 # RHEL bloquea puertos por defecto - hay que abrirlos
+sudo firewall-cmd --permanent --add-port=22/tcp # ⚠️ CRÍTICO: escuchara conexion ssh para sysmon
 sudo firewall-cmd --permanent --add-port=443/tcp
 sudo firewall-cmd --permanent --add-port=1514/tcp
 sudo firewall-cmd --permanent --add-port=1515/tcp # ⚠️ CRÍTICO: Puerto de enrollment, escucha desde rhel al agente de windows
@@ -616,76 +617,52 @@ sudo /var/ossec/bin/manage_agents
 # I = Import key
 # Q = Quit
 
-#### **8.4.6 Configurar Monitoreo Sysmon**
+#### **8.4.6 Integración Wazuh + Sysmon + IPBan** 
 
-##### **8.4.6.1 Configurar Wazuh para leer Sysmon (Ya instalado)**
+##### **1. Configurar Wazuh Agent (Windows)**
+
+###### **Abrir y editar ossec.conf**
+```cmd
+# 1. Abrir PowerShell como ADMINISTRADOR
+# 2. Abrir archivo con notepad:
+notepad "C:\Program Files (x86)\ossec-agent\ossec.conf"
+
+# O con PowerShell ISE:
+powershell_ise "C:\Program Files (x86)\ossec-agent\ossec.conf"
+```
+
+###### **Modificar el archivo**
 ```xml
-# Editar: C:\Program Files (x86)\ossec-agent\ossec.conf
-# Agregar dentro de <ossec_config>:
+# BUSCAR la línea que dice: </ossec_config>
+# ANTES de esa línea, AGREGAR esto:
 
+<!-- Sysmon mejorado -->
 <localfile>
   <location>Microsoft-Windows-Sysmon/Operational</location>
   <log_format>eventchannel</log_format>
+  <query>Event/System[EventID=1 or EventID=3 or EventID=7 or EventID=11 or EventID=22]</query>
+</localfile>
+
+<!-- IPBan logs -->
+<localfile>
+  <location>Application</location>
+  <log_format>eventchannel</log_format>
+  <query>Event/System[Provider/@Name='IPBan']</query>
+</localfile>
+
+<!-- Si IPBan tiene archivo de log -->
+<localfile>
+  <location>C:\IPBan\logfile.txt</location>
+  <log_format>syslog</log_format>
 </localfile>
 ```
 
-##### **8.4.6.2 Reiniciar Agente Windows**
+###### **Guardar y reiniciar agente**
 ```cmd
+# 3. GUARDAR archivo (Ctrl+S) y cerrar notepad
+# 4. En el mismo PowerShell ejecutar:
 net stop WazuhSvc
 net start WazuhSvc
 ```
 
 ---
-
-#### **8.4.7 Verificación Final**
-
-##### **8.4.7.1 En Servidor RHEL:**
-```bash
-# Ver agentes conectados
-sudo /var/ossec/bin/agent_control -l
-```
-
-##### **8.4.7.2 En Dashboard Web:**
-- `Wazuh → Agents` - Tu Windows debe aparecer **Activo**
-- `Security Events` - Eventos de Sysmon apareciendo
-
----
-
-#### **8.4.8 Troubleshooting Rápido**
-
-| **Problema** | **Solución** |
-|--------------|--------------|
-| "Installation failed" | Verificar RAM: `free -h` - necesitas 4+ GB libres |
-| Chrome no carga IP | Firewall: `sudo firewall-cmd --add-port=443/tcp --permanent; sudo firewall-cmd --reload` |
-| Credenciales incorrectas | **SOLUCIÓN DEFINITIVA:** `sudo /usr/share/wazuh-indexer/plugins/opensearch-security/tools/wazuh-passwords-tool.sh -u admin -p Wazuh123<` |
-| Agente no aparece | Verificar conectividad: `ping IP_SERVIDOR` desde Windows |
-| Sin eventos Sysmon | Revisar Event Viewer Windows: `Aplicaciones y servicios → Microsoft → Windows → Sysmon` |
-
----
-
-#### **8.4.9 Comandos de Emergencia**
-
-##### **8.4.9.1 Resetear contraseña admin:**
-```bash
-sudo /usr/share/wazuh-indexer/plugins/opensearch-security/tools/wazuh-passwords-tool.sh -u admin -p NuevaPassword123<
-```
-
-##### **8.4.9.2 Reiniciar todos los servicios:**
-```bash
-sudo systemctl restart wazuh-indexer wazuh-manager wazuh-dashboard
-```
-
----
-
-#### **8.4.10 Resumen del Flujo Exitoso**
-
-1. **Verificar RAM** → **Instalar Wazuh** → **Anotar/Resetear credenciales**
-2. **Abrir firewall (2 puertos: 443 y 1514)** → **Obtener IP**
-3. **Acceder desde Windows** → **Desplegar agente**
-4. **Configurar Sysmon** → **Verificar eventos**
-
-**Total de comandos críticos:** 6  
-**Tiempo estimado:** 15-20 minutos  
-**Puertos necesarios:** 443 (Web) y 1514 (Agentes)
-
-> 💡 **Nota sobre puertos:** Solo necesitamos 443 (acceso web) y 1514 (comunicación agentes). El puerto 9200 era para casos especiales que no aplicamos en este laboratorio básico.
