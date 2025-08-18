@@ -216,6 +216,23 @@ graph TD
 | **ProtonMail** | Correo electrónico cifrado | Alto | No |
 | **Tutanota** | Correo electrónico cifrado | Alto | No |
 
+### 🧩 Comandos para Script esenciales en Windows (equivalentes a Linux)
+
+| Comando PowerShell                                      | Equivalente Linux       | Función clave                                               |
+|---------------------------------------------------------|--------------------------|-------------------------------------------------------------|
+| `Set-ExecutionPolicy RemoteSigned -Scope Process`       | `chmod +x script.sh`     | Permite ejecutar scripts `.ps1` sin cambiar política global |
+| `& ".\script.ps1"`                                      | `./script.sh`            | Ejecuta el script desde ruta local                         |
+| `notepad`                                               | `nano`, `nono`, `vim`    | Editor de texto básico para modificar scripts o archivos   |
+
+---
+
+#### 🧠 Detalles útiles
+
+- `RemoteSigned -Scope Process`: Solo afecta la sesión actual, ideal para entornos seguros o temporales.
+- `& "ruta"`: El operador `&` ejecuta el script como si fuera un comando.
+- `notepad`: Aunque básico, es estable y accesible. Puede sustituirse por editores más avanzados como `notepad++` o `code`.
+
+
 ## **🛡️ Dominio 6: Detección, Respuesta y Defensa Activa (Versión Completa y Corregida)**
 
 Este dominio cubre las herramientas y técnicas para monitorear activamente el sistema, detectar anomalías que puedan indicar un compromiso y responder a incidentes de seguridad.
@@ -519,10 +536,11 @@ sudo bash ./wazuh-install.sh -a
 ```bash
 # RHEL bloquea puertos por defecto - hay que abrirlos
 sudo firewall-cmd --permanent --add-port=22/tcp # ⚠️ CRÍTICO: escuchara conexion ssh para sysmon
-sudo firewall-cmd --permanent --add-port=443/tcp
-sudo firewall-cmd --permanent --add-port=1514/tcp
-sudo firewall-cmd --permanent --add-port=1515/tcp # ⚠️ CRÍTICO: Puerto de enrollment, escucha desde rhel al agente de windows
-sudo firewall-cmd --permanent --add-port=9200/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp # ⚠️ CRÍTICO: wazuh dashborad navegador web
+sudo firewall-cmd --permanent --add-port=1514/tcp # ⚠️ CRÍTICO: Syslog TCP
+sudo firewall-cmd --permanent --add-port=1515/tcp # ⚠️ CRÍTICO: Wazuh Manager. Puerto de enrollment, escucha desde rhel al agente de windows
+sudo firewall-cmd --permanent --add-port=5601/tcp # ⚠️ CRÍTICO: Kibana
+sudo firewall-cmd --permanent --add-port=9200/tcp # ⚠️ CRÍTICO: Elasticsearch
 sudo firewall-cmd --permanent --add-port=55000/tcp #⚠️ CRÍTICO: Escucha desde dashboard windows a la API wazuh de rhel
 sudo firewall-cmd --reload
 
