@@ -44,17 +44,47 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `/etc/sudoers.d/` | Directorio para archivos de configuración adicionales de `sudo`. |
 | `/etc/hostname` | Nombre de host del sistema. |
 | `/etc/hosts` | Mapeo estático de direcciones IP a nombres de host. |
+| `/etc/network/` | Configuración de interfaces de red (según la distribución). |
 | `/etc/resolv.conf` | Configuración de los servidores de nombres DNS. |
 | `/etc/nsswitch.conf` | **N**ame **S**ervice **S**witch: Configura el orden de resolución de nombres (ej: hosts, dns). |
 | `/etc/login.defs` | Configuración predeterminada para la creación de usuarios y políticas de contraseñas. |
 | `/etc/skel/` | **Skel**eton: Directorio que contiene archivos y directorios modelo que se copian al home de un nuevo usuario. |
+| `/etc/systemd/` | Archivos de configuración para servicios y unidades de systemd. |
 | `/etc/systemd/system/` | Unidades de `systemd` personalizadas o modificadas por el administrador. |
-| `/etc/motd` | **M**essage **o**f **t**he **D**ay: Mensaje mostrado a los usuarios después de un inicio de sesión exitoso. |
+| `/etc/init.d/` | Scripts de inicio de servicios (usado en sistemas con SysVinit). |
+| `/etc/profile` | Variables de entorno globales para todos los usuarios. |
+| `/etc/bash.bashrc` | Alias y funciones globales para sesiones Bash. |
 | `/etc/issue` | Mensaje mostrado *antes* del prompt de login en consolas locales. |
+| `/etc/motd` | **M**essage **o**f **t**he **D**ay: Mensaje mostrado a los usuarios después de un inicio de sesión exitoso. |
+| `/etc/exports` | Configuración de directorios compartidos vía NFS. |
+| `/etc/alternatives/` | Sistema de enlaces simbólicos para gestionar múltiples versiones de binarios. |
+
+### 0.3. Archivos Ocultos Comunes en Linux/Unix
+
+| Archivo/Directorio | Tipo | Propósito técnico |
+| :--- | :--- | :--- |
+| `.bashrc` | Archivo | Configura alias, funciones y entorno para Bash. |
+| `.profile` | Archivo | Define variables de entorno y comandos al iniciar sesión. |
+| `.config/` | Directorio | Contiene configuraciones de apps gráficas y CLI. |
+| `.local/` | Directorio | Instalaciones y datos locales del usuario. |
+| `.ssh/` | Directorio | Claves privadas/públicas y configuración de acceso remoto SSH. |
+| `.git/` | Directorio | Metadatos y configuración de repositorios Git. |
+| `.vimrc` | Archivo | Configuración personalizada para el editor Vim. |
+| `.npmrc` | Archivo | Configuración de NPM (Node.js). |
+| `.docker/` | Directorio | Configuración de Docker CLI y credenciales. |
+| `.env` | Archivo | Variables de entorno para proyectos (usado en desarrollo web). |
 
 ---
 
 ## 1. 🧭 Navegación y Exploración del Sistema
+
+### 1.0 🔧 **Conceptos Básicos de la Shell**
+
+| Símbolo | Significado |
+| :--- | :--- |
+| `$` | Prompt de un usuario normal. Ej: `[user@host ~]$` |
+| `#` | Prompt del superusuario (root). Ej: `[root@host ~]#` |
+| `~` | Representa el directorio "home" del usuario actual. |
 
 ### 1.1. Ubicación y Navegación
 
@@ -66,14 +96,23 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `cd ..` | Cambia al directorio padre del actual. | `cd ..` |
 | `cd -` | Cambia al directorio de trabajo anterior. | `cd -` |
 | `cd /` | Cambia al directorio raíz del sistema. | `cd /` |
+| `cd .` | Cambia al directorio actual (no tiene efecto práctico). | `cd .` |
+| `cd Videos` | Cambia el directorio de trabajo actual al subdirectorio `Videos`. | `cd Videos` |
+| `cd /home/user/Documents` | Cambia el directorio de trabajo actual a la ruta absoluta `/home/user/Documents`. | `cd /home/user/Documents` |
+| `cd -P /home/user/configfiles` | Cambia al directorio real al que apunta un enlace simbólico, en lugar de usar el nombre del enlace simbólico en la ruta. | `cd -P /home/user/configfiles` |
+| `cd /home/consultants` | Cambiar a directorio consultants | `cd /home/consultants` |
+| `cd /tmp/shared` | Cambiar a directorio shared | `cd /tmp/shared` |
+| `cd /home/techdocs` | Cambiar a directorio techdocs | `cd /home/techdocs` |
 
 ### 1.2. Listado de Contenidos
 
 | Comando | Descripción |
 | :--- | :--- |
 | `ls` | **L**i**s**t. Lista archivos y directorios. |
+| `dir` | Lista archivos y carpetas (Windows). |
 | `ls -l` | Formato largo, muestra permisos, propietario, tamaño, fecha. |
 | `ls -a` | Muestra todos los archivos, incluyendo los ocultos (que empiezan con `.`). |
+| `ls --all` | Alternativa a `ls -a`. |
 | `ls -h` | Muestra los tamaños en formato legible por humanos (KB, MB, GB). |
 | `ls -t` | Ordena los archivos por fecha de modificación (los más nuevos primero). |
 | `ls -r` | Invierte el orden de la clasificación. `ls -ltr` es muy común para ver los archivos más recientes al final. |
@@ -81,8 +120,34 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `ls -d */` | Lista solo los directorios en la ubicación actual. |
 | `ls -i` | Muestra el número de inodo de cada archivo. |
 | `ls -F` | Agrega un indicador de tipo de archivo (`/` para directorios, `*` para ejecutables, `@` para enlaces simbólicos). |
-| `tree` | Muestra la estructura de directorios en forma de árbol (puede necesitar instalación: `dnf install tree`). |
+| `ls -la` | Combina `ls -l` y `ls -a`. |
+| `ls -LS` | Ordena por tamaño (mayor a menor). |
+| `ls -LH` | Lista con detalles y tamaños legibles (KB, MB…), sin orden específico. |
+| `ls -LASH` | Lista incluye archivos ocultos con detalles y tamaños legibles (KB, MB…), Ordena por tamaño (mayor a menor). |
+| `ls -LH/usr` | Lista el contenido del directorio /usr con detalles y tamaños legibles. |
+| `ls -LSH` | Ordena por tamaño en formato legible (MB, GB). |
+| `ls -LSHR` | Ordena por tamaño (mayor a menor), formato legible, y en orden inverso. |
+| `ls -lr` | Ordena al revés. |
+| `ls /` | Muestra el contenido inmediato del directorio raíz. |
+| `tree` | Muestra la estructura de directorios en forma de árbol (puede necesitar instalación). |
 | `tree -L [nivel]` | Limita la profundidad del árbol a `[nivel]` niveles. |
+| `tree -L 1 /` | Muestra la estructura de directorios en forma de árbol, solo hasta el nivel 1. |
+| `tree -L 1 -x /` | Muestra la estructura en árbol de la raíz (nivel 1), sin cruzar a otros sistemas de archivos. |
+| `tree -f` | Muestra rutas completas en el árbol. |
+| `ls -l ~` | Lista el contenido del directorio de inicio del usuario (`~`) en formato largo. | `ls -l ~` |
+| `ls -R Thesis/` | Lista el contenido del directorio `Thesis` y todos sus subdirectorios de forma recursiva. | `ls -R Thesis/` |
+| `ls a*` | Lista todos los archivos en el directorio actual cuyos nombres comienzan con la letra 'a'. | `ls a*` |
+| `ls *a*` | Lista todos los archivos en el directorio actual cuyos nombres contienen la letra 'a'. | `ls *a*` |
+| `ls [ac]*` | Lista todos los archivos en el directorio actual cuyos nombres comienzan con 'a' o 'c'. | `ls [ac]*` |
+| `ls ????` | Lista todos los archivos en el directorio actual cuyos nombres tienen exactamente cuatro caracteres. | `ls ????` |
+| `ls ?????` | Lista todos los archivos en el directorio actual cuyos nombres tienen exactamente cinco caracteres. | `ls ?????` |
+| `ls -il newfile.txt /tmp/newfile-hlink2.txt` | Lista los archivos mostrando su número de inodo (`-i`) y formato largo (`-l`), para verificar si son enlaces duros al mismo archivo. | `ls -il newfile.txt /tmp/newfile-hlink2.txt` |
+| `ls -ld Documents` | Muestra la información en formato largo para el directorio `Documents` en sí, no su contenido. | `ls -ld Documents` |
+| `ls -l test` | Muestra información detallada sobre permisos | `ls -l test` |
+| `ls -ld /home` | Muestra información detallada sobre un directorio | `ls -ld /home` |
+| `ls -l mytextfile.txt` | Ver propietario de un archivo | `ls -l mytextfile.txt` |
+| `ls -l /home` | Listar directorios home | `ls -l /home` |
+| `ls directorio` | Listar contenido directorio | `ls directorio` |
 
 ### 1.3. Análisis de Espacio en Disco
 
@@ -97,6 +162,10 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `du -s` | **S**ummarize. Muestra solo un total para cada argumento. |
 | `du -sh [directorio]` | Muestra el tamaño total de un directorio en formato legible. **(Esencial)** |
 | `du -h --max-depth=1` | Muestra el tamaño de los directorios y archivos en el nivel actual, sin profundizar más. |
+| `du -h --max-depth=1 . | sort -h` | Muestra el tamaño de los archivos y directorios del primer nivel, ordenamos para ver las mas grandes al final (`.`). |
+| `du -ah carpeta/` | Muestra el tamaño de **todos los archivos (`a`)** y directorios, no solo los directorios. |
+| `du -csh carpeta1/ carpeta2/` | Muestra el total de varias carpetas y un **gran total (`c`)** al final. |
+| `df -Th` | Uso espacio con tipo sistema archivos |
 
 ### 1.4. Análisis de Memoria
 
@@ -112,14 +181,140 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | Comando | Descripción |
 | :--- | :--- |
 | `uname -a` | Muestra toda la información del kernel de Linux. |
+| `uname -r` | Mostrar versión kernel ejecución |
 | `lscpu` | Muestra información sobre la arquitectura de la CPU. |
 | `lsblk` | **L**i**s**t **Bl**oc**k** Devices. Lista los dispositivos de bloque (discos, particiones). |
+| `lsblk -fp` | Lista los dispositivos de bloque mostrando la ruta completa del dispositivo (`-p`) y la información del sistema de archivos (`-f`). |
 | `lspci` | Lista todos los dispositivos PCI. |
 | `lsusb` | Lista todos los dispositivos USB. |
 | `hostname` | Muestra o establece el nombre de host del sistema. |
 | `hostnamectl` | Controla el nombre de host del sistema (método moderno con systemd). |
 | `date` | Muestra o establece la fecha y hora del sistema. |
 | `uptime` | Muestra cuánto tiempo ha estado funcionando el sistema, los usuarios conectados y el promedio de carga. |
+| `whoami` | Muestra el nombre del usuario con el que has iniciado sesión. |
+| `date +%x` | Muestra la fecha en formato local (ej. `05/20/2025`). |
+| `date +%F` | Muestra la fecha en formato ISO (`AÑO-MES-DÍA`). |
+| `date +%r` | Muestra la hora en formato 12h con AM/PM y segundos (ej. 03:45:10 PM). |
+| `date +%R` | Muestra la hora en formato 24h, solo hora y minuto (ej. 15:45). |
+
+### 1.6. Limpieza y Ayuda
+
+| Comando | Descripción |
+| :--- | :--- |
+| `clear` | Limpia la pantalla de la terminal |
+| `Flecha ↑` | Recupera comandos ingresados previamente |
+
+### 1.7. Productividad y Sintaxis Avanzada en la Shell
+
+#### 1.7.1. Autocompletado con Tabulador (Tab Completion)
+
+| Acción | Resultado |
+| :--- | :--- |
+| `pas<Tab>` | Si es único, se autocompleta a `passwd`. |
+| `pas<Tab><Tab>` | Si no es único, muestra todas las opciones que empiezan con "pas" (ej. `passwd`, `paste`). |
+| `ls /etc/pass<Tab>` | Autocompleta nombres de archivo o directorios en una ruta. |
+| `useradd --<Tab><Tab>` | **(Avanzado)** Muestra todas las opciones disponibles para un comando. |
+
+#### 1.7.2. Historial de Comandos
+
+| Comando/Atajo | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `history` | Muestra la lista de comandos ejecutados. | `history` |
+| `!numero` | Ejecuta el comando con ese número del historial. | `!26` |
+| `!string` | Ejecuta el último comando que empezó con `string`. | `!ls` |
+| `!!` | **Ejecuta el último comando ejecutado.** | `sudo !!` |
+| `^old^new` | **Sustituye 'old' por 'new' en el último comando y lo ejecuta.** | `^/usr^/tmp` |
+| `Ctrl + R` | **Búsqueda inversa:** Empieza a escribir y te mostrará comandos del historial que coincidan. | |
+| `Alt` + `.` (o `Esc` + `.`) | Inserta el **último argumento del comando anterior** en la posición del cursor. | |
+
+#### 1.7.3. Edición Rápida de la Línea de Comandos
+
+| Atajo | Acción |
+| :--- | :--- |
+| `Ctrl + A` | Mover el cursor al **inicio** de la línea. |
+| `Ctrl + E` | Mover el cursor al **final** de la línea. |
+| `Ctrl + U` | **Borrar** desde el cursor hasta el **inicio** de la línea. |
+| `Ctrl + K` | **Borrar** desde el cursor hasta el **final** de la línea. |
+| `Ctrl + ←/→` | Moverse palabra por palabra. |
+
+#### 1.7.4. Encadenamiento de Comandos y Operadores de Control
+
+| Operador | Nombre | Descripción | Ejemplo |
+| :--- | :--- | :--- | :--- |
+| `;` | Separador | Ejecuta los comandos en secuencia, sin importar el resultado del anterior. | `sudo apt update ; sudo apt upgrade -y` |
+| `&&` | Y Lógico | Ejecuta el segundo comando **solo si el primero tiene éxito**. | `mkdir backup && cp *.txt backup/` |
+| `||` | O Lógico | Ejecuta el segundo comando **solo si el primero falla**. | `git pull || echo "Error al actualizar"` |
+| `\|` | Pipe (Tubería) | La salida del primer comando se convierte en la entrada del segundo. | `ls -l \| grep ".txt"` |
+| `\` | Continuación de línea | Permite escribir un comando largo en varias líneas. | `head -n 3 \`<br>`/etc/passwd` |
+
+### 1.8. Expansiones de Shell
+
+#### 1.8.1. Expansión de Nombres de Archivo (Globbing)
+
+##### 1.8.1.1. Metacaracteres Básicos
+| Patrón | Coincide con | Ejemplo |
+| :--- | :--- | :--- |
+| `*` | Cualquier cadena de cero o más caracteres | `ls *.txt` |
+| `?` | Cualquier carácter individual | `ls foto?.jpg` |
+| `[abc]` | Cualquier carácter listado en los corchetes | `ls archivo[123].txt` |
+| `[!abc]` | Cualquier carácter que NO esté en la clase incluida | `ls archivo[!0-9].txt` |
+| `[^abc]` | Cualquier carácter que NO esté en la clase incluida | `ls archivo[^0-9].txt` |
+
+##### 1.8.1.2. Clases de Caracteres Predefinidas
+| Patrón | Coincide con | Ejemplo |
+| :--- | :--- | :--- |
+| `[[:alpha:]]` | Cualquier carácter alfabético | `ls *[[:alpha:]].conf` |
+| `[[:lower:]]` | Cualquier carácter en minúsculas | `ls [[:lower:]]*.txt` |
+| `[[:upper:]]` | Cualquier carácter en mayúsculas | `ls [[:upper:]]*.log` |
+| `[[:alnum:]]` | Cualquier dígito o carácter alfabético | `ls *[[:alnum:]].dat` |
+| `[[:punct:]]` | Cualquier carácter imprimible que no sea espacio o alfanumérico | `ls *[[:punct:]]*` |
+| `[[:digit:]]` | Cualquier dígito de 0 a 9 | `ls log[[:digit:]].txt` |
+| `[[:space:]]` | Cualquier carácter de espacio en blanco | `ls *[[:space:]]*` |
+
+##### 1.8.1.3. Patrones Prácticos de Coincidencia
+| Nº | Comando / Patrón | Función |
+| :--- | :--- | :--- |
+| 1 | `*b` | Coincide con archivos que **terminan en "b"** |
+| 2 | `b*` | Coincide con archivos que **comienzan con "b"** |
+| 3 | `[!b]*` | Coincide con archivos cuyo **primer carácter NO es "b"** |
+| 4 | `*b*` | Coincide con archivos que **contienen "b"** en cualquier posición |
+| 5 | `*[[:digit:]]*` | Coincide con archivos que **contienen al menos un número** |
+| 6 | `[[:upper:]]*` | Coincide con archivos que **comienzan con una letra mayúscula** |
+| 7 | `???*` | Coincide con archivos de **al menos tres caracteres de longitud** |
+| 8 | `????` | Coincide con archivos de **exactamente cuatro caracteres** |
+| 9 | `[ac]*` | Coincide con archivos que **comienzan con "a" o "c"** |
+
+#### 1.8.2. Expansión de Llaves
+| Comando | Resultado | Uso |
+| :--- | :--- | :--- |
+| `echo file{1..5}.txt` | `file1.txt file2.txt file3.txt file4.txt file5.txt` | Generar secuencias |
+| `echo {a,b,c}.log` | `a.log b.log c.log` | Múltiples opciones |
+| `mkdir {2023,2024,2025}` | Crea directorios para esos años | Organización temporal |
+| `echo file{a{1,2},b}.txt` | `filea1.txt filea2.txt fileb.txt` | Expansiones anidadas |
+| `touch file{1..2}_{a..c}.txt` | `file1_a.txt file1_b.txt file1_c.txt file2_a.txt file2_b.txt file2_c.txt` | **Expansión anidada múltiple** |
+| `touch tv_season{1..2}_episode{1..6}.ogg` | Crea 12 archivos: `tv_season1_episode1.ogg` hasta `tv_season2_episode6.ogg` | **Generación masiva de archivos con patrón** |
+| `mkdir season{1..2}` | `season1 season2` | Crear directorios numerados |
+| `mkdir {editor,changes,vacation}` | Crea tres directorios con nombres específicos | **Lista de cadenas** vs rangos |
+
+#### 1.8.3. Expansión de Variables
+| Comando | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `echo $USER` | Muestra variable del usuario | Muestra nombre del usuario actual |
+| `echo ${USER}` | Forma explícita de variable | Evita ambigüedades |
+| `NOMBRE=Juan; echo $NOMBRE` | Define y usa variable | Define variable local |
+
+#### 1.8.4. Sustitución de Comandos
+| Sintaxis | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `$(comando)` | Ejecuta comando y usa su salida | `echo "Hoy es $(date +%A)"` |
+| `echo "Son las $(date +%H) horas"` | Combina texto con salida de comando | Personalización de mensajes |
+
+#### 1.8.5. Prevenir Expansiones (Escape)
+| Método | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `\$` | Escapa un carácter específico | `echo "El precio es \$100"` |
+| `'texto'` | Comillas simples - NO expansión | `echo 'El usuario es $USER'` |
+| `"texto"` | Comillas dobles - permite variables | `echo "El usuario es $USER"` |
 
 ---
 
@@ -133,6 +328,29 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `touch a b c` | Crea múltiples archivos. | `touch file{1..3}.txt` |
 | `mkdir [directorio]` | **M**a**k**e **Dir**ectory. Crea un nuevo directorio. | `mkdir mi_directorio` |
 | `mkdir -p [ruta]` | Crea un directorio, incluyendo todos los directorios padres necesarios en la ruta. | `mkdir -p proyectos/año/mes` |
+| `mkdir -pv ruta/completa/nueva` | Igual que -p pero muestra cada directorio creado | `mkdir -pv ruta/completa/nueva` |
+| `ni carpeta` | Crea una carpeta (PowerShell). | `ni carpeta` |
+| `mkdir ProjectX ProjectY ProjectZ` | Crea tres directorios llamados `ProjectX`, `ProjectY`, y `ProjectZ` en el directorio actual. | `mkdir ProjectX ProjectY ProjectZ` |
+| `mkdir -p Thesis/Chapter1` | Crea el directorio `Chapter1` dentro de `Thesis`, creando también el directorio padre `Thesis` si no existe. | `mkdir -p Thesis/Chapter1` |
+| `mkdir Music Pictures Videos` | Crea tres directorios en el directorio actual. | `mkdir Music Pictures Videos` |
+| `mkdir /home/consultants` | Crear directorio consultants | `mkdir /home/consultants` |
+| `mkdir /tmp/shared` | Crear directorio shared | `mkdir /tmp/shared` |
+| `mkdir /home/techdocs` | Crear directorio techdocs | `mkdir /home/techdocs` |
+| `touch Videos/blockbuster1.ogg` | Crea un archivo vacío llamado `blockbuster1.ogg` en el directorio `Videos`, o actualiza su marca de tiempo si ya existe. | `touch Videos/blockbuster1.ogg` |
+| `touch song{1..6}.mp3` | Utiliza la expansión de llaves para crear seis archivos vacíos, desde `song1.mp3` hasta `song6.mp3`. | `touch song{1..6}.mp3` |
+| `touch consultant1.txt` | Crear archivo consultant1.txt | `touch consultant1.txt` |
+| `touch /tmp/shared/defaults` | Crear archivo en directorio específico | `touch /tmp/shared/defaults` |
+| `touch /tmp/shared/group` | Crear archivo group | `touch /tmp/shared/group` |
+| `touch /tmp/shared/ops_db.txt` | Crear archivo ops_db.txt | `touch /tmp/shared/ops_db.txt` |
+| `touch /tmp/shared/ops_net.txt` | Crear archivo ops_net.txt | `touch /tmp/shared/ops_net.txt` |
+| `touch /tmp/shared/ops_prod.txt` | Crear archivo ops_prod.txt | `touch /tmp/shared/ops_prod.txt` |
+| `touch /tmp/shared/ops_prod2.txt` | Crear archivo ops_prod2.txt | `touch /tmp/shared/ops_prod2.txt` |
+| `touch default.txt` | Crear archivo con máscara defecto | `touch default.txt` |
+| `touch zero.txt` | Crear archivo con máscara 0 | `touch zero.txt` |
+| `touch seven.txt` | Crear archivo con máscara 007 | `touch seven.txt` |
+| `touch two-seven.txt` | Crear archivo con máscara 027 | `touch two-seven.txt` |
+| `touch /home/techdocs/techdoc1.txt` | Crear archivo techdoc1.txt | `touch /home/techdocs/techdoc1.txt` |
+| `touch /home/techdocs/techdoc2.txt` | Crear archivo techdoc2.txt | `touch /home/techdocs/techdoc2.txt` |
 
 ### 2.2. Copia
 
@@ -144,6 +362,13 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `cp -v` | **V**erbose. Muestra lo que se está haciendo. | `cp -v *.txt backups/` |
 | `cp -p` | **P**reserve. Conserva los atributos del archivo (modo, propietario, fechas). | `cp -p archivo_original nuevo_archivo` |
 | `cp -a` | **A**rchive. Equivale a `-pPR`, preserva todo y copia recursivamente. Ideal para backups. | `cp -a /origen /destino` |
+| `cp blockbuster1.ogg blockbuster3.ogg` | Copia el archivo `blockbuster1.ogg` a un nuevo archivo llamado `blockbuster3.ogg` en el mismo directorio. | `cp blockbuster1.ogg blockbuster3.ogg` |
+| `cp thesis_chapter1.txt thesis_chapter2.txt ProjectX` | Copia los archivos `thesis_chapter1.txt` y `thesis_chapter2.txt` al directorio `ProjectX`. | `cp thesis_chapter1.txt thesis_chapter2.txt ProjectX` |
+| `cp -r ../Thesis/ .` | Copia el directorio `Thesis` del directorio padre y todo su contenido al directorio actual (`.`). | `cp -r ../Thesis/ .` |
+| `cp chapters/mystery_chapter[56].odf changes` | Copia los archivos `mystery_chapter5.odf` y `mystery_chapter6.odf` al directorio `changes`. | `cp chapters/mystery_chapter[56].odf changes` |
+| `cp mystery_chapter5.odf mystery_chapter5_$(date +%F).odf` | Copia un archivo, agregando la fecha actual (formato YYYY-MM-DD) al nuevo nombre de archivo mediante sustitución de comandos. | `cp mystery_chapter5.odf mystery_chapter5_$(date +%F).odf` |
+| `cp /etc/motd /etc/motdOLD` | Copiar archivo motd | `cp /etc/motd /etc/motdOLD` |
+| `sudo cp /etc/motd /etc/motdOLD` | Copiar archivo como root | `sudo cp /etc/motd /etc/motdOLD` |
 
 ### 2.3. Movimiento y Renombrado
 
@@ -154,6 +379,12 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `mv -v` | **V**erbose. Muestra lo que se está haciendo. | `mv -v *.log logs_archivados/` |
 | `mv -i` | **I**nteractive. Pide confirmación antes de sobrescribir. | `mv -i archivo.conf /etc/` |
 | `mv -n` | **N**o-clobber. No sobrescribe un archivo existente en el destino. | `mv -n * /destino_comun/` |
+| `mv -f [origen] [destino]` | Mover archivo forzar sobreescritura | `mv -f file1 file2` |
+| `mv ~/archivos/* .` | **El punto (.) representa el directorio actual como destino** | `mv ~/archivos/* .` |
+| `mv thesis_chapter2.txt thesis_chapter2_reviewed.txt` | Renombra (mueve) el archivo `thesis_chapter2.txt` a `thesis_chapter2_reviewed.txt` en el mismo directorio. | `mv thesis_chapter2.txt thesis_chapter2_reviewed.txt` |
+| `mv -v thesis_chapter1.txt Thesis/Chapter1` | Mueve el archivo `thesis_chapter1.txt` al directorio `Thesis/Chapter1` y muestra una salida detallada (`-v`) de la operación. | `mv -v thesis_chapter1.txt Thesis/Chapter1` |
+| `mv song*.mp3 Music` | Mueve todos los archivos que coinciden con el patrón `song*.mp3` al directorio `Music`. | `mv song*.mp3 Music` |
+| `mv tv_season1* Videos/season1` | Mueve todos los archivos que comienzan con `tv_season1` al directorio `Videos/season1`. | `mv tv_season1* Videos/season1` |
 
 ### 2.4. Eliminación
 
@@ -165,6 +396,12 @@ El Filesystem Hierarchy Standard (FHS) define la estructura de directorios princ
 | `rm -rf [directorio]` | Elimina forzada y recursivamente. | **EL COMANDO MÁS PELIGROSO DE LINUX.** Verifica dos veces la ruta. |
 | `rm -i` | **I**nteractive. Pide confirmación para cada eliminación. | Recomendado para principiantes o al borrar con comodines. |
 | `rmdir [directorio]` | **R**e**m**ove **Dir**ectory. Elimina un directorio, pero **solo si está vacío**. | Es más seguro que `rm -r`. |
+| `rm Thesis/Chapter1/thesis_chapter1.txt` | Elimina (borra) el archivo `thesis_chapter1.txt` del directorio `Thesis/Chapter1`. | `rm Thesis/Chapter1/thesis_chapter1.txt` |
+| `rm -r Thesis/Chapter1` | Elimina el directorio `Thesis/Chapter1` y todo su contenido de forma recursiva (`-r`). | `rm -r Thesis/Chapter1` |
+| `rm -ri Thesis` | Elimina el directorio `Thesis` de forma recursiva (`-r`) y solicita confirmación para cada archivo y directorio (`-i`). | `rm -ri Thesis` |
+| `rmdir ProjectZ` | Elimina el directorio `ProjectZ`, pero solo si está vacío. | `rmdir ProjectZ` |
+| `rm /etc/motdOLD` | Eliminar archivo motdOLD | `rm /etc/motdOLD` |
+| `sudo rm /etc/motdOLD` | Eliminar archivo como root | `sudo rm /etc/motdOLD` |
 
 ### 2.5. Enlaces (Links)
 
@@ -176,6 +413,8 @@ Los enlaces son "accesos directos" a otros archivos o directorios.
 | :--- | :--- |
 | `ln [archivo_original] [enlace_duro]` | Crea un enlace duro. Es otro nombre para los mismos datos en el disco. |
 | `ls -i` | Muestra el número de inodo. Los enlaces duros comparten el mismo inodo. |
+| `ln newfile.txt /tmp/newfile-hlink2.txt` | Crea un enlace duro llamado `newfile-hlink2.txt` en `/tmp` que apunta a los mismos datos que `newfile.txt`. |
+| `ln /home/student/files/target.file /home/student/links/file.hardlink` | Crea un enlace duro. |
 
 **Características de los Enlaces Duros:**
 - No se pueden crear para directorios.
@@ -188,6 +427,8 @@ Los enlaces son "accesos directos" a otros archivos o directorios.
 | :--- | :--- |
 | `ln -s [ruta_original] [enlace_simbólico]` | Crea un enlace simbólico. Apunta a una *ruta*, no a los datos directamente. |
 | `ls -l` | Muestra a dónde apunta el enlace simbólico (ej: `enlace -> /ruta/original`). |
+| `ln -s /home/user/newfile-link2.txt /tmp/newfile-symlink.txt` | Crea un enlace simbólico (o suave) llamado `newfile-symlink.txt` que apunta a la ruta del archivo `/home/user/newfile-link2.txt`. |
+| `ln -s /tmp /home/student/tempdir` | Crea un enlace simbólico a un directorio. |
 
 **Características de los Enlaces Simbólicos:**
 - Pueden apuntar a directorios.
@@ -209,6 +450,38 @@ Los enlaces son "accesos directos" a otros archivos o directorios.
 | `head [archivo]` | Muestra las primeras 10 líneas de un archivo. | `head -n 20 archivo.log` para ver 20 líneas. |
 | `tail [archivo]` | Muestra las últimas 10 líneas de un archivo. | `tail -n 50 archivo.log` para ver 50 líneas. |
 | `tail -f [archivo]` | **F**ollow. Muestra las últimas líneas y sigue mostrando el contenido nuevo que se añade. | **Esencial para monitorear logs en tiempo real.** |
+| `wc` | **W**ord **C**ount. Cuenta líneas, palabras y caracteres. | `wc -l archivo.txt` (muy útil para contar solo líneas) |
+| `file` | Examina un archivo y muestra su tipo. | `file archivo.txt` |
+| `cat /etc/passwd` | Muestra el contenido completo del archivo `/etc/passwd` en la salida estándar. | `cat /etc/passwd` |
+| `cat file1 file2` | Concatena y muestra el contenido de `file1` seguido del contenido de `file2`. | `cat file1 file2` |
+| `head /etc/passwd` | Muestra las primeras 10 líneas del archivo `/etc/passwd`. | `head /etc/passwd` |
+| `tail -n 3 /etc/passwd` | Muestra las últimas 3 líneas del archivo `/etc/passwd`. | `tail -n 3 /etc/passwd` |
+| `wc /etc/passwd` | Cuenta las líneas, palabras y caracteres en el archivo `/etc/passwd`. | `wc /etc/passwd` |
+| `wc -l /etc/passwd` | Cuenta únicamente el número de líneas en el archivo `/etc/passwd`. | `wc -l /etc/passwd` |
+| `wc -c /etc/group /etc/hosts` | Cuenta el número de caracteres en los archivos especificados y muestra un total. | `wc -c /etc/group /etc/hosts` |
+| `file zcat` | Determina el tipo de archivo del script `zcat`. | `file zcat` |
+| `wc zcat` | Cuenta las líneas, palabras y bytes del script `zcat`. | `wc zcat` |
+| `head zcat` | Muestra las primeras 10 líneas del script `zcat`. | `head zcat` |
+| `tail zcat` | Muestra las últimas 10 líneas del script `zcat`. | `tail zcat` |
+| `tail -n 20 zcat` | Muestra las últimas 20 líneas del script `zcat`. | `tail -n 20 zcat` |
+| `cat /etc/group` | Ver archivo de grupos | `cat /etc/group` |
+| `cat /etc/shadow` | Ver archivo de contraseñas | `cat /etc/shadow` |
+| `cat /etc/sudoers.d/operator1` | Ver configuración sudoers | `cat /etc/sudoers.d/operator1` |
+| `cat /etc/sudoers.d/admin` | Ver configuración admin | `cat /etc/sudoers.d/admin` |
+| `cat ~/.bashrc` | Mostrar contenido bashrc | `cat ~/.bashrc` |
+| `cat /etc/login.defs` | Mostrar login.defs | `cat /etc/login.defs` |
+| `cat techdoc1.txt` | Mostrar contenido archivo | `cat techdoc1.txt` |
+| `cat /home/techdocs/techdoc1.txt` | Mostrar con ruta completa | `cat /home/techdocs/techdoc1.txt` |
+| `cat /etc/profile.d/local-umask.sh` | Mostrar script umask | `cat /etc/profile.d/local-umask.sh` |
+| `cat archivo` | Mostrar contenido de archivo | `cat archivo` |
+| `tail /etc/passwd` | Ver final archivo usuarios | `tail /etc/passwd` |
+| `tail /etc/group` | Ver final archivo grupos | `tail /etc/group` |
+| `tail /etc/shadow` | Ver final archivo shadow | `tail /etc/shadow` |
+| `tail /var/log/secure` | Ver final log secure | `tail /var/log/secure` |
+| `tail -5 /var/log/messages` | Ver últimas 5 líneas log | `tail -5 /var/log/messages` |
+| `sudo tail -5 /var/log/messages` | Ver log como root | `sudo tail -5 /var/log/messages` |
+| `sudo tail /var/log/secure` | Ver log secure como root | `sudo tail /var/log/secure` |
+| `tail -f archivo` | Seguir archivo en tiempo real | `tail -f archivo` |
 
 ### 3.2. Edición de Archivos de Texto
 
@@ -217,13 +490,18 @@ Los enlaces son "accesos directos" a otros archivos o directorios.
 | `nano` | Editor de texto simple y muy intuitivo. Los comandos se muestran en la parte inferior. | Principiante |
 | `vim` / `vi` | Editor de texto modal muy potente y eficiente. Requiere aprendizaje. | Intermedio/Avanzado |
 | `emacs` | Un editor de texto extensible, personalizable y autodocumentado. | Avanzado |
+| `gedit` | Editor de texto gráfico de GNOME. | Principiante |
+| `vimtutor` | Inicia el tutorial interactivo para aprender a usar `vim`. | `vimtutor` |
+| `vim /etc/login.defs` | Editar configuración login | `vim /etc/login.defs` |
+| `vim /etc/sudoers.d/consultants` | Editar sudoers consultants | `vim /etc/sudoers.d/consultants` |
+| `visudo` | Editar sudoers de forma segura | `visudo` |
 
 ### 3.3. Redirección de Entrada/Salida (I/O)
 
 Controla de dónde vienen los datos (entrada) y a dónde van (salida).
 
 | Operador | Nombre | Descripción | Ejemplo |
-| :--- | :--- | :--- |
+| :--- | :--- | :--- | :--- |
 | `>` | Redirección de Salida | Envía la salida estándar (stdout) a un archivo, **sobrescribiéndolo**. | `ls -l > lista_archivos.txt` |
 | `>>` | Anexar Salida | Envía la salida estándar (stdout) a un archivo, **agregándola al final**. | `echo "Nuevo log" >> sistema.log` |
 | `<` | Redirección de Entrada | Toma la entrada estándar (stdin) de un archivo en lugar del teclado. | `sort < lista_desordenada.txt` |
@@ -231,6 +509,17 @@ Controla de dónde vienen los datos (entrada) y a dónde van (salida).
 | `2>>` | Anexar Error | Envía la salida de error estándar (stderr) a un archivo, **agregándola al final**. | `comando_erroneo 2>> log_de_errores.txt` |
 | `&>` o `>&` | Redirigir stdout y stderr | Envía tanto la salida estándar como el error estándar al mismo archivo. | `comando &> salida_completa.txt` |
 | `/dev/null` | El Agujero Negro | Un archivo especial que descarta todo lo que se le escribe. | `comando_ruidoso 2> /dev/null` |
+| `date > /tmp/saved-timestamp` | Redirige la salida estándar del comando `date` para sobrescribir el archivo `/tmp/saved-timestamp`. | `date > /tmp/saved-timestamp` |
+| `echo "new line" >> /tmp/many-lines-of-information` | Redirige la salida de `echo` para agregarla (anexarla) al final del archivo especificado. | `echo "new line" >> /tmp/many-lines-of-information` |
+| `find /etc -name passwd 2> /tmp/errors` | Redirige solo el error estándar (canal 2) del comando `find` al archivo `/tmp/errors`. | `find /etc -name passwd 2> /tmp/errors` |
+| `find /etc -name passwd &> /tmp/all-message-output` | Redirige tanto la salida estándar como el error estándar al mismo archivo, sobrescribiéndolo. | `find /etc -name passwd &> /tmp/all-message-output` |
+| `ls -al > $lab_file` | Lista todos los archivos en formato largo y redirige la salida para sobrescribir el archivo cuyo nombre está en la variable `$lab_file`. | `ls -al > $lab_file` |
+| `echo "------------" >> $lab_file` | Agrega una línea de guiones al final del archivo cuyo nombre está en la variable `$lab_file`. | `echo "------------" >> $lab_file` |
+| `echo "texto" >> archivo` | Agregar texto a archivo | `echo "texto" >> archivo` |
+| `echo "%admin ALL=(ALL) ALL" >> /etc/sudoers.d/admin` | Agregar regla sudoers | `echo "%admin ALL=(ALL) ALL" >> /etc/sudoers.d/admin` |
+| `echo "This is the first tech doc." > /home/techdocs/techdoc1.txt` | Escribir texto archivo | `echo "This is the first tech doc." > /home/techdocs/techdoc1.txt` |
+| `echo "umask 007" >> ~/.bashrc` | Agregar umask bashrc | `echo "umask 007" >> ~/.bashrc` |
+| `echo "texto" >> archivo` | Añadir línea archivo | `echo "texto" >> archivo` |
 
 ### 3.4. Tuberías (Pipes)
 
@@ -242,13 +531,18 @@ Las tuberías (`|`) son una de las herramientas más potentes de la línea de co
 | `history | grep "ssh"` | Busca la palabra "ssh" en el historial de comandos. |
 | `ps aux | grep "httpd"` | Muestra todos los procesos y filtra solo los que contienen "httpd". |
 | `cat archivo.log | sort | uniq -c` | Muestra el contenido, lo ordena, y luego cuenta las líneas únicas adyacentes. |
+| `ls | wc -l` | Conecta la salida de `ls` a `wc -l` para contar el número de archivos en el directorio actual. |
+| `ls -l | tee /tmp/saved-output | less` | Usa `tee` para enviar la salida de `ls -l` tanto al archivo `/tmp/saved-output` como al comando `less`. |
+| `find / -name passwd 2>&1 | less` | Redirige el error estándar al mismo destino que la salida estándar, y luego canaliza ambos a `less`. |
+| `ls Documents/ | tee -a $lab_file` | Lista el contenido de `Documents`, lo muestra en la terminal y lo agrega al final del archivo en `$lab_file`. |
+| `chage -l cloudadmin10 | grep "Account expires"` | Ver fecha específica de expiración |
+| `grep "model name" /proc/cpuinfo | wc -l` | Contar CPUs lógicas |
 
 ### 3.5. Comandos de Procesamiento de Texto
 
 | Comando | Descripción | Ejemplo |
 | :--- | :--- | :--- |
 | `grep [patrón] [archivo]` | **G**lobal **R**egular **E**xpression **P**rint. Busca líneas que coincidan con un patrón. | `grep -i "error" /var/log/messages` |
-| `wc` | **W**ord **C**ount. Cuenta líneas, palabras y caracteres. | `wc -l archivo.txt` (cuenta solo líneas). |
 | `sort` | Ordena las líneas de un archivo de texto. | `sort -n datos.txt` (ordena numéricamente). |
 | `uniq` | Reporta o filtra líneas repetidas adyacentes. | `uniq -c` (cuenta las ocurrencias). |
 | `cut` | Elimina secciones de cada línea de archivos. | `cut -d':' -f1 /etc/passwd` (corta por `:` y toma el campo 1). |
@@ -257,6 +551,7 @@ Las tuberías (`|`) son una de las herramientas más potentes de la línea de co
 | `awk` | Lenguaje de programación para procesar y analizar texto. | `awk '{print $1, $3}' archivo.txt` (imprime columnas). |
 | `diff` | Compara archivos línea por línea. | `diff archivo1.conf archivo2.conf` |
 | `tee` | Lee de la entrada estándar y escribe a la salida estándar y a archivos. | `ls -l | tee listado.txt` (muestra en pantalla y guarda en archivo). |
+| `awk '{print $9 " " $10 " " $11}'` | Procesar texto imprimir columnas específicas | `ls -l | awk '{print $9 " " $10 " " $11}'` |
 
 ---
 
@@ -271,25 +566,25 @@ Las tuberías (`|`) son una de las herramientas más potentes de la línea de co
 | `updatedb` | Actualiza la base de datos de `locate` (requiere `sudo`). | `sudo updatedb` |
 | `which [comando]` | Muestra la ruta completa del ejecutable de un comando. | `which python` |
 | `whereis [comando]` | Localiza el binario, la fuente y la página del manual de un comando. | `whereis ls` |
-
-#### Opciones Avanzadas de `find`
-
-`find` es extremadamente potente. Su sintaxis es `find [ruta...] [opciones] [acción]`.
-
-| Opción de `find` | Descripción | Ejemplo |
-| :--- | :--- | :--- |
-| `-name [patrón]` | Busca por nombre de archivo (sensible a mayúsculas). | `find . -name "MiFoto.JPG"` |
-| `-iname [patrón]` | Busca por nombre de archivo (**i**nsensible a mayúsculas). | `find . -iname "mifoto.jpg"` |
-| `-type [f/d/l]` | Busca por tipo de archivo: **f**ile (archivo), **d**irectory (directorio), **l**ink (enlace). | `find /etc -type d` |
-| `-user [nombre]` | Busca archivos cuyo propietario es `[nombre]`. | `find /home -user juan` |
-| `-group [nombre]` | Busca archivos cuyo grupo propietario es `[nombre]`. | `find /var/www -group apache` |
-| `-perm [modo]` | Busca archivos con permisos exactos a `[modo]`. | `find . -perm 644` |
-| `-perm -[modo]` | Busca archivos que tengan *al menos* los permisos de `[modo]` (más común). | `find . -perm -644` |
-| `-size [+/-][n][c/k/M/G]` | Busca por tamaño. `+` (más de), `-` (menos de). `c` (bytes), `k` (KB), `M` (MB), `G` (GB). | `find / -size +100M` |
-| `-mtime [-/+]n` | Busca archivos modificados en las últimas `n`*24 horas. `-n` (hace menos de n días), `+n` (hace más de n días). | `find . -mtime -7` |
-| `-mmin [-/+]n` | Busca archivos modificados en los últimos `n` minutos. | `find . -mmin -60` |
-| `-exec [comando] {} \;` | Ejecuta `[comando]` en cada archivo encontrado. `{}` se reemplaza por el nombre del archivo. | `find . -type f -name "*.tmp" -exec rm -f {} \;` |
-| `-delete` | Elimina los archivos encontrados. Más eficiente que `-exec rm`. | `find . -type f -name "*.bak" -delete` |
+| `find / -name sshd_config` | Busca en todo el sistema de archivos (`/`) un archivo con el nombre exacto `sshd_config`. | `find / -name sshd_config` |
+| `find / -name '*.txt'` | Busca archivos cuyos nombres terminen en `.txt`. Las comillas son importantes para evitar la expansión del shell. | `find / -name '*.txt'` |
+| `find / -iname '*messages*'` | Realiza una búsqueda de archivos por nombre que no distingue entre mayúsculas y minúsculas (`-iname`). | `find / -iname '*messages*'` |
+| `find -user developer` | Busca archivos en el directorio actual y subdirectorios que son propiedad del usuario `developer`. | `find -user developer` |
+| `find /home -perm 764` | Busca archivos en `/home` que tengan exactamente los permisos `764`. | `find /home -perm 764` |
+| `find /home -perm -324` | Busca archivos en `/home` que tengan *al menos* los permisos especificados (propietario: wx, grupo: w, otros: r). | `find /home -perm -324` |
+| `find -size +10G` | Busca archivos de más de 10 Gigabytes. | `find -size +10G` |
+| `find / -mmin 120` | Busca archivos en todo el sistema que fueron modificados hace exactamente 120 minutos. | `find / -mmin 120` |
+| `find /etc -type d` | Busca solo directorios (`-type d`) dentro de `/etc`. | `find /etc -type d` |
+| `find / -nouser -o -nogroup` | Encontrar archivos sin dueño | `find / -nouser -o -nogroup` |
+| `find [ruta] -iname [nombre]` | Buscar archivos sin distinguir mayúsculas | `find /home -iname "*.TXT"` |
+| `find [ruta] -group [grupo]` | Buscar archivos pertenecen grupo | `find /home -group users` |
+| `find [ruta] -uid [id_usuario]` | Buscar archivos por UID | `find /home -uid 1000` |
+| `find [ruta] -gid [id_grupo]` | Buscar archivos por GID | `find /home -gid 100` |
+| `find [ruta] -perm [permisos] -ls` | Buscar permisos con salida detallada | `find /home -perm 644 -ls` |
+| `find [ruta] -size [tamaño]` | Buscar archivos por tamaño | `find /home -size +100M` |
+| `find [ruta] -mmin [minutos]` | Buscar archivos modificados tiempo específico | `find /home -mmin -60` |
+| `find [ruta] -type [tipo]` | Buscar por tipo archivo | `find /home -type f` |
+| `find [ruta] -links [+n]` | Buscar archivos con más n enlaces | `find /home -links +1` |
 
 ### 4.2. Búsqueda de Contenido en Archivos (`grep`)
 
@@ -343,6 +638,12 @@ La salida de `ls -l` muestra los permisos en un formato de 10 caracteres: `d rwx
 | `chmod o=r config.conf` | Establece que otros solo tengan permiso de lectura. |
 | `chmod a+r archivo.log` | Añade permiso de lectura para todos. |
 | `chmod -R g+w proyecto/` | Añade recursivamente permiso de escritura para el grupo en un directorio. |
+| `chmod go-rw document.pdf` | Cambiar permisos método simbólico |
+| `chmod a+x myscript.sh` | Agregar permiso de ejecución para todos |
+| `chmod -R g+rwx /home/user/myfolder` | Establecer permisos recursivamente |
+| `chmod -R g+rwX demodir` | Establecer permisos con X especial |
+| `chmod g+w /home/consultants` | Agregar permiso escritura al grupo |
+| `chmod +x archivo` | Otorgar permisos de ejecución |
 
 #### Método Octal
 
@@ -366,6 +667,8 @@ Se basa en la suma de valores numéricos para cada conjunto de permisos:
 | `chmod 777 temporal/` | `a=rwx` | **INSEGURO.** A veces usado para directorios temporales. Evitar si es posible. |
 | `chmod 600 clave_privada` | `u=rw,go=` | Archivos sensibles que solo el propietario debe leer/escribir. |
 | `chmod 770 dir_compartido/`| `ug=rwx,o=` | Directorio compartido para un grupo, sin acceso para otros. |
+| `chmod 750 sampledir` | Establecer permisos octal directorio |
+| `chmod 770 /home/consultants` | Establecer permisos 770 |
 
 ### 5.3. Cambio de Propietario (`chown` y `chgrp`)
 
@@ -375,6 +678,12 @@ Se basa en la suma de valores numéricos para cada conjunto de permisos:
 | `chown [usuario]:[grupo] [archivo]` | Cambia tanto el usuario como el grupo propietario a la vez. | Sí |
 | `chgrp [grupo] [archivo]` | **Ch**ange **Gr**ou**p**. Cambia solo el grupo propietario. | Sí (a menos que seas el propietario y miembro del nuevo grupo). |
 | `chown -R [usuario] [directorio]` | Cambia la propiedad de un directorio y todo su contenido de forma **R**ecursiva. | Sí |
+| `chown student app.conf` | Cambiar propietario del archivo |
+| `chown -R student Pictures` | Cambiar propietario recursivamente |
+| `chown :admins Pictures` | Cambiar propietario del grupo |
+| `chown visitor:guests Pictures` | Cambiar propietario y grupo |
+| `chown :consultants /home/consultants` | Cambiar solo grupo propietario |
+| `chgrp consultant1 file` | Cambiar propietario del grupo |
 
 ### 5.4. Permisos Especiales
 
@@ -392,6 +701,11 @@ Se basa en la suma de valores numéricos para cada conjunto de permisos:
 | `chmod 4755 ejecutable` | Establece SUID y permisos `rwxr-xr-x`. |
 | `chmod 2775 dir_grupo` | Establece SGID y permisos `rwxrwxr-x`. |
 | `chmod 1777 /tmp` | Establece Sticky Bit y permisos `rwxrwxrwx`. |
+| `chmod g+s example` | Agregar bit setgid |
+| `chmod u-s example` | Quitar bit setuid |
+| `chmod 2770 example` | Establecer setgid y permisos octal |
+| `chmod 00770 example` | Quitar permisos especiales octal |
+| `chmod o+t [directorio]` | Establecer sticky bit directorio |
 
 ### 5.5. Máscara de Permisos por Defecto (`umask`)
 
@@ -403,6 +717,9 @@ El comando `umask` establece los permisos por defecto para los nuevos archivos y
 | `umask -S` | Muestra la máscara en formato simbólico (los permisos que se *permiten*). |
 | `umask 022` | Una máscara común. Archivos: `644`, Directorios: `755`. |
 | `umask 077` | Una máscara muy restrictiva. Archivos: `600`, Directorios: `700`. |
+| `umask 0` | Establecer máscara en 0 |
+| `umask 007` | Establecer máscara en 007 |
+| `umask 027` | Establecer máscara en 027 |
 
 ---
 
@@ -430,6 +747,8 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | `w` | Muestra quién está conectado y qué están haciendo. |
 | `last` | Muestra un listado de los últimos inicios de sesión en el sistema. |
 | `getent [db] [llave]` | Obtiene entradas de bases de datos administrativas. Útil para ver usuarios/grupos (`getent passwd juan`). |
+| `id -gn` | Muestra el nombre del grupo principal |
+| `id -un` | Muestra el nombre del usuario actual |
 
 ### 6.3. Gestión de Usuarios
 
@@ -446,6 +765,17 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | `-s [shell]` | Especifica el shell de login del usuario. | `sudo useradd -s /bin/bash juan` |
 | `-u [UID]` | Especifica el User ID (UID) para el usuario. | `sudo useradd -u 1001 juan` |
 | `-r` | Crea un usuario de sistema (UID bajo). | `sudo useradd -r nginx_user` |
+| `useradd operator1` | Crear usuario operator1 | `useradd operator1` |
+| `useradd operator2` | Crear usuario operator2 | `useradd operator2` |
+| `useradd operator3` | Crear usuario operator3 | `useradd operator3` |
+| `useradd user01` | Crear usuario user01 | `useradd user01` |
+| `useradd user02` | Crear usuario user02 | `useradd user02` |
+| `useradd user03` | Crear usuario user03 | `useradd user03` |
+| `useradd -u 1000 user02` | Crear usuario con UID específico | `useradd -u 1000 user02` |
+| `useradd -G consultants consultant1` | Crear usuario con grupo complementario | `useradd -G consultants consultant1` |
+| `useradd -G consultants consultant2` | Crear usuario consultant2 con grupo | `useradd -G consultants consultant2` |
+| `useradd -G consultants consultant3` | Crear usuario consultant3 con grupo | `useradd -G consultants consultant3` |
+| `useradd --help` | Ver ayuda de useradd | `useradd --help` |
 
 #### `usermod`: Modificación de Usuarios
 
@@ -461,6 +791,24 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | `-L` | **L**ock. Bloquea la cuenta del usuario (pone un `!` en el hash de la contraseña). | `sudo usermod -L juan` |
 | `-U` | **U**nlock. Desbloquea la cuenta del usuario. | `sudo usermod -U juan` |
 | `-e [YYYY-MM-DD]` | Establece la fecha de expiración de la cuenta. | `sudo usermod -e 2024-12-31 juan` |
+| `usermod -c "Operator One" operator1` | Modificar comentario de usuario | `usermod -c "Operator One" operator1` |
+| `usermod -c "Operator Two" operator2` | Modificar comentario de operator2 | `usermod -c "Operator Two" operator2` |
+| `usermod -g group01 user02` | Cambiar grupo principal | `usermod -g group01 user02` |
+| `usermod -aG group01 user03` | Agregar grupos complementarios | `usermod -aG group01 user03` |
+| `usermod -aG operators operator1` | Agregar operator1 a grupo operators | `usermod -aG operators operator1` |
+| `usermod -aG operators operator2` | Agregar operator2 a grupo operators | `usermod -aG operators operator2` |
+| `usermod -aG operators operator3` | Agregar operator3 a grupo operators | `usermod -aG operators operator3` |
+| `usermod -aG admin sysadmin1` | Agregar sysadmin1 a grupo admin | `usermod -aG admin sysadmin1` |
+| `usermod -aG admin sysadmin2` | Agregar sysadmin2 a grupo admin | `usermod -aG admin sysadmin2` |
+| `usermod -aG admin sysadmin3` | Agregar sysadmin3 a grupo admin | `usermod -aG admin sysadmin3` |
+| `usermod -L user02` | Bloquear cuenta de usuario | `usermod -L user02` |
+| `usermod -L operator1` | Bloquear cuenta operator1 | `usermod -L operator1` |
+| `usermod -L sysadmin03` | Bloquear cuenta sysadmin03 | `usermod -L sysadmin03` |
+| `usermod -L -e 2022-08-14 cloudadmin10` | Bloquear y establecer expiración | `usermod -L -e 2022-08-14 cloudadmin10` |
+| `usermod -U operator1` | Desbloquear cuenta de usuario | `usermod -U operator1` |
+| `usermod -s /sbin/nologin newapp` | Cambiar shell de usuario | `usermod -s /sbin/nologin newapp` |
+| `usermod -m -d /new/home/path username` | Mover directorio home | `usermod -m -d /new/home/path username` |
+| `usermod --help` | Ver ayuda de usermod | `usermod --help` |
 
 #### `userdel`: Eliminación de Usuarios
 
@@ -468,6 +816,8 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | :--- | :--- | :--- |
 | `userdel [nombre]` | Elimina un usuario, pero **no borra su directorio home**. | `sudo userdel juan` |
 | `-r` | **R**emove. Elimina un usuario **y su directorio home y cola de correo**. | `sudo userdel -r juan` |
+| `userdel user01` | Eliminar usuario user01 | `userdel user01` |
+| `userdel -r operator3` | Eliminar operator3 con directorio | `userdel -r operator3` |
 
 ### 6.4. Gestión de Grupos
 
@@ -479,6 +829,15 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | `groupmod -g [GID]` | Cambia el **G**ID de un grupo. | `sudo groupmod -g 1501 devs` |
 | `groupdel [nombre]` | Elimina un grupo. | `sudo groupdel devs` |
 | `newgrp [grupo]` | Cambia el grupo primario del usuario en un nuevo shell. | `newgrp docker` |
+| `groupadd group01` | Crear grupo básico | `groupadd group01` |
+| `groupadd admin` | Crear grupo admin | `groupadd admin` |
+| `groupadd -g 10000 group01` | Crear grupo con GID específico | `groupadd -g 10000 group01` |
+| `groupadd -g 30000 operators` | Crear grupo operators con GID | `groupadd -g 30000 operators` |
+| `groupadd -g 35000 consultants` | Crear grupo consultants con GID | `groupadd -g 35000 consultants` |
+| `groupadd -r group02` | Crear grupo de sistema | `groupadd -r group02` |
+| `groupmod -n group0022 group02` | Cambiar nombre de grupo | `groupmod -n group0022 group02` |
+| `groupmod -g 20000 group0022` | Cambiar GID de grupo | `groupmod -g 20000 group0022` |
+| `groupdel group0022` | Eliminar grupo | `groupdel group0022` |
 
 ### 6.5. Gestión de Contraseñas y Políticas
 
@@ -490,6 +849,13 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | `passwd -u [usuario]` | Desbloquea la cuenta (equivalente a `usermod -U`). | `sudo passwd -u juan` |
 | `passwd -d [usuario]` | Elimina la contraseña de un usuario (permite login sin contraseña, **muy inseguro**). | `sudo passwd -d juan` |
 | `passwd -S [usuario]` | Muestra el estado de la contraseña de una cuenta. | `sudo passwd -S juan` |
+| `passwd user01` | Cambiar contraseña de usuario | `passwd user01` |
+| `passwd operator1` | Cambiar contraseña operator1 | `passwd operator1` |
+| `passwd operator2` | Cambiar contraseña operator2 | `passwd operator2` |
+| `passwd operator3` | Cambiar contraseña operator3 | `passwd operator3` |
+| `passwd consultant1` | Cambiar contraseña consultant1 | `passwd consultant1` |
+| `passwd consultant2` | Cambiar contraseña consultant2 | `passwd consultant2` |
+| `passwd consultant3` | Cambiar contraseña consultant3 | `passwd consultant3` |
 
 #### `chage`: Control de Antigüedad de Contraseñas
 
@@ -502,6 +868,21 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | `chage -I [días]` | Días de **I**nactividad permitidos después de que la contraseña expire antes de bloquear la cuenta. | `sudo chage -I 14 juan` |
 | `chage -E [YYYY-MM-DD]` | Fecha de **E**xpiración de la cuenta. | `sudo chage -E 2024-12-31 juan` |
 | `chage -d 0 [usuario]` | Establece la fecha del último cambio a 0 (1 de Enero de 1970), forzando al usuario a cambiarla en el próximo login. | `sudo chage -d 0 juan` |
+| `chage -m 0 -M 90 -W 7 -I 14 sysadmin05` | Configurar política de contraseñas | `chage -m 0 -M 90 -W 7 -I 14 sysadmin05` |
+| `chage -E $(date -d "+30 days" +%F) cloudadmin10` | Establecer fecha de expiración | `chage -E $(date -d "+30 days" +%F) cloudadmin10` |
+| `chage -E 2022-04-09 cloudadmin10` | Establecer expiración específica | `chage -E 2022-04-09 cloudadmin10` |
+| `chage -E 2022-06-08 consultant1` | Establecer expiración consultant1 | `chage -E 2022-06-08 consultant1` |
+| `chage -E 2022-06-08 consultant2` | Establecer expiración consultant2 | `chage -E 2022-06-08 consultant2` |
+| `chage -E 2022-06-08 consultant3` | Establecer expiración consultant3 | `chage -E 2022-06-08 consultant3` |
+| `chage -d 0 cloudadmin10` | Forzar cambio de contraseña | `chage -d 0 cloudadmin10` |
+| `chage -d 0 operator1` | Forzar cambio operator1 | `chage -d 0 operator1` |
+| `chage -d 0 consultant1` | Forzar cambio consultant1 | `chage -d 0 consultant1` |
+| `chage -d 0 consultant2` | Forzar cambio consultant2 | `chage -d 0 consultant2` |
+| `chage -d 0 consultant3` | Forzar cambio consultant3 | `chage -d 0 consultant3` |
+| `chage -M 90 operator1` | Establecer edad máxima de contraseña | `chage -M 90 operator1` |
+| `chage -M 15 consultant2` | Establecer edad máxima consultant2 | `chage -M 15 consultant2` |
+| `chage -l cloudadmin10` | Ver configuración de expiración | `chage -l cloudadmin10` |
+| `chage -l operator1` | Ver configuración operator1 | `chage -l operator1` |
 
 ### 6.6. Elevación de Privilegios
 
@@ -513,6 +894,23 @@ La administración de usuarios y grupos es una tarea fundamental en Linux. Todos
 | `sudo -i` o `sudo -s` | Inicia un shell interactivo como `root`. `-i` simula un login completo. |
 | `sudo -u [usuario] [cmd]` | Ejecuta un comando como otro usuario, no como `root`. |
 | `visudo` | **El único método seguro para editar `/etc/sudoers`**. Realiza una comprobación de sintaxis antes de guardar. |
+| `sudo su` | Cambiar a root con sudo |
+| `sudo su -` | Cambiar a root con entorno completo |
+| `su - operator1` | Cambiar a usuario operator1 |
+| `su - sysadmin03` | Cambiar a usuario sysadmin03 |
+| `su - newapp` | Cambiar a usuario newapp |
+| `su - sysadmin1` | Cambiar a usuario sysadmin1 |
+| `su - consultant1` | Cambiar a usuario consultant1 |
+| `su - consultant2` | Cambiar a usuario consultant2 |
+| `su - tech1` | Cambiar a usuario tech1 |
+| `su - tech2` | Cambiar a usuario tech2 |
+| `su - database1` | Cambiar a usuario database1 |
+| `su - student` | Cambiar a usuario student |
+| `sudo cat /etc/sudoers.d/operator1` | Ver archivo sudoers |
+| `sudo tail -5 /var/log/messages` | Ver final de log |
+| `sudo cp /etc/motd /etc/motdOLD` | Copiar archivo como root |
+| `sudo rm /etc/motdOLD` | Eliminar archivo como root |
+| `sudo cat /etc/sudoers.d/admin` | Ver configuración admin |
 
 #### Sintaxis Básica de `/etc/sudoers`
 
@@ -542,6 +940,14 @@ Un proceso es una instancia de un programa en ejecución. La gestión de proceso
 | `pstree` | Similar a `ps --forest`, a menudo con una salida más visual. |
 | `top` | Muestra una vista dinámica y en tiempo real de los procesos, ordenada por uso de CPU. Interactivo. |
 | `htop` | Una versión mejorada de `top` con colores, scroll y gestión más sencilla. (Puede necesitar `dnf install htop`). |
+| `ps -au` | Ver procesos del usuario actual |
+| `ps -a` | Ver todos los procesos con terminal |
+| `ps -u` | Ver procesos con información usuario |
+| `ps lax` | Listado largo todos los procesos |
+| `ps j` | Mostrar información de trabajos |
+| `ps -p PID` | Mostrar información proceso específico |
+| `pstree -p usuario` | Mostrar árbol procesos con PIDs |
+| `pgrep -l -u usuario` | Enumerar PIDs y nombres usuario |
 
 ### 7.2. Control de Procesos (Señales)
 
@@ -555,6 +961,16 @@ Se pueden enviar señales a los procesos para controlar su comportamiento.
 | `killall [nombre_proceso]` | Mata todos los procesos con un nombre específico. |
 | `pkill [patrón]` | Mata procesos basándose en un patrón de nombre u otros criterios. |
 | `pkill -u [usuario]` | Mata todos los procesos de un usuario específico. |
+| `kill -SIGKILL PID` | Forzar terminación proceso |
+| `kill -SIGTERM PID` | Terminación limpia proceso |
+| `kill -SIGSTOP %número` | Suspender trabajo |
+| `kill -SIGCONT %número` | Reanudar trabajo suspendido |
+| `pkill criterio` | Terminar procesos por criterio |
+| `pkill -SIGKILL -u usuario` | Terminar procesos usuario |
+| `pkill -t tty` | Terminar procesos terminal |
+| `pkill -P PPID` | Terminar procesos hijos |
+| `pkill -SIGSTOP nombre_proceso` | Suspender procesos por nombre |
+| `pkill -SIGCONT nombre_proceso` | Reanudar procesos por nombre |
 
 #### Señales Más Comunes
 
@@ -602,6 +1018,22 @@ Se pueden enviar señales a los procesos para controlar su comportamiento.
 | `dig [host]` | Herramienta avanzada para realizar consultas DNS. |
 | `host [host]` | Herramienta simple para realizar consultas DNS. |
 | `nslookup [host]` | Herramienta interactiva para consultas DNS. |
+| `ip link show` | Enumerar interfaces de red |
+| `ip addr show interfaz` | Mostrar información IP interfaz |
+| `ip -br addr` | Lista breve direcciones IP |
+| `ip -br addr show interfaz` | Direcciones IP interfaz específica |
+| `ip -s link show interfaz` | Estadísticas interfaz |
+| `ip -6 route` | Mostrar tabla enrutamiento IPv6 |
+| `ping -c<num> destino` | Ping número específico paquetes |
+| `ping6 destino` | Prueba conectividad IPv6 |
+| `ping6 destino%interfaz` | Ping IPv6 enlace local |
+| `ping6 -c <num> destino%interfaz` | Ping IPv6 número específico |
+| `tracepath destino` | Rastrear ruta red |
+| `tracepath6 destino` | Rastrear ruta IPv6 |
+| `traceroute -I` | Traceroute con ICMP |
+| `traceroute -T` | Traceroute con TCP |
+| `ss -ta` | Mostrar sockets TCP |
+| `ss -lt` | Mostrar sockets TCP escucha |
 
 ### 8.2. Transferencia de Archivos
 
@@ -651,13 +1083,31 @@ En sistemas basados en Red Hat (RHEL, CentOS, Fedora), `dnf` es el gestor de paq
 | `dnf repolist` | Lista los repositorios de software habilitados. |
 | `dnf clean all` | Limpia la caché de paquetes. |
 | `dnf groupinstall "[nombre grupo]"` | Instala un grupo de paquetes predefinido. |
+| `dnf help` | Mostrar información uso DNF |
+| `dnf list [patrón]` | Listar paquetes coinciden patrón |
+| `dnf search [palabra-clave]` | Buscar paquetes por palabra clave |
+| `dnf search all [palabra-clave]` | Buscar en nombre, resumen y descripción |
+| `dnf group list` | Listar grupos paquetes disponibles |
+| `dnf group list hidden` | Listar grupos paquetes ocultos |
+| `dnf group info "[grupo]"` | Información detallada grupo paquetes |
+| `dnf group install "[grupo]"` | Instalar grupo paquetes |
+| `dnf history info [ID]` | Detalles transacción específica |
+| `dnf repolist all` | Listar todos repositorios configurados |
+| `dnf config-manager --enable [repo]` | Habilitar repositorio persistente |
+| `dnf config-manager --disable [repo]` | Deshabilitar repositorio persistente |
+| `dnf config-manager --add-repo [URL]` | Añadir nuevo repositorio desde URL |
+| `dnf module list` | Listar módulos Application Stream |
+| `dnf module list [nombre-módulo]` | Listar flujos módulo específico |
+| `dnf module info [nombre-módulo]` | Detalles módulo |
+| `dnf module info [nombre-módulo]:[flujo]` | Detalles flujo módulo específico |
+| `dnf module provides [paquete]` | Módulo que proporciona paquete |
 
 ### 9.2. `rpm` (RPM Package Manager)
 
 `rpm` opera directamente sobre archivos `.rpm` y la base de datos local, sin gestionar dependencias.
 
 | Opción | Modo | Descripción | Ejemplo |
-| :--- | :--- | :--- |
+| :--- | :--- | :--- | :--- |
 | `-q` | Query | Consulta la base de datos de paquetes. | `rpm -qa` (query all) |
 | `-i` | Install | Instala un paquete desde un archivo `.rpm`. | `sudo rpm -ivh paquete.rpm` |
 | `-e` | Erase | Elimina (desinstala) un paquete ya instalado. | `sudo rpm -e nombre-paquete` |
@@ -676,6 +1126,9 @@ En sistemas basados en Red Hat (RHEL, CentOS, Fedora), `dnf` es el gestor de paq
 | `-d [paquete]` | **D**oc files. Lista solo los archivos de documentación. | `rpm -qd httpd` |
 | `--scripts [paquete]` | Muestra los scripts (pre/post install/uninstall) de un paquete. | `rpm -q --scripts httpd` |
 | `-p [archivo.rpm]` | **P**ackage file. Permite hacer consultas sobre un archivo `.rpm` sin instalarlo. | `rpm -qlp paquete.rpm` |
+| `rpm --import [URL/archivo]` | Importar clave pública GPG verificación | `rpm --import key.gpg` |
+| `rpm2cpio [archivo.rpm] \| cpio -idv` | Extraer contenido archivo RPM | `rpm2cpio paquete.rpm | cpio -idv` |
+| `rpm2cpio [archivo.rpm] \| cpio -tv` | Listar contenido RPM sin extraer | `rpm2cpio paquete.rpm | cpio -tv` |
 
 ---
 
@@ -699,6 +1152,21 @@ En sistemas basados en Red Hat (RHEL, CentOS, Fedora), `dnf` es el gestor de paq
 | `systemctl enable --now [servicio]` | Habilita y arranca un servicio en un solo comando. |
 | `systemctl mask [servicio]` | Enmascara un servicio, impidiendo que se inicie de cualquier forma (incluso como dependencia). Es un `disable` más fuerte. |
 | `systemctl unmask [servicio]` | Deshace el enmascaramiento de un servicio. |
+| `systemctl list-units --type=service` | Enumerar servicios activos |
+| `systemctl list-units --type=socket --all` | Enumerar todos sockets |
+| `systemctl list-units --all` | Enumerar todas unidades |
+| `systemctl list-unit-files --type=service` | Mostrar estado archivos servicio |
+| `systemctl is-failed unidad` | Verificar si unidad falló |
+| `systemctl --failed --type=service` | Enumerar servicios fallidos |
+| `systemctl list-dependencies unidad` | Mostrar dependencias unidad |
+| `systemctl list-dependencies --reverse unidad` | Mostrar dependencias inversas |
+| `systemctl -t help` | Mostrar tipos unidades disponibles |
+| `systemctl` | Enumerar unidades cargadas activas |
+| `systemctl reload-or-restart unidad` | Recargar o reiniciar unidad |
+| `systemctl disable --now unidad` | Deshabilitar y detener unidad |
+| `systemctl reboot` | Reiniciar sistema |
+| `systemctl reload sshd` | Recargar configuración SSH |
+| `systemctl reload sshd.service` | Recargar servicio SSH |
 
 ### 10.2. Análisis y Logs del Sistema (`journalctl`)
 
@@ -767,28 +1235,7 @@ Formato de compresión común en sistemas Windows.
 
 ## 12. 📜 Shell, Scripting y Variables de Entorno
 
-### 12.1. Expansiones de Shell
-
-El shell procesa la línea de comandos antes de ejecutarla, expandiendo ciertos patrones.
-
-| Expansión | Ejemplo | Resultado |
-| :--- | :--- | :--- |
-| **Nombre de Ruta (Globbing)** | `ls *.txt` | Lista todos los archivos que terminan en `.txt`. |
-| **Tilde (`~`)** | `cd ~` | Cambia al directorio home del usuario. |
-| **Llaves (`{}`)** | `echo file{1..3}.jpg` | `file1.jpg file2.jpg file3.jpg` |
-| **Variable (`$`)** | `echo $USER` | Muestra el nombre del usuario actual. |
-| **Sustitución de Comando** | `echo "Hoy es $(date +%F)"` | `Hoy es 2024-08-19` |
-
-### 12.2. Quoting (Uso de Comillas)
-
-| Comillas | Descripción | Ejemplo |
-| :--- | :--- | :--- |
-| **Dobles (`"`)** | Permite expansiones de variables y sustitución de comandos. Previene globbing y expansión de palabras. | `echo "Mi usuario es $USER"` -> `Mi usuario es juan` |
-| **Simples (`'`)** | Previene **toda** expansión. El texto se trata de forma literal. | `echo 'Mi usuario es $USER'` -> `Mi usuario es $USER` |
-| **Invertida (`` ` ``)** | Sustitución de comando (obsoleta). Preferir `$(...)`. | `echo "Kernel: `uname -r`"` |
-| **Barra Invertida (`\`)** | Carácter de escape. Quita el significado especial del siguiente carácter. | `echo "El precio es de \$50"` |
-
-### 12.3. Variables y Alias
+### 12.1. Variables y Alias
 
 | Comando | Descripción | Ejemplo |
 | :--- | :--- | :--- |
@@ -800,8 +1247,14 @@ El shell procesa la línea de comandos antes de ejecutarla, expandiendo ciertos 
 | `set` | Muestra todas las variables de shell y entorno, y funciones. | `set | less` |
 | `alias nombre='comando'` | Crea un atajo para un comando. | `alias ll='ls -l --color=auto'` |
 | `unalias nombre` | Elimina un alias. | `unalias ll` |
+| `HISTTIMEFORMAT="%F %T "` | Establece una variable de shell para que el comando `history` muestre la fecha y hora de cada comando. | `HISTTIMEFORMAT="%F %T "` |
+| `PS1="[\u@\h \W]\$ "` | Cambia la variable `PS1` para modificar la apariencia del prompt del shell. | `PS1="[\u@\h \W]\$ "` |
+| `export PATH=${PATH}:/home/user/sbin` | Agrega el directorio `/home/user/sbin` a la variable de entorno `PATH`. | `export PATH=${PATH}:/home/user/sbin` |
+| `unset file1` | Elimina (desdefine) la variable de shell `file1`. | `unset file1` |
+| `export -n PS1` | Elimina el atributo de exportación de una variable, convirtiéndola de una variable de entorno a una variable de shell local. | `export -n PS1` |
+| `unalias hello` | Elimina el alias llamado `hello`. | `unalias hello` |
 
-### 12.4. Archivos de Inicio del Shell
+### 12.2. Archivos de Inicio del Shell
 
 | Archivo | Cuándo se lee | Propósito |
 | :--- | :--- | :--- |
@@ -821,8 +1274,10 @@ El shell procesa la línea de comandos antes de ejecutarla, expandiendo ciertos 
 | `man [comando]` | **Man**ual. Muestra la página del manual de un comando. Es la fuente de documentación principal. |
 | `[comando] --help` | Muestra un mensaje de uso breve y las opciones del comando. |
 | `apropos [palabra]` | Busca páginas de manual que contengan una palabra clave en su nombre o descripción. Equivale a `man -k`. |
-| `whatis [comando]` | Muestra una descripción de una sola línea de un comando desde su página de manual. |
+| `whatis [comando]` | Muestra una descripción de una sola línea de un comando desde su página del manual. |
 | `info [comando]` | Muestra la documentación en formato `info`, que a menudo es más detallada y está hipervinculada. |
+| `yelp` | Inicia la aplicación de ayuda de GNOME. |
+| `yelp help:gnome-help/shell-introduction` | Abre la ayuda de GNOME directamente en la sección de introducción al shell. |
 
 ### 13.2. Secciones del Manual
 
@@ -840,494 +1295,324 @@ Las páginas `man` están divididas en secciones. Puedes especificar una con `ma
 | :--- | :--- |
 | `man -k [palabra]` | Busca una palabra clave en los nombres y descripciones de las páginas del manual. |
 | `man -K [palabra]` | Busca una palabra clave en el texto completo de **todas** las páginas del manual (puede ser lento). |
+| `man -t [topic]` | Formatea una página del manual para impresión en PostScript |
+| `mandb` | Genera o actualiza el índice de la base de datos de las páginas del manual |
 
 ---
-De acuerdo. A continuación se presenta la tabla exhaustiva de todos los comandos, atajos y sintaxis presentes en el documento proporcionado, sin omisiones ni resúmenes, tal como fue solicitado. La información ha sido extraída y organizada meticulosamente para su auditoría.
 
-### Tabla Principal de Comandos
+## 14. 🖥️ Entorno Gráfico y Laboratorios
 
-| Comando Completo | Descripción | Capítulo | Sección/Contexto |
-| :--- | :--- | :--- | :--- |
-| `ssh student@serverb` | Inicia una sesión de Secure Shell (SSH) en el servidor `serverb` con el usuario `student`. | Introducción | Orientación al entorno del aula |
-| `systemctl enable --now cockpit.socket` | Activa y arranca de inmediato el socket para la consola web (Cockpit). | Introducción | Orientación al entorno del aula |
-| `lab action exercise` | Sintaxis general para ejecutar un script de ejercicio. `action` puede ser `start`, `grade`, o `finish`. `exercise` es el nombre de la actividad. | Introducción | Realización de ejercicios de laboratorio |
-| `lab start [Tab][Tab]` | Utiliza la finalización de tabulaciones para listar todos los ejercicios que se pueden iniciar con el comando `lab`. | Introducción | Realización de ejercicios de laboratorio |
-| `usermod -L user01` | Bloquea la contraseña de la cuenta de usuario `user01`. | 2 | Conceptos básicos de Shell |
-| `ssh remoteuser@remotehost` | Inicia una sesión SSH en un sistema remoto (`remotehost`) como un usuario específico (`remoteuser`), usualmente autenticando con contraseña. | 2 | Inicie sesión en un sistema remoto |
-| `ssh -i mylab.pem remoteuser@remotehost` | Inicia una sesión SSH utilizando un archivo de clave privada (`mylab.pem`) para la autenticación, en lugar de una contraseña. | 2 | Inicie sesión en un sistema remoto |
-| `chmod 600 mylab.pem` | Cambia los permisos del archivo de clave privada para que solo el propietario pueda leerlo (permiso 600), un requisito de seguridad de SSH. | 2 | Inicie sesión en un sistema remoto |
-| `exit` | Finaliza la sesión de shell actual, cerrando la conexión si es una sesión remota. | 2 | Cerrar sesión desde un sistema remoto |
-| `yelp` | Inicia la aplicación de ayuda de GNOME. | 2 | Referencias (Acceder a la línea de comandos con el escritorio) |
-| `yelp help:gnome-help/shell-introduction` | Abre la ayuda de GNOME directamente en la sección de introducción al shell. | 2 | Referencias (Acceder a la línea de comandos con el escritorio) |
-| `lab start cli-desktop` | Prepara el entorno de laboratorio para el ejercicio guiado `cli-desktop`. | 2 | Ejercicio guiado: Acceso a la línea de comandos con el escritorio |
-| `passwd` | Cambia la contraseña del usuario actual. Solicita la contraseña actual y luego la nueva dos veces. | 2 | Ejercicio guiado: Acceso a la línea de comandos con el escritorio |
-| `lab finish cli-desktop` | Limpia el entorno de laboratorio después de completar el ejercicio `cli-desktop`. | 2 | Ejercicio guiado: Acceso a la línea de comandos con el escritorio |
-| `whoami` | Muestra el nombre de usuario del usuario actualmente conectado. | 2 | Sintaxis básica de comandos |
-| `command1 ; command2` | Ejecuta `command1` y luego `command2` en la misma línea, secuencialmente. | 2 | Sintaxis básica de comandos |
-| `date` | Muestra la fecha y hora actuales del sistema. | 2 | Escribir comandos simples |
-| `date +%R` | Muestra la hora actual en formato de 24 horas (HH:MM). | 2 | Escribir comandos simples |
-| `date +%x` | Muestra la fecha actual en el formato local (MM/DD/YYYY). | 2 | Escribir comandos simples |
-| `file /etc/passwd` | Examina el archivo `/etc/passwd` y muestra su tipo (en este caso, texto ASCII). | 2 | Escribir comandos simples |
-| `file /bin/passwd` | Examina el archivo `/bin/passwd` y muestra su tipo (en este caso, un ejecutable ELF de 64 bits). | 2 | Escribir comandos simples |
-| `file /home` | Examina `/home` y muestra su tipo (en este caso, un directorio). | 2 | Escribir comandos simples |
-| `cat /etc/passwd` | Muestra el contenido completo del archivo `/etc/passwd` en la salida estándar. | 2 | Ver el contenido de los archivos |
-| `cat file1 file2` | Concatena y muestra el contenido de `file1` seguido del contenido de `file2`. | 2 | Ver el contenido de los archivos |
-| `less` | Muestra el contenido de un archivo página por página, permitiendo desplazarse hacia arriba y hacia abajo. | 2 | Ver el contenido de los archivos |
-| `head /etc/passwd` | Muestra las primeras 10 líneas del archivo `/etc/passwd`. | 2 | Ver el contenido de los archivos |
-| `tail -n 3 /etc/passwd` | Muestra las últimas 3 líneas del archivo `/etc/passwd`. | 2 | Ver el contenido de los archivos |
-| `wc /etc/passwd` | Cuenta las líneas, palabras y caracteres en el archivo `/etc/passwd`. | 2 | Ver el contenido de los archivos |
-| `wc -l /etc/passwd` | Cuenta únicamente el número de líneas en el archivo `/etc/passwd`. | 2 | Ver el contenido de los archivos |
-| `wc -c /etc/group /etc/hosts` | Cuenta el número de caracteres en los archivos especificados y muestra un total. | 2 | Ver el contenido de los archivos |
-| `useradd --[Tab][Tab]` | Utiliza la finalización de tabulaciones para mostrar todas las opciones disponibles para el comando `useradd`. | 2 | Descripción de la finalización de tabulaciones |
-| `head -n 3 \ /usr/share/dict/words \ /usr/share/dict/linux.words` | Muestra las primeras 3 líneas de dos archivos, usando la barra invertida `\` para continuar el comando en múltiples líneas. | 2 | Escribir un comando largo en varias líneas |
-| `history` | Muestra una lista numerada de los comandos ejecutados anteriormente en la sesión de shell actual. | 2 | Mostrar el historial de comandos |
-| `!ls` | Ejecuta el comando más reciente en el historial que comienza con "ls". | 2 | Mostrar el historial de comandos |
-| `!26` | Ejecuta el comando número 26 de la lista del historial. | 2 | Mostrar el historial de comandos |
-| `lab start cli-review` | Prepara el entorno de laboratorio para el laboratorio de revisión `cli-review`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `file zcat` | Determina el tipo de archivo del script `zcat`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `wc zcat` | Cuenta las líneas, palabras y bytes del script `zcat`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `head zcat` | Muestra las primeras 10 líneas del script `zcat`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `tail zcat` | Muestra las últimas 10 líneas del script `zcat`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `!!` | Repite y ejecuta el último comando ingresado. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `tail -n 20 zcat` | Muestra las últimas 20 líneas del script `zcat`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `lab grade cli-review` | Califica el trabajo realizado en el laboratorio `cli-review`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `lab finish cli-review` | Limpia el entorno de laboratorio después de completar el laboratorio `cli-review`. | 2 | Laboratorio: Acceso a la línea de comandos |
-| `pwd` | Muestra la ruta completa del directorio de trabajo actual (Print Working Directory). | 3 | Navegar por rutas en el sistema de archivos |
-| `ls` | Lista el contenido del directorio de trabajo actual. | 3 | Navegar por rutas en el sistema de archivos |
-| `cd Videos` | Cambia el directorio de trabajo actual al subdirectorio `Videos`. | 3 | Navegar por rutas en el sistema de archivos |
-| `cd /home/user/Documents` | Cambia el directorio de trabajo actual a la ruta absoluta `/home/user/Documents`. | 3 | Navegar por rutas en el sistema de archivos |
-| `cd` | Cambia el directorio de trabajo actual al directorio de inicio del usuario. | 3 | Navegar por rutas en el sistema de archivos |
-| `touch Videos/blockbuster1.ogg` | Crea un archivo vacío llamado `blockbuster1.ogg` en el directorio `Videos`, o actualiza su marca de tiempo si ya existe. | 3 | Navegar por rutas en el sistema de archivos |
-| `ls -l` | Lista el contenido del directorio en formato largo, mostrando permisos, propietario, tamaño, fecha de modificación, etc. | 3 | Navegar por rutas en el sistema de archivos |
-| `ls -la` | Lista todo el contenido del directorio (incluidos los archivos ocultos que comienzan con `.`) en formato largo. | 3 | Navegar por rutas en el sistema de archivos |
-| `ls -l ~` | Lista el contenido del directorio de inicio del usuario (`~`) en formato largo. | 3 | Navegar por rutas en el sistema de archivos |
-| `cd -` | Cambia al directorio de trabajo anterior. | 3 | Navegar por rutas en el sistema de archivos |
-| `cd .` | Cambia al directorio actual (no tiene efecto práctico). | 3 | Navegar por rutas en el sistema de archivos |
-| `cd ..` | Cambia al directorio padre (sube un nivel en la jerarquía). | 3 | Navegar por rutas en el sistema de archivos |
-| `mkdir ProjectX ProjectY ProjectZ` | Crea tres directorios llamados `ProjectX`, `ProjectY`, y `ProjectZ` en el directorio actual. | 3 | Crear directorios |
-| `mkdir -p Thesis/Chapter1` | Crea el directorio `Chapter1` dentro de `Thesis`, creando también el directorio padre `Thesis` si no existe. | 3 | Crear directorios |
-| `ls -R Thesis/` | Lista el contenido del directorio `Thesis` y todos sus subdirectorios de forma recursiva. | 3 | Crear directorios |
-| `cp blockbuster1.ogg blockbuster3.ogg` | Copia el archivo `blockbuster1.ogg` a un nuevo archivo llamado `blockbuster3.ogg` en el mismo directorio. | 3 | Copiar archivos y directorios |
-| `cp thesis_chapter1.txt thesis_chapter2.txt ProjectX` | Copia los archivos `thesis_chapter1.txt` y `thesis_chapter2.txt` al directorio `ProjectX`. | 3 | Copiar archivos y directorios |
-| `cp -r ../Thesis/ .` | Copia el directorio `Thesis` del directorio padre y todo su contenido al directorio actual (`.`). | 3 | Copiar archivos y directorios |
-| `mv thesis_chapter2.txt thesis_chapter2_reviewed.txt` | Renombra (mueve) el archivo `thesis_chapter2.txt` a `thesis_chapter2_reviewed.txt` en el mismo directorio. | 3 | Mover archivos y directorios |
-| `mv -v thesis_chapter1.txt Thesis/Chapter1` | Mueve el archivo `thesis_chapter1.txt` al directorio `Thesis/Chapter1` y muestra una salida detallada (`-v`) de la operación. | 3 | Mover archivos y directorios |
-| `rm Thesis/Chapter1/thesis_chapter1.txt` | Elimina (borra) el archivo `thesis_chapter1.txt` del directorio `Thesis/Chapter1`. | 3 | Eliminar archivos y directorios |
-| `rm -r Thesis/Chapter1` | Elimina el directorio `Thesis/Chapter1` y todo su contenido de forma recursiva (`-r`). | 3 | Eliminar archivos y directorios |
-| `rm -ri Thesis` | Elimina el directorio `Thesis` de forma recursiva (`-r`) y solicita confirmación para cada archivo y directorio (`-i`). | 3 | Eliminar archivos y directorios |
-| `rmdir ProjectZ` | Elimina el directorio `ProjectZ`, pero solo si está vacío. | 3 | Eliminar archivos y directorios |
-| `lab start files-manage` | Prepara el entorno para el ejercicio `files-manage`. | 3 | Ejercicio guiado: administración de archivos con herramientas de línea de comandos |
-| `ssh student@servera` | Inicia una sesión SSH en `servera` como usuario `student`. | 3 | Ejercicio guiado: administración de archivos con herramientas de línea de comandos |
-| `mkdir Music Pictures Videos` | Crea tres directorios en el directorio actual. | 3 | Ejercicio guiado: administración de archivos con herramientas de línea de comandos |
-| `touch song{1..6}.mp3` | Utiliza la expansión de llaves para crear seis archivos vacíos, desde `song1.mp3` hasta `song6.mp3`. | 3 | Ejercicio guiado: administración de archivos con herramientas de línea de comandos |
-| `mv song*.mp3 Music` | Mueve todos los archivos que coinciden con el patrón `song*.mp3` al directorio `Music`. | 3 | Ejercicio guiado: administración de archivos con herramientas de línea de comandos |
-| `lab finish files-manage` | Limpia el entorno después del ejercicio `files-manage`. | 3 | Ejercicio guiado: administración de archivos con herramientas de línea de comandos |
-| `ln newfile.txt /tmp/newfile-hlink2.txt` | Crea un enlace duro llamado `newfile-hlink2.txt` en `/tmp` que apunta a los mismos datos que `newfile.txt`. | 3 | Crear enlaces duros |
-| `ls -il newfile.txt /tmp/newfile-hlink2.txt` | Lista los archivos mostrando su número de inodo (`-i`) y formato largo (`-l`), para verificar si son enlaces duros al mismo archivo. | 3 | Crear enlaces duros |
-| `df` | Muestra el uso del espacio en disco para todos los sistemas de archivos montados (disk free). | 3 | Limitaciones de los enlaces duros |
-| `ln -s /home/user/newfile-link2.txt /tmp/newfile-symlink.txt` | Crea un enlace simbólico (o suave) llamado `newfile-symlink.txt` que apunta a la ruta del archivo `/home/user/newfile-link2.txt`. | 3 | Crear enlaces simbólicos |
-| `cd -P /home/user/configfiles` | Cambia al directorio real al que apunta un enlace simbólico, en lugar de usar el nombre del enlace simbólico en la ruta. | 3 | Crear enlaces simbólicos |
-| `lab start files-make` | Prepara el entorno para el ejercicio `files-make`. | 3 | Ejercicio guiado: Establecer vínculos entre archivos |
-| `ln /home/student/files/target.file /home/student/links/file.hardlink` | Crea un enlace duro. | 3 | Ejercicio guiado: Establecer vínculos entre archivos |
-| `ln -s /tmp /home/student/tempdir` | Crea un enlace simbólico a un directorio. | 3 | Ejercicio guiado: Establecer vínculos entre archivos |
-| `lab finish files-make` | Limpia el entorno después del ejercicio `files-make`. | 3 | Ejercicio guiado: Establecer vínculos entre archivos |
-| `mkdir glob; cd glob` | Crea un directorio llamado `glob` y luego cambia a ese directorio. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `touch alfa bravo charlie delta echo able baker cast dog easy` | Crea múltiples archivos vacíos con los nombres especificados. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `ls a*` | Lista todos los archivos en el directorio actual cuyos nombres comienzan con la letra 'a'. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `ls *a*` | Lista todos los archivos en el directorio actual cuyos nombres contienen la letra 'a'. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `ls [ac]*` | Lista todos los archivos en el directorio actual cuyos nombres comienzan con 'a' o 'c'. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `ls ????` | Lista todos los archivos en el directorio actual cuyos nombres tienen exactamente cuatro caracteres. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `ls ?????` | Lista todos los archivos en el directorio actual cuyos nombres tienen exactamente cinco caracteres. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `echo {Sunday,Monday,Tuesday,Wednesday}.log` | Utiliza la expansión de llaves para generar una lista de cadenas. | 3 | Expansión de aparatos ortopédicos |
-| `echo file{1..3}.txt` | Utiliza la expansión de llaves con una secuencia numérica para generar `file1.txt file2.txt file3.txt`. | 3 | Expansión de aparatos ortopédicos |
-| `echo ~root` | Muestra la ruta al directorio de inicio del usuario `root`. | 3 | Expansión de tilde |
-| `echo ~nonexistinguser` | Intenta expandir la tilde a un usuario que no existe, resultando en la cadena literal. | 3 | Expansión de tilde |
-| `VARIABLENAME=value` | Sintaxis para asignar un valor a una variable de shell. | 3 | Expansión variable |
-| `echo $USERNAME` | Muestra el valor almacenado en la variable `USERNAME`. | 3 | Expansión variable |
-| `echo ${USERNAME}` | Muestra el valor de la variable `USERNAME`, usando llaves para una delimitación clara. | 3 | Expansión variable |
-| `echo Today is $(date +%A).` | Utiliza la sustitución de comandos para insertar la salida del comando `date +%A` dentro de la cadena de `echo`. | 3 | Sustitución de comandos |
-| `echo 'Will variable $myhost evaluate to $(hostname -s)?'` | Usa comillas simples para evitar cualquier expansión de shell, imprimiendo la cadena literalmente. | 3 | Proteger los argumentos de la expansión |
-| `lab start files-review` | Prepara el entorno para el laboratorio de revisión `files-review`. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `mkdir -p ~/Documents/project_plans` | Crea un directorio y su directorio padre si no existen. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `touch tv_season{1..2}_episode{1..6}.ogg` | Usa expansiones de llaves anidadas para crear una serie de archivos. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `mv tv_season1* Videos/season1` | Mueve todos los archivos que comienzan con `tv_season1` al directorio `Videos/season1`. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `cp chapters/mystery_chapter[56].odf changes` | Copia los archivos `mystery_chapter5.odf` y `mystery_chapter6.odf` al directorio `changes`. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `cp mystery_chapter5.odf mystery_chapter5_$(date +%F).odf` | Copia un archivo, agregando la fecha actual (formato YYYY-MM-DD) al nuevo nombre de archivo mediante sustitución de comandos. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `lab grade files-review` | Califica el trabajo realizado en el laboratorio `files-review`. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `lab finish files-review` | Limpia el entorno después del laboratorio `files-review`. | 3 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `man topic` | Muestra la página del manual para un `topic` específico. | 4 | Introducción a las páginas del manual de Linux |
-| `man 5 passwd` | Muestra la página del manual para `passwd` específicamente de la sección 5 (formatos de archivo). | 4 | Introducción a las páginas del manual de Linux |
-| `man -k passwd` | Busca páginas de manual que contengan la palabra clave `passwd` en sus nombres y descripciones cortas (equivale a `apropos`). | 4 | Buscar páginas de manual por palabra clave |
-| `man -K passwd` | Realiza una búsqueda de texto completo de la palabra clave `passwd` en todas las páginas del manual. | 4 | Buscar páginas de manual por palabra clave |
-| `lab start help-manual` | Prepara el entorno para el ejercicio `help-manual`. | 4 | Ejercicio guiado: Leer páginas del manual |
-| `gedit + manual` | Abre el archivo `manual` en el editor `gedit` con el cursor posicionado en la última línea. | 4 | Ejercicio guiado: Leer páginas del manual |
-| `man 1 su` | Muestra la página del manual para el comando `su` de la sección 1. | 4 | Ejercicio guiado: Leer páginas del manual |
-| `whereis passwd` | Localiza los archivos binarios, de origen y de manual para el comando `passwd`. | 4 | Ejercicio guiado: Leer páginas del manual |
-| `lab finish help-manual` | Limpia el entorno después del ejercicio `help-manual`. | 4 | Ejercicio guiado: Leer páginas del manual |
-| `lab start help-review` | Prepara el entorno para el laboratorio de revisión `help-review`. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `man -t bash | lpr -Pps` | Formatea la página del manual de `bash` para impresión (formato PostScript) y la envía a la impresora `ps`. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `man -t passwd > passwd.ps` | Formatea la página del manual de `passwd` para impresión y redirige la salida al archivo `passwd.ps`. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `evince /home/student/passwd.ps` | Abre un archivo PostScript con el visor de documentos `evince`. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `evince -w /home/student/passwd.ps` | Abre un archivo PostScript en modo de vista previa. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `evince -i 3 /home/student/passwd.ps` | Abre un archivo PostScript comenzando en la página 3. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `lp passwd.ps -P 2-3` | Sintaxis para imprimir solo las páginas 2 y 3 de un archivo. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `firefox /usr/share/doc` | Abre el navegador Firefox en el directorio de documentación del sistema. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `lab grade help-review` | Califica el trabajo realizado en el laboratorio `help-review`. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `lab finish help-review` | Limpia el entorno después del laboratorio `help-review`. | 4 | Laboratorio: Obtener ayuda en Red Hat Enterprise Linux |
-| `date > /tmp/saved-timestamp` | Redirige la salida estándar del comando `date` para sobrescribir el archivo `/tmp/saved-timestamp`. | 5 | Redirigir la salida a un archivo |
-| `echo "new line" >> /tmp/many-lines-of-information` | Redirige la salida de `echo` para agregarla (anexarla) al final del archivo especificado. | 5 | Redirigir la salida a un archivo |
-| `find /etc -name passwd 2> /tmp/errors` | Redirige solo el error estándar (canal 2) del comando `find` al archivo `/tmp/errors`. | 5 | Redirigir la salida a un archivo |
-| `find /etc -name passwd &> /tmp/all-message-output` | Redirige tanto la salida estándar como el error estándar al mismo archivo, sobrescribiéndolo. | 5 | Redirigir la salida a un archivo |
-| `ls -l /usr/bin | less` | Conecta la salida estándar de `ls -l` a la entrada estándar de `less` mediante una tubería (`|`). | 5 | Construir canalizaciones |
-| `ls | wc -l` | Conecta la salida de `ls` a `wc -l` para contar el número de archivos en el directorio actual. | 5 | Construir canalizaciones |
-| `ls -l | tee /tmp/saved-output | less` | Usa `tee` para enviar la salida de `ls -l` tanto al archivo `/tmp/saved-output` como al comando `less`. | 5 | Canalizaciones, redireccionamiento y anexión a un archivo |
-| `find / -name passwd 2>&1 | less` | Redirige el error estándar al mismo destino que la salida estándar, y luego canaliza ambos a `less`. | 5 | Canalizaciones, redireccionamiento y anexión a un archivo |
-| `vi filename` | Abre un archivo en el editor de texto `vi`. | 5 | Editar archivos con Vim |
-| `vim filename` | Abre un archivo en el editor de texto `vim` (versión mejorada de `vi`). | 5 | Editar archivos con Vim |
-| `vimtutor` | Inicia el tutorial interactivo para aprender a usar `vim`. | 5 | Editar archivos con Vim |
-| `lab start edit-editfile` | Prepara el entorno para el ejercicio `edit-editfile`. | 5 | Ejercicio guiado: edición de archivos de texto desde la solicitud de shell |
-| `lab finish edit-editfile` | Limpia el entorno después del ejercicio `edit-editfile`. | 5 | Ejercicio guiado: edición de archivos de texto desde la solicitud de shell |
-| `set | less` | Muestra todas las variables de shell y funciones definidas, canalizando la salida a `less` para una visualización paginada. | 5 | Uso de variables de shell |
-| `HISTTIMEFORMAT="%F %T "` | Establece una variable de shell para que el comando `history` muestre la fecha y hora de cada comando. | 5 | Configurar Bash con variables de shell |
-| `PS1="[\u@\h \W]\$ "` | Cambia la variable `PS1` para modificar la apariencia del prompt del shell. | 5 | Configurar Bash con variables de shell |
-| `export EDITOR=vim` | Establece y exporta la variable de entorno `EDITOR`, que define el editor de texto predeterminado para muchos programas. | 5 | Configurar programas con variables de entorno |
-| `export PATH=${PATH}:/home/user/sbin` | Agrega el directorio `/home/user/sbin` a la variable de entorno `PATH`. | 5 | Configurar programas con variables de entorno |
-| `env` | Muestra todas las variables de entorno actuales. | 5 | Configurar programas con variables de entorno |
-| `alias hello='echo "Hello, this is a long string."'` | Crea un alias llamado `hello` que ejecuta el comando `echo` especificado. | 5 | Alias de Bash |
-| `unset file1` | Elimina (desdefine) la variable de shell `file1`. | 5 | Desactivación y anulación de la exportación de variables y alias |
-| `export -n PS1` | Elimina el atributo de exportación de una variable, convirtiéndola de una variable de entorno a una variable de shell local. | 5 | Desactivación y anulación de la exportación de variables y alias |
-| `unalias hello` | Elimina el alias llamado `hello`. | 5 | Desactivación y anulación de la exportación de variables y alias |
-| `lab start edit-bashconfig` | Prepara el entorno para el ejercicio `edit-bashconfig`. | 5 | Ejercicio guiado: Cambiar el entorno de Shell |
-| `source ~/.bashrc` | Ejecuta los comandos en el archivo `~/.bashrc` en el shell actual, aplicando los cambios sin necesidad de cerrar sesión. | 5 | Ejercicio guiado: Cambiar el entorno de Shell |
-| `lab finish edit-bashconfig` | Limpia el entorno después del ejercicio `edit-bashconfig`. | 5 | Ejercicio guiado: Cambiar el entorno de Shell |
-| `lab start edit-review` | Prepara el entorno para el laboratorio de revisión `edit-review`. | 5 | Lab: Crear, ver y editar archivos de texto |
-| `ls -al > $lab_file` | Lista todos los archivos en formato largo y redirige la salida para sobrescribir el archivo cuyo nombre está en la variable `$lab_file`. | 5 | Lab: Crear, ver y editar archivos de texto |
-| `echo "------------" >> $lab_file` | Agrega una línea de guiones al final del archivo cuyo nombre está en la variable `$lab_file`. | 5 | Lab: Crear, ver y editar archivos de texto |
-| `ls Documents/ | tee -a $lab_file` | Lista el contenido de `Documents`, lo muestra en la terminal y lo agrega al final del archivo en `$lab_file`. | 5 | Lab: Crear, ver y editar archivos de texto |
-| `lab grade edit-review` | Califica el trabajo realizado en el laboratorio `edit-review`. | 5 | Lab: Crear, ver y editar archivos de texto |
-| `lab finish edit-review` | Limpia el entorno después del laboratorio `edit-review`. | 5 | Lab: Crear, ver y editar archivos de texto |
-| `id` | Muestra la información de identidad del usuario actual (UID, GID, grupos). | 6 | ¿Qué es un usuario? |
-| `id user02` | Muestra la información de identidad para el usuario `user02`. | 6 | ¿Qué es un usuario? |
-| `ls -ld Documents` | Muestra la información en formato largo para el directorio `Documents` en sí, no su contenido. | 6 | ¿Qué es un usuario? |
-| `ps -au` | Muestra los procesos en ejecución para todos los usuarios (`a`) con información detallada del usuario (`u`). | 6 | ¿Qué es un usuario? |
-| `su - user02` | Cambia al usuario `user02`, iniciando un shell de inicio de sesión (entorno limpio). | 6 | Cambiar cuentas de usuario |
-| `su -` | Cambia al usuario `root`, iniciando un shell de inicio de sesión. | 6 | Cambiar cuentas de usuario |
-| `sudo usermod -L user02` | Ejecuta el comando `usermod -L user02` con privilegios de superusuario. | 6 | Ejecutar comandos con sudo |
-| `sudo tail /var/log/secure` | Ejecuta el comando `tail` en un archivo protegido con privilegios de superusuario. | 6 | Ejecutar comandos con sudo |
-| `sudo -i` | Inicia un shell de inicio de sesión interactivo como `root`. | 6 | Obtenga un shell raíz interactivo con sudo |
-| `visudo` | Edita el archivo de configuración de `sudo` (`/etc/sudoers`) de forma segura, realizando una verificación de sintaxis antes de guardar. | 6 | Configurar sudo |
-| `lab start users-superuser` | Prepara el entorno para el ejercicio `users-superuser`. | 6 | Ejercicio guiado: Obtener acceso de superusuario |
-| `sudo su` | Cambia al usuario `root` dentro del entorno del usuario actual (shell sin inicio de sesión). | 6 | Ejercicio guiado: Obtener acceso de superusuario |
-| `lab finish users-superuser` | Limpia el entorno después del ejercicio `users-superuser`. | 6 | Ejercicio guiado: Obtener acceso de superusuario |
-| `useradd username` | Crea una nueva cuenta de usuario local llamada `username`. | 6 | Administrar usuarios locales |
-| `usermod -c "Operator One" operator1` | Modifica la cuenta de usuario `operator1` para agregar un comentario ("Operator One"). | 6 | Modificar usuarios existentes desde la línea de comandos |
-| `userdel -r operator3` | Elimina la cuenta de usuario `operator3` y su directorio de inicio (`-r`). | 6 | Eliminar usuarios de la línea de comandos |
-| `find / -nouser -o -nogroup` | Busca en todo el sistema de archivos archivos que no tengan un propietario de usuario o grupo válido. | 6 | Eliminar usuarios de la línea de comandos |
-| `passwd user01` | Establece o cambia la contraseña para el usuario `user01` (requiere privilegios de `root`). | 6 | Establecer contraseñas desde la línea de comandos |
-| `lab start users-user` | Prepara el entorno para el ejercicio `users-user`. | 6 | Ejercicio guiado: Administrar cuentas de usuario locales |
-| `lab finish users-user` | Limpia el entorno después del ejercicio `users-user`. | 6 | Ejercicio guiado: Administrar cuentas de usuario locales |
-| `groupadd -g 10000 group01` | Crea un nuevo grupo llamado `group01` con un ID de grupo (GID) específico de 10000. | 6 | Crear grupos desde la línea de comandos |
-| `groupmod -n group0022 group02` | Renombra el grupo `group02` a `group0022`. | 6 | Modificación de grupos existentes desde la línea de comandos |
-| `groupdel group0022` | Elimina el grupo `group0022`. | 6 | Eliminar grupos de la línea de comandos |
-| `usermod -aG group01 user03` | Agrega (`-a`) el usuario `user03` al grupo suplementario (`-G`) `group01` sin eliminarlo de otros grupos. | 6 | Cambiar la pertenencia a grupos desde la línea de comandos |
-| `newgrp group01` | Inicia un nuevo shell en el que el grupo principal del usuario se cambia temporalmente a `group01`. | 6 | Cambiar temporalmente el grupo principal |
-| `lab start users-group` | Prepara el entorno para el ejercicio `users-group`. | 6 | Ejercicio guiado: Administrar cuentas de grupo local |
-| `echo "%admin ALL=(ALL) ALL" >> /etc/sudoers.d/admin` | Agrega una regla a un archivo de configuración de `sudo` para otorgar privilegios de administrador a todos los miembros del grupo `admin`. | 6 | Ejercicio guiado: Administrar cuentas de grupo local |
-| `lab finish users-group` | Limpia el entorno después del ejercicio `users-group`. | 6 | Ejercicio guiado: Administrar cuentas de grupo local |
-| `chage -m 0 -M 90 -W 7 -I 14 sysadmin05` | Cambia la política de antigüedad de la contraseña para `sysadmin05`: mínimo 0 días, máximo 90, advertencia 7, inactividad 14. | 6 | Configurar la caducidad de contraseñas |
-| `chage -E $(date -d "+30 days" +%F) cloudadmin10` | Establece la fecha de expiración de la cuenta `cloudadmin10` para dentro de 30 días. | 6 | Configurar la caducidad de contraseñas |
-| `chage -d 0 cloudadmin10` | Establece la fecha del último cambio de contraseña a 0, forzando al usuario `cloudadmin10` a cambiarla en el próximo inicio de sesión. | 6 | Configurar la caducidad de contraseñas |
-| `usermod -L sysadmin03` | Bloquea la cuenta de usuario `sysadmin03`, impidiendo inicios de sesión con contraseña. | 6 | Restringir acceso |
-| `usermod -U operator1` | Desbloquea la cuenta de usuario `operator1`. | 6 | Restringir acceso |
-| `usermod -s /sbin/nologin newapp` | Cambia el shell de inicio de sesión del usuario `newapp` a `/sbin/nologin`, lo que impide inicios de sesión interactivos. | 6 | El shell nologin |
-| `lab start users-password` | Prepara el entorno para el ejercicio `users-password`. | 6 | Ejercicio guiado: Administrar contraseñas de usuario |
-| `lab finish users-password` | Limpia el entorno después del ejercicio `users-password`. | 6 | Ejercicio guiado: Administrar contraseñas de usuario |
-| `lab start users-review` | Prepara el entorno para el laboratorio de revisión `users-review`. | 6 | Laboratorio: Administrar usuarios y grupos locales |
-| `lab grade users-review` | Califica el trabajo realizado en el laboratorio `users-review`. | 6 | Laboratorio: Administrar usuarios y grupos locales |
-| `lab finish users-review` | Limpia el entorno después del laboratorio `users-review`. | 6 | Laboratorio: Administrar usuarios y grupos locales |
-| `chmod go-rw document.pdf` | Elimina (`-`) los permisos de lectura (`r`) y escritura (`w`) para el grupo (`g`) y otros (`o`) en el archivo `document.pdf`. | 7 | Cambiar permisos con el método simbólico |
-| `chmod a+x myscript.sh` | Agrega (`+`) permiso de ejecución (`x`) para todos (`a`) en el archivo `myscript.sh`. | 7 | Cambiar permisos con el método simbólico |
-| `chmod -R g+rwx /home/user/myfolder` | Agrega recursivamente (`-R`) permisos de lectura, escritura y ejecución para el grupo en el directorio y todo su contenido. | 7 | Cambiar permisos con el método simbólico |
-| `chmod 644 sample.txt` | Establece los permisos del archivo `sample.txt` a lectura/escritura para el propietario, y solo lectura para el grupo y otros (notación octal). | 7 | Cambiar permisos con el método octal |
-| `chmod 750 sampledir` | Establece los permisos del directorio `sampledir` a lectura/escritura/ejecución para el propietario, lectura/ejecución para el grupo, y sin permisos para otros. | 7 | Cambiar permisos con el método octal |
-| `chown student app.conf` | Cambia el propietario del archivo `app.conf` al usuario `student`. | 7 | Cambiar la propiedad de un usuario o grupo de archivos y directorios |
-| `chown -R student Pictures` | Cambia recursivamente (`-R`) el propietario del directorio `Pictures` y todo su contenido al usuario `student`. | 7 | Cambiar la propiedad de un usuario o grupo de archivos y directorios |
-| `chown :admins Pictures` | Cambia solo el grupo propietario del directorio `Pictures` al grupo `admins`. | 7 | Cambiar la propiedad de un usuario o grupo de archivos y directorios |
-| `chown visitor:guests Pictures` | Cambia tanto el usuario propietario (`visitor`) como el grupo propietario (`guests`) del directorio `Pictures`. | 7 | Cambiar la propiedad de un usuario o grupo de archivos y directorios |
-| `chgrp` | Comando alternativo para cambiar solo la propiedad del grupo de un archivo o directorio. | 7 | Cambiar la propiedad de un usuario o grupo de archivos y directorios |
-| `lab start perms-cli` | Prepara el entorno para el ejercicio `perms-cli`. | 7 | Ejercicio guiado: Administrar permisos del sistema de archivos desde la línea de comandos |
-| `mkdir /home/consultants` | Crea el directorio `/home/consultants`. | 7 | Ejercicio guiado: Administrar permisos del sistema de archivos desde la línea de comandos |
-| `chmod g+w /home/consultants` | Agrega permiso de escritura para el grupo en el directorio. | 7 | Ejercicio guiado: Administrar permisos del sistema de archivos desde la línea de comandos |
-| `chmod 770 /home/consultants` | Establece permisos de lectura/escritura/ejecución para el propietario y el grupo, y sin permisos para otros. | 7 | Ejercicio guiado: Administrar permisos del sistema de archivos desde la línea de comandos |
-| `lab finish perms-cli` | Limpia el entorno después del ejercicio `perms-cli`. | 7 | Ejercicio guiado: Administrar permisos del sistema de archivos desde la línea de comandos |
-| `chmod g+s example` | Agrega el bit especial `setgid` (SGID) al directorio `example`. | 7 | Configuración de permisos especiales |
-| `chmod 2770 example` | Establece permisos usando notación octal de 4 dígitos, donde el `2` inicial establece el bit `setgid`. | 7 | Configuración de permisos especiales |
-| `umask` | Muestra el valor actual de la máscara de creación de archivos de usuario. | 7 | Permisos de archivo predeterminados |
-| `umask 077` | Establece la máscara de creación de archivos de usuario a `077`, lo que resulta en permisos más restrictivos para los archivos nuevos. | 7 | Permisos de archivo predeterminados |
-| `lab start perms-default` | Prepara el entorno para el ejercicio `perms-default`. | 7 | Ejercicio guiado: Administrar permisos predeterminados y acceso a archivos |
-| `echo "umask 007" >> ~/.bashrc` | Agrega un comando `umask` al archivo de inicio de Bash del usuario para que el cambio sea persistente. | 7 | Ejercicio guiado: Administrar permisos predeterminados y acceso a archivos |
-| `lab finish perms-default` | Limpia el entorno después del ejercicio `perms-default`. | 7 | Ejercicio guiado: Administrar permisos predeterminados y acceso a archivos |
-| `lab start perms-review` | Prepara el entorno para el laboratorio de revisión `perms-review`. | 7 | Laboratorio: Controlar el acceso a los archivos |
-| `chmod 2770 /home/techdocs` | Establece el bit `setgid` y permisos `rwxrwx---` en el directorio. | 7 | Laboratorio: Controlar el acceso a los archivos |
-| `chmod o+t /home/dbadmin1/grading/review2` | Agrega el permiso especial "sticky bit" (`t`) a un directorio. | 7 | Laboratorio: Administrar usuarios y grupos, permisos y procesos |
-| `lab grade perms-review` | Califica el trabajo realizado en el laboratorio `perms-review`. | 7 | Laboratorio: Controlar el acceso a los archivos |
-| `lab finish perms-review` | Limpia el entorno después del laboratorio `perms-review`. | 7 | Laboratorio: Controlar el acceso a los archivos |
-| `top` | Muestra una vista dinámica y en tiempo real de los procesos del sistema, ordenada por uso de CPU. | 8 | Importancia de los estados de proceso |
-| `ps aux` | Muestra todos los procesos (`a`), incluidos los que no tienen un terminal de control (`x`), en un formato orientado al usuario (`u`). | 8 | Procesos de listado |
-| `ps lax` | Muestra todos los procesos (`a`) en un formato largo (`l`), incluidos los que no tienen un terminal de control (`x`). | 8 | Procesos de listado |
-| `ps -ef` | Muestra todos los procesos (`-e`) en un formato de lista completo (`-f`). Sintaxis estándar de UNIX. | 8 | Procesos de listado |
-| `ps --forest` | Muestra los procesos en un formato de árbol, mostrando las relaciones padre-hijo. | 8 | Procesos de listado |
-| `sleep 10000 &` | Ejecuta el comando `sleep` en segundo plano (`&`). | 8 | Ejecutar trabajos en segundo plano |
-| `jobs` | Muestra la lista de trabajos (procesos en segundo plano o detenidos) en la sesión de shell actual. | 8 | Ejecutar trabajos en segundo plano |
-| `fg %1` | Trae el trabajo número 1 al primer plano. | 8 | Ejecutar trabajos en segundo plano |
-| `ps j` | Muestra los procesos en formato de trabajo, incluyendo PGID y SID. | 8 | Ejecutar trabajos en segundo plano |
-| `bg %1` | Reanuda la ejecución del trabajo detenido número 1 en segundo plano. | 8 | Ejecutar trabajos en segundo plano |
-| `lab start processes-control` | Prepara el entorno para el ejercicio `processes-control`. | 8 | Ejercicio guiado: Trabajos de control |
-| `chmod +x /home/student/bin/control` | Hace que un archivo de script sea ejecutable. | 8 | Ejercicio guiado: Trabajos de control |
-| `tail -f ~/control_outfile` | Muestra las últimas líneas de un archivo y continúa mostrando las nuevas líneas a medida que se agregan. | 8 | Ejercicio guiado: Trabajos de control |
-| `lab finish processes-control` | Limpia el entorno después del ejercicio `processes-control`. | 8 | Ejercicio guiado: Trabajos de control |
-| `kill -l` | Lista todos los nombres y números de señales disponibles. | 8 | Enviar señales por solicitud explícita |
-| `kill 5194` | Envía la señal predeterminada (SIGTERM, 15) al proceso con PID 5194. | 8 | Enviar señales por solicitud explícita |
-| `kill -9 5199` | Envía la señal SIGKILL (9), que no se puede ignorar, para terminar forzosamente el proceso con PID 5199. | 8 | Enviar señales por solicitud explícita |
-| `pgrep -l -u bob` | Busca (`grep`) y lista (`-l`) los PID de los procesos que pertenecen al usuario (`-u`) `bob`. | 8 | Controle procesos específicos |
-| `pkill -SIGKILL -u bob` | Envía la señal SIGKILL a todos los procesos que pertenecen al usuario `bob`. | 8 | Controle procesos específicos |
-| `w` | Muestra quién está conectado y qué están haciendo. | 8 | Controle procesos específicos |
-| `pstree -p bob` | Muestra los procesos del usuario `bob` en un formato de árbol, incluyendo sus PIDs (`-p`). | 8 | Controle procesos específicos |
-| `killall control` | Envía la señal predeterminada (SIGTERM) a todos los procesos cuyo nombre de comando es `control`. | 8 | Procesos múltiples de señales |
-| `kill -SIGTERM %1` | Envía la señal SIGTERM al trabajo número 1. | 8 | Terminar trabajos en segundo plano |
-| `lab start processes-kill` | Prepara el entorno para el ejercicio `processes-kill`. | 8 | Ejercicio guiado: Matar procesos |
-| `kill -SIGSTOP %1` | Envía la señal SIGSTOP para suspender (detener) el trabajo número 1. | 8 | Ejercicio guiado: Matar procesos |
-| `kill -SIGCONT %1` | Envía la señal SIGCONT para reanudar la ejecución del trabajo número 1. | 8 | Ejercicio guiado: Matar procesos |
-| `pkill -SIGTERM tail` | Envía la señal SIGTERM a todos los procesos llamados `tail`. | 8 | Ejercicio guiado: Matar procesos |
-| `lab finish processes-kill` | Limpia el entorno después del ejercicio `processes-kill`. | 8 | Ejercicio guiado: Matar procesos |
-| `uptime` | Muestra la hora actual, cuánto tiempo ha estado funcionando el sistema, cuántos usuarios están conectados y los promedios de carga. | 8 | Describir el promedio de carga |
-| `lscpu` | Muestra información sobre la arquitectura de la CPU. | 8 | Interpretar valores promedio de carga |
-| `lab start processes-monitor` | Prepara el entorno para el ejercicio `processes-monitor`. | 8 | Ejercicio guiado: Supervisar la actividad del proceso |
-| `lab finish processes-monitor` | Limpia el entorno después del ejercicio `processes-monitor`. | 8 | Ejercicio guiado: Supervisar la actividad del proceso |
-| `lab start processes-review` | Prepara el entorno para el laboratorio de revisión `processes-review`. | 8 | Laboratorio: Supervisión y gestión de procesos de Linux |
-| `grep "model name" /proc/cpuinfo | wc -l` | Cuenta el número de CPUs (núcleos) en el sistema. | 8 | Laboratorio: Supervisión y gestión de procesos de Linux |
-| `lab grade processes-review` | Califica el trabajo realizado en el laboratorio `processes-review`. | 8 | Laboratorio: Supervisión y gestión de procesos de Linux |
-| `lab finish processes-review` | Limpia el entorno después del laboratorio `processes-review`. | 8 | Laboratorio: Supervisión y gestión de procesos de Linux |
-| `systemctl list-units --type=service` | Lista todas las unidades de tipo `service` que `systemd` ha cargado. | 9 | Enumerar unidades de servicio |
-| `systemctl list-units --all` | Lista todas las unidades cargadas, independientemente de su estado de activación. | 9 | Enumerar unidades de servicio |
-| `systemctl list-unit-files --type=service` | Lista el estado (enabled, disabled, static, etc.) de todos los archivos de unidad de servicio instalados. | 9 | Enumerar unidades de servicio |
-| `systemctl status sshd.service` | Muestra información detallada sobre el estado actual del servicio `sshd`. | 9 | Ver estados de servicio |
-| `systemctl is-active sshd.service` | Comprueba si un servicio está actualmente activo (en ejecución) y devuelve `active` o `inactive`. | 9 | Verificar el estado de un servicio |
-| `systemctl is-enabled sshd.service` | Comprueba si un servicio está configurado para iniciarse automáticamente en el arranque y devuelve `enabled` o `disabled`. | 9 | Verificar el estado de un servicio |
-| `systemctl is-failed sshd.service` | Comprueba si una unidad ha entrado en un estado de fallo. | 9 | Verificar el estado de un servicio |
-| `lab start services-identify` | Prepara el entorno para el ejercicio `services-identify`. | 9 | Ejercicio guiado: Identificación de procesos del sistema iniciados automáticamente |
-| `ps -p 747` | Muestra información sobre el proceso con el PID 747. | 9 | Ejercicio guiado: Identificación de procesos del sistema iniciados automáticamente |
-| `lab finish services-identify` | Limpia el entorno después del ejercicio `services-identify`. | 9 | Ejercicio guiado: Identificación de procesos del sistema iniciados automáticamente |
-| `systemctl start sshd` | Inicia el servicio `sshd`. | 9 | Servicios de inicio y parada |
-| `systemctl stop sshd.service` | Detiene el servicio `sshd`. | 9 | Servicios de inicio y parada |
-| `systemctl restart sshd.service` | Reinicia (detiene y luego inicia) el servicio `sshd`. | 9 | Reiniciar y volver a cargar servicios |
-| `systemctl reload sshd.service` | Le indica al servicio `sshd` que vuelva a cargar su configuración sin reiniciarse. | 9 | Reiniciar y volver a cargar servicios |
-| `systemctl reload-or-restart sshd.service` | Intenta recargar la configuración del servicio; si no es compatible, lo reinicia. | 9 | Reiniciar y volver a cargar servicios |
-| `systemctl list-dependencies sshd.service` | Muestra una jerarquía de las unidades de las que depende el servicio `sshd` para iniciarse. | 9 | Enumerar dependencias de unidades |
-| `systemctl mask sendmail.service` | Enmascara un servicio, impidiendo que se inicie manual o automáticamente. | 9 | Servicios de máscara y desenmascaramiento |
-| `systemctl unmask sendmail` | Elimina la máscara de un servicio, permitiendo que se inicie de nuevo. | 9 | Servicios de máscara y desenmascaramiento |
-| `systemctl enable sshd.service` | Habilita un servicio para que se inicie automáticamente en el arranque. | 9 | Habilitar servicios para que se inicien o detengan en el arranque |
-| `systemctl enable --now sshd.service` | Habilita un servicio para el arranque y lo inicia inmediatamente en la sesión actual. | 9 | Habilitar servicios para que se inicien o detengan en el arranque |
-| `systemctl disable --now sshd.service` | Deshabilita un servicio para el arranque y lo detiene inmediatamente en la sesión actual. | 9 | Habilitar servicios para que se inicien o detengan en el arranque |
-| `lab start services-control` | Prepara el entorno para el ejercicio `services-control`. | 9 | Ejercicio guiado: Servicios del sistema de control |
-| `systemctl reboot` | Reinicia el sistema. | 9 | Ejercicio guiado: Servicios del sistema de control |
-| `lab finish services-control` | Limpia el entorno después del ejercicio `services-control`. | 9 | Ejercicio guiado: Servicios del sistema de control |
-| `lab start services-review` | Prepara el entorno para el laboratorio de revisión `services-review`. | 9 | Laboratorio: Servicios de control y demonios |
-| `lab grade services-review` | Califica el trabajo realizado en el laboratorio `services-review`. | 9 | Laboratorio: Servicios de control y demonios |
-| `lab finish services-review` | Limpia el entorno después del laboratorio `services-review`. | 9 | Laboratorio: Servicios de control y demonios |
-| `ssh hostname` | Ejecuta el comando `hostname` en un sistema remoto a través de SSH sin iniciar un shell interactivo. | 10 | Descripción de Secure Shell |
-| `w --from` | Muestra quién está conectado, incluyendo la dirección IP o nombre de host desde donde se conectaron. | 10 | Identificación de usuarios remotos |
-| `ssh-keygen -lf /etc/ssh/ssh_host_ecdsa_key.pub` | Muestra la huella digital (`-l`) de un archivo de clave pública de host SSH (`-f`). | 10 | Comprobación estricta de claves de host |
-| `ssh-keygen -R remotesystemname` | Elimina la entrada para `remotesystemname` del archivo `~/.ssh/known_hosts`. | 10 | Solución de problemas de clave de host |
-| `lab start ssh-access` | Prepara el entorno para el ejercicio `ssh-access`. | 10 | Ejercicio guiado: Acceso a la línea de comandos remota |
-| `rm /home/student/.ssh/known_hosts` | Elimina el archivo de hosts conocidos de SSH del usuario. | 10 | Ejercicio guiado: Acceso a la línea de comandos remota |
-| `lab finish ssh-access` | Limpia el entorno después del ejercicio `ssh-access`. | 10 | Ejercicio guiado: Acceso a la línea de comandos remota |
-| `ssh-keygen` | Genera un par de claves SSH (pública y privada) para la autenticación sin contraseña. | 10 | Generación de claves SSH |
-| `ssh-keygen -f .ssh/key-with-pass` | Genera un par de claves SSH y las guarda en archivos con el nombre base `key-with-pass`. | 10 | Generación de claves SSH |
-| `ssh-copy-id -i .ssh/key-with-pass.pub user@remotehost` | Copia una clave pública específica al archivo `authorized_keys` de un usuario en un host remoto. | 10 | Compartir la clave pública |
-| `eval $(ssh-agent)` | Inicia el agente SSH y configura las variables de entorno necesarias en el shell actual. | 10 | Autenticación no interactiva con el Administrador de claves |
-| `ssh-add .ssh/key-with-pass` | Agrega una clave privada al agente SSH, solicitando la frase de contraseña una vez para almacenarla en caché. | 10 | Autenticación no interactiva con el Administrador de claves |
-| `ssh -v user@remotehost` | Inicia una conexión SSH en modo detallado (`-v`), mostrando información de depuración útil para la solución de problemas. | 10 | Solución de problemas básicos de conexión SSH |
-| `lab start ssh-configure` | Prepara el entorno para el ejercicio `ssh-configure`. | 10 | Ejercicio guiado: Configuración de la autenticación basada en claves SSH |
-| `lab finish ssh-configure` | Limpia el entorno después del ejercicio `ssh-configure`. | 10 | Ejercicio guiado: Configuración de la autenticación basada en claves SSH |
-| `lab start ssh-customize` | Prepara el entorno para el ejercicio `ssh-customize`. | 10 | Ejercicio guiado: Personalización de la configuración del servicio OpenSSH |
-| `lab finish ssh-customize` | Limpia el entorno después del ejercicio `ssh-customize`. | 10 | Ejercicio guiado: Personalización de la configuración del servicio OpenSSH |
-| `lab start ssh-review` | Prepara el entorno para el laboratorio de revisión `ssh-review`. | 10 | Laboratorio: Configuración y protección de SSH |
-| `lab grade ssh-review` | Califica el trabajo realizado en el laboratorio `ssh-review`. | 10 | Laboratorio: Configuración y protección de SSH |
-| `lab finish ssh-review` | Limpia el entorno después del laboratorio `ssh-review`. | 10 | Laboratorio: Configuración y protección de SSH |
-| `ip addr show dev eth0` | Muestra la información de dirección (IP, MAC) para la interfaz de red `eth0`. | 11 | Direcciones IPv6 |
-| `ip -br addr show dev eth0` | Muestra la información de dirección para `eth0` en un formato breve y legible. | 11 | Direcciones IPv6 |
-| `ping6 ff02::1%ens3` | Hace ping a la dirección de multidifusión de todos los nodos en el enlace local, especificando la interfaz de salida `ens3`. | 11 | Subredes IPv6 |
-| `ip link show` | Muestra información sobre todas las interfaces de red. | 11 | Recopilar información de la interfaz de red |
-| `ip -s link show ens3` | Muestra estadísticas detalladas (paquetes, errores, etc.) para la interfaz `ens3`. | 11 | Mostrar estadísticas de rendimiento |
-| `ping -c3 192.0.2.254` | Envía 3 paquetes ICMP ECHO_REQUEST al host `192.0.2.254` para probar la conectividad. | 11 | Verificar la conectividad entre hosts |
-| `ip route` | Muestra la tabla de enrutamiento IPv4. | 11 | Describir la tabla de enrutamiento |
-| `ip -6 route` | Muestra la tabla de enrutamiento IPv6. | 11 | Describir la tabla de enrutamiento |
-| `tracepath access.redhat.com` | Traza la ruta de red hacia un destino, mostrando cada salto. | 11 | Trazar rutas de tráfico |
-| `ss -ta` | Muestra todos (`-a`) los sockets TCP (`-t`). | 11 | Solucionar problemas de puerto y servicio |
-| `lab start net-validate` | Prepara el entorno para el ejercicio `net-validate`. | 11 | Ejercicio guiado: Validar la configuración de red |
-| `lab finish net-validate` | Limpia el entorno después del ejercicio `net-validate`. | 11 | Ejercicio guiado: Validar la configuración de red |
-| `nmcli dev status` | Muestra el estado de todos los dispositivos de red gestionados por NetworkManager. | 11 | Describir el servicio NetworkManager |
-| `nmcli con show --active` | Muestra solo las conexiones de red que están actualmente activas. | 11 | Ver información de red |
-| `nmcli con add con-name eno2 type ethernet ifname eno2` | Agrega una nueva conexión de red llamada `eno2` para la interfaz `eno2`. | 11 | Agregar una conexión de red |
-| `nmcli con up static-ens3` | Activa (levanta) la conexión de red llamada `static-ens3`. | 11 | Administrar conexiones de red |
-| `nmcli dev disconnect ens3` | Desconecta la interfaz de red `ens3`, desactivando su conexión activa. | 11 | Administrar conexiones de red |
-| `nmcli con mod static-ens3 +ipv4.dns 2.2.2.2` | Modifica la conexión `static-ens3` para agregar (`+`) un servidor DNS. | 11 | Actualizar la configuración de conexión de red |
-| `nmcli con reload` | Vuelve a cargar todos los perfiles de conexión desde el disco. | 11 | Actualizar la configuración de conexión de red |
-| `nmcli con del static-ens3` | Elimina el perfil de conexión llamado `static-ens3`. | 11 | Eliminar una conexión de red |
-| `nmcli gen permissions` | Muestra los permisos de PolicyKit para que el usuario actual realice acciones de NetworkManager. | 11 | Permisos para modificar la configuración de NetworkManager |
-| `lab start net-configure` | Prepara el entorno para el ejercicio `net-configure`. | 11 | Ejercicio guiado: configuración de redes desde la línea de comandos |
-| `lab finish net-configure` | Limpia el entorno después del ejercicio `net-configure`. | 11 | Ejercicio guiado: configuración de redes desde la línea de comandos |
-| `lab start net-edit` | Prepara el entorno para el ejercicio `net-edit`. | 11 | Ejercicio guiado: Edición de archivos de configuración de red |
-| `lab finish net-edit` | Limpia el entorno después del ejercicio `net-edit`. | 11 | Ejercicio guiado: Edición de archivos de configuración de red |
-| `hostname` | Muestra el nombre de host actual del sistema. | 11 | Actualizar el nombre de host del sistema |
-| `hostnamectl hostname host.example.com` | Establece el nombre de host estático del sistema a `host.example.com`. | 11 | Actualizar el nombre de host del sistema |
-| `hostnamectl status` | Muestra el estado detallado del nombre de host (estático, transitorio, etc.). | 11 | Actualizar el nombre de host del sistema |
-| `getent hosts hostname` | Obtiene entradas de la base de datos de hosts, consultando `/etc/hosts` y DNS según la configuración de `nsswitch.conf`. | 11 | Configurar la resolución de nombres |
-| `host servera.lab.example.com` | Realiza una consulta DNS para el nombre de host especificado. | 11 | Prueba de resolución de nombres DNS |
-| `dig servera.lab.example.com` | Realiza una consulta DNS detallada para el nombre de host especificado. | 11 | Prueba de resolución de nombres DNS |
-| `lab start net-hostnames` | Prepara el entorno para el ejercicio `net-hostnames`. | 11 | Ejercicio guiado: Configurar nombres de host y resolución de nombres |
-| `lab finish net-hostnames` | Limpia el entorno después del ejercicio `net-hostnames`. | 11 | Ejercicio guiado: Configurar nombres de host y resolución de nombres |
-| `lab start net-review` | Prepara el entorno para el laboratorio de revisión `net-review`. | 11 | Laboratorio: Administración de redes |
-| `echo "10.0.1.1 private" >> /etc/hosts` | Agrega una entrada estática al archivo `/etc/hosts`. | 11 | Laboratorio: Administración de redes |
-| `lab grade net-review` | Califica el trabajo realizado en el laboratorio `net-review`. | 11 | Laboratorio: Administración de redes |
-| `lab finish net-review` | Limpia el entorno después del laboratorio `net-review`. | 11 | Laboratorio: Administración de redes |
-| `rhc connect -a host_key -o 117018` | Registra un sistema en Red Hat usando una clave de activación y un ID de organización. | 12 | Suscribir un sistema mediante el comando rhc |
-| `rhc disconnect` | Anula el registro de un sistema de Red Hat. | 12 | Suscribir un sistema mediante el comando rhc |
-| `subscription-manager register --username <yourusername>` | Registra un sistema en Red Hat usando credenciales de nombre de usuario y contraseña. | 12 | Suscribir un sistema mediante el comando subscription-manager |
-| `subscription-manager list --available` | Lista todas las suscripciones disponibles para la cuenta. | 12 | Suscribir un sistema mediante el comando subscription-manager |
-| `subscription-manager attach --auto` | Adjunta automáticamente una suscripción compatible al sistema. | 12 | Suscribir un sistema mediante el comando subscription-manager |
-| `subscription-manager unregister` | Anula el registro del sistema de Red Hat Subscription Management. | 12 | Suscribir un sistema mediante el comando subscription-manager |
-| `rct` | Inspecciona los certificados de derechos y las suscripciones adjuntas en el sistema. | 12 | Certificados de derechos |
-| `rpm -qa` | Consulta (`-q`) todos (`-a`) los paquetes RPM instalados en el sistema. | 12 | Examinar paquetes RPM |
-| `rpm -qf /etc/yum.repos.d` | Consulta (`-q`) qué paquete es propietario del archivo (`-f`) especificado. | 12 | Examinar paquetes RPM |
-| `rpm -qi dnf` | Muestra información detallada (`-i`) sobre el paquete `dnf` instalado. | 12 | Examinar paquetes RPM |
-| `rpm -ql dnf` | Lista (`-l`) todos los archivos que pertenecen al paquete `dnf` instalado. | 12 | Examinar paquetes RPM |
-| `rpm -qc openssh-clients` | Lista solo los archivos de configuración (`-c`) que pertenecen al paquete `openssh-clients`. | 12 | Examinar paquetes RPM |
-| `rpm -qd openssh-clients` | Lista solo los archivos de documentación (`-d`) que pertenecen al paquete `openssh-clients`. | 12 | Examinar paquetes RPM |
-| `rpm -q --scripts openssh-server` | Muestra los scripts de pre/post instalación/desinstalación del paquete `openssh-server`. | 12 | Examinar paquetes RPM |
-| `rpm -q --changelog audit` | Muestra el registro de cambios del paquete `audit`. | 12 | Examinar paquetes RPM |
-| `rpm -qlp podman-4.0.0-6.el9.x86_64.rpm` | Lista (`-l`) los archivos dentro de un archivo de paquete RPM (`-p`) sin instalarlo. | 12 | Examinar paquetes RPM |
-| `rpm -ivh podman-4.0.0-6.el9.x86_64.rpm` | Instala (`-i`) un paquete RPM desde un archivo, mostrando una salida detallada (`-v`) y una barra de progreso (`-h`). | 12 | Instalar paquetes RPM |
-| `rpm2cpio httpd-2.4.51-7.el9_0.x86_64.rpm | cpio -idv` | Extrae el contenido de un archivo RPM al directorio actual. | 12 | Extracción de paquetes RPM |
-| `rpm2cpio ... | cpio -tv` | Lista el contenido de un archivo RPM sin extraerlo. | 12 | Extracción de paquetes RPM |
-| `lab start software-rpm` | Prepara el entorno para el ejercicio `software-rpm`. | 12 | Ejercicio guiado: Explicar e investigar paquetes de software RPM |
-| `sudo rpm -ivh rhcsa-script-1.0.0-1.noarch.rpm` | Instala un paquete RPM local con privilegios de superusuario. | 12 | Ejercicio guiado: Explicar e investigar paquetes de software RPM |
-| `lab finish software-rpm` | Limpia el entorno después del ejercicio `software-rpm`. | 12 | Ejercicio guiado: Explicar e investigar paquetes de software RPM |
-| `dnf list 'http*'` | Lista todos los paquetes instalados y disponibles cuyos nombres comienzan con `http`. | 12 | Buscar software con DNF |
-| `dnf search all 'web server'` | Busca paquetes que contengan 'web server' en su nombre, resumen o descripción. | 12 | Buscar software con DNF |
-| `dnf info httpd` | Muestra información detallada sobre el paquete `httpd`. | 12 | Buscar software con DNF |
-| `dnf provides /var/www/html` | Busca qué paquete proporciona el archivo o la capacidad `/var/www/html`. | 12 | Buscar software con DNF |
-| `dnf install httpd` | Instala el paquete `httpd` y todas sus dependencias. | 12 | Instalar y eliminar software con DNF |
-| `dnf update` | Actualiza todos los paquetes instalados en el sistema a sus últimas versiones disponibles. | 12 | Instalar y eliminar software con DNF |
-| `dnf remove httpd` | Elimina (desinstala) el paquete `httpd` y las dependencias que ya no son necesarias. | 12 | Instalar y eliminar software con DNF |
-| `dnf group list` | Lista todos los grupos de paquetes disponibles y instalados. | 12 | Instalar y eliminar grupos de software con DNF |
-| `dnf group info "RPM Development Tools"` | Muestra información detallada sobre un grupo de paquetes, incluyendo los paquetes que contiene. | 12 | Instalar y eliminar grupos de software con DNF |
-| `dnf group install "RPM Development Tools"` | Instala todos los paquetes predeterminados y obligatorios del grupo de paquetes especificado. | 12 | Instalar y eliminar grupos de software con DNF |
-| `dnf history` | Muestra un historial de las transacciones de DNF (instalaciones, eliminaciones, actualizaciones). | 12 | Ver historial de transacciones |
-| `dnf history undo 6` | Deshace la transacción con el ID 6, eliminando los paquetes que se instalaron o reinstalando los que se eliminaron. | 12 | Ver historial de transacciones |
-| `lab start software-dnf` | Prepara el entorno para el ejercicio `software-dnf`. | 12 | Ejercicio guiado: Instalación y actualización de paquetes de software con DNF |
-| `lab finish software-dnf` | Limpia el entorno después del ejercicio `software-dnf`. | 12 | Ejercicio guiado: Instalación y actualización de paquetes de software con DNF |
-| `dnf repolist all` | Lista todos los repositorios de software configurados, tanto habilitados como deshabilitados. | 12 | Habilitación de repositorios de software de Red Hat |
-| `dnf config-manager --enable rhel-9-server-debug-rpms` | Habilita un repositorio de software específico. | 12 | Habilitación de repositorios de software de Red Hat |
-| `dnf config-manager --add-repo="URL"` | Agrega un nuevo repositorio de software desde una URL, creando un archivo `.repo`. | 12 | Agregar repositorios DNF |
-| `rpm --import https://.../RPM-GPG-KEY-EPEL-9` | Importa una clave GPG pública para verificar la firma de los paquetes RPM. | 12 | Paquetes de configuración RPM para repositorios locales |
-| `dnf install https://.../epel-release-latest-9.noarch.rpm` | Instala un paquete RPM directamente desde una URL. | 12 | Paquetes de configuración RPM para repositorios locales |
-| `lab start software-repo` | Prepara el entorno para el ejercicio `software-repo`. | 12 | Ejercicio guiado: Habilitar repositorios de software DNF |
-| `dnf config-manager --disable rht-updates` | Deshabilita un repositorio de software. | 12 | Ejercicio guiado: Habilitar repositorios de software DNF |
-| `lab finish software-repo` | Limpia el entorno después del ejercicio `software-repo`. | 12 | Ejercicio guiado: Habilitar repositorios de software DNF |
-| `lab start software-review` | Prepara el entorno para el laboratorio de revisión `software-review`. | 12 | Laboratorio: Instalación y actualización de paquetes de software |
-| `sudo dnf install rhcsa-script-1.0.0-1.noarch.rpm` | Instala un paquete RPM local usando DNF, que también resolverá dependencias si es necesario. | 12 | Laboratorio: Instalación y actualización de paquetes de software |
-| `lab grade software-review` | Califica el trabajo realizado en el laboratorio `software-review`. | 12 | Laboratorio: Instalación y actualización de paquetes de software |
-| `lab finish software-review` | Limpia el entorno después del laboratorio `software-review`. | 12 | Laboratorio: Instalación y actualización de paquetes de software |
-| `lsblk` | Lista los dispositivos de bloque (discos y particiones) y sus puntos de montaje. | 13 | Identificar un dispositivo de bloque |
-| `lsblk -fp` | Lista los dispositivos de bloque mostrando la ruta completa del dispositivo (`-p`) y la información del sistema de archivos (`-f`). | 13 | Montar sistema de archivos con UUID de partición |
-| `mount /dev/vda4 /mnt/data` | Monta el sistema de archivos en el dispositivo `/dev/vda4` en el directorio `/mnt/data`. | 13 | Montar el sistema de archivos con el nombre de la partición |
-| `mount UUID="..." /mnt/data` | Monta un sistema de archivos especificando su UUID en lugar del nombre del dispositivo. | 13 | Montar sistema de archivos con UUID de partición |
-| `umount /mnt/data` | Desmonta el sistema de archivos que está montado en `/mnt/data`. | 13 | Desmontar sistemas de archivos |
-| `lsof /mnt/data` | Lista los archivos abiertos (`List Open Files`) en un punto de montaje, mostrando qué procesos lo están utilizando. | 13 | Desmontar sistemas de archivos |
-| `lab start fs-mount` | Prepara el entorno para el ejercicio `fs-mount`. | 13 | Ejercicio guiado: Montar y desmontar sistemas de archivos |
-| `lab finish fs-mount` | Limpia el entorno después del ejercicio `fs-mount`. | 13 | Ejercicio guiado: Montar y desmontar sistemas de archivos |
-| `updatedb` | Actualiza la base de datos utilizada por el comando `locate`. | 13 | Localizar archivos por nombre |
-| `locate passwd` | Busca rápidamente en la base de datos de archivos cualquier archivo o directorio que contenga "passwd" en su ruta. | 13 | Localizar archivos por nombre |
-| `locate -i messages` | Realiza una búsqueda con `locate` que no distingue entre mayúsculas y minúsculas. | 13 | Localizar archivos por nombre |
-| `locate -n 5 passwd` | Limita la salida de `locate` a los primeros 5 resultados. | 13 | Localizar archivos por nombre |
-| `find / -name sshd_config` | Busca en todo el sistema de archivos (`/`) un archivo con el nombre exacto `sshd_config`. | 13 | Búsqueda de archivos en tiempo real |
-| `find / -name '*.txt'` | Busca archivos cuyos nombres terminen en `.txt`. Las comillas son importantes para evitar la expansión del shell. | 13 | Búsqueda de archivos en tiempo real |
-| `find / -iname '*messages*'` | Realiza una búsqueda de archivos por nombre que no distingue entre mayúsculas y minúsculas (`-iname`). | 13 | Búsqueda de archivos en tiempo real |
-| `find -user developer` | Busca archivos en el directorio actual y subdirectorios que son propiedad del usuario `developer`. | 13 | Buscar archivos según la propiedad o el permiso |
-| `find /home -perm 764` | Busca archivos en `/home` que tengan exactamente los permisos `764`. | 13 | Buscar archivos según la propiedad o el permiso |
-| `find /home -perm -324` | Busca archivos en `/home` que tengan *al menos* los permisos especificados (propietario: wx, grupo: w, otros: r). | 13 | Buscar archivos según la propiedad o el permiso |
-| `find -size +10G` | Busca archivos de más de 10 Gigabytes. | 13 | Buscar archivos según el tamaño |
-| `find / -mmin 120` | Busca archivos en todo el sistema que fueron modificados hace exactamente 120 minutos. | 13 | Búsqueda de archivos en función del tiempo de modificación |
-| `find /etc -type d` | Busca solo directorios (`-type d`) dentro de `/etc`. | 13 | Buscar archivos según el tipo de archivo |
-| `lab start fs-locate` | Prepara el entorno para el ejercicio `fs-locate`. | 13 | Ejercicio guiado: Localización de archivos en el sistema |
-| `lab finish fs-locate` | Limpia el entorno después del ejercicio `fs-locate`. | 13 | Ejercicio guiado: Localización de archivos en el sistema |
-| `lab start fs-review` | Prepara el entorno para el laboratorio de revisión `fs-review`. | 13 | Laboratorio: Acceso a sistemas de archivos Linux |
-| `du /usr/share > /mnt/freespace/results.txt` | Calcula el uso del disco para el directorio `/usr/share` y guarda la salida en un archivo. | 13 | Laboratorio: Acceso a sistemas de archivos Linux |
-| `find / -iname review5-path 2>/dev/null` | Busca un archivo, redirigiendo los mensajes de error (como "Permission denied") a `/dev/null` para ocultarlos. | 13 | Laboratorio: Acceso a sistemas de archivos Linux |
-| `lab grade fs-review` | Califica el trabajo realizado en el laboratorio `fs-review`. | 13 | Laboratorio: Acceso a sistemas de archivos Linux |
-| `lab finish fs-review` | Limpia el entorno después del laboratorio `fs-review`. | 13 | Laboratorio: Acceso a sistemas de archivos Linux |
-| `dnf install cockpit` | Instala el paquete de la consola web. | 14 | Habilitar la consola web |
-| `firewall-cmd --add-service=cockpit --permanent` | Agrega permanentemente el servicio `cockpit` a la zona de firewall predeterminada. | 14 | Habilitar la consola web |
-| `firewall-cmd --reload` | Vuelve a cargar la configuración del firewall para aplicar los cambios permanentes. | 14 | Habilitar la consola web |
-| `lab start support-cockpit` | Prepara el entorno para el ejercicio `support-cockpit`. | 14 | Ejercicio guiado: Análisis y administración de servidores remotos |
-| `lab finish support-cockpit` | Limpia el entorno después del ejercicio `support-cockpit`. | 14 | Ejercicio guiado: Análisis y administración de servidores remotos |
-| `sos report` | Genera un informe de diagnóstico del sistema (sosreport) para la solución de problemas y el soporte técnico. | 14 | Generar un informe sos desde la línea de comandos |
-| `sos clean /path/to/sosreport.tar.xz` | Ofusca información sensible de un sosreport existente. | 14 | Generar un informe sos desde la línea de comandos |
-| `lab start support-portal` | Prepara el entorno para el ejercicio `support-portal`. | 14 | Ejercicio guiado: Crear un informe de diagnóstico |
-| `systemctl start cockpit.socket` | Inicia el socket de la consola web. | 14 | Ejercicio guiado: Crear un informe de diagnóstico |
-| `lab finish support-portal` | Limpia el entorno después del ejercicio `support-portal`. | 14 | Ejercicio guiado: Crear un informe de diagnóstico |
-| `insights-client --register` | Registra el sistema con el servicio Red Hat Insights. | 14 | Instalar clientes de Red Hat Insights |
-| `lab start rhcsa-rh124-review1` | Prepara el entorno para el primer laboratorio de revisión exhaustiva. | 15 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `lab grade rhcsa-rh124-review1` | Califica el trabajo realizado en el primer laboratorio de revisión. | 15 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `lab finish rhcsa-rh124-review1` | Limpia el entorno después del primer laboratorio de revisión. | 15 | Laboratorio: Administrar archivos desde la línea de comandos |
-| `lab start rhcsa-rh124-review2` | Prepara el entorno para el segundo laboratorio de revisión exhaustiva. | 15 | Laboratorio: Administrar usuarios y grupos, permisos y procesos |
-| `lab grade rhcsa-rh124-review2` | Califica el trabajo realizado en el segundo laboratorio de revisión. | 15 | Laboratorio: Administrar usuarios y grupos, permisos y procesos |
-| `lab finish rhcsa-rh124-review2` | Limpia el entorno después del segundo laboratorio de revisión. | 15 | Laboratorio: Administrar usuarios y grupos, permisos y procesos |
-| `lab start rhcsa-rh124-review3` | Prepara el entorno para el tercer laboratorio de revisión exhaustiva. | 15 | Laboratorio: Configurar y administrar un servidor |
-| `lab grade rhcsa-rh124-review3` | Califica el trabajo realizado en el tercer laboratorio de revisión. | 15 | Laboratorio: Configurar y administrar un servidor |
-| `lab finish rhcsa-rh124-review3` | Limpia el entorno después del tercer laboratorio de revisión. | 15 | Laboratorio: Configurar y administrar un servidor |
-| `lab start rhcsa-rh124-review4` | Prepara el entorno para el cuarto laboratorio de revisión exhaustiva. | 15 | Laboratorio: Administración de redes |
-| `lab grade rhcsa-rh124-review4` | Califica el trabajo realizado en el cuarto laboratorio de revisión. | 15 | Laboratorio: Administración de redes |
-| `lab finish rhcsa-rh124-review4` | Limpia el entorno después del cuarto laboratorio de revisión. | 15 | Laboratorio: Administración de redes |
-| `lab start rhcsa-rh124-review5` | Prepara el entorno para el quinto laboratorio de revisión exhaustiva. | 15 | Laboratorio: Montaje de sistemas de archivos y búsqueda de archivos |
-| `lab grade rhcsa-rh124-review5` | Califica el trabajo realizado en el quinto laboratorio de revisión. | 15 | Laboratorio: Montaje de sistemas de archivos y búsqueda de archivos |
-| `lab finish rhcsa-rh124-review5` | Limpia el entorno después del quinto laboratorio de revisión. | 15 | Laboratorio: Montaje de sistemas de archivos y búsqueda de archivos |
+### 14.1. Comandos de Laboratorio
 
-### Tabla de Atajos de Teclado y Metacaracteres de Shell
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `lab start [nombre]` | Inicia ejercicio de laboratorio | `lab start help-manual` |
+| `lab grade [nombre]` | Califica ejercicio de laboratorio | `lab grade help-review` |
+| `lab finish [nombre]` | Finaliza ejercicio de laboratorio | `lab finish help-manual` |
+| `lab action exercise` | Sintaxis general para ejecutar un script de ejercicio. `action` puede ser `start`, `grade`, o `finish`. `exercise` es el nombre de la actividad. | `lab start cli-desktop` |
+| `lab start [Tab][Tab]` | Utiliza la finalización de tabulaciones para listar todos los ejercicios que se pueden iniciar con el comando `lab`. | `lab start [Tab][Tab]` |
 
-| Atajo / Metacarácter | Descripción | Capítulo | Sección/Contexto |
-| :--- | :--- | :--- | :--- |
-| `Ctrl+Alt+F[1-6]` | Cambia entre las diferentes consolas virtuales de texto. | 2 | Inicie sesión en un sistema local |
-| `Ctrl+D` | Finaliza la sesión de shell actual (equivale a `exit`). | 2 | Cerrar sesión desde un sistema remoto |
-| `Super` (Tecla de Windows/Comando) | Abre la vista general de Actividades en GNOME. | 2 | Partes del shell de GNOME |
-| `Super+M` | Abre o cierra la bandeja de mensajes en GNOME. | 2 | Partes del shell de GNOME |
-| `Ctrl+Alt+Flecha Izquierda/Derecha` | Cambia entre espacios de trabajo en GNOME. | 2 | Acceder a espacios de trabajo |
-| `Alt+F2` | Abre el cuadro de diálogo "Enter a Command" en GNOME. | 2 | Iniciar un terminal |
-| `Super+L` | Bloquea la pantalla en GNOME. | 2 | Bloquear la pantalla y cerrar sesión |
-| `Ctrl+Alt+Supr` | Inicia el proceso de apagado del sistema desde GNOME. | 2 | Apague o reinicie el sistema |
-| `[Tab]` | Autocompleta un comando o nombre de archivo. Presionar dos veces muestra las opciones. | 2 | Descripción de la finalización de tabulaciones |
-| `\` (al final de la línea) | Carácter de escape que permite continuar un comando en la línea siguiente. | 2 | Escribir un comando largo en varias líneas |
-| `!` | Metacarácter para la expansión del historial de comandos. | 2 | Mostrar el historial de comandos |
-| `Esc+.` o `Alt+.` | Inserta la última palabra del comando anterior en la línea de comandos actual. | 2 | Mostrar el historial de comandos |
-| `Ctrl+A` | Mueve el cursor al principio de la línea de comandos. | 2 | Editar la línea de comandos |
-| `Ctrl+E` | Mueve el cursor al final de la línea de comandos. | 2 | Editar la línea de comandos |
-| `Ctrl+U` | Borra desde el cursor hasta el principio de la línea. | 2 | Editar la línea de comandos |
-| `Ctrl+K` | Borra desde el cursor hasta el final de la línea. | 2 | Editar la línea de comandos |
-| `Ctrl+R` | Inicia una búsqueda inversa en el historial de comandos. | 2 | Editar la línea de comandos |
-| `*` | Comodín que coincide con cero o más caracteres en la expansión de nombres de ruta. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `?` | Comodín que coincide con cualquier carácter individual en la expansión de nombres de ruta. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `[...]` | Coincide con cualquier carácter dentro de los corchetes en la expansión de nombres de ruta. | 3 | Expansión de nombres de ruta y coincidencia de patrones |
-| `{...}` | Expansión de llaves para generar cadenas arbitrarias. | 3 | Expansión de aparatos ortopédicos |
-| `~` | Metacarácter que se expande al directorio de inicio del usuario actual. | 3 | Expansión de tilde |
-| `$` | Inicia la expansión de una variable o la sustitución de un comando. | 3 | Expansión variable / Sustitución de comandos |
-| `>` | Redirige la salida estándar, sobrescribiendo el archivo de destino. | 5 | Redirigir la salida a un archivo |
-| `>>` | Redirige la salida estándar, agregándola al final del archivo de destino. | 5 | Redirigir la salida a un archivo |
-| `2>` | Redirige el error estándar. | 5 | Redirigir la salida a un archivo |
-| `&>` | Redirige tanto la salida estándar como el error estándar al mismo destino. | 5 | Redirigir la salida a un archivo |
-| `|` | Tubería (pipe), conecta la salida estándar de un comando a la entrada estándar de otro. | 5 | Construir canalizaciones |
-| `Ctrl+z` | Suspende el proceso en primer plano actual (envía la señal SIGTSTP). | 8 | Ejecutar trabajos en segundo plano |
-| `Ctrl+c` | Interrumpe y finaliza el proceso en primer plano actual (envía la señal SIGINT). | 8 | Enviar señales por solicitud explícita |
-| `Ctrl+\` | Finaliza el proceso en primer plano y genera un volcado de núcleo (envía la señal SIGQUIT). | 8 | Enviar señales por solicitud explícita |
-| `%` | Prefijo utilizado en comandos de control de trabajos (`fg`, `bg`, `kill`) para referirse a un número de trabajo. | 8 | Terminar trabajos en segundo plano |
+### 14.2. Comandos de Consola Web (Cockpit)
+
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `systemctl enable --now cockpit.socket` | Habilitar e iniciar socket cockpit | `systemctl enable --now cockpit.socket` |
+| `systemctl start cockpit.socket` | Iniciar socket cockpit sesión actual | `systemctl start cockpit.socket` |
+| `systemctl status cockpit.socket` | Verificar estado socket cockpit | `systemctl status cockpit.socket` |
+| `firewall-cmd --add-service=cockpit --permanent` | Añadir servicio cockpit firewall | `firewall-cmd --add-service=cockpit --permanent` |
+| `firewall-cmd --reload` | Recargar configuración firewall | `firewall-cmd --reload` |
+
+### 14.3. Comandos de Diagnóstico y Soporte
+
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `sos report` | Generar informe diagnóstico sistema | `sos report` |
+| `sos report --upload` | Generar sosreport y subir soporte | `sos report --upload` |
+| `sos clean [archivo-sosreport]` | Ofuscar información sensible sosreport | `sos clean sosreport.tar.xz` |
+| `dnf install sos` | Instalar paquete sos | `dnf install sos` |
+
+### 14.4. Comandos Red Hat Insights
+
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `insights-client --register` | Registrar cliente Red Hat Insights | `insights-client --register` |
+| `insights-client` | Recopilación manual metadatos sistema | `insights-client` |
+
+---
+
+## 15. 🌐 Red y Transferencia de Archivos (Avanzado)
+
+### 15.1. `wget` – El Descargador No Interactivo
+
+**Uso principal:** Bajar archivos de internet. Guarda en disco por defecto.
+
+**Comando Básico:** `wget <URL_DEL_ARCHIVO>`
+
+| Flag | Descripción |
+| :--- | :--- |
+| `-O <archivo>` | Guardar con un **nombre diferente**. |
+| `-c` | **Continuar** una descarga interrumpida. |
+| `-P <directorio>` | Guardar en un **directorio específico**. |
+| `-b` | Descargar en **segundo plano** (background). |
+| `-r` | Descarga **recursiva** (clonar un sitio). |
+| `--limit-rate=1m` | **Limita la velocidad** de descarga (ej. 1 MB/s). |
+| `-i <archivo.txt>` | Descarga **múltiples URLs** de un archivo. |
+
+### 15.2. `curl` – La Navaja Suiza para URLs
+
+**Uso principal:** Interactuar con URLs (probar APIs, ver cabeceras, transferir datos). Muestra en pantalla por defecto.
+
+**Comando Básico (para guardar archivo):** `curl <URL> -o <nombre_archivo>`
+
+| Flag | Descripción |
+| :--- | :--- |
+| `-o <archivo>` | Guardar la salida en un **archivo específico**. |
+| `-O` | Guardar con el **nombre original** de la URL. |
+| `-I` | Mostrar solo las **cabeceras** (headers) de la respuesta. |
+| `-X <MÉTODO>` | Especificar el **método HTTP** (ej. `POST`, `PUT`). |
+| `-d <datos>` | **Enviar datos** en una petición (ej. para un formulario). |
+| `-H <cabecera>` | Añadir una **cabecera HTTP** personalizada. |
+
+### 15.3. Comandos de Gestión de Suscripciones (Red Hat)
+
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `rhc connect -a [clave] -o [ID_org]` | Registrar sistema RHEL 8.8+ con clave activación | `rhc connect -a ABC123 -o ORG456` |
+| `rhc connect -u [usuario] -p [contraseña]` | Registrar sistema RHEL 8.8+ con credenciales | `rhc connect -u usuario -p contraseña` |
+| `rhc disconnect` | Anular registro sistema gestionado por rhc | `rhc disconnect` |
+| `subscription-manager register --username [usuario]` | Registrar sistema en Red Hat Subscription | `subscription-manager register --username usuario` |
+| `subscription-manager list --available` | Listar suscripciones disponibles | `subscription-manager list --available` |
+| `subscription-manager attach --auto` | Adjuntar automáticamente mejor suscripción | `subscription-manager attach --auto` |
+| `subscription-manager attach --pool=[ID_pool]` | Adjuntar suscripción específica por ID pool | `subscription-manager attach --pool=ABC123` |
+| `subscription-manager list --consumed` | Mostrar suscripciones utilizadas actualmente | `subscription-manager list --consumed` |
+| `subscription-manager unregister` | Anular registro Red Hat Subscription | `subscription-manager unregister` |
+| `rct` | Inspeccionar certificados derechos suscripciones | `rct` |
+
+### 15.4. Comandos NetworkManager (nmcli)
+
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `nmcli dev status` | Estado dispositivos red | `nmcli dev status` |
+| `nmcli con show` | Enumerar conexiones configuradas | `nmcli con show` |
+| `nmcli con show --active` | Enumerar conexiones activas | `nmcli con show --active` |
+| `nmcli con show "nombre-conexión"` | Detalles conexión específica | `nmcli con show "nombre-conexión"` |
+| `nmcli dev show interfaz` | Detalles dispositivo específico | `nmcli dev show interfaz` |
+| `nmcli con add con-name nombre type ethernet ifname interfaz` | Crear nueva conexión | `nmcli con add con-name nombre type ethernet ifname interfaz` |
+| `nmcli con up "nombre-conexión"` | Activar conexión | `nmcli con up "nombre-conexión"` |
+| `nmcli con down "nombre-conexión"` | Desactivar conexión | `nmcli con down "nombre-conexión"` |
+| `nmcli dev disconnect interfaz` | Desconectar interfaz red | `nmcli dev disconnect interfaz` |
+| `nmcli con mod "nombre-conexión" parámetro valor` | Modificar parámetro conexión | `nmcli con mod "nombre-conexión" parámetro valor` |
+| `nmcli con mod "nombre-conexión" +parámetro valor` | Añadir valor parámetro múltiple | `nmcli con mod "nombre-conexión" +parámetro valor` |
+| `nmcli con reload` | Recargar archivos configuración | `nmcli con reload` |
+| `nmcli con reload "nombre-conexión"` | Recargar conexión específica | `nmcli con reload "nombre-conexión"` |
+| `nmcli con del "nombre-conexión"` | Eliminar conexión | `nmcli con del "nombre-conexión"` |
+| `nmcli gen permissions` | Mostrar permisos usuario | `nmcli gen permissions` |
+
+### 15.5. Comandos de Hostname y Resolución DNS
+
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `hostnamectl status` | Estado nombre host sistema | `hostnamectl status` |
+| `hostnamectl hostname nuevo-nombre` | Establecer nombre host persistente | `hostnamectl hostname nuevo-nombre` |
+| `getent hosts nombre-host` | Resolver nombre host | `getent hosts nombre-host` |
+
+---
+
+## 16. ⌨️ Atajos de Teclado y Comportamiento de la Terminal
+
+### 16.1. Atajos de Teclado Útiles
+
+| Atajo | Acción |
+| :--- | :--- |
+| `bind -p` | Muestra todos los atajos de teclado (key bindings) disponibles en la shell Bash **(Bourne-Again Shell)**. |
+| `Ctrl + C` | Interrumpe comando actual |
+| `Ctrl + Z` | Suspende proceso |
+| `Ctrl + L` | Limpia pantalla (igual que `clear`) |
+| `Ctrl + R` | Busca en historial de comandos |
+| `Ctrl + D`/ `exit` | Cierra la sesion de shell actual(logout) |
+| `Ctrl + shift + T` | Abre nueva pestaña en emulador terminal gráficos (como GNOME Terminal). |
+| `Tab` | Autocompleta comandos o rutas. |
+| `ls ~/.ssh` | Lista claves y configuración directorio .ssh del usuario (tu ~ home). |
+| `↑/↓` | Navegar historial de comandos |
+| `Ctrl+Alt+F[1-6]` | Cambia entre las diferentes consolas virtuales de texto. |
+| `Super` (Tecla de Windows/Comando) | Abre la vista general de Actividades en GNOME. |
+| `Super+M` | Abre o cierra la bandeja de mensajes en GNOME. |
+| `Ctrl+Alt+Flecha Izquierda/Derecha` | Cambia entre espacios de trabajo en GNOME. |
+| `Alt+F2` | Abre el cuadro de diálogo "Enter a Command" en GNOME. |
+| `Super+L` | Bloquea la pantalla en GNOME. |
+| `Ctrl+Alt+Supr` | Inicia el proceso de apagado del sistema desde GNOME. |
+
+### 16.2. Comportamiento de teclas en la terminal
+
+#### ¿Por qué aparecen letras como `a`, `b`, `c`, `d`?
+
+| Combinación | Resultado visible |
+| :--- | :--- |
+| `Shift + ↑` | `a` |
+| `Shift + ↓` | `b` |
+| `Shift + →` | `c` |
+| `Shift + ←` | `d` |
+
+> Esto ocurre porque la terminal **no tiene una acción definida** para esas combinaciones, y las interpreta como **secuencias de escape incompletas** o como entrada cruda.
+
+#### ¿Qué está pasando técnicamente?
+
+| Componente | Explicación |
+| :--- | :--- |
+| Terminal (ej. Bash, Zsh) | Recibe códigos ASCII o secuencias de escape de teclado |
+| Emulador de terminal (ej. GNOME Terminal, Konsole) | Traduce pulsaciones a códigos que Bash interpreta |
+| Sin mapeo definido | Si `Shift + flecha` no tiene función asignada, puede enviar caracteres como `a`, `b`, `c`, `d` |
+
+#### ¿Cómo se puede verificar?
+
+```bash
+# Ver entrada cruda del teclado
+cat
+# Luego pulsa Shift + flechas y observa qué aparece
+# Ctrl+C para salir
+```
+
+#### ¿Cómo se soluciona o personaliza?
+
+| Método | Resultado |
+| :--- | :--- |
+| Usar `showkey` o `xev` | Ver qué códigos se envían por cada tecla |
+| Configurar `.inputrc` | Personalizar comportamiento de teclas en Bash |
+| Usar terminales avanzados | Algunos permiten mapear combinaciones como `Shift + flecha` a funciones útiles |
+
+---
+
+## 17. 🔐 Seguridad y Análisis de Archivos
+
+### 17.1. Identificación de Archivos
+
+| Comando | Descripción |
+| :--- | :--- |
+| `file archivo` | Identifica tipo real del archivo |
+| `strings archivo.png` | Extrae texto legible de archivos binarios |
+| `whereis` | Localiza el binario, código fuente y página del manual para un comando |
+
+### 17.2. Verificación de Integridad (Hashing)
+
+#### Genera Hash en archivo en Linux/Unix
+
+| Comando | Descripción |
+| :--- | :--- |
+| `md5sum archivo` | Genera hash MD5 |
+| `sha256sum archivo` | Genera hash SHA-256 |
+| `sha256sum archivo >> archivo.hash` | Guarda hash en archivo |
+
+#### Generar Hash en Windows PowerShell
+
+| Comando | Descripción |
+| :--- | :--- |
+| `Get-FileHash archivo` | Genera hash del archivo |
+| `Get-FileHash -Algorithm MD5 archivo` | Hash MD5 específico |
+
+#### Comparar Hashes de Archivos
+
+| Comando | Descripción |
+| :--- | :--- |
+| `sha256sum -c archivo.hash` | Verifica integridad comparando el hash |
+
+### 17.3. Comparación de Archivos
+
+| Comando | Descripción |
+| :--- | :--- |
+| `cmp archivo1 archivo2` | Compara archivos byte a byte |
+| `diff archivo1 archivo2` | Muestra diferencias línea por línea |
+
+### 17.4. Herramientas Especializadas de Seguridad
+
+| Comando | Descripción | Uso |
+| :--- | :--- | :--- |
+| `fcrackzip -v -u -D -p diccionario.txt archivo.zip` | Descifra ZIP protegido | Auditoría de seguridad |
+| `steghide extract -sf imagen.jpg` | Extrae datos ocultos | Análisis forense |
+| `steghide embed -cf imagen.jpg -ef archivo.txt` | Oculta datos en imagen | Esteganografía |
+
+---
+
+## 18. 🌐 Acceso Remoto y Gestión de Servicios con SSH
+
+Secure Shell (SSH) es el protocolo estándar para acceder y administrar servidores remotos de forma segura.
+
+### 18.1. Conexión a un Servidor Remoto
+Para conectarte a una máquina remota, necesitas su dirección IP o nombre, un nombre de usuario y sus credenciales (contraseña o clave SSH).
+
+| Tarea | ⭐ Comando Esencial | Opciones Comunes |
+| :--- | :--- | :--- |
+| **Conexión con Contraseña** | `ssh usuario@<IP_OBJETIVO>` | El método más básico. Te solicitará la contraseña.|
+| **Especificar Puerto** | `ssh -p <PUERTO> usuario@<IP_OBJETIVO>` | `-p`: Util si SSH no corre en el puerto estándar 22. |
+| **Usar Llave Privada** | `ssh -i /ruta/a/llave.pem usuario@<IP_OBJETIVO>` | `-i`: Archivo para autenticación con llaves (la clave) en lugar de contraseña. |
+| **Configurar Login sin Contraseña** | `ssh-copy-id usuario@<IP_OBJETIVO>` | Copia la clave pública al servidor remoto para habilitar el login sin contraseña. |
+| **Cierra sesión SSH y regresa al sistema local** | `exit` | Al finalizar trabajo remoto |
+| `ssh-keygen` | Generar par claves SSH |
+| `ssh-keygen -f ruta/nombre_clave` | Generar claves archivo específico |
+| `ssh-keygen -lf archivo_clave_pública` | Mostrar huella digital clave |
+| `ssh-keygen -R nombre_host_remoto` | Eliminar entrada known_hosts |
+| `ssh-copy-id -i ruta/clave.pub usuario@host` | Copiar clave específica |
+| `ssh -v usuario@host` | Conectar modo verbose |
+| `eval $(ssh-agent)` | Iniciar agente SSH |
+| `ssh-add` | Añadir identidad por defecto |
+| `ssh-add ruta/clave_privada` | Añadir clave específica |
+| `ssh dirección-ipv6%interfaz` | SSH IPv6 enlace local |
+
+- **📝 Nota sobre la primera conexión SSH**
+
+La primera vez que te conectes a un servidor, verás un mensaje como:
+
+"The authenticity of host 'remotehost' can't be established..."
+
+Escribe `yes` para aceptar y guardar la clave "huella digital" (fingerprint) del servidor del host, protegiendo conexiones futuras.
+Esto es normal y esperado en la primera conexión.
+
+### 18.2. Gestión del Servicio SSH (en el Servidor).
+
+Estos comandos se usan en el servidor al que te quieres conectar para asegurarte de que el servicio SSH está funcionando. La mayoría de sistemas modernos usan systemd.
+
+| Acción | ⭐ Comando Esencial |
+| :--- | :--- |
+| Iniciar servicio (temporal) | `sudo systemctl start ssh` |
+| Habilitar en el arranque (permanente) | `sudo systemctl enable ssh` |
+| Habilitar y arrancar ahora (mixto) | `sudo systemctl enable ssh --now` |
+| Detener servicio (temporal) | `sudo systemctl stop ssh` |
+| Deshabilitar en el arranque (permanente) | `sudo systemctl disable ssh` |
+| Ver estado del servicio | `sudo systemctl status ssh` |
+| Reiniciar servicio | `sudo systemctl restart ssh` |
+| Ver logs del servicio | `sudo journalctl -u ssh` |
+
+### 18.3. 🧭 Referencia: Gestores de Servicios por Distribución.
+
+| Distribución | Gestor de Servicios | Comando para iniciar SSH |
+| :--- | :--- | :--- |
+| Ubuntu / Debian | `systemctl` | `sudo systemctl start ssh` |
+| Arch Linux | Fedora / CentOS / RHEL / OpenSUSE / SUSE | `systemctl` | `sudo systemctl start sshd` |
+| Alpine Linux | `rc-service` | `sudo rc-service sshd start` |
+| Gentoo | `rc-service` | `sudo rc-service sshd start` |
+| Devuan | `service` | `sudo service ssh start` |
+| Void Linux | `runit` | `sudo sv up sshd` |
+| Slackware | `rc` | `sudo rc sshd start` |
+| FreeBSD | `service` | `sudo service sshd start` |
+| OpenBSD / NetBSD / DragonFly BSD | `rc.d` | `sudo rc.d sshd start` |
+| macOS (Homebrew) | `brew services` | `brew services start ssh` |
+| macOS (System) | `launchctl` | `sudo launchctl load /Library/LaunchDaemons/ssh.iterm` |
+| Windows (PowerShell) | `Start-Service` | `Start-Service ssh` |
+| Windows (cmd) | `net start` | `net start ssh` |
+| Windows Subsystem for Linux (WSL) | `wsl` | `sudo systemctl start ssh` |
+
+---
+
+## 19. 🗄️ Sistemas de Archivos y Dispositivos
+
+| Comando | Descripción/Uso | Ejemplo |
+| :--- | :--- | :--- |
+| `df -H` | Uso espacio formato legible base 10 | `df -H` |
+| `du [directorio]` | Uso espacio directorio y subdirectorios | `du /home` |
+| `du -h [directorio]` | Uso espacio formato legible | `du -h /home` |
+| `lsblk -fp [dispositivo]` | Dispositivos con ruta completa y UUID | `lsblk -fp /dev/sda` |
+| `mount [dispositivo] [punto-montaje]` | Montar sistema archivos | `mount /dev/sdb1 /mnt` |
+| `mount UUID="[uuid]" [punto-montaje]` | Montar sistema archivos por UUID | `mount UUID="abc-123" /mnt` |
+| `umount [punto-montaje]` | Desmontar sistema archivos | `umount /mnt` |
+| `lsof [punto-montaje]` | Procesos con archivos abiertos | `lsof /mnt` |
+
+---
