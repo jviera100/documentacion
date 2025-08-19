@@ -83,6 +83,7 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `cd ..` | Sale a la carpeta padre anterior | `cd ..` |
 | `cd ~` | Va al directorio principal del usuario | `cd ~` |
 | `cd /` | Va al directorio raíz del sistema | `cd /` |
+| `cd -` | Alterna entre directorio actual y anterior | Después de `cd /tmp`, usar `cd -` regresa al directorio previo |
 
 ### 1.2 Visualización de Contenidos
 
@@ -116,11 +117,12 @@ El directorio `/etc` contiene los archivos de configuración esenciales para el 
 | `ls -LSH` | Ordena por tamaño en formato legible (MB, GB) |
 | `ls -LSHR` | Ordena por tamaño (mayor a menor), formato legible, y en orden inverso |
 | `ls -lr` | Ordena al revés |
-| `tree` | Muestra estructura en forma de árbol |
+| `ls -R` | Lista recursivamente todos los subdirectorios |
 | `ls /` | muestra el contenido inmediato del directorio raíz. |
+| `tree` | Muestra estructura en forma de árbol |
 | `tree -L 1 /` | Muestra la estructura de directorios en forma de árbol, solo hasta el nivel 1. |
 | `tree -L 1 -x /` | Muestra la estructura en árbol de la raíz (nivel 1), sin cruzar a otros sistemas de archivos. (evita cruzar a /proc, /sys, etc.).|
-
+| `tree -f` | Muestra rutas completas en el árbol |
 
 ### **1.3 Análisis de Espacio en Disco (`du`)**
 
@@ -205,6 +207,98 @@ Usa estos atajos para editar comandos largos sin usar el ratón.
 | `\` | Continuación de línea | Permite escribir un comando largo en varias líneas. | `head -n 3 \`<br>`/etc/passwd` |
 ---
 
+
+### **1.7 - Expansiones de Shell**
+
+#### 1.7.1 Expansión de Nombres de Archivo (Globbing)
+
+##### 1.7.1.1 Metacaracteres Básicos
+| Patrón | Coincide con | Ejemplo |
+|--------|--------------|---------|
+| `*` | Cualquier cadena de cero o más caracteres | `ls *.txt` |
+| `?` | Cualquier carácter individual | `ls foto?.jpg` |
+| `[abc]` | Cualquier carácter listado en los corchetes | `ls archivo[123].txt` |
+| `[!abc]` | Cualquier carácter que NO esté en la clase incluida | `ls archivo[!0-9].txt` |
+| `[^abc]` | Cualquier carácter que NO esté en la clase incluida | `ls archivo[^0-9].txt` |
+
+##### 1.7.1.2 Clases de Caracteres Predefinidas
+| Patrón | Coincide con | Ejemplo |
+|--------|--------------|---------|
+| `[[:alpha:]]` | Cualquier carácter alfabético | `ls *[[:alpha:]].conf` |
+| `[[:lower:]]` | Cualquier carácter en minúsculas | `ls [[:lower:]]*.txt` |
+| `[[:upper:]]` | Cualquier carácter en mayúsculas | `ls [[:upper:]]*.log` |
+| `[[:alnum:]]` | Cualquier dígito o carácter alfabético | `ls *[[:alnum:]].dat` |
+| `[[:punct:]]` | Cualquier carácter imprimible que no sea espacio o alfanumérico | `ls *[[:punct:]]*` |
+| `[[:digit:]]` | Cualquier dígito de 0 a 9 | `ls log[[:digit:]].txt` |
+| `[[:space:]]` | Cualquier carácter de espacio en blanco | `ls *[[:space:]]*` |
+
+##### 1.7.1.3 🧠 Patrones Prácticos de Coincidencia
+| Nº | Comando / Patrón | Función |
+|----|------------------|---------|
+| 1 | `*b` | Coincide con archivos que **terminan en "b"** |
+| 2 | `b*` | Coincide con archivos que **comienzan con "b"** |
+| 3 | `[!b]*` | Coincide con archivos cuyo **primer carácter NO es "b"** |
+| 4 | `*b*` | Coincide con archivos que **contienen "b"** en cualquier posición |
+| 5 | `*[[:digit:]]*` | Coincide con archivos que **contienen al menos un número** |
+| 6 | `[[:upper:]]*` | Coincide con archivos que **comienzan con una letra mayúscula** |
+| 7 | `???*` | Coincide con archivos de **al menos tres caracteres de longitud** |
+| 8 | `????` | Coincide con archivos de **exactamente cuatro caracteres** |
+| 9 | `[ac]*` | Coincide con archivos que **comienzan con "a" o "c"** |
+
+### **1.7.1.4 Variables de Entorno**
+
+Tu guía menciona variables pero falta profundizar en su gestión:
+
+| Comando | Descripción | Ejemplo del texto RHEL |
+|---------|-------------|------------------------|
+| `set` | Muestra todas las variables de shell y funciones | `set \| less` |
+| `env` | Muestra solo las variables de entorno exportadas | `env` |
+| `export VARIABLE=valor` | Exporta variable al entorno | `export EDITOR=vim`, `export LANG=fr_FR.UTF-8` |
+| `export -n VARIABLE` | Deshace la exportación sin eliminar valor | `export -n PS1` |
+| `unset VARIABLE` | Elimina variable de la shell | `unset file1` |
+| `source archivo` | Ejecuta comandos de archivo en shell actual | `source ~/.bashrc` |
+
+### **1.7.1.5 Alias y Funciones**
+
+| Comando | Descripción | Ejemplo del texto RHEL |
+|---------|-------------|------------------------|
+| `alias nombre='comando'` | Crea atajo para comando | `alias hello='echo "Hello, this is a long string."'` |
+| `unalias nombre` | Elimina alias | `unalias hello` |
+| `\comando` | Ejecuta comando sin alias | `\vi --version` |
+
+#### 1.7.2 Expansión de Llaves
+| Comando | Resultado | Uso |
+|---------|-----------|-----|
+| `echo file{1..5}.txt` | `file1.txt file2.txt file3.txt file4.txt file5.txt` | Generar secuencias |
+| `echo {a,b,c}.log` | `a.log b.log c.log` | Múltiples opciones |
+| `mkdir {2023,2024,2025}` | Crea directorios para esos años | Organización temporal |
+| `echo file{a{1,2},b}.txt` | `filea1.txt filea2.txt fileb.txt` | Expansiones anidadas |
+| `touch file{1..2}_{a..c}.txt` | `file1_a.txt file1_b.txt file1_c.txt file2_a.txt file2_b.txt file2_c.txt` | **Expansión anidada múltiple** |
+| `touch tv_season{1..2}_episode{1..6}.ogg` | Crea 12 archivos: `tv_season1_episode1.ogg` hasta `tv_season2_episode6.ogg` | **Generación masiva de archivos con patrón** |
+| `mkdir season{1..2}` | `season1 season2` | Crear directorios numerados |
+| `mkdir {editor,changes,vacation}` | Crea tres directorios con nombres específicos | **Lista de cadenas** vs rangos |
+
+#### 1.7.3 Expansión de Variables
+| Comando | Descripción | Ejemplo |
+|---------|-------------|---------|
+| `echo $USER` | Muestra variable del usuario | Muestra nombre del usuario actual |
+| `echo ${USER}` | Forma explícita de variable | Evita ambigüedades |
+| `NOMBRE=Juan; echo $NOMBRE` | Define y usa variable | Define variable local |
+
+#### 1.7.4 Sustitución de Comandos
+| Sintaxis | Descripción | Ejemplo |
+|----------|-------------|---------|
+| `$(comando)` | Ejecuta comando y usa su salida | `echo "Hoy es $(date +%A)"` |
+| `echo "Son las $(date +%H) horas"` | Combina texto con salida de comando | Personalización de mensajes |
+
+#### 1.7.5 Prevenir Expansiones (Escape)
+| Método | Descripción | Ejemplo |
+|--------|-------------|---------|
+| `\$` | Escapa un carácter específico | `echo "El precio es \$100"` |
+| `'texto'` | Comillas simples - NO expansión | `echo 'El usuario es $USER'` |
+| `"texto"` | Comillas dobles - permite variables | `echo "El usuario es $USER"` |
+
+---
 ## 2. Gestión de Directorios y Archivos
 
 ### 2.1 Creación de Directorios
@@ -213,6 +307,8 @@ Usa estos atajos para editar comandos largos sin usar el ratón.
 |---------|-------------|---------|
 | `mkdir carpeta` | Crea una carpeta | Linux/Unix |
 | `mkdir carpeta1 carpeta2` | Crea múltiples carpetas | Linux/Unix |
+| `mkdir -p ruta/completa/nueva` | Crea directorios padres automáticamente | Linux/Unix |
+| `mkdir -pv ruta/completa/nueva` | Igual que -p pero muestra cada directorio creado | Linux/Unix |
 | `ni carpeta` | Crea una carpeta | PowerShell |
 
 ### 2.2 Eliminación de Directorios
@@ -222,6 +318,7 @@ Usa estos atajos para editar comandos largos sin usar el ratón.
 | `rmdir carpeta`  | Elimina carpeta vacía                            | Solo carpetas vacías                                        |
 | `rm -r carpeta`  | Elimina carpeta y contenido recursivamente       | **¡Irreversible!**                                          |
 | `rm -rf carpeta` | Elimina carpeta y contenido recursivamente, forzado | **¡Irreversible! Omite confirmaciones y errores. Úsalo con extrema precaución.** |
+| `rm -i archivo.txt` | Elimina archivo con confirmación interactiva | Pide confirmación antes de cada eliminación |
 
 #### Ejemplos de Eliminación por Rutas
 
@@ -249,10 +346,54 @@ rm -r ~/mi_carpeta
 | Comando | Descripción |
 |---------|-------------|
 | `cp archivo.txt destino/` | Copia archivo |
+| `cp archivo.txt .` | Copia archivo al directorio actual |
 | `cp -r carpeta/ destino/` | Copia carpeta recursivamente |
+| `cp -v archivo.txt destino/` | Copia archivo mostrando detalles verbose |
 | `mv archivo.txt nuevo_nombre.txt` | Renombra archivo |
 | `mv archivo.txt destino/` | Mueve archivo |
+| `mv -v archivo.txt nuevo_nombre.txt` | Mueve/renombra mostrando detalles |
+| `mv ~/archivos/* .` | **El punto (.) representa el directorio actual como destino** |
 
+#### **2.4.1 - Técnicas Avanzadas de Movimiento**
+
+#### Movimiento con Patrones y Expansiones
+| Técnica | Comando | Descripción |
+|---------|---------|-------------|
+| **Movimiento con rangos** | `mv mystery_chapter{1..2}.odf destino/` | Mueve archivos usando expansión de llaves con rango |
+| **Movimiento con lista** | `mv mystery_chapter{7,8}.odf destino/` | Mueve archivos específicos usando lista de llaves |
+| **Movimiento con patrones** | `mv tv_season1* destino/` | Mueve todos los archivos que coincidan con el patrón |
+| **Uso del punto como destino** | `mv ~/archivos/* .` | Mueve archivos al directorio actual |
+
+---
+
+### **2.5 - Enlaces entre Archivos**
+
+#### 2.5.1 Enlaces Duros (Hard Links)
+| Comando | Descripción | Ejemplo |
+|---------|-------------|---------|
+| `ln archivo_original enlace_duro` | Crea enlace duro al archivo | `ln notas.txt /tmp/notas-link.txt` |
+| `ls -l archivo` | Ver contador de enlaces duros | El número después de permisos indica enlaces |
+| `ls -i archivo1 archivo2` | Comparar números de inodo | Si son iguales, son enlaces duros del mismo archivo |
+
+**Características de enlaces duros:**
+- Apuntan directamente a los datos en disco
+- Solo funcionan en el mismo sistema de archivos
+- No se pueden crear para directorios
+- El archivo permanece mientras exista al menos un enlace duro
+
+#### 2.5.2 Enlaces Simbólicos (Symbolic Links)
+| Comando | Descripción | Ejemplo |
+|---------|-------------|---------|
+| `ln -s ruta_original enlace_simbolico` | Crea enlace simbólico | `ln -s /etc/passwd mi_config` |
+| `ln -s /ruta/absoluta/archivo enlace` | Enlace con ruta absoluta | `ln -s /home/user/docs/file.txt shortcut` |
+| `ls -l enlace_simbolico` | Ver destino del enlace simbólico | Muestra `->` apuntando al destino |
+
+**Ventajas de enlaces simbólicos:**
+- Funcionan entre diferentes sistemas de archivos
+- Pueden apuntar a directorios
+- Se identifican fácilmente con `ls -l` (muestran `->`)
+
+---
 ## 3. Edición y Manipulación de Contenido
 
 ### 3.1 Creación de Contenido en Archivos
@@ -307,6 +448,9 @@ echo "Santiago" | tee -a pais.txt       # Agrega al final
 | `find . -name "*.txt"` | Busca archivos por nombre | `find /home -name "documento.pdf"` |
 | `find . -type d` | Busca solo directorios | `find . -type d -name "config"` |
 | `find . -size +1M` | Busca archivos mayores a 1MB | `find . -size -100k` |
+| `ls tv_season1*` | Busca archivos que empiecen con patrón específico | Lista todos los episodios de temporada 1 |
+| `mv tv_season1* destino/` | Mueve múltiples archivos que coincidan con patrón | Organizar archivos por patrón |
+| `rm mystery*` | Elimina archivos que empiecen con patrón | **¡Cuidado!** Elimina múltiples archivos |
 
 ### 4.2 Búsqueda en Contenido
 
@@ -444,6 +588,7 @@ grep -E 'profesores|alumnos' /etc/group
 |---------|-------------|
 | `file archivo` | Identifica tipo real del archivo |
 | `strings archivo.png` | Extrae texto legible de archivos binarios |
+| `whereis` | Localiza el binario, código fuente y página del manual para un comando |
 
 ### 8.2 Verificación de Integridad (Hashing)
 
@@ -532,8 +677,29 @@ NOMBRE="Juan"
 echo "Hola, $NOMBRE"
 echo "Hola, ${NOMBRE}!"
 ```
+### 10.3 Sustitución de Comandos con Date
+| Comando | Descripción | Resultado Ejemplo |
+|---------|-------------|-------------------|
+| `echo "Archivo_$(date +%F).txt"` | Incluye fecha en formato ISO | `Archivo_2025-03-07.txt` |
+| `cp file.txt backup_$(date +%F).txt` | Crea backup con fecha | `backup_2025-03-07.txt` |
+| `cp file.txt backup_$(date +%s).txt` | Crea backup con timestamp Unix | `backup_1646644424.txt` |
+| `echo "Procesado el $(date +%F) a las $(date +%R)"` | Combina fecha y hora | `Procesado el 2025-03-07 a las 15:30` |
 
+**Formatos de fecha útiles:**
+- `%F` = Fecha ISO (YYYY-MM-DD)
+- `%s` = Timestamp Unix (segundos desde 1970)
+- `%R` = Hora en formato 24h (HH:MM)
+
+---
 ## 11. Ejemplos Prácticos Integrados
+
+### **11.0 Comandos Laboratorios de RedHat**
+
+| Comando | Descripción | Ejemplo del texto RHEL |
+|---------|-------------|------------------------|
+| `lab start [nombre]` | Inicia ejercicio de laboratorio | `lab start help-manual` |
+| `lab grade [nombre]` | Califica ejercicio de laboratorio | `lab grade help-review` |
+| `lab finish [nombre]` | Finaliza ejercicio de laboratorio | `lab finish help-manual` |
 
 ### 11.1 Creación de Estructura de Proyecto
 
@@ -612,7 +778,8 @@ Para conectarte a una máquina remota, necesitas su dirección IP o nombre, un n
 | **Conexión con Contraseña** | `ssh usuario@<IP_OBJETIVO>` | El método más básico. Te solicitará la contraseña.|
 | **Especificar Puerto** | `ssh -p <PUERTO> usuario@<IP_OBJETIVO>` | `-p`: Util si SSH no corre en el puerto estándar 22. |
 | **Usar Llave Privada** | `ssh -i /ruta/a/llave.pem usuario@<IP_OBJETIVO>` | `-i`: Archivo para autenticación con llaves (la clave) en lugar de contraseña. |
-| **Configurar Login sin Contraseña** | `ssh-copy-id usuario@<IP_OBJETIVO>` | Copia la clave pública al servidor remoto para habilitar el login sin contraseña. |                     |  |
+| **Configurar Login sin Contraseña** | `ssh-copy-id usuario@<IP_OBJETIVO>` | Copia la clave pública al servidor remoto para habilitar el login sin contraseña. |
+| **Cierra sesión SSH y regresa al sistema local** | `exit` | Al finalizar trabajo remoto |
 
 - **📝 Nota sobre la primera conexión SSH**
 
@@ -693,6 +860,30 @@ Estos comandos se usan en el servidor al que te quieres conectar para asegurarte
 | `-X <MÉTODO>` | Especificar el **método HTTP** (ej. `POST`, `PUT`). |
 | `-d <datos>` | **Enviar datos** en una petición (ej. para un formulario). |
 | `-H <cabecera>` | Añadir una **cabecera HTTP** personalizada. |
+
+
+#### **14. Documentación y Ayuda Avanzada**
+
+Estos comandos son específicos del sistema de ayuda de Red Hat y deberían formar una nueva sección:
+
+| Comando | Descripción | Ejemplo del texto RHEL |
+|---------|-------------|------------------------|
+| `man [section] [topic]` | Muestra la página del manual para un tema en una sección específica | `man 5 passwd`, `man 1 su` |
+| `man -k [keyword]` | Busca una palabra clave en los títulos y descripciones de las páginas del manual | `man -k passwd`, `man -k zip`, `man -k boot` |
+| `man -K [keyword]` | Busca una palabra clave en el texto completo de todas las páginas del manual | `man -K passwd` |
+| `man -t [topic]` | Formatea una página del manual para impresión en PostScript | `man -t bash` |
+| `mandb` | Genera o actualiza el índice de la base de datos de las páginas del manual | Se ejecuta automáticamente |
+| `apropos [keyword]` | Equivalente a `man -k`, busca comandos relacionados con palabra clave | Mencionado como equivalente |
+
+#### **15. Impresión y Visualización de Documentos**
+
+| Comando | Descripción | Ejemplo del texto RHEL |
+|---------|-------------|------------------------|
+| `lpr` | Envía archivos a la impresora | `man -t bash \| lpr` |
+| `lp` | Envía trabajos de impresión con más opciones | `lp passwd.ps -P 2-3` |
+| `evince` | Visor de documentos de GNOME (PostScript, PDF, etc.) | `evince /home/student/passwd.ps` |
+| `evince -w` | Abre evince en modo ventana | `evince -w /home/student/passwd.ps` |
+| `evince -i [página]` | Abre evince en página específica | `evince -i 3 /home/student/passwd.ps` |
 
 ## Consejos de Uso
 
