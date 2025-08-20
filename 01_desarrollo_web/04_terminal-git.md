@@ -1,4 +1,4 @@
-### 1. Terminal Visual Studio Code
+### 1. Guia de Terminal Visual Studio Code
 
 ### 2. Terminal GIT - Configuración Inicial 
 

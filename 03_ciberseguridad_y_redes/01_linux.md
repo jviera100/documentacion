@@ -1,4 +1,4 @@
-# Guía Maestra de Comandos Linux (Versión Exhaustiva)
+# Guía Maestra de Comandos Linux (752 comandos)
 
 Esta guía es un compendio detallado y meticuloso de comandos de Linux, diseñada para ser una referencia completa para administradores de sistemas y usuarios avanzados. La estructura está organizada por funcionalidad, desde los conceptos más básicos hasta las operaciones más complejas, integrando las mejores prácticas y la profundidad técnica.
 

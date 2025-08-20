@@ -1,4 +1,4 @@
-### Resumen de JavaScript:
+### Guia de JavaScript (329 comandos):
 
 ### 1. Generalidades y Configuración
 
